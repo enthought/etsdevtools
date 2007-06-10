@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name = 'enthought.debug',
-    version = '2.0.1b1',
+    version = '2.0b2',
     description  = 'Frame Based Inspector - Traits based debugging tool',
     author       = 'Enthought, Inc',
     author_email = 'info@enthought.com',

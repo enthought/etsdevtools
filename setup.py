@@ -9,7 +9,6 @@ def gendeps(list):
 # Declare our installation requirements.
 install_requires = gendeps([
     ("enthought.envisage", "2.0b1", "3"),
-    ("enthought.logger", "2.0b1", "3"),
     ("enthought.pyface", "2.0b1", "3"),
     ("enthought.traits", "2.0b1", "3"),
     ])

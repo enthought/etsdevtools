@@ -37,12 +37,14 @@ from bdb \
 from traceback \
     import format_tb
 
-from enthought.traits.core \
+from enthought.traits.api \
     import HasTraits, HasPrivateTraits, Str, Int, Instance, List, Dict, Any, \
-           Code, Constant, Property, PythonValue, true, false, Button, View, \
-           VSplit, VGroup, HSplit, HGroup, HFlow, Tabbed, Item, TableEditor, \
-           ValueEditor, CodeEditor, InstanceEditor, TextEditor, EnumEditor, \
-           Handler, UI, Event, TraitError
+           Code, Constant, Property, PythonValue, true, false, Button, \
+           Event, TraitError
+from enthought.traits.ui.api \
+    import View, VSplit, VGroup, HSplit, HGroup, HFlow, Tabbed, Item, \
+           TableEditor, ValueEditor, CodeEditor, InstanceEditor, TextEditor, \
+           EnumEditor, Handler, UI
 
 from enthought.traits.ui.value_tree \
     import ValueTree

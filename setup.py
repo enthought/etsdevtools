@@ -15,6 +15,11 @@ install_requires = etsdeps([
     ("enthought.traits", "2.0b1"),
     ])
 print 'install_requires:\n\t%s' % '\n\t'.join(install_requires)
+test_requires = [
+    "nose >= 0.9, ",
+    ] + etsdeps([
+    ])
+print 'test_requires:\n\t%s' % '\n\t'.join(test_requires)
 
 
 setup(
@@ -35,6 +40,7 @@ setup(
         "enthought",
         ],
     packages = find_packages(),
+    tests_require = test_requires,
     test_suite = 'nose.collector',
     url = 'http://code.enthought.com/ets',
     version = '2.0b2',

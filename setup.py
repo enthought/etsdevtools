@@ -18,24 +18,25 @@ print 'install_requires:\n\t%s' % '\n\t'.join(install_requires)
 
 
 setup(
-    name = 'enthought.debug',
-    version = '2.0b2',
-    description  = 'Frame Based Inspector - Traits based debugging tool',
-    author       = 'Enthought, Inc',
+    author = 'Enthought, Inc',
     author_email = 'info@enthought.com',
-    url          = 'http://code.enthought.com/ets',
-    license      = 'BSD',
-    zip_safe     = False,
-    packages = find_packages(),
-    include_package_data = True,
-    install_requires = install_requires,
+    description = 'Frame Based Inspector - Traits based debugging tool',
     extras_require = {
         # All non-ets dependencies should be in this extra to ensure users can
         # decide whether to require them or not.
         'nonets': [
-        ],
-    },
+            ],
+        },
+    license = 'BSD',
+    include_package_data = True,
+    install_requires = install_requires,
+    name = 'enthought.debug',
     namespace_packages = [
         "enthought",
-    ],
+        ],
+    packages = find_packages(),
+    test_suite = 'nose.collector',
+    url = 'http://code.enthought.com/ets',
+    version = '2.0b2',
+    zip_safe = False,
 )

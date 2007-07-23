@@ -12,7 +12,7 @@ def etsdeps(list):
 # Declare our installation requirements.
 install_requires = etsdeps([
     ("enthought.pyface", "2.0b1"),
-    ("enthought.traits", "2.0b1"),
+    ("enthought.traits[ui]", "2.0b1"),
     ])
 print 'install_requires:\n\t%s' % '\n\t'.join(install_requires)
 test_requires = [

@@ -24,6 +24,10 @@ TRAITS_UI = etsdep('enthought.traits[ui]', '2.0b1')
 setup(
     author = 'Enthought, Inc',
     author_email = 'info@enthought.com',
+    dependency_links = [
+        'http://code.enthought.com/enstaller/eggs/source',
+        'http://code.enthought.com/enstaller/eggs/source/unstable',
+        ],
     description = 'Frame Based Inspector - Traits based debugging tool',
     extras_require = {
         # All non-ets dependencies should be in this extra to ensure users can

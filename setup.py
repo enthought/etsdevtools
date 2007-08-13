@@ -17,8 +17,8 @@ def etsdep(p, min, max=None, literal=False):
 
 
 # Declare our ETS project dependencies.
-PYFACE = etsdep('enthought.pyface', '2.0b1')
-TRAITS_UI = etsdep('enthought.traits[ui]', '2.0b1')
+PYFACE = etsdep('enthought.pyface', '2.0.0b1')
+TRAITS_UI = etsdep('enthought.traits[ui]', '2.0.0b1')
 
 
 setup(

@@ -35,12 +35,12 @@ setup(
         'nonets': [
             ],
         },
-    license = 'BSD',
     include_package_data = True,
     install_requires = [
         PYFACE,
         TRAITS_UI,
         ],
+    license = 'BSD',
     name = 'enthought.debug',
     namespace_packages = [
         "enthought",

@@ -58,7 +58,7 @@ from enthought.traits.ui.table_column \
 from enthought.pyface.image_resource \
     import ImageResource
 
-from enthought.traits.vet.class_browser \
+from enthought.traits.ui.wx.vet.class_browser \
     import ClassBrowser, ClassBrowserPaths, CBPath
 
 #-------------------------------------------------------------------------------

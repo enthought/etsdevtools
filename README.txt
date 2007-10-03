@@ -1,2 +1,2 @@
-The debug package, a part othe Enthought Tool Suite.
+The debug package, a part of the Enthought Tool Suite.
 

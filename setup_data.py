@@ -14,15 +14,15 @@ def etsdep(p, min, max=None, literal=False):
 
 
 # Declare our ETS project dependencies.
-APPTOOLS = etsdep('AppTools', '3.0.0b1')
-#CHACO_WX = etsdep('Chaco[wx]', '3.0.0b1') - gotcha had this, do we really need it?
-#ENABLE_WX = etsdep('Enable[wx]', '3.0.0b1') - gotcha had this, do we really need it?
+APPTOOLS = etsdep('AppTools', '3.0.0b1')  # -- import of enthought.io in enthought.developer
+CHACO = etsdep('Chaco', '3.0.0b1')  # -- imported only in enthought.gotcha
 ENTHOUGHTBASE = etsdep('EnthoughtBase', '3.0.0b1')
 ENVISAGECORE = etsdep('EnvisageCore', '3.0.0b1')
-TRAITSBACKENDQT = etsdep('TraitsBackendQt', '3.0.0b1')
-TRAITSBACKENDWX = etsdep('TraitsBackendWX', '3.0.0b1')
-TRAITSGUI_DOCK = etsdep('TraitsGUI[dock]', '3.0.0b1')
-TRAITS_UI = etsdep('Traits[ui]', '3.0.0b1')
+ENVISAGEPLUGINS = etsdep('EnvisagePlugins', '3.0.0b1')  # -- imported only in enthought.gotcha
+TRAITS = etsdep('Traits', '3.0.0b1')
+TRAITSBACKENDWX = etsdep('TraitsBackendWX', '3.0.0b1')  # -- imported mostly by enthought.developer, but one from enthought.gotcha
+TRAITSGUI = etsdep('TraitsGUI', '3.0.0b1')
+TRAITSGUI_DOCK = etsdep('TraitsGUI[dock]', '3.0.0b1')  # -- imported only by enthought.developer.
 
 
 # A dictionary of the pre_setup information.
@@ -30,11 +30,15 @@ INFO = {
     'extras_require': {
         'envisage': [
             ENVISAGECORE,
+            ENVISAGEPLUGINS,
             ],
-        'qt': [
-            TRAITSBACKENDQT,
+        'developer': [
+            APPTOOLS,
+            TRAITSBACKENDWX,
+            TRAITSGUI_DOCK,
             ],
-        'wx': [
+        'gotcha': [
+            CHACO,
             TRAITSBACKENDWX,
             ],
 
@@ -48,10 +52,9 @@ INFO = {
             ],
         },
     'install_requires': [
-        APPTOOLS,
         ENTHOUGHTBASE,
-        TRAITSGUI_DOCK,
-        TRAITS_UI,
+        TRAITS,
+        TRAITSGUI,
         ],
     'name': 'DevTools',
     'version': '3.0.0b1',

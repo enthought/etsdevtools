@@ -1,7 +1,27 @@
+[developer]
+enthought.developer = *
+
+
 [envisage]
-enthought.developer.fbi_plugin_definition = *
-enthought.developer.plugin_definition = *
 enthought.developer.tools.app_monitor = *
 enthought.developer.tools.fbi_plugin = *
-enthought.developer.tools.envisage_browser.application_adapter = *
+enthought.gotcha.plugin.gotcha_plugin = *
 enthought.developer.tools.envisage_browser.plugin_definition_adapter = *
+enthought.developer.plugin_definition = *
+enthought.developer.fbi_plugin_definition = *
+enthought.developer.plugin_definition = *
+enthought.gotcha.plugin.gotcha_plugin_definition = *
+enthought.developer.tools.envisage_browser.application_adapter = *
+enthought.developer.plugin_definition = *
+enthought.developer.plugin_definition = *
+enthought.gotcha.viewer = *
+enthought.gotcha.plugin.gotcha_editor = *
+enthought.gotcha.plugin.action.begin_profiling = *
+enthought.gotcha.plugin.action.end_profiling = *
+enthought.gotcha.plugin.action.open_profile = *
+enthought.gotcha.plugin.gotcha_plugin_definition = *
+
+
+[gotcha]
+enthought.gotcha = *
+

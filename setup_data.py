@@ -25,8 +25,6 @@ TRAITSGUI_DOCK = etsdep('TraitsGUI[dock]', '3.0.0b1')
 TRAITS_UI = etsdep('Traits[ui]', '3.0.0b1')
 
 
-
-
 # A dictionary of the pre_setup information.
 INFO = {
     'extras_require': {

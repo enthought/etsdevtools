@@ -1,0 +1,24 @@
+{% if show_abs_name %}{% assign colspan=2 %}{% else %}{% assign colspan=1 %}{% endif %}
+{% for obj, link, subobjs in hierarchy %}
+{% genid private_id %}
+<table class="hierarchy" summary="hierarchy for {{ obj.name }}">
+  <tr>
+    <td rowspan="2" class="icon">{% if subobjs %}<span id="{{ private_id }}-icon" class="icon" onclick="toggle_row('{{ private_id }}');">[+]</span>{% else %}&nbsp;{% endif %}</td>
+    <td class="name">
+      {% if link %}
+        <a href="{{ link }}">{{ obj.name }}</a>
+      {% else %}
+        {{ obj.name }}
+      {% endif %}
+    </td>
+    {% if show_abs_name %}
+    <td class="absname">{{ obj.abs_name }}</td>
+    {% endif %}
+  </tr>
+  <tr id="{{ private_id }}-tree" class="hidden">
+    <td colspan="{{ colspan }}">
+{% include "hierarchy_r" hierarchy=subobjs %}
+    </td>
+  </tr>
+</table>
+{% endfor %}

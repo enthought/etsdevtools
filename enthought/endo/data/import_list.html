@@ -1,0 +1,10 @@
+<table summary="imported names" class="imported-names">
+  <thead>
+    <tr><th>Local name</th><th>Refers to</th></tr>
+  </thead>
+  <tbody>
+{% for local_name, name, link in import_list %}
+  <tr id="{{local_name}}"><td>{{local_name}}</td><td>{%if link%}<a href="{{link}}">{%endif%}{{name}}{%if link%}</a>{%endif%}</td></tr>
+{% endfor %}
+  </tbody>
+</table>

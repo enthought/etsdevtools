@@ -1,0 +1,75 @@
+{% extends "object" %}
+{% block content %}
+{% super %}
+
+{% if len(sub_packages) + len(sub_modules) + len(variables) + len(traits) + len(classes) + len(functions) > 0 %}
+<div id="contents">
+<ul>
+Contents:
+{% if sub_packages %}
+<li><a href="#section-packages">Subpackages</a></li>
+{% endif %}
+{% if sub_modules %}
+<li><a href="#section-modules">Submodules</a></li>
+{% endif %}
+{% if variables %}
+<li><a href="#section-variables">Variables</a></li>
+{% endif %}
+{% if traits %}
+<li><a href="#section-traits">Traits</a></li>
+{% endif %}
+{% if classes %}
+<li><a href="#section-classes">Classes</a></li>
+{% endif %}
+{% if functions %}
+<li><a href="#section-functions">Functions</a></li>
+{% endif %}
+{% if imported_objects %}
+<li><a href="#section-imports">Imported Names</a></li>
+{% endif %}
+</ul>
+</div>
+{% endif %}
+
+{% if sub_packages %}
+<div id="main">
+<h2 id="section-packages">Subpackages</h2>
+{% include "module_list" module_list=sub_packages %}
+{% endif %}
+
+{% if sub_modules %}
+<h2 id="section-modules">Submodules</h2>
+{% include "module_list" module_list=sub_modules %}
+{% endif %}
+
+{% if variables %}
+<h2 id="section-variables">Variables</h2>
+{% include "var_list" var_list=variables type="attribute" %}
+{% endif %}
+
+{% if traits %}
+<h2 id="section-traits">Traits</h2>
+{% include "var_list" var_list=traits type="trait" %}
+{% endif %}
+
+{% if classes %}
+<h2 id="section-classes">Classes</h2>
+{% include "class_list" class_list=classes %}
+{% endif %}
+
+{% if functions %}
+<h2 id="section-functions">Function summary</h2>
+{% include "function_summary" function_list=functions %}
+
+<h2>Functions</h2>
+{% include "function_detail" function_list=functions %}
+{% endif %}
+
+{% if imported_objects %}
+<h2 id="section-imports">Imported Names</h2>
+{% include "import_list" import_list=imported_objects %}
+{% endif %}
+
+</div>  <!-- #main -->
+
+{% endblock %}

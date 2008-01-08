@@ -1,2 +1,2 @@
-The debug package, a part of the Enthought Tool Suite.
+The DevTools project, a part of the Enthought Tool Suite.
 

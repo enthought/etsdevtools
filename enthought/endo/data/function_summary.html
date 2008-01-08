@@ -1,0 +1,5 @@
+<ul class="function-summary">
+  {% for name, param_list, docstring in function_list %}
+  <li class="function"><a href="#{{name}}">{{name}}</a>({{param_list}})</li>
+  {% endfor %}
+</ul>

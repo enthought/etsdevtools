@@ -1,0 +1,12 @@
+{% extends "base" %}
+{% block content %}
+{% if docstring %}{{ docstring }}{% endif %}
+{% if len(package_hierarchy) > 0 %}
+<h2>Packages</h2>
+{% include "hierarchy_r" hierarchy=package_hierarchy show_abs_name=False %}
+{% endif %}
+{% if len(module_hierarchy) > 0 %}
+<h2>Modules</h2>
+{% include "hierarchy_r" hierarchy=module_hierarchy show_abs_name=False %}
+{% endif %}
+{% endblock %}

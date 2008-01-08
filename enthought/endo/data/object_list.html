@@ -1,0 +1,5 @@
+<ul class="doclist">
+  {% for name, link, abs_name in object_list %}
+    <li>{% if link %}<a href="{{link}}">{% endif %}{{name}}{% if link %}</a>{% endif %}: {{ abs_name }}</li>
+  {% endfor %}
+</ul>

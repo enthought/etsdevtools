@@ -1,0 +1,5 @@
+<ul class="doclist">
+{% for name, syntax, docstring in var_list %}
+  <li class="{{type}}" id="{{name}}">{{name}}{{syntax}}{{docstring}}</li>
+{% endfor %}
+</ul>

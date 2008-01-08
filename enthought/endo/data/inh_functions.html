@@ -1,0 +1,8 @@
+<div class="smallbox">
+<h3>Inherited from base classes</h3>
+<ul>
+{% for name, param_list, link in obj_list %}
+<li><a href="{{ link }}">{{ name }}</a>({{ param_list }})</li>
+{% endfor %}
+</ul>
+</div>

@@ -1,0 +1,5 @@
+<ul class="doclist">
+  {% for name, link, docstring in class_list %}
+  <li id="{{name}}" class="class"><a href="{{link}}">{{name}}</a>{% if docstring %} - {{docstring}}{% endif %}</li>
+  {% endfor %}
+</ul>

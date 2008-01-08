@@ -1,0 +1,5 @@
+<ul class="doclist">
+  {% for name, param_list, docstring in function_list %}
+  <li id="{{name}}" class="function">{{name}}({{param_list}}){{docstring}}</li>
+  {% endfor %}
+</ul>

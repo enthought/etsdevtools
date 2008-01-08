@@ -1,0 +1,13 @@
+{% extends "base" %}
+{% block content %}
+<!-- using template alpha_list -->
+<div id="letter-index">{% for letter in letter_list %}<a href="#letter-{{letter}}">{{letter}}</a>&nbsp;{% endfor %}</div>
+{% for letter in letter_list %}
+<h2 id="letter-{{letter}}">{{letter}}</h2>
+<ul>
+  {% for link, display_name, text in objects[letter] %}
+  <li><a href="{{link}}">{{display_name}}</a>{% if text %}: {{text}}{% endif %}</li>
+  {% endfor %}
+</ul>
+{% endfor %}
+{% endblock %}

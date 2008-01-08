@@ -1,0 +1,66 @@
+{% extends "object" %}
+{% block content %}
+{% super %}
+
+{% if len(superclasses) + len(variables) + len(traits) + len(classes) + len(functions) > 0 %}
+<div id="contents">
+<ul>
+Contents:
+{% if superclasses %}
+<li><a href="#section-superclasses">Base classes</a></li>
+{% endif %}
+{% if variables or inh_variables %}
+<li><a href="#section-variables">Attributes</a></li>
+{% endif %}
+{% if traits or inh_traits %}
+<li><a href="#section-traits">Traits</a></li>
+{% endif %}
+{% if classes or inh_classes %}
+<li><a href="#section-classes">Local classes</a></li>
+{% endif %}
+{% if functions or inh_functions %}
+<li><a href="#section-functions">Methods</a></li>
+{% endif %}
+</ul>
+</div>
+{% endif %}
+
+<div id="main">
+
+{% if superclasses %}
+<h2 id="section-superclasses">Inherits from</h2>
+{% include "object_list" object_list=superclasses %}
+{% endif %}
+
+{% if variables or inh_variables %}
+<h2 id="section-variables">Attributes</h2>
+{% if variables %}{% include "var_list" var_list=variables type="attribute" %}{% endif %}
+{% if inh_variables %}{% include "inh_list" obj_list=inh_variables %}{% endif %}
+{% endif %}
+
+{% if traits or inh_traits %}
+<h2 id="section-traits">Traits</h2>
+{% if traits %}{% include "var_list" var_list=traits type="trait" %}{% endif %}
+{% if inh_variables %}{% include "inh_list" obj_list=inh_traits %}{% endif %}
+{% endif %}
+
+{% if classes or inh_classes %}
+<h2 id="section-classes">Local classes</h2>
+{% if classes %}{% include "class_list" class_list=classes %}{% endif %}
+{% if inh_classes %}{% include "inh_list" obj_list=inh_classes %}{% endif %}
+{% endif %}
+
+{% if functions or inh_functions %}
+<h2 id="section-functions">Method summary</h2>
+{% if functions %}{% include "function_summary" function_list=functions %}{% endif %}
+{% if inh_functions %}{% include "inh_functions" obj_list=inh_functions %}{% endif %}
+
+{% if functions %}
+<h2>Methods</h2>
+{% include "function_detail" function_list=functions %}
+{% endif %}
+{% endif %}
+
+</div>  <!-- #main -->
+
+{% endblock %}

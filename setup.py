@@ -17,8 +17,8 @@ def etsdep(p, min, max=None, literal=False):
 
 
 # Declare our ETS project dependencies.
-PYFACE = etsdep('enthought.pyface', '2.0.0b1')
-TRAITS_UI = etsdep('enthought.traits[ui]', '2.0.0b1')
+TRAITSGUI = etsdep('TraitsGUI', '3.0.0b1')
+TRAITS_UI = etsdep('Traits[ui]', '3.0.0b1')
 
 
 setup(
@@ -26,9 +26,15 @@ setup(
     author_email = 'info@enthought.com',
     dependency_links = [
         'http://code.enthought.com/enstaller/eggs/source',
-        'http://code.enthought.com/enstaller/eggs/source/unstable',
         ],
-    description = 'Frame Based Inspector - Traits based debugging tool',
+    description = 'Enthought\'s Development Tools',
+    entry_points = {
+        'console_scripts': [
+            'endo = enthought.endo.scripts.endo:main',
+            'endo-readstate = enthought.endo.scripts.readstate:main',
+            'ets_endo = enthought.endo.scripts.ets_endo:main',
+            ]
+        },
     extras_require = {
         # All non-ets dependencies should be in this extra to ensure users can
         # decide whether to require them or not.
@@ -37,20 +43,20 @@ setup(
         },
     include_package_data = True,
     install_requires = [
-        PYFACE,
+        TRAITSGUI,
         TRAITS_UI,
         ],
     license = 'BSD',
-    name = 'enthought.debug',
+    name = 'DevTools',
     namespace_packages = [
         "enthought",
         ],
-    packages = find_packages(),
+    packages = find_packages(exclude=['docs']),
     tests_require = [
         'nose >= 0.9',
         ],
     test_suite = 'nose.collector',
     url = 'http://code.enthought.com/ets',
-    version = '2.1.0a1',
+    version = '3.0.0b1',
     zip_safe = False,
     )

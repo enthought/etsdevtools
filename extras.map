@@ -1,0 +1,7 @@
+[plugin]
+enthought.developer.fbi_plugin_definition = *
+enthought.developer.plugin_definition = *
+enthought.developer.tools.app_monitor = *
+enthought.developer.tools.fbi_plugin = *
+enthought.developer.tools.envisage_browser.application_adapter = *
+enthought.developer.tools.envisage_browser.plugin_definition_adapter = *

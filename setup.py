@@ -34,13 +34,14 @@ def etsdep(p, min, max=None, literal=False):
 
 
 # Declare our ETS project dependencies.
+APPTOOLS = etsdep('AppTools', '3.0.0b1')
 #CHACO_WX = etsdep('Chaco[wx]', '3.0.0b1') - gotcha had this, do we really need it?
 #ENABLE_WX = etsdep('Enable[wx]', '3.0.0b1') - gotcha had this, do we really need it?
 ENTHOUGHTBASE = etsdep('EnthoughtBase', '3.0.0b1')
-#ENVISAGE = etsdep('EnvisageCore', '3.0.0b1') - gotcha had this, do we really need it?
+ENVISAGECORE = etsdep('EnvisageCore', '3.0.0b1')
 TRAITSBACKENDQT = etsdep('TraitsBackendQt', '3.0.0b1')
 TRAITSBACKENDWX = etsdep('TraitsBackendWX', '3.0.0b1')
-TRAITSGUI = etsdep('TraitsGUI', '3.0.0b1')
+TRAITSGUI_DOCK = etsdep('TraitsGUI[dock]', '3.0.0b1')
 TRAITS_UI = etsdep('Traits[ui]', '3.0.0b1')
 
 
@@ -60,6 +61,9 @@ setup(
             ]
         },
     extras_require = {
+        'plugin': [
+            ENVISAGECORE,
+            ],
         'qt': [
             TRAITSBACKENDQT,
             ],
@@ -78,8 +82,9 @@ setup(
         },
     include_package_data = True,
     install_requires = [
+        APPTOOLS,
         ENTHOUGHTBASE,
-        TRAITSGUI,
+        TRAITSGUI_DOCK,
         TRAITS_UI,
         ],
     license = 'BSD',

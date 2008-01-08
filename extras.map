@@ -1,4 +1,4 @@
-[plugin]
+[envisage]
 enthought.developer.fbi_plugin_definition = *
 enthought.developer.plugin_definition = *
 enthought.developer.tools.app_monitor = *

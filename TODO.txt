@@ -1,0 +1,2 @@
+* Remove the dependency on enthought.util by stopping to use util.numerix.
+

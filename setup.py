@@ -17,6 +17,12 @@ def etsdep(p, min, max=None, literal=False):
 
 
 # Declare our ETS project dependencies.
+#CHACO_WX = etsdep('Chaco[wx]', '3.0.0b1') - gotcha had this, do we really need it?
+#ENABLE_WX = etsdep('Enable[wx]', '3.0.0b1') - gotcha had this, do we really need it?
+ENTHOUGHTBASE = etsdep('EnthoughtBase', '3.0.0b1')
+#ENVISAGE = etsdep('EnvisageCore', '3.0.0b1') - gotcha had this, do we really need it?
+TRAITSBACKENDQT = etsdep('TraitsBackendQt', '3.0.0b1')
+TRAITSBACKENDWX = etsdep('TraitsBackendWX', '3.0.0b1')
 TRAITSGUI = etsdep('TraitsGUI', '3.0.0b1')
 TRAITS_UI = etsdep('Traits[ui]', '3.0.0b1')
 
@@ -36,6 +42,13 @@ setup(
             ]
         },
     extras_require = {
+        'qt': [
+            TRAITSBACKENDQT,
+            ],
+        'wx': [
+            TRAITSBACKENDWX,
+            ],
+
         # All non-ets dependencies should be in this extra to ensure users can
         # decide whether to require them or not.
         'nonets': [
@@ -43,6 +56,7 @@ setup(
         },
     include_package_data = True,
     install_requires = [
+        ENTHOUGHTBASE,
         TRAITSGUI,
         TRAITS_UI,
         ],
@@ -51,7 +65,7 @@ setup(
     namespace_packages = [
         "enthought",
         ],
-    packages = find_packages(exclude=['docs']),
+    packages = find_packages(exclude=['docs', 'examples']),
     tests_require = [
         'nose >= 0.9',
         ],

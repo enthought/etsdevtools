@@ -13,12 +13,7 @@ def configuration(parent_package='', top_path=None):
         quiet=True,
     )
 
-    config.add_subpackage('enthought.debug')
-    config.add_subpackage('enthought.developer')
-    config.add_subpackage('enthought.endo')
-    config.add_subpackage('enthought.gotcha')
     config.add_subpackage('enthought.guitest')
-    config.add_subpackage('enthought.testing')
     config.add_subpackage('enthought')
 
     return config

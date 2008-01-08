@@ -56,6 +56,7 @@ setup(
             'endo = enthought.endo.scripts.endo:main',
             'endo-readstate = enthought.endo.scripts.readstate:main',
             'ets_endo = enthought.endo.scripts.ets_endo:main',
+            'marathon = enthought.testing.marathon:main'
             ]
         },
     extras_require = {
@@ -69,6 +70,10 @@ setup(
         # All non-ets dependencies should be in this extra to ensure users can
         # decide whether to require them or not.
         'nonets': [
+            'cElementTree',
+            'elementtree',
+            'nose',
+            'testoob',
             ],
         },
     include_package_data = True,
@@ -80,7 +85,7 @@ setup(
     license = 'BSD',
     name = 'DevTools',
     namespace_packages = [
-        "enthought",
+        'enthought',
         ],
     packages = find_packages(exclude=['docs', 'examples']),
     tests_require = [

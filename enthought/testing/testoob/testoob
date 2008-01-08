@@ -1,0 +1,70 @@
+#!/usr/bin/env python
+import sys
+
+def parseArgs(printUsage=False):
+    usage="""%prog [options] [test_file] [test1 [test2 [...]]]
+
+examples:
+  %prog myFile.py                          - run default set of tests
+  %prog myFile.py MyTestSuite              - run suite 'MyTestSuite'
+  %prog myFile.py MyTestCase.testSomething - run MyTestCase.testSomething
+  %prog myFile.py MyTestCase               - run all 'test*' test methods in MyTestCase"""
+
+    if printUsage:
+        sys.argv.append("-h")
+
+    parser = testoob_main("_arg_parser")(usage)
+    options, free_args = parser.parse_args()
+
+    if len(free_args) == 0:
+        parseArgs(printUsage=True)
+    file_name = free_args[0]
+    test_names = free_args[1:]
+
+    return options, file_name, test_names, parser
+
+def addPythonPath(path):
+    from os.path import normpath
+    sys.path.insert(0, normpath(path))
+
+def currentFile():
+    try:
+        return __file__
+    except NameError:
+        # Python 2.2 compatibility
+        return sys.argv[0]
+
+def fixIncludePath():
+    # the testoob executable is often in the same directory as testoob
+    from os.path import dirname, join
+    module_path = join(dirname(currentFile()), "..")
+    addPythonPath(module_path)
+
+def testoob_main(attrname):
+    try:
+        exec "from testoob.main import %(attrname)s as result" % vars()
+    except ImportError:
+        fixIncludePath()
+        exec "from testoob.main import %(attrname)s as result" % vars()
+        
+    return result
+
+options, file_name, test_names, parser = parseArgs()
+
+try:
+    # Add the path of the ran file to the python path, so that includes
+    # from the same directory would work.
+    from os.path import dirname, basename
+    addPythonPath(dirname(file_name))
+
+    # run the file given on the command line
+    name = __name__
+    __name__ = basename(file_name).split(".")[0]
+    execfile(file_name)
+    __name__ = name
+
+    sys.exit(not testoob_main("_main")(None, None, options, test_names, parser))
+except IOError, e:
+    print e
+    parseArgs(printUsage=True)
+

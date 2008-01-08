@@ -1,5 +1,6 @@
 from setuptools import find_packages
 from numpy.distutils.core import setup
+from setup_data import INFO
 
 
 def configuration(parent_package='', top_path=None):
@@ -12,37 +13,22 @@ def configuration(parent_package='', top_path=None):
         quiet=True,
     )
 
+    config.add_subpackage('enthought.debug')
+    config.add_subpackage('enthought.developer')
+    config.add_subpackage('enthought.endo')
+    config.add_subpackage('enthought.gotcha')
     config.add_subpackage('enthought.guitest')
+    config.add_subpackage('enthought.testing')
     config.add_subpackage('enthought')
 
     return config
 
 
-# Function to convert simple ETS project names and versions to a requirements
-# spec that works for both development builds and stable builds.  Allows
-# a caller to specify a max version, which is intended to work along with
-# Enthought's standard versioning scheme -- see the following write up:
-#    https://svn.enthought.com/enthought/wiki/EnthoughtVersionNumbers
-def etsdep(p, min, max=None, literal=False):
-    require = '%s >=%s.dev' % (p, min)
-    if max is not None:
-        if literal is False:
-            require = '%s, <%s.a' % (require, max)
-        else:
-            require = '%s, <%s' % (require, max)
-    return require
-
-
-# Declare our ETS project dependencies.
-APPTOOLS = etsdep('AppTools', '3.0.0b1')
-#CHACO_WX = etsdep('Chaco[wx]', '3.0.0b1') - gotcha had this, do we really need it?
-#ENABLE_WX = etsdep('Enable[wx]', '3.0.0b1') - gotcha had this, do we really need it?
-ENTHOUGHTBASE = etsdep('EnthoughtBase', '3.0.0b1')
-ENVISAGECORE = etsdep('EnvisageCore', '3.0.0b1')
-TRAITSBACKENDQT = etsdep('TraitsBackendQt', '3.0.0b1')
-TRAITSBACKENDWX = etsdep('TraitsBackendWX', '3.0.0b1')
-TRAITSGUI_DOCK = etsdep('TraitsGUI[dock]', '3.0.0b1')
-TRAITS_UI = etsdep('Traits[ui]', '3.0.0b1')
+# Build the full set of packages by appending any found by setuptools'
+# find_packages to those discovered by numpy.distutils.
+config = configuration().todict()
+packages = find_packages(exclude=config['packages'] + ['docs', 'examples'])
+config['packages'] += packages
 
 
 setup(
@@ -60,46 +46,23 @@ setup(
             'marathon = enthought.testing.marathon:main'
             ]
         },
-    extras_require = {
-        'plugin': [
-            ENVISAGECORE,
-            ],
-        'qt': [
-            TRAITSBACKENDQT,
-            ],
-        'wx': [
-            TRAITSBACKENDWX,
-            ],
-
-        # All non-ets dependencies should be in this extra to ensure users can
-        # decide whether to require them or not.
-        'nonets': [
-            'cElementTree',
-            'elementtree',
-            'nose',
-            'testoob',
-            ],
-        },
+    extras_require = INFO['extras_require'],
     include_package_data = True,
-    install_requires = [
-        APPTOOLS,
-        ENTHOUGHTBASE,
-        TRAITSGUI_DOCK,
-        TRAITS_UI,
-        ],
+    install_requires = INFO['install_requires'],
     license = 'BSD',
-    name = 'DevTools',
+    name = INFO['name'],
     namespace_packages = [
         'enthought',
         ],
-    packages = find_packages(exclude=['docs', 'examples']),
     tests_require = [
         'nose >= 0.9',
         ],
     test_suite = 'nose.collector',
     url = 'http://code.enthought.com/ets',
-    version = '3.0.0b1',
+    version = INFO['version'],
     zip_safe = False,
-    **configuration().todict()
+    **config
     )
+
+
 

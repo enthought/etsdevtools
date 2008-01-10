@@ -14,31 +14,35 @@ def etsdep(p, min, max=None, literal=False):
 
 
 # Declare our ETS project dependencies.
-APPTOOLS = etsdep('AppTools', '3.0.0b1')  # -- import of enthought.io in enthought.developer
-CHACO = etsdep('Chaco', '3.0.0b1')  # -- imported only in enthought.gotcha
+APPTOOLS = etsdep('AppTools', '3.0.0b1')  # import of enthought.io in enthought.developer
 ENTHOUGHTBASE = etsdep('EnthoughtBase', '3.0.0b1')
+ENTHOUGHTBASE_UI = etsdep('EnthoughtBase[ui]', '3.0.0b1')  # e.util.wx.* imported in developer
 ENVISAGECORE = etsdep('EnvisageCore', '3.0.0b1')
 ENVISAGEPLUGINS = etsdep('EnvisagePlugins', '3.0.0b1')  # -- imported only in enthought.gotcha
-TRAITS = etsdep('Traits', '3.0.0b1')
 TRAITSBACKENDWX = etsdep('TraitsBackendWX', '3.0.0b1')  # -- imported mostly by enthought.developer, but one from enthought.gotcha
 TRAITSGUI = etsdep('TraitsGUI', '3.0.0b1')
 TRAITSGUI_DOCK = etsdep('TraitsGUI[dock]', '3.0.0b1')  # -- imported only by enthought.developer.
+TRAITS_UI = etsdep('Traits[ui]', '3.0.0b1')
 
 
 # A dictionary of the pre_setup information.
 INFO = {
     'extras_require': {
-        'envisage': [
-            ENVISAGECORE,
-            ENVISAGEPLUGINS,
-            ],
         'developer': [
             APPTOOLS,
+            ENTHOUGHTBASE_UI,
             TRAITSBACKENDWX,
             TRAITSGUI_DOCK,
             ],
+        'envisage': [  # -- all plugins are here, even gotcha, fbi, and developer.
+            ENVISAGECORE,
+            ENVISAGEPLUGINS,
+            ],
+        'fbi': [
+            TRAITSBACKENDWX,
+            ],
         'gotcha': [
-            CHACO,
+            ENTHOUGHTBASE,
             TRAITSBACKENDWX,
             ],
 
@@ -46,15 +50,20 @@ INFO = {
         # decide whether to require them or not.
         'nonets': [
             'cElementTree',
+            'docutils',
             'elementtree',
             'nose',
+            'Pyro',
+            'reportlab',
+            'setuptools',
             'testoob',
+            'win32',
+            'wxPython',
             ],
         },
     'install_requires': [
-        ENTHOUGHTBASE,
-        TRAITS,
         TRAITSGUI,
+        TRAITS_UI,
         ],
     'name': 'DevTools',
     'version': '3.0.0b1',

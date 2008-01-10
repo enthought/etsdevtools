@@ -22,6 +22,10 @@ enthought.gotcha.plugin.action.open_profile = *
 enthought.gotcha.plugin.gotcha_plugin_definition = *
 
 
+[fbi]
+enthought.debug.fbi = *
+
+
 [gotcha]
 enthought.gotcha = *
 

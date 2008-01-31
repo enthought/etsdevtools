@@ -333,18 +333,15 @@ class LogFile ( HasPrivateTraits ):
         date, time = date_time.split()
         info       = info.strip()
         extra      = ''
-        if type == 'Error':
-            for i in range( 1, len( lines ) ):
-                line = lines[i]
-                col  = line.find( '|' )
-                if (col > 0) and (line[ :col ] in log_types):
-                    extra = '\n'.join( lines[ 1: i ] )
-                    del lines[ 0: i ]
-                    break
-            else:
-                return None
+        for i in range( 1, len( lines ) ):
+            line = lines[i]
+            col  = line.find( '|' )
+            if (col > 0) and (line[ :col ] in log_types):
+                extra = '\n'.join( lines[ 1: i ] )
+                del lines[ 0: i ]
+                break
         else:
-            del lines[0]
+            return None
             
         return LogRecord( type  = type, date = date, time = time, info = info,
                           extra = extra )

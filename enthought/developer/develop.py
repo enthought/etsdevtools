@@ -84,6 +84,9 @@ from enthought.developer.tools.listener \
 from enthought.developer.tools.logger \
     import Logger
     
+from enthought.developer.tools.log_file \
+    import LogFile
+    
 from enthought.developer.tools.object_source \
     import ObjectSource
     
@@ -140,6 +143,7 @@ StdTools = {
     'Image Theme Editor':   ImageThemeEditor,
     'Listener':             Listener,
     'Logger':               Logger,
+    'Log File':             LogFile,
     'Object Source':        ObjectSource,
     'Object Viewer':        ObjectViewer,
     'Profile Viewer':       ProfileViewer,

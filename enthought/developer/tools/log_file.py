@@ -30,16 +30,13 @@ from enthought.traits.api \
            Delegate, Button
 
 from enthought.traits.ui.api \
-    import View, HGroup, Item, TableEditor, CodeEditor
+    import View, HGroup, Item, TableEditor, CodeEditor, FileEditor, spring
 
 from enthought.traits.ui.table_column \
     import ObjectColumn
     
 from enthought.traits.ui.table_filter \
     import TableFilter
-    
-from enthought.traits.ui.wx.history_editor \
-    import HistoryEditor
     
 from enthought.pyface.dock.features.api \
     import DropFile
@@ -194,7 +191,7 @@ class LogFile ( HasPrivateTraits ):
     logging_level = Delegate( 'log_filter', modify = True )
     
     # Maximum number of log messages displayed:
-    max_records = Range( 1, 10000, 200, save_state = True )
+    max_records = Range( 1, 10000, 10000, save_state = True )
     
     # The log record filter:
     log_filter = Instance( LogFilter, (), save_state = True )
@@ -216,21 +213,23 @@ class LogFile ( HasPrivateTraits ):
     traits_view = View(
         HGroup(
             Item( 'file_name',
+                  id      = 'file_name',
                   springy = True,
-                  editor  = HistoryEditor()
+                  editor  = FileEditor( entries = 10 )
             ),
             '_',
             Item( 'logging_level' ),
-            '_',
-            Item( 'max_records' ),
-            '_',
-            Item( 'clear', show_label = False )
         ),
         '_',
         Item( 'log_records',
               id         = 'log_records',
               show_label = False,
               editor     = log_file_table_editor
+        ),
+        '_',
+        HGroup(
+            spring,
+            Item( 'clear', show_label = False )
         ),
         title     = 'Log File',
         id        = 'enthought.developer.tools.log_file',

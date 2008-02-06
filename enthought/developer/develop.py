@@ -40,122 +40,66 @@ from helper.themes \
 from enthought.pyface.dock.dock_sizer \
     import DockImages
     
-#-- The Tool Imports -----------------------------------------------------------
-
-from enthought.developer.tools.app_monitor \
-    import AppMonitor
-    
-from enthought.developer.tools.class_browser \
-    import ClassBrowser
-    
-from enthought.developer.tools.favorites_browser \
-    import FavoritesBrowser
-    
-from enthought.developer.tools.fbi_viewer \
-    import FBIViewer
-    
-from enthought.developer.tools.file_browser \
-    import FileBrowser
-    
-#from enthought.developer.tools.file_monitor \
-#    import FileMonitor
-    
-from enthought.developer.tools.file_sieve \
-    import FileSieve
-    
-from enthought.developer.tools.file_space \
-    import FileSpace
-    
-from enthought.developer.tools.heap_browser \
-    import HB_HeapBrowser
-    
-from enthought.developer.tools.image_browser \
-    import ImageBrowser
-    
-from enthought.developer.tools.image_library_viewer \
-    import ImageLibraryViewer
-    
-from enthought.developer.tools.image_theme_editor \
-    import ImageThemeEditor
-    
-from enthought.developer.tools.listener \
-    import Listener
-    
-from enthought.developer.tools.logger \
-    import Logger
-    
-from enthought.developer.tools.log_file \
-    import LogFile
-    
-from enthought.developer.tools.object_source \
-    import ObjectSource
-    
-from enthought.developer.tools.object_viewer \
-    import ObjectViewer
-    
-from enthought.developer.tools.profile_viewer \
-    import ProfileViewer
-    
-from enthought.developer.tools.profiler \
-    import Profiler
-    
-from enthought.developer.tools.syntax_checker \
-    import SyntaxChecker
-    
-from enthought.developer.tools.traceback_viewer \
-    import TracebackViewer
-    
-from enthought.developer.tools.traits_ui_db \
-    import TraitsUIDB
-    
-from enthought.developer.tools.ui_debugger \
-    import UIDebugger
-    
-from enthought.developer.tools.universal_inspector \
-    import UniversalInspector
-    
-from enthought.developer.tools.view_tester \
-    import ViewTester
-    
-from enthought.developer.tools.wiretap \
-    import Wiretap
-    
-#from enthought.template.test.template_view \
-#    import TemplateView
-    
 #-------------------------------------------------------------------------------
 #  Constants:
 #-------------------------------------------------------------------------------
 
 # The standard tools:
 StdTools = {
-    'Application Monitor':  AppMonitor,
-    'Class Browser':        ClassBrowser,
-    'Favorites Browser':    FavoritesBrowser,
-    'FBI Viewer':           FBIViewer,
-    'File Browser':         FileBrowser,
-#   'File Monitor':         FileMonitor,
-    'File Sieve':           FileSieve,
-    'File Space':           FileSpace,
-    'Heap Browser':         HB_HeapBrowser,
-    'Image Browser':        ImageBrowser,
-    'Image Library Viewer': ImageLibraryViewer,
-    'Image Theme Editor':   ImageThemeEditor,
-    'Listener':             Listener,
-    'Logger':               Logger,
-    'Log File':             LogFile,
-    'Object Source':        ObjectSource,
-    'Object Viewer':        ObjectViewer,
-    'Profile Viewer':       ProfileViewer,
-    'Profiler':             Profiler,
-    'Syntax Checker':       SyntaxChecker,
-    'Traceback Viewer':     TracebackViewer,
-    'Traits UI DB':         TraitsUIDB,
-    'UI Debugger':          UIDebugger,
-    'Universal Inspector':  UniversalInspector,
-    'View Tester':          ViewTester,
-    'Wiretap':              Wiretap,
-#    'Template View':       TemplateView
+    'Application Monitor': 
+        'enthought.developer.tools.app_monitor.AppMonitor',
+    'Class Browser':   
+        'enthought.developer.tools.class_browser.ClassBrowser',
+    'Favorites Browser':  
+        'enthought.developer.tools.favorites_browser.FavoritesBrowser',
+    'FBI Viewer':        
+        'enthought.developer.tools.fbi_viewer.FBIViewer',
+    'File Browser':      
+        'enthought.developer.tools.file_browser.FileBrowser',
+#   'File Monitor':       
+#       'enthought.developer.tools.file_monitor.FileMonitor',
+    'File Sieve':          
+        'enthought.developer.tools.file_sieve.FileSieve',
+    'File Space':          
+        'enthought.developer.tools.file_space.FileSpace',
+    'Heap Browser':        
+        'enthought.developer.tools.heap_browser.HB_HeapBrowser',
+    'Image Browser':       
+        'enthought.developer.tools.image_browser.ImageBrowser',
+    'Image Library Viewer':
+        'enthought.developer.tools.image_library_viewer.ImageLibraryViewer',
+    'Image Theme Editor':  
+        'enthought.developer.tools.image_theme_editor.ImageThemeEditor',
+    'Listener':            
+        'enthought.developer.tools.listener.Listener',
+    'Logger':              
+        'enthought.developer.tools.logger.Logger',
+    'Log File':            
+        'enthought.developer.tools.log_file.LogFile',
+    'Object Source':       
+        'enthought.developer.tools.object_source.ObjectSource',
+    'Object Viewer':       
+        'enthought.developer.tools.object_viewer.ObjectViewer',
+    'Profile Viewer':     
+        'enthought.developer.tools.profile_viewer.ProfileViewer',
+    'Profiler':           
+        'enthought.developer.tools.profiler.Profiler',
+    'Syntax Checker':     
+        'enthought.developer.tools.syntax_checker.SyntaxChecker',
+    'Traceback Viewer':   
+        'enthought.developer.tools.traceback_viewer.TracebackViewer',
+    'Traits UI DB':       
+        'enthought.developer.tools.traits_ui_db.TraitsUIDB',
+    'UI Debugger':        
+        'enthought.developer.tools.ui_debugger.UIDebugger',
+    'Universal Inspector':
+        'enthought.developer.tools.universal_inspector.UniversalInspector',
+    'View Tester':        
+        'enthought.developer.tools.view_tester.ViewTester',
+    'Wiretap':          
+        'enthought.developer.tools.wiretap.Wiretap',
+    'Template View':    
+        'enthought.template.test.template_view.TemplateView'
 }
 
 #-------------------------------------------------------------------------------
@@ -179,6 +123,20 @@ pages_key_bindings = KeyBindings(
     KeyBinding( binding1 = 'Alt-Shift-f', method_name = '_enable_fbi',
                 description = 'Enables the FBI debugger.' )
 )
+
+#-------------------------------------------------------------------------------
+#  Creates an instance of the specified tool:
+#-------------------------------------------------------------------------------
+    
+def make_tool ( tool_name ):
+    """ Creates an instance of the specified tool.
+    """
+    module_name, class_name = StdTools[ tool_name ].rsplit( '.', 1 )
+    module = __import__( module_name )
+    for component in module_name.split( '.' )[1:]:
+        module = getattr( module, component )
+        
+    return getattr( module, class_name )()
     
 #-------------------------------------------------------------------------------
 #  'ToolsPage' class:
@@ -494,7 +452,7 @@ class Tools ( HasPrivateTraits ):
     def _add_selected_tool ( self ):
         """ Adds the currently selected tool as a new tool to the current page.
         """
-        self.selected_page.tools.append( StdTools[ self.selected_tool ]() )
+        self.selected_page.tools.append( make_tool( self.selected_tool ) )
         
 #-------------------------------------------------------------------------------
 #  Factory for creating a standard, default Tools object:
@@ -506,8 +464,9 @@ def StandardTools ( ):
     # Make sure that all of the features have been added:
     add_standard_features()
     
-    # Return a Tools object with one starter page containing a couple of tools:
-    page  = ToolsPage( name  = 'Page', tools = [ UniversalInspector() ] )
+    # Return a Tools object with one starter page containing a sample tool:
+    page = ToolsPage( name  = 'Page', 
+                      tools = [ make_tool( 'Universal Inspector' ) ] )
     return Tools( pages = [ page ], selected_page = page )    
         
 #-------------------------------------------------------------------------------
@@ -519,7 +478,8 @@ def develop ( obj_or_class, args = (), traits = {} ):
     """
     add_standard_features()
     page  = ToolsPage( name  = 'Develop', 
-                       tools = [ UniversalInspector(), FBIViewer() ] )
+                       tools = [ make_tool( 'Universal Inspector' ), 
+                                 make_tool( 'FBI Viewer' ) ] )
     Tools( test_object   = obj_or_class,
            test_args     = args,
            test_traits   = traits,

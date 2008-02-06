@@ -33,7 +33,7 @@ class TTitle ( Item ):
     show_label = Constant( False )
     style      = Constant( 'readonly' )
     editor     = ThemedTextEditor()
-    item_theme = Constant( '@GB5' )
+    item_theme = Constant( Theme( '@GB5', content = ( 8, 0 ) ) )
 
 # A standard themed button:    
 class TButton ( Item ):
@@ -50,7 +50,7 @@ class TText ( Item ):
     editor = ThemedTextEditor( theme = Theme( '@G04', content = 0 ) )
     
 # A theme for displaying a group of items with a group title:    
-GroupTitle = Theme( 'gbox', content = ( -6, -1 ) )
+GroupTitle = Theme( 'gbox', content = ( 3, -1 ) )
     
 # A label theme:
 LabelTheme = Theme( '@images:GL5', label     = ( -3, 10 ), 

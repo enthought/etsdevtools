@@ -1207,6 +1207,7 @@ class FBI ( Handler ):
         self.local_variables = []
         self.frame_locals    = {}
         if is_modal:
+            self.ui.save_prefs()
             self.ui.control.EndModal( True )
 
     #---------------------------------------------------------------------------
@@ -1467,10 +1468,6 @@ def use_fbi ( stop = False, restore = True, modal = True ):
     
     from enthought.developer.api import file_watch
     from ex_fbi                  import SavedBreakPoints
-    
-    # fixme: This is a hack caused by the lazy loading problem in DockWindows...
-    from enthought.pyface.dock.dock_sizer import DockImages
-    DockImages._lazy_init()        
     
     skip_bp  = (not stop)
     is_modal = modal

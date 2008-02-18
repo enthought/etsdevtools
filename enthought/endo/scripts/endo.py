@@ -240,15 +240,7 @@ def add_module_names(filename_list):
     return result
 
 
-def main():
-    quit_now = False
-
-    option_parser = OptionParser(usage = """
-%prog [options] [-r [package_name=path/to/package]]*
-                  [[module_prefix=]path/to/module.py]*""")
-    #option_parser.add_option("-r", "--recursive", dest="recursive",
-    #                         help="walk a directory recursively",
-    #                         action="store_true", default=False)
+def add_endo_options(option_parser):
     group = OptionGroup(option_parser, "Input options",
                         "Specify what you want to document")
     group.add_option("-r", "--package", dest="package_list", action="append",
@@ -320,6 +312,17 @@ def main():
                              metavar="FILE", default=None,
                              help="dump parser state to file and quit")
 
+
+def main():
+    quit_now = False
+    option_parser = OptionParser(usage = """
+%prog [options] [-r [package_name=path/to/package]]*
+                  [[module_prefix=]path/to/module.py]*""")
+    #option_parser.add_option("-r", "--recursive", dest="recursive",
+    #                         help="walk a directory recursively",
+    #                         action="store_true", default=False)
+    
+    add_endo_options(option_parser)
     (options, args) = option_parser.parse_args()
 
     read_header_footer_files(options)

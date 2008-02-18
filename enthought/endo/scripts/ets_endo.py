@@ -50,7 +50,7 @@ def main():
         version = '0.1',
         description = ('Runs endo on all SVN checkouts within a directory.'
             'If no path is explicitly specified, then the current directory '
-            'is treated as the root of the checkouts to be updated.'),
+            'is treated as the root of the checkouts to be documented.'),
         usage = '%prog [endo_options] [path]'
         )
     add_endo_options(parser)

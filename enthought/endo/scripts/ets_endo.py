@@ -65,7 +65,7 @@ def main():
     for checkout in checkouts.checkouts:
         pkgs = find_packages(checkout)
         for pkg in pkgs:
-            pdir = os.path.join(checkout, pkg.replace('.', '/'))
+            pdir = os.path.normpath(os.path.join(checkout, pkg.replace('.', '/')))
             ropts.append('-r%s=%s' % (pkg, pdir))
 
     # FIXME: Hack that puts the traits packages in the desired order

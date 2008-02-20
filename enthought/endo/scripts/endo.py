@@ -379,19 +379,21 @@ def main():
 
     backend = OutputHTML(options)
     exceptions = [ ]
+    scanned = {}
     for package, package_root, filenames in filename_list:
         for mod_name, filename in filenames:
             try:
-                if options.verbose:
-                    sys.stdout.write("Scanning %s ... " % filename)
-                    sys.stdout.flush()
-                module_obj = scan_file(options, filename, mod_name)
-
-                if module_obj is not None:
-                    backend.add_module(module_obj)
-
-                if options.verbose:
-                    sys.stdout.write("ok.\n")
+                if str(mod_name) not in scanned: # Avoid duplicates
+                    if options.verbose:
+                        sys.stdout.write("Scanning ('%s') %s ... " % (mod_name,filename))
+                        sys.stdout.flush()
+                    module_obj = scan_file(options, filename, mod_name)
+                    scanned[mod_name] = filename
+                    if module_obj is not None:
+                        print "Adding module to backend: %s" % mod_name
+                        backend.add_module(module_obj)
+                    if options.verbose:
+                        sys.stdout.write("ok.\n")
             except KeyboardInterrupt:
                 sys.stdout.write("interrupted!  Exiting...\n")
                 quit_now = True

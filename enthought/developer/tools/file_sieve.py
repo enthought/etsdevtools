@@ -200,7 +200,6 @@ class Size ( TraitType ):
     
     def post_setattr ( self, object, name, value ):
         object.__dict__[ name + '_' ] = value
-        
 
     def as_ctrait ( self ):
         """ Returns a CTrait corresponding to the trait defined by this class.
@@ -586,9 +585,6 @@ class FileSieveHandler ( Handler ):
         if fs.worker is not None:
             fs.worker.abort = True
             fs.worker       = None
-        del fs.files[:]
-        del fs.selected[:]
-        del fs.filtered_indices[:]
         
 #-------------------------------------------------------------------------------
 #  'FileSieve' class:  
@@ -771,8 +767,6 @@ if __name__ == '__main__':
     sieve = FileSieve(
         #path = r'C:\svnroot\enthought.trunk\enthought.sweet_pickle_2.1' )
         path = r'C:\svnroot\enthought.trunk\enthought.pyface_3.0' )
-        
-    #from enthought.developer.helper.fbi import use_fbi
-    #use_fbi()
     
     sieve.configure_traits()
+    

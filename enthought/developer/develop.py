@@ -25,9 +25,6 @@ from enthought.traits.ui.api \
 from enthought.traits.ui.key_bindings \
     import KeyBindings, KeyBinding
     
-from enthought.traits.ui.dock_window_theme \
-    import white_dock_window_theme, white_bottom_dock_window_theme
-    
 from enthought.pyface.dock.features.api \
     import add_standard_features
     
@@ -164,7 +161,6 @@ class ToolsPage ( HasPrivateTraits ):
                   editor = ListEditor( 
                                use_notebook = True,
                                deletable    = True,
-                               dock_theme   = white_dock_window_theme,
                                dock_style   = 'tab',
                                export       = 'DockWindowShell',
                                page_name    = '.name',
@@ -329,8 +325,7 @@ class Tools ( HasPrivateTraits ):
                                    export       = 'DockWindowShell',
                                    page_name    = '.name',
                                    selected     = 'selected_page' ) ),
-                show_labels = False,
-                dock_theme  = white_bottom_dock_window_theme
+                show_labels = False
             ),
             group_theme = '@XG2'
         ),

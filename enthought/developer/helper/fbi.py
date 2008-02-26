@@ -34,7 +34,7 @@ from os.path \
 from enthought.traits.api \
     import HasTraits, HasPrivateTraits, Str, Int, Instance, List, Dict, Any, \
            Code, Constant, Property, PythonValue, Button, Event, Bool, \
-           TraitError
+           TraitError, push_exception_handler
 
 from enthought.traits.ui.api \
     import View, VSplit, VGroup, HSplit, HGroup, HFlow, Tabbed, Item, \
@@ -1345,6 +1345,13 @@ def enable_fbi ( enabled = True, gui = True ):
     has_gui     = gui
     if enabled:
         sys.excepthook, saved_excepthook = fbi_exception, sys.excepthook
+        try:
+            push_exception_handler( handler = lambda a, b, c, d: None, 
+                                    reraise_exceptions = True, 
+                                    main   = True, 
+                                    locked = True )
+        except:
+            print 'Could not set Traits notification exception handler'
 
 def fbi_exception ( type, value, traceback, msg = '', gui = None, offset = 0,
                     debug_frame = None ):

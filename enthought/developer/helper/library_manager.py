@@ -24,7 +24,7 @@ from enthought.traits.api \
            Property, on_trait_change, cached_property
     
 from enthought.traits.ui.api \
-    import View, HGroup, Item, Theme, spring
+    import View, HGroup, Item, Theme, TabularEditor, spring
     
 from enthought.traits.ui.ui_traits \
     import Image
@@ -35,8 +35,8 @@ from enthought.traits.ui.image \
 from enthought.traits.ui.wx.themed_vertical_notebook_editor \
     import ThemedVerticalNotebookEditor
     
-from enthought.traits.ui.wx.extra.tabular_editor \
-    import TabularEditor, TabularAdapter
+from enthought.traits.ui.tabular_adapter \
+    import TabularAdapter
     
 #-------------------------------------------------------------------------------
 #  Constants:

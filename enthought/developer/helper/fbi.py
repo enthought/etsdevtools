@@ -39,13 +39,13 @@ from enthought.traits.api \
 from enthought.traits.ui.api \
     import View, VSplit, VGroup, HSplit, HGroup, HFlow, Tabbed, Item, \
            TableEditor, ValueEditor, CodeEditor, InstanceEditor, TextEditor, \
-           EnumEditor, ShellEditor, Handler, UI
+           EnumEditor, ShellEditor, TabularEditor, Handler, UI
 
 from enthought.traits.ui.value_tree \
     import ValueTree
     
-from enthought.traits.ui.wx.extra.tabular_editor \
-    import TabularEditor, TabularAdapter
+from enthought.traits.ui.tabular_adapter \
+    import TabularAdapter
 
 from enthought.traits.ui.menu \
     import NoButtons

@@ -23,10 +23,10 @@ from enthought.traits.api \
     import HasPrivateTraits, List, Str, Any, Instance, Bool, Button
 
 from enthought.traits.ui.api \
-    import View, VGroup, HGroup, Item, ValueEditor, spring
+    import View, VGroup, HGroup, Item, ValueEditor, TabularEditor, spring
 
-from enthought.traits.ui.wx.extra.tabular_editor \
-    import TabularEditor, TabularAdapter
+from enthought.traits.ui.tabular_adapter \
+    import TabularAdapter
     
 from enthought.traits.trait_base \
     import traits_home                             

@@ -20,13 +20,10 @@
 #-------------------------------------------------------------------------------
     
 from enthought.traits.ui.api \
-    import View, HGroup, VGroup, HSplit, Item, Label, Theme
+    import View, HGroup, VGroup, HSplit, Item, Label, Theme, ListStrEditor
     
 from enthought.developer.helper.image_library_editor \
     import ImageLibraryEditor, ImageLibraryItem
-    
-from enthought.traits.ui.wx.extra.list_str_editor \
-    import ListStrEditor
  
 from enthought.developer.helper.themes \
     import InsetTheme

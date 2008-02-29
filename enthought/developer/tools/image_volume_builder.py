@@ -34,7 +34,7 @@ from enthought.traits.api \
     
 from enthought.traits.ui.api \
     import View, HGroup, VGroup, Tabbed, Item, Label, Theme, FileEditor, \
-           TableEditor
+           TableEditor, ListStrEditor
     
 from enthought.traits.ui.table_column \
     import ObjectColumn
@@ -45,9 +45,6 @@ from enthought.traits.ui.image \
     
 from enthought.traits.ui.wx.history_editor \
     import HistoryEditor
-    
-from enthought.traits.ui.wx.extra.list_str_editor \
-    import ListStrEditor
      
 from enthought.developer.helper.themes \
     import LabelTheme, InsetTheme

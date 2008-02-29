@@ -21,7 +21,8 @@ from enthought.traits.api \
     import HasTraits, Str, Int, List, Enum, Bool, Any, Property
     
 from enthought.traits.ui.api \
-    import View, HGroup, VGroup, Item, Label, Theme, NullEditor, spring   
+    import View, HGroup, VGroup, Item, Label, Theme, NullEditor, \
+           ListStrEditor, spring   
     
 from enthought.traits.ui.basic_editor_factory \
     import BasicEditorFactory
@@ -31,9 +32,6 @@ from enthought.traits.ui.wx.ui_editor \
     
 from enthought.traits.ui.wx.extra.list_canvas_editor \
     import ListCanvasEditor, ListCanvasAdapter
-    
-from enthought.traits.ui.wx.extra.list_str_editor \
-    import ListStrEditor
     
 from enthought.developer.helper.themes \
     import LabelTheme

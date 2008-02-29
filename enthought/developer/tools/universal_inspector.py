@@ -28,10 +28,7 @@ from enthought.traits.api \
 
 from enthought.traits.ui.api \
     import View, VGroup, HGroup, Item, ListEditor, DNDEditor, ValueEditor, \
-           CodeEditor
-
-from enthought.traits.ui.traits \
-    import Title
+           CodeEditor, Title
 
 from enthought.developer.helper.themes \
     import TTitle

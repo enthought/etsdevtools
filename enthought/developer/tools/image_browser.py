@@ -21,7 +21,7 @@ from enthought.traits.api \
     import HasPrivateTraits, Property, Str, List
     
 from enthought.traits.ui.api \
-    import View, Item
+    import View, Item, ImageEditor
     
 from enthought.traits.ui.ui_traits \
     import Image, ATheme
@@ -29,10 +29,7 @@ from enthought.traits.ui.ui_traits \
 from enthought.traits.ui.theme \
     import Theme
     
-from enthought.traits.ui.wx.extra.image_editor \
-    import ImageEditor
-    
-from enthought.traits.ui.wx.extra.list_canvas_editor \
+from enthought.developer.editors.list_canvas_editor \
     import ListCanvasEditor, ListCanvasAdapter
     
 #-------------------------------------------------------------------------------

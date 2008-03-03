@@ -77,6 +77,9 @@ from enthought.developer.tools.universal_inspector \
 from enthought.developer.tools.listener \
     import Listener
 
+#from enthought.developer.tools.profiler \
+#    import Profiler
+
 from enthought.developer.helper.file_position \
     import FilePosition
 
@@ -130,6 +133,7 @@ TheFavoritesBrowser = FavoritesBrowser(
 TheInspector = UniversalInspector(
     id = 'enthought.developer.helper.fbi.universal_inspector.state'
 )
+#TheProfiler = Profiler()
 
 #-------------------------------------------------------------------------------
 #  Returns the canonic form of a specified file name:
@@ -871,6 +875,9 @@ class FBI ( Handler ):
     # A listener:
     listener = Constant( TheListener )
 
+    # A profiler:
+    #profiler = Constant( TheProfiler )
+
     # A wiretap:
     wiretap = Property
 
@@ -1014,6 +1021,11 @@ class FBI ( Handler ):
                              label      = 'Listener',
                              export     = 'DockShellWindow'
                        ),
+                       #Item( 'profiler@',
+                       #      show_label = False,
+                       #      label      = 'Profiler',
+                       #      export     = 'DockShellWindow'
+                       #),
                        Item( 'fbi_viewer@',
                              show_label = False,
                              label      = 'Source View',

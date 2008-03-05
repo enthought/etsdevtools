@@ -143,8 +143,11 @@ class TraitsUIDB ( HasPrivateTraits ):
                 )
             )
         ),
-        title = 'Traits UI DB',
-        id    = 'enthought.developer.tools.traits_ui_db'
+        title     = 'Traits UI DB',
+        id        = 'enthought.developer.tools.traits_ui_db',
+        width     = 0.40,
+        height    = 0.50,
+        resizable = True
     )
                  
     #---------------------------------------------------------------------------

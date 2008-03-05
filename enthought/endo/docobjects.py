@@ -20,7 +20,7 @@ import compiler.ast as ast
 from enthought.endo.namespace import Namespace
 from sets import Set
 
-# need types.FunctionType
+# need types.FunctionType and types.TypeType
 import types
 
 # import warnings as a different name for warnings that may occur
@@ -30,49 +30,62 @@ import warnings as local_warnings
 warnings = None
 
 # traits primitives
-TRAITS_PRIMITIVES = Set([ 'enthought.traits.api' + x for x in
+TRAITS_PRIMITIVES = Set([ 'enthought.traits.api.' + x for x in
                           [ 'Trait' ] ])
+_trait_vars = {}
 # traits base classes -- constructed later
 HAS_TRAITS_BASES = Set()
 # base type for all traits
 CTRAIT_TYPE = None
 
+def _is_trait(val):
+    return (  # Find traits like Event = TraitFactory(Event)
+              isinstance(val, enthought.traits.api.TraitFactory)
+              # Find traits like ReadOnly = Ctrait(6)
+              or isinstance(val, enthought.traits.api.CTrait)
+              # Find both 'class BaseRange(TraitType)' and 'class TraitRange(TraitHandler)'
+              or ( type(val) == types.TypeType and
+                   issubclass(val, enthought.traits.api.BaseTraitHandler))
+              # Find traits like DictStrAny
+              or isinstance(val, enthought.traits.api.BaseTraitHandler) 
+            )
+
 # attempt to build a list of traits primitives from enthought.traits.api package
 try:
     import enthought.traits.api
-    import enthought.traits.traits
     _traits_vars= vars(enthought.traits.api)
-    _temp = [ sym
-              for sym in _traits_vars.keys()
-              if isinstance(_traits_vars[sym], enthought.traits.traits.TraitFactory)
-              or isinstance(_traits_vars[sym], enthought.traits.traits.CTrait)
-              or ord('A') <= ord(sym[0]) <= ord('Z') and
-              type(_traits_vars[sym]) == types.FunctionType ]
-    TRAITS_PRIMITIVES.update([ 'enthought.traits.' + sym for sym in _temp ] + 
-                             [ 'enthought.traits.traits.' + sym for sym in _temp ])
-    _temp = [ sym for sym in _traits_vars.keys()
-              if isinstance(_traits_vars[sym], enthought.traits.api.MetaHasTraits) and
-                 issubclass(_traits_vars[sym], enthought.traits.api.HasTraits) ]
-    HAS_TRAITS_BASES.update([ 'enthought.traits.' + sym for sym in _temp ] +
-                            [ 'enthought.traits.has_traits.' + sym for sym in _temp ])
-
     CTRAIT_TYPE = enthought.traits.api.CTrait
-
 except ImportError:
-    local_warnings.warn("enthought.traits not found\n")
+    local_warnings.warn("enthought.traits.api not found\n")
 
-# attempt to add traits.ui primitives to list
+            
+TRAITS_PRIMITIVES.update([ 'enthought.traits.api.' + sym 
+    for sym in _traits_vars.keys()
+    if _is_trait(_traits_vars[sym]) or 
+    # Find traits like Constant or Delegate
+    ( ord('A') <= ord(sym[0]) <= ord('Z') and
+    type(_traits_vars[sym]) == types.FunctionType ) ])
+
+_temp = [ sym for sym in _traits_vars.keys()
+          if isinstance(_traits_vars[sym], enthought.traits.api.MetaHasTraits) and
+             issubclass(_traits_vars[sym], enthought.traits.api.HasTraits) ]
+HAS_TRAITS_BASES.update([ 'enthought.traits.api.' + sym for sym in _temp ] +
+                        [ 'enthought.traits.has_traits.' + sym for sym in _temp ])
+
+# attempt to build add traits.ui primitives to the list
 try:
     import enthought.traits.ui.api
     _traits_vars = vars(enthought.traits.ui.api)
-    TRAITS_PRIMITIVES.update([ 'enthought.traits.ui.api.' + sym
-        for sym in _traits_vars.keys()
-        if isinstance(_traits_vars[sym], enthought.traits.traits.TraitFactory)
-        or isinstance(_traits_vars[sym], enthought.traits.traits.CTrait)
-        or ord('A') <= ord(sym[0]) <= ord('Z') and
-        type(_traits_vars[sym]) == types.FunctionType ])
 except ImportError:
     local_warnings.warn("enthought.traits.ui.api not found\n")
+    
+TRAITS_PRIMITIVES.update([ 'enthought.traits.ui.api.' + sym 
+    for sym in _traits_vars.keys() if _is_trait(_traits_vars[sym]) ])
+
+HAS_TRAITS_BASES.update([ 'enthought.traits.ui.api.' + sym 
+            for sym in _traits_vars.keys()
+            if isinstance(_traits_vars[sym], enthought.traits.api.MetaHasTraits) 
+            and issubclass(_traits_vars[sym], enthought.traits.api.HasTraits) ] )
 
 def _indent_multiline_string(s, indent):
     i = ' ' * indent
@@ -748,7 +761,7 @@ class Class(DocObject):
                         if check_has_traits_import(base_obj.abs_name):
                             return True
                         else:
-                            return False
+                            continue
                     except ImportError:
                         warnings.warn("%s could not be resolved -- referenced in %s:%d\n" % (base_obj.abs_name, self.file, self.lineno))
 

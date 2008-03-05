@@ -73,7 +73,7 @@ def _balanced_parens(txt):
             stack.append(ch)
         elif ch in match.values():
             if len(stack) == 0:
-                raise ValueError, "unmatched delimeter '%s'" % ch
+                raise ValueError, "unmatched delimiter '%s'" % ch
             elif ch == match[stack[-1]]:
                 stack = stack[:-1]
             else:
@@ -331,7 +331,7 @@ def main():
         option_parser.error("Option --rst specified, but docutils not found in default import path.\n")
 
     if len(args) < 1 and len(options.package_list) < 1:
-        option_parser.error("Please specify at least one module or one package (with -p)")
+        option_parser.error("Please specify at least one module or one package (with -r)")
 
     filename_list = [ ]
 
@@ -385,12 +385,11 @@ def main():
             try:
                 if str(mod_name) not in scanned: # Avoid duplicates
                     if options.verbose:
-                        sys.stdout.write("Scanning ('%s') %s ... " % (mod_name,filename))
+                        sys.stdout.write("Scanning %s ... " % filename)
                         sys.stdout.flush()
                     module_obj = scan_file(options, filename, mod_name)
                     scanned[mod_name] = filename
                     if module_obj is not None:
-                        print "Adding module to backend: %s" % mod_name
                         backend.add_module(module_obj)
                     if options.verbose:
                         sys.stdout.write("ok.\n")

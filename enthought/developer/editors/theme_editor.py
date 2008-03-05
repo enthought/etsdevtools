@@ -30,11 +30,11 @@ from enthought.traits.ui.basic_editor_factory \
 from enthought.traits.ui.wx.ui_editor \
     import UIEditor       
     
-from enthought.traits.ui.wx.extra.list_canvas_editor \
-    import ListCanvasEditor, ListCanvasAdapter
-    
 from enthought.developer.helper.themes \
     import LabelTheme
+    
+from list_canvas_editor \
+    import ListCanvasEditor, ListCanvasAdapter
     
 from margin_editor \
     import MarginEditor

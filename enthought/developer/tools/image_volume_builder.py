@@ -39,7 +39,7 @@ from enthought.traits.ui.api \
 from enthought.traits.ui.table_column \
     import ObjectColumn
     
-from enthought.traits.ui.image \
+from enthought.traits.ui.image.image \
     import ImageLibrary, ImageVolume, ImageVolumeInfo, ImageInfo, FastZipFile, \
            time_stamp_for
     

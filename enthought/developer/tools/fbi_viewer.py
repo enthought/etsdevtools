@@ -36,7 +36,7 @@ from enthought.developer.helper.fbi \
     import fbi_object
 
 from enthought.developer.helper.themes \
-    import TTitle, TText, TButton, GroupTitle
+    import TTitle, TButton
 
 from enthought.developer.helper.bdb \
     import BPType
@@ -231,7 +231,7 @@ class AnFBIViewer ( HasPrivateTraits ):
                       enabled_when = 'object.object is not None'
                 ),
                 Item(  'bp_type',   label = 'Type' ),
-                TText( 'condition', width = 200 ),
+                Item( 'condition', width = 200 ),
                 TButton( 'bp_set',
                          label        = 'Set',
                          enabled_when = "(bp_type != 'Trace') or "
@@ -241,8 +241,8 @@ class AnFBIViewer ( HasPrivateTraits ):
                          label        = 'Reset',
                          enabled_when = 'has_bp'
                 ),
-                label       = 'Breakpoint Modifiers',
-                group_theme = GroupTitle
+                show_border = True,
+                label       = 'Breakpoint Modifiers'
             ),
             Item( 'source',
                   editor = CodeEditor( selected_line = 'selected_line',

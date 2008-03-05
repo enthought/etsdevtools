@@ -244,14 +244,17 @@ class WXWindow ( TreeNodeObject ):
                     label = ''
         if label != '':
             label = ' (%s)' % label
+            
         return self.window.__class__.__name__ + label
         
     def _get_size ( self ):
         dx, dy = self.window.GetSizeTuple()
+        
         return str( ( dx, dy ) )
         
     def _get_position ( self ):
         x, y = self.window.GetPositionTuple()
+        
         return str( ( x, y ) )
         
     def _get_sizer ( self ):
@@ -259,14 +262,17 @@ class WXWindow ( TreeNodeObject ):
         if sizer is None:
             return ''
         dx, dy = sizer.CalcMin()
+        
         return '%s( %d, %d )' % ( sizer.__class__.__name__, dx, dy )
         
     def _get_min_size ( self ):
         dx, dy = self.window.GetMinSize()
+        
         return str( ( dx, dy ) )
         
     def _get_best_size ( self ):
-        dx, dy = self.window.GetBestFittingSize()
+        dx, dy = self.window.GetEffectiveMinSize()
+        
         return str( ( dx, dy ) )
                                   
     def _get_result ( self ):
@@ -293,6 +299,7 @@ class WXWindow ( TreeNodeObject ):
                 items.append( WXSizerItem( item = item ) )
         except:
             pass
+        
         return items
 
     #---------------------------------------------------------------------------

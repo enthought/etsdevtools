@@ -36,7 +36,7 @@ from enthought.developer.api \
     import Saveable, read_file, file_watch
      
 from enthought.developer.helper.themes \
-    import TTitle, TButton
+    import TTitle
     
 #-------------------------------------------------------------------------------
 #  'SyntaxChecker' class:
@@ -104,8 +104,9 @@ class SyntaxChecker ( Saveable ):
             TTitle( 'error' ),
             HGroup(
                 spring,
-                TButton( 'go_to', 
-                    enabled_when = '(error_line > 0) and (not auto_goto)' ),
+                Item( 'go_to', 
+                      show_label   = False,
+                      enabled_when = '(error_line > 0) and (not auto_goto)' ),
             ),
             show_labels = False
         ),

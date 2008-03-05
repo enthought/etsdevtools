@@ -29,7 +29,7 @@ from enthought.traits.ui.api \
 from enthought.traits.ui.ui_traits \
     import Image
     
-from enthought.traits.ui.image \
+from enthought.traits.ui.image.image \
     import ImageLibrary, ImageVolume, ImageInfo
     
 from enthought.traits.ui.wx.themed_vertical_notebook_editor \

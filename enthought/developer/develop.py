@@ -19,8 +19,8 @@ from enthought.traits.api \
            Property, Dict, Enum, Bool, cached_property
     
 from enthought.traits.ui.api \
-    import View, VGroup, HGroup, Item, EnumEditor, ListEditor, Theme, spring, \
-           UI, Handler, DNDEditor
+    import View, VGroup, HGroup, Item, EnumEditor, ListEditor, spring, UI, \
+           Handler, DNDEditor
            
 from enthought.traits.ui.key_bindings \
     import KeyBindings, KeyBinding
@@ -32,10 +32,7 @@ from enthought.pyface.image_resource\
     import ImageResource
     
 from helper.themes \
-    import TButton, TText
-    
-from enthought.pyface.dock.dock_sizer \
-    import DockImages
+    import TButton
     
 #-------------------------------------------------------------------------------
 #  Constants:
@@ -303,7 +300,7 @@ class Tools ( HasPrivateTraits ):
                       label        = 'Add Tool',
                       enabled_when = 'selected_page is not None' ),
                 '_',
-                TText( 'name' ),
+                Item( 'name' ),
                 TButton( 'new_page',
                       label        = 'New Page',
                       enabled_when = "name.strip() != ''" ),
@@ -313,8 +310,8 @@ class Tools ( HasPrivateTraits ):
                 TButton( 'delete_page',
                       label        = 'Delete Page',
                       enabled_when = 'selected_page is not None' ),
-                group_theme = Theme( '@GFB', content = ( -7, -6 ) )
             ),
+            '_',
             VGroup(
                 Item( 'pages',
                       style  = 'custom',
@@ -326,8 +323,7 @@ class Tools ( HasPrivateTraits ):
                                    page_name    = '.name',
                                    selected     = 'selected_page' ) ),
                 show_labels = False
-            ),
-            group_theme = '@XG2'
+            )
         ),
         title        = 'Enthought Developer Tools: Traits UI Edition',
         id           = 'enthought.developer.tools.Tools',

@@ -24,7 +24,7 @@ from enthought.traits.api \
 from enthought.traits.ui.api \
     import View, HSplit, Item, ListEditor
     
-from enthought.traits.ui.image \
+from enthought.traits.ui.image.image \
     import ImageLibrary, ImageInfo
     
 from enthought.developer.helper.library_manager \

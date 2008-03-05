@@ -33,7 +33,7 @@ from enthought.traits.ui.table_column \
 from enthought.traits.ui.table_filter \
     import TableFilter
     
-from enthought.traits.ui.image \
+from enthought.traits.ui.image.image \
     import ImageLibrary, ImageInfo
            
 from enthought.traits.ui.key_bindings \

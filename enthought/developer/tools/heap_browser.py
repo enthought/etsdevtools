@@ -56,9 +56,6 @@ MAX_DETAILS = 16
 # The list of types we handle specially:
 SequenceTypes = ( list, tuple )
 
-# The HGroup theme used by the browser:
-HB_Theme = Theme( 'tannish', content = -3 )
-
 # Classes which should not show up in any of the statistics, since they are 
 # part of this tool itself:
 ignored_classes = set( [
@@ -570,7 +567,6 @@ class HB_Referrers ( HasPrivateTraits ):
                                 'referred to object',
                       enabled_when = 'selected is not None' ),
                 show_labels = False,
-                group_theme = HB_Theme
             )
         ),
         resizable    = True,
@@ -834,7 +830,6 @@ class HB_Baseline ( HasPrivateTraits ):
                       label = '# Remaining',
                       style = 'readonly',
                       width = -50 ),
-                group_theme = HB_Theme
             ),
             Item( 'filtered_items',
                   show_label = False,
@@ -1060,7 +1055,6 @@ class HB_HeapBrowser ( HasPrivateTraits ):
                           format_func = commatize,
                           width       = -50
                     ),
-                    group_theme = HB_Theme
                 ), 
                 Item( 'current_counts', 
                       id     = 'current_counts',
@@ -1089,7 +1083,6 @@ class HB_HeapBrowser ( HasPrivateTraits ):
                                     'classes',
                           enabled_when = 'has_counts' ),
                     show_labels = False,
-                    group_theme = HB_Theme
                 ),
                 label       = 'Heap',
                 show_labels = False,

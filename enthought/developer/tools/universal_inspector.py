@@ -24,11 +24,12 @@ from cStringIO \
     import StringIO
 
 from enthought.traits.api \
-    import HasPrivateTraits, Any, Int, Str, Code, List, Range, Property, Bool
+    import HasPrivateTraits, Any, Int, Str, Code, List, Range, Property, Bool, \
+           Title
 
 from enthought.traits.ui.api \
     import View, VGroup, HGroup, Item, ListEditor, DNDEditor, ValueEditor, \
-           CodeEditor, Title
+           CodeEditor
 
 from enthought.developer.helper.themes \
     import TTitle

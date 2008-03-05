@@ -34,9 +34,6 @@ from enthought.traits.trait_base \
 from enthought.developer.api \
     import file_watch, HasPayload
     
-from enthought.developer.helper.themes \
-    import TButton
-    
 #-------------------------------------------------------------------------------
 #  Returns the name of the traits UI database:  
 #-------------------------------------------------------------------------------
@@ -140,9 +137,9 @@ class TraitsUIDB ( HasPrivateTraits ):
             ),
             HGroup( 
                 spring,
-                TButton( 'delete', 
-                         label        = 'Delete',
-                         enabled_when = 'selected is not None'
+                Item( 'delete', 
+                      show_label   = False,
+                      enabled_when = 'selected is not None'
                 )
             )
         ),
@@ -217,4 +214,8 @@ class TraitsUIDB ( HasPrivateTraits ):
 #-------------------------------------------------------------------------------
 
 view = TraitsUIDB()
+
+# Run the tool (if invoked from the command line):
+if __name__ == '__main__':
+    view.configure_traits()
 

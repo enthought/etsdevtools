@@ -1,6 +1,6 @@
 #-------------------------------------------------------------------------------
 #  
-#  Plugin for testing/developer view plugins within the Envisage framework. 
+#  Plugin for testing/developing Traits UI views.
 #  
 #  Written by: David C. Morrill
 #  

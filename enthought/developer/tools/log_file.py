@@ -1,6 +1,6 @@
 #-------------------------------------------------------------------------------
 #
-#  Display Envisage log messages gleaned from a log file plugin. 
+#  Display log messages gleaned from a log file plugin. 
 #
 #  Written by: David C. Morrill
 #
@@ -10,7 +10,7 @@
 #
 #-------------------------------------------------------------------------------
 
-""" Display Envisage log messages gleaned from a log file plugin.
+""" Display log messages gleaned from a log file plugin.
 """
 
 #-------------------------------------------------------------------------------

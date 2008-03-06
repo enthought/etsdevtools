@@ -3,15 +3,13 @@
 #  Enthought developer tools.
 #
 #  These tools are intended to help developers debug and test Traits-based
-#  code running within an Envisage-based application. These tools can all be 
-#  easily added to an Envisage-based application by adding the appropriate View
-#  extension points to a plugin definition file.
+#  code running within an application framework. 
 #
 #  For the most part, these tools also make heavy use of the DockWindow
 #  'feature' capability to implement their functionality. As a result, the
-#  appropriate DockWindow features must also be included in the Envisage
-#  application by adding the appropriate Feature extensions to a plugin
-#  definition file.
+#  appropriate DockWindow features must also be included in the application 
+#  framework by adding the appropriate Feature extensions (see the
+#  enthought.pyface.dock.feature package for more information).
 #  
 #  Package owner/architect: David C. Morrill
 #  

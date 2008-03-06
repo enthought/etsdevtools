@@ -1,6 +1,6 @@
 #-------------------------------------------------------------------------------
 #
-#  Display Envisage Log Messages plugin.
+#  Display Log Messages plugin.
 #
 #  Written by: David C. Morrill
 #

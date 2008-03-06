@@ -1,7 +1,6 @@
 #-------------------------------------------------------------------------------
 #  
-#  Feature-based Envisage plugin base class for managing lists of viewable
-#  objects.
+#  Feature-based plugin base class for managing lists of viewable objects.
 #  
 #  Written by: David C. Morrill
 #  

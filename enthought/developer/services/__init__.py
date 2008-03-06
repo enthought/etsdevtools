@@ -1,6 +1,6 @@
 #-------------------------------------------------------------------------------
 #  
-#  Enthought developer Envisage services
+#  Enthought developer services
 #  
 #  Package owner/architect: David C. Morrill
 #  

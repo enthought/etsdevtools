@@ -58,10 +58,10 @@ class _MarginEditor ( UIEditor ):
             Item( 'right',  editor = slider_editor ),                         
             Item( 'top',    editor = slider_editor ),  
             Item( 'bottom', editor = slider_editor ),  
-            group_theme  = '@images:GL5',
-            item_theme   = Theme( '@ui:GreyItemInset',
+            group_theme  = '@std:GL5',
+            item_theme   = Theme( '@std:GreyItemInset',
                                   content = ( -6, -6, -7, -2 ) ),       
-            label_theme  = Theme( '@ui:BlueLabelInset',
+            label_theme  = Theme( '@std:BlueLabelInset',
                                   content = ( -6, -4, -7, 0 ),
                                   label   = ( -3, 8 ) )
         ),

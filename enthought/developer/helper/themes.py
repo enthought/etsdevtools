@@ -34,13 +34,13 @@ class TButton ( Item ):
     image      = Delegate( 'editor', modify = True )
     
 # A label theme:
-LabelTheme = Theme( '@images:GL5', label     = ( -3, 10 ), 
-                                   content   = ( 0, -5 ), 
-                                   alignment = 'center' )
+LabelTheme = Theme( '@std:GL5', label     = ( -3, 10 ), 
+                                content   = ( 0, -5 ), 
+                                alignment = 'center' )
 
 # An inset label theme:
-InsetTheme = Theme( '@ui:inset_grey', content   = -6,
-                                      label     = ( 6, 6, 9, 0 ),
-                                      alignment = 'center', )
+InsetTheme = Theme( '@std:inset_grey', content   = -6,
+                                       label     = ( 6, 6, 9, 0 ),
+                                       alignment = 'center', )
 
 

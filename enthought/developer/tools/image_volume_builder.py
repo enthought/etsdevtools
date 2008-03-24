@@ -57,7 +57,7 @@ from enthought.developer.helper.themes \
 ImageExtensions = ( '.png', '.jpg', '.jpeg', '.gif' )
 
 # The standard Group Theme we are using:
-GroupTheme = Theme( '@images:XG1', content = 4 )
+GroupTheme = Theme( '@std:XG1', content = 4 )
     
 #-------------------------------------------------------------------------------
 #  The table editor used to list the files being included in the volume:
@@ -267,7 +267,7 @@ class ImageVolumeBuilder ( HasPrivateTraits ):
                 ),
                 group_theme = InsetTheme
             ),
-            group_theme = '@images:XG1'
+            group_theme = '@std:XG1'
         ),
         id        = 'enthought.developer.tools.image_volume_builder.'
                     'ImageVolumeBuilder',

@@ -84,7 +84,7 @@ class VolumeManagerAdapter ( TabularAdapter ):
     image = Property
     
     # Image definitions:
-    alert_image = Image( '@ui:alert16' )
+    alert_image = Image( '@std:alert16' )
     
     #-- Property Implementations -----------------------------------------------
     
@@ -222,16 +222,16 @@ class LibraryManager ( HasPrivateTraits ):
         Item( 'volumes',
               show_label = False,
               editor     = ThemedVerticalNotebookEditor(
-                  closed_theme  = Theme( '@images:GL5', 
+                  closed_theme  = Theme( '@std:GL5', 
                                          content   = ( 0, 0, -2, 0 ), 
                                          alignment = 'center' ),
-                  open_theme    = '@ui:GL5TB', 
+                  open_theme    = '@std:GL5TB', 
                   multiple_open = True,
                   scrollable    = True,
                   double_click  = False,
                   page_name     = '.name'
               ),
-              item_theme = '@images:XG1'
+              item_theme = '@std:XG1'
         )
     )
     

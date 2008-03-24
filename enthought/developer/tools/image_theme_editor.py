@@ -71,7 +71,7 @@ class ImageThemeEditor ( ImageLibraryEditor ):
 
 if __name__ == '__main__':
     ImageThemeEditor( image_names = [ 
-        '@ui:BlackChromeT', '@ui:BlackChromeB', '@ui:notebook_open',
-        '@ui:notebook_close'
+        '@std:BlackChromeT', '@std:BlackChromeB', '@std:notebook_open',
+        '@std:notebook_close'
     ] ).configure_traits()
     

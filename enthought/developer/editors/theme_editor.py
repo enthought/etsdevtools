@@ -193,20 +193,20 @@ class _ThemeEditor ( UIEditor ):
                     spring,
                     Item( 'alignment', style = 'custom' ),
                     spring,
-                    group_theme = Theme( '@images:GL5', 
+                    group_theme = Theme( '@std:GL5', 
                                          content = ( 0, 0, -7, -4 ) )
                 ),
                 Item( 'editor.items', 
                       show_label = False,
                       height     = 270,
                       editor     = ListCanvasEditor(
-                                       theme      = '@images:GL5',
+                                       theme      = '@std:GL5',
                                        adapter    = ThemeEditorAdapter(
                                                         editor = self ),
                                        scrollable = True,
                                        operations = [ 'size' ] )
                 ),
-                group_theme = '@images:XG0'
+                group_theme = '@std:XG0'
             ),
             kind = 'subpanel',
         )
@@ -225,7 +225,7 @@ if __name__ == '__main__':
     from enthought.traits.api import HasTraits, Instance 
     
     class Test ( HasTraits ):
-        theme = Instance( Theme, ( '@ui:BlackChromeB', ) )
+        theme = Instance( Theme, ( '@std:BlackChromeB', ) )
         
         view = View(
             Item( 'theme', 

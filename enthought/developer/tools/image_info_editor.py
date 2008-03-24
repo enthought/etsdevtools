@@ -55,7 +55,7 @@ class ImageInfoItem ( ImageLibraryItem ):
                           style = 'custom' ),
                     group_theme = InsetTheme
                 ),
-                group_theme = '@images:GL5',
+                group_theme = '@std:GL5',
             ),
             VGroup(
                 HSplit(
@@ -63,20 +63,20 @@ class ImageInfoItem ( ImageLibraryItem ):
                         Label( 'Keywords', InsetTheme ),
                         Item( 'keywords', 
                               editor = ListStrEditor( auto_add = True ) ),
-                        group_theme = '@images:XG1',
+                        group_theme = '@std:XG1',
                         show_labels = False,
                     ),
                     VGroup(
                         Label( 'License', InsetTheme ),
                         Item( 'license', style = 'custom' ),
-                        group_theme = '@images:XG1',
+                        group_theme = '@std:XG1',
                         show_labels = False,
                     ),
                     id = 'splitter'
                 ),
-                group_theme = '@images:GL5',
+                group_theme = '@std:GL5',
             ),
-            group_theme = '@images:XG0',
+            group_theme = '@std:XG0',
         ),
         id = 'enthought.developer.tools.image_info_editor.ImageInfoItem'
     )
@@ -107,7 +107,7 @@ class ImageInfoEditor ( ImageLibraryEditor ):
 
 if __name__ == '__main__':
     ImageInfoEditor( image_names = [ 
-        '@ui:BlackChromeT', '@ui:BlackChromeB', '@ui:notebook_open',
-        '@ui:notebook_close'
+        '@std:BlackChromeT', '@std:BlackChromeB', '@std:notebook_open',
+        '@std:notebook_close'
     ] ).configure_traits()
     

@@ -96,7 +96,7 @@ class ImageLibraryEditor ( HasPrivateTraits ):
                   label      = 'Library Manager',
                   style      = 'custom',
                   dock       = 'horizontal',
-                  item_theme = '@ui:GL5TB'
+                  item_theme = '@std:GL5TB'
             ),
             Item( 'items',
                   id         = 'items',
@@ -110,7 +110,7 @@ class ImageLibraryEditor ( HasPrivateTraits ):
                                            export       = 'DockWindowShell',
                                            dock_style   = 'tab' )
             ),
-            group_theme = '@images:XG0',
+            group_theme = '@std:XG0',
             id          = 'splitter'
         ),
         id        = editor_id,

@@ -23,6 +23,9 @@ import sys
 import shutil
 import warnings
 
+# local imports
+from enthought.endo.util import alpha_sort
+
 sys.path.append('..')
 
 ### Information about objects to document
@@ -323,11 +326,10 @@ class OutputHTML(OutputBase):
         template = self.template_loader.load('module_index')
 
         # prepare hierarchy of packages, modules
-        mods = [ (m.abs_name.upper(), m) for m in module_list ]
+        mods = [(m.abs_name.lower(), m) for m in module_list]
         mods.sort()
-        mods = [ m[1] for m in mods ]
-        packages = [ m for m in mods if m.is_package() ]
-        module_hierarchy = self._add_links(hierarchicalize_modules(mods))
+        packages = [ m[1] for m in mods if m[1].is_package() ]
+        module_hierarchy = self._add_links(hierarchicalize_modules(module_list))
         package_hierarchy = self._add_links(hierarchicalize_modules(packages))
 
         # generate an overall docstring by concatenating the docstrings for
@@ -365,13 +367,11 @@ class OutputHTML(OutputBase):
         # load class index HTML template
         template = self.template_loader.load('alpha_list')
 
-        cl = [ (c.name.upper(), c.abs_name.upper(), c) for c in class_list ]
-        cl.sort()
-        cl = [ c[2] for c in cl ]
+        alpha_sort(class_list)
 
         # group class objects by first letter of local name
         classes_grouped = { }
-        for c in cl:
+        for c in class_list:
             letter = c.name[0].upper()
             link = class_link(c)
             display_name = c.name
@@ -398,8 +398,8 @@ class OutputHTML(OutputBase):
             children = [ (c.name.upper(), c.abs_name.upper(), c) for c in temp[0] + temp[2] + temp[3] ]
             obj_list.extend(children)
 
-        # sort alphabetically by local name (not case-sensitive)
-        obj_list.sort()
+        # sort alphabetically by local name
+        alpha_sort(obj_list)
         obj_list = [ r[2] for r in obj_list ]
 
         # group by first letter

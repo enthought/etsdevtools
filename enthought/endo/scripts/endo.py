@@ -31,6 +31,7 @@ import enthought.endo.docobjects as docobjects
 import enthought.endo.docerror as docerror
 from enthought.endo.namespace import Namespace
 from enthought.endo.output import OutputHTML
+from enthought.endo.util import alpha_sort
 
 from optparse import OptionParser, OptionGroup
 from glob import glob
@@ -233,9 +234,9 @@ def add_module_names(filename_list):
         fn = [ ]
         for filename in filenames:
             module_name = filename_to_module_name(package_root, package, filename)
-            fn.append((module_name.upper(), module_name, filename))
-        fn.sort()
-        result.append((package, package_root, [ (x[1], x[2]) for x in fn ]))
+            fn.append((module_name, filename))
+        alpha_sort(fn)
+        result.append((package, package_root, [ (x[0], x[1]) for x in fn ]))
 
     return result
 
@@ -344,10 +345,10 @@ def main():
             package_dir = package_arg
             package_name = os.path.split(os.path.normpath(package_dir))[-1]
         package_dir_list = [ (package_name, x) for x in glob(package_dir) ]
-        package_dir_list.sort()
+        alpha_sort(package_dir_list)
         new_files = [ (package_name, package_dir, search_tree(package_dir))
                       for package_name, package_dir in package_dir_list ]
-        [ entry[2].sort() for entry in new_files ]
+        [ alpha_sort(entry[2]) for entry in new_files ]
         filename_list.extend(new_files)
 
     # add additional modules
@@ -358,10 +359,10 @@ def main():
             module_prefix = options.package
             module_file = module_arg
         module_file_list = [ (module_prefix, x) for x in glob(module_file) ]
-        module_file_list.sort()
+        alpha_sort(module_file_list)
         new_files = [ (module_prefix, os.path.dirname(f), [ f ])
                       for module_prefix, f in module_file_list ]
-        new_files.sort()
+        alpha_sort(new_files)
         filename_list.extend(new_files)
 
     # create output dir if it doesn't exist

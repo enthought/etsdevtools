@@ -129,11 +129,11 @@ def _safe_setup_execution(setup):
         try:
             scope = {'__file__':'setup.py', '__name__':'__main__'}
             exec setup in scope
-            print "Fully executed setup.py"
+            #print "Fully executed setup.py"
         except:
             scope = {'__file__':'setup.py'}
             exec setup in scope
-            print "Executed setup.py but not as __main__"
+            #print "Executed setup.py but not as __main__"
     finally:
         sys.stdout = sys.__stdout__
         sys.stderr = sys.__stderr__
@@ -192,7 +192,7 @@ def main():
         if (not options.header) and (not options.header_filename):
             header = header_template % ', '.join(proj.replace("_", " ") for proj in options.project_list)
     else:
-        ropts.extend( ['=r%s' % pdir for pdir in _get_package_dirs(runpath) ] )
+        ropts.extend( ['-r%s' % pdir for pdir in _get_package_dirs(runpath) ] )
         
     #ropts.sort(reverse=True) # FIXME: Hack that puts the traits packages in the desired order
     

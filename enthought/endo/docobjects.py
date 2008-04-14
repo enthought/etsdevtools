@@ -29,8 +29,11 @@ import types
 import warnings as local_warnings
 warnings = None
 
+# Local imports
+from util import alpha_sort
+
 # traits primitives
-TRAITS_PRIMITIVES = Set([ 'enthought.traits.api.' + x for x in
+TRAITS_PRIMITIVES = Set([ 'enthought.traits.api.' + x for x in 
                           [ 'Trait' ] ])
 _trait_vars = {}
 # traits base classes -- constructed later
@@ -81,12 +84,12 @@ except ImportError:
     
 TRAITS_PRIMITIVES.update([ 'enthought.traits.ui.api.' + sym 
     for sym in _traits_vars.keys() if _is_trait(_traits_vars[sym]) ])
-
 HAS_TRAITS_BASES.update([ 'enthought.traits.ui.api.' + sym 
             for sym in _traits_vars.keys()
             if isinstance(_traits_vars[sym], enthought.traits.api.MetaHasTraits) 
             and issubclass(_traits_vars[sym], enthought.traits.api.HasTraits) ] )
 
+    
 def _indent_multiline_string(s, indent):
     i = ' ' * indent
     return ''.join([ '%s%s\n' % (i, line) for line in s.split('\n') ])
@@ -269,14 +272,16 @@ class DocObject(Namespace):
                 yield d
 
     def _divide_list(the_list):
-        "split list into object tyes (attr_list, class_list, func_list, trait_list)"
+        "split list into object types (attr_list, class_list, func_list, trait_list)"
         attr_children = [ ]
         class_children = [ ]
         func_children = [ ]
         traits_children = [ ]
 
+        #print "Checking type of items:"
         # build up lists, adding names for easy alphabetization
         for child in the_list:
+            #print "\t%s" % child.name
             if isinstance(child, Function):
                 func_children.append((child.name, child))
             elif isinstance(child, Class):
@@ -288,10 +293,10 @@ class DocObject(Namespace):
                     attr_children.append((child.name, child))
 
         # sort by name
-        attr_children.sort()
-        class_children.sort()
-        func_children.sort()
-        traits_children.sort()
+        alpha_sort(attr_children)
+        alpha_sort(class_children)
+        alpha_sort(func_children)
+        alpha_sort(traits_children)
 
         # discard names
         attr_children = [ x[1] for x in attr_children ]
@@ -408,7 +413,7 @@ class Module(DocObject):
     def sort_sub_modules(self):
         """ Sort submodules by name """
         sm = [ (m.name, m) for m in self.sub_modules ]
-        sm.sort()
+        alpha_sort(sm)
         sm = [ m[1] for m in sm ]
 
         self.sub_modules = sm
@@ -596,11 +601,9 @@ class Module(DocObject):
 
         result format: [ (local_name, obj), (local_name, obj), ... ]
         """
-        result = [ (name.upper(), name, obj)
-                   for name, obj in self.get_objects()
-                   if obj.parent_module is not self ]
-        result.sort()
-        result = [ (name, obj) for upper, name, obj in result ]
+        result = [ (name, obj) for name, obj in self.get_objects() 
+                    if obj.parent_module is not self ]
+        alpha_sort(result)
         return result
         
     def print_node(self, indent):
@@ -837,6 +840,7 @@ class Attribute(DocObject):
            isinstance(self.rhs_expr.node, ast.Name):
             called_name = self.rhs_expr.node.name
             called_obj = self.resolve(called_name)
+            #print "\tValue: %s" % str(called_obj)
 
             # known traits primitive on RHS -- this is a trait
             if called_obj is not None and called_obj.abs_name in TRAITS_PRIMITIVES:
@@ -921,13 +925,13 @@ def _order_hierarchy(klass_list, klass_to_children):
         return [ ]
     else:
         # order hierarchy for subclasses of each class
-        result = [ (klass.name.upper(), klass.abs_name.upper(), klass,
+        result = [ (klass.name, klass.abs_name, klass,
                     _order_hierarchy(list(klass_to_children[klass]),
                                      klass_to_children))
                    for klass in klass_list ]
 
         # sort by name
-        result.sort()
+        alpha_sort(result)
         result = [ r[2:] for r in result ]
 
         return result

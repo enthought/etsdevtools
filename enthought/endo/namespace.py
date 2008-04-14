@@ -19,6 +19,9 @@ Here is the basic functionality to make this happen."""
 
 from sets import Set
 
+# local imports
+from util import alpha_sort
+
 class Namespace:
     """
     A namespace 
@@ -92,7 +95,7 @@ class Namespace:
     def get_objects(self):
         "index accessible in this namespace"
         result = self.id_map.items()
-        result.sort()
+        alpha_sort(result)
 
         return result
             

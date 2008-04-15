@@ -32,7 +32,7 @@ from enthought.traits.ui.table_column \
 from enthought.traits.ui.menu \
     import NoButtons
     
-from enthought.pyface.dock.features.api \
+from enthought.developer.features.api \
     import DropFile
     
 from enthought.developer.tools.envisage_browser.object_adapter_base \

@@ -25,7 +25,7 @@ from enthought.traits.ui.api \
 from enthought.traits.ui.key_bindings \
     import KeyBindings, KeyBinding
     
-from enthought.pyface.dock.features.api \
+from enthought.developer.features.api \
     import add_standard_features
     
 from enthought.pyface.image_resource\

@@ -24,10 +24,10 @@ from enthought.traits.ui.api \
 from enthought.traits.ui.menu \
     import NoButtons
     
-from enthought.pyface.dock.features.api \
+from enthought.developer.features.api \
     import CustomFeature, is_not_none
     
-from enthought.pyface.dock.features.connect_feature \
+from enthought.developer.features.connect_feature \
     import can_connect
     
 from enthought.pyface.image_resource \

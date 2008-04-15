@@ -41,7 +41,7 @@ from enthought.pyface.timer.api \
 from enthought.developer.api \
     import FilePosition
     
-from enthought.pyface.dock.features.api \
+from enthought.developer.features.api \
     import DropFile
             
 #-------------------------------------------------------------------------------

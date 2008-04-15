@@ -89,7 +89,7 @@ from enthought.developer.helper.pickle \
 from enthought.developer.helper.themes \
     import TButton
 
-from enthought.pyface.dock.features.api \
+from enthought.developer.features.api \
     import CustomFeature
 
 #-------------------------------------------------------------------------------
@@ -1392,7 +1392,7 @@ def fbi_exception ( type, value, traceback, msg = '', gui = None, offset = 0,
     if not has_features:
         has_features = True
         try:
-            from enthought.pyface.dock.features.api import add_standard_features
+            from enthought.developer.features.api import add_standard_features
             add_standard_features()
         except:
             pass

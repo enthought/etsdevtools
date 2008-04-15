@@ -38,7 +38,7 @@ from enthought.traits.ui.table_column \
 from enthought.traits.ui.table_filter \
     import TableFilter
     
-from enthought.pyface.dock.features.api \
+from enthought.developer.features.api \
     import DropFile
     
 #-------------------------------------------------------------------------------

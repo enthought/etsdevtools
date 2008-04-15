@@ -29,7 +29,7 @@ from enthought.traits.ui.api \
 from enthought.pyface.timer.api \
     import do_after
     
-from enthought.pyface.dock.features.api \
+from enthought.developer.features.api \
     import DropFile
     
 from enthought.developer.api \

@@ -31,7 +31,7 @@ except:
 from enthought.pyface.image_resource \
     import ImageResource
     
-from enthought.pyface.dock.features.api \
+from enthought.developer.features.api \
     import CustomFeature
     
 #-------------------------------------------------------------------------------

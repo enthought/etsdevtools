@@ -225,25 +225,25 @@ class EnthoughtDeveloperPluginDefinition ( PluginDefinition ):
         workbench_action_set,
         workbench,
         
-        Feature( class_name = 'enthought.pyface.dock.features.drag_drop_feature.'
+        Feature( class_name = 'enthought.developer.features.drag_drop_feature.'
                               'DragDropFeature' ),
-        Feature( class_name = 'enthought.pyface.dock.features.drop_file_feature.'
+        Feature( class_name = 'enthought.developer.features.drop_file_feature.'
                               'DropFileFeature' ),
-        Feature( class_name = 'enthought.pyface.dock.features.connect_feature.'
+        Feature( class_name = 'enthought.developer.features.connect_feature.'
                               'ConnectFeature' ),
-        Feature( class_name = 'enthought.pyface.dock.features.popup_menu_feature.'
+        Feature( class_name = 'enthought.developer.features.popup_menu_feature.'
                               'PopupMenuFeature' ),
-        Feature( class_name = 'enthought.pyface.dock.features.options_feature.'
+        Feature( class_name = 'enthought.developer.features.options_feature.'
                               'OptionsFeature' ),
-        Feature( class_name = 'enthought.pyface.dock.features.save_state_feature.'
+        Feature( class_name = 'enthought.developer.features.save_state_feature.'
                               'SaveStateFeature' ),
-        Feature( class_name = 'enthought.pyface.dock.features.save_feature.'
+        Feature( class_name = 'enthought.developer.features.save_feature.'
                               'SaveFeature' ),
-        Feature( class_name = 'enthought.pyface.dock.features.custom_feature.'
+        Feature( class_name = 'enthought.developer.features.custom_feature.'
                               'ACustomFeature' ),
-        Feature( class_name = 'enthought.pyface.dock.features.dock_control_feature.'
+        Feature( class_name = 'enthought.developer.features.dock_control_feature.'
                               'DockControlFeature' ),
-        Feature( class_name = 'enthought.pyface.dock.features.debug_feature.'
+        Feature( class_name = 'enthought.developer.features.debug_feature.'
                               'DebugFeature' ),
     ]
 

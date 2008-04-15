@@ -39,7 +39,7 @@ from enthought.traits.ui.image.image \
 from enthought.traits.ui.key_bindings \
     import KeyBindings, KeyBinding
     
-from enthought.pyface.dock.features.api \
+from enthought.developer.features.api \
     import DropFile
     
 from enthought.developer.helper.traits \

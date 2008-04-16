@@ -26,6 +26,12 @@ from cStringIO import StringIO
 from tokenize import generate_tokens, COMMENT, NEWLINE, INDENT
 from traceback import print_exception
 
+try:
+    from enthought.etsconfig.api import ETSConfig
+except:
+    from enthought.traits.trait_base import ETSConfig
+ETSConfig.toolkit = 'null'
+    
 import enthought.endo as endo
 import enthought.endo.docobjects as docobjects
 import enthought.endo.docerror as docerror
@@ -35,6 +41,7 @@ from enthought.endo.util import alpha_sort
 
 from optparse import OptionParser, OptionGroup
 from glob import glob
+
 
 moddir = os.path.abspath(os.path.dirname(endo.__file__))
 sys.path.append(moddir)

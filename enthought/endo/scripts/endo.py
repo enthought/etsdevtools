@@ -313,7 +313,7 @@ def add_endo_options(option_parser):
     option_parser.add_option("-s", "--silent", dest="silent",
                             action="store_true", default=False,
                             help="ignores all warnings")
-    option_parser.add_option("--verbose", dest="verbose",
+    option_parser.add_option("-v", "--verbose", dest="verbose",
                              action="store_true", default=False,
                              help="show detailed status messages")
     option_parser.add_option("--dump-state", dest="state_file",

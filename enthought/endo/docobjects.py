@@ -42,9 +42,9 @@ HAS_TRAITS_BASES = Set()
 CTRAIT_TYPE = None
 
 def _is_trait(val):
-    return (  # Find traits like Event = TraitFactory(Event)
+    return (  # Find traits like Color = TraitFactory(Color)
               isinstance(val, enthought.traits.api.TraitFactory)
-              # Find traits like ReadOnly = Ctrait(6)
+              # Find traits like generic_trait = CTrait(8)
               or isinstance(val, enthought.traits.api.CTrait)
               # Find both 'class BaseRange(TraitType)' and 'class TraitRange(TraitHandler)'
               or ( type(val) == types.TypeType and
@@ -732,7 +732,6 @@ class Class(DocObject):
         for obj in self.children:
             if inherited_stuff.has_key(obj.name):
                 del inherited_stuff[obj.name]
-
         return self._divide_list(inherited_stuff.values())
     
     def print_node(self, indent):
@@ -774,7 +773,6 @@ class Class(DocObject):
     def get_bases(self):
         result = [ self.resolve(self._base_to_string(base)) for base in self.bases ]
         result = [ base for base in result if base is not None ]
-
         return result
 
 class Attribute(DocObject):

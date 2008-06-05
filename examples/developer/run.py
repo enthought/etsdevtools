@@ -10,7 +10,7 @@
 
 import sys
 
-from enthought.envisage \
+from enthought.envisage.api \
     import Application
 
 from plugin_definitions \

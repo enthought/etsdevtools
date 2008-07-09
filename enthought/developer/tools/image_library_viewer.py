@@ -155,8 +155,8 @@ class ImageColumn ( NameColumn ):
         
 image_table_editor = TableEditor(
     columns = [
-        ImageColumn( label = 'Image', width = 42,
-                     view  = image_view,
+        ImageColumn( label = 'Image',      width = 42,
+                     auto_editable = True, view  = image_view,
                      horizontal_alignment = 'center' ),
         VolumeColumn(   name = 'volume',      width = 0.10 ),
         NameColumn(     name = 'name',        width = 0.10 ),
@@ -170,11 +170,11 @@ image_table_editor = TableEditor(
                         horizontal_alignment = 'center' ),
         KeywordsColumn( name = 'keywords',    width = 0.10 ),
         TextColumn(     name = 'description', width = 0.10, 
-                        view = description_view ),
+                        auto_editable = True, view  = description_view ),
         TextColumn(     name = 'copyright',   width = 0.10,
-                        view = copyright_view ),
+                        auto_editable = True, view  = copyright_view ),
         TextColumn(     name = 'license',     width = 0.10,
-                        view = license_view ),
+                        auto_editable = True, view  = license_view ),
     ],
     auto_size           = False,
     editable            = False,

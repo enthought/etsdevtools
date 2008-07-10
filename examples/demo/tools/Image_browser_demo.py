@@ -19,13 +19,12 @@ from enthought.developer.tools.image_browser \
 from enthought.traits.ui.image.image \
      import ImageLibrary
      
-# Get the image library volume called 'images':
-volume = ImageLibrary.catalog[ 'images' ]
+# Get the image library volume called 'std':
+volume = ImageLibrary.catalog[ 'std' ]
 
-# Create the demo using a subset of the images available in the 'image' volume:
+# Create the demo using a subset of the images available in the 'std' volume:
 demo = ImageBrowser(
-           image_names = [ image.image_name for image in volume.images
-                           if image.image_name.find( 'O' ) >= 0 ] )
+           image_names = [ image.image_name for image in volume.images ] )
         
 # Run the demo (if invoked from the command line):
 if __name__ == '__main__':

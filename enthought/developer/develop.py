@@ -54,6 +54,8 @@ StdTools = {
 #       'enthought.developer.tools.file_monitor.FileMonitor',
     'File Sieve':          
         'enthought.developer.tools.file_sieve.FileSieve',
+    'File Search':          
+        'enthought.developer.tools.file_search.FileSearch',
     'File Space':          
         'enthought.developer.tools.file_space.FileSpace',
     'Heap Browser':        

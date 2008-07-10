@@ -203,11 +203,11 @@ class PersonMonitor ( ListCanvasItemMonitor ):
 
 #-- The main demo ListCanvas adapter class -------------------------------------               
 
-Person_theme_active = ATheme( Theme( '@ui:GL5TB', label  = ( 14, 14, 25, 3 ),
-                                                  border = ( 6, 6, 6, 6 ) ) )
-
-Person_theme_inactive = ATheme( Theme( '@ui:GL5T', label  = ( 14, 14, 25, 3 ),
+Person_theme_active = ATheme( Theme( '@std:GL5TB', label  = ( 14, 14, 25, 3 ),
                                                    border = ( 6, 6, 6, 6 ) ) )
+
+Person_theme_inactive = ATheme( Theme( '@std:GL5T', label  = ( 14, 14, 25, 3 ),
+                                                    border = ( 6, 6, 6, 6 ) ) )
 
 class TestAdapter ( ListCanvasAdapter ):
     

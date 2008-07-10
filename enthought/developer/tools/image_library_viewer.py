@@ -73,13 +73,13 @@ class ImageHandler ( Handler ):
     
 image_view = View(
     Item( 'handler.image', style = 'custom', show_label = False ),
-    kind    = 'popup',
+    kind    = 'info',
     handler = ImageHandler
 )
 
 description_view = View(
     Item( 'description', style = 'readonly', show_label = False ),
-    kind       = 'popup',
+    kind       = 'info',
     width      = 0.20,
     height     = 0.20,
     resizable  = True,
@@ -88,7 +88,7 @@ description_view = View(
 
 copyright_view = View(
     Item( 'copyright', style = 'readonly', show_label = False ),
-    kind       = 'popup',
+    kind       = 'info',
     width      = 0.20,
     height     = 0.20,
     resizable  = True,
@@ -97,7 +97,7 @@ copyright_view = View(
 
 license_view = View(
     Item( 'license', style = 'readonly', show_label = False ),
-    kind       = 'popup',
+    kind       = 'info',
     width      = 0.20,
     height     = 0.20,
     resizable  = True,

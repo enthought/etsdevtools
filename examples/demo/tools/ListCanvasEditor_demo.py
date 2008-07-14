@@ -206,7 +206,9 @@ class PersonMonitor ( ListCanvasItemMonitor ):
 Person_theme_active = ATheme( Theme( '@std:GL5TB', label  = ( 14, 14, 25, 3 ),
                                                    border = ( 6, 6, 6, 6 ) ) )
 
-Person_theme_inactive = ATheme( Theme( '@std:GL5T', label  = ( 14, 14, 25, 3 ),
+# Fixme: This image was originally @GL5T but we could not find it, so GL5 is
+# being used in its place
+Person_theme_inactive = ATheme( Theme( '@std:GL5', label  = ( 14, 14, 25, 3 ),
                                                     border = ( 6, 6, 6, 6 ) ) )
 
 class TestAdapter ( ListCanvasAdapter ):

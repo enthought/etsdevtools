@@ -1,8 +1,3 @@
-* Remove the dependency on enthought.util by stopping to use util.numerix.
 
 * Refactor the enthought.debug.fbi module to remove the hardwired dependency
     on the wx backend to traits.
-
-* e.gotcha.plugin/gotcha_editor.py imports a non-existing e.chaco.plot_style.
-    This needs to be refactored or gotcha removed.
-

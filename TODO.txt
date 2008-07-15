@@ -1,7 +1,5 @@
 * Remove the dependency on enthought.util by stopping to use util.numerix.
 
-* Consider removing enthought.gotcha entirely from ETS.
-
 * Refactor the enthought.debug.fbi module to remove the hardwired dependency
     on the wx backend to traits.
 

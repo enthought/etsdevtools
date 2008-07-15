@@ -34,15 +34,11 @@ INFO = {
             TRAITSBACKENDWX,
             TRAITSGUI_DOCK,
             ],
-        'envisage': [  # -- all plugins are here, even gotcha, fbi, and developer.
+        'envisage': [  # -- all plugins are here, even fbi, and developer.
             ENVISAGECORE,
             ENVISAGEPLUGINS,
             ],
         'fbi': [
-            TRAITSBACKENDWX,
-            ],
-        'gotcha': [
-            ENTHOUGHTBASE,
             TRAITSBACKENDWX,
             ],
 

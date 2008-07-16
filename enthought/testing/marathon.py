@@ -9,7 +9,7 @@ import sys
 import fnmatch
 import os.path
 import traceback
-import elementtree
+import xml.etree.ElementTree as ElementTree
 
 from enthought.testing.utils import getExceptionFromStack
 
@@ -176,7 +176,7 @@ def main():
                 os.unlink(xmlfile);
                 
         #read the aggregate result file to print some simple stats to the console
-        root = elementtree.ElementTree.parse(resultfile)
+        root = ElementTree.parse(resultfile)
         results = root.find("UnitResults")
         print ""
         print "Aggregate unit test results"

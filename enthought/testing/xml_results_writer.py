@@ -1,4 +1,4 @@
-import elementtree.ElementTree as ElementTree
+import xml.etree.ElementTree as ElementTree
 from xml.parsers.expat import ExpatError
 import os.path
 

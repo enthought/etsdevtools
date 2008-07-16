@@ -9,7 +9,13 @@ import sys
 import fnmatch
 import os.path
 import traceback
-import xml.etree.ElementTree as ElementTree
+
+# Note:  xml.etree was added in Python 2.5.
+try:
+    import xml.etree.ElementTree as ElementTree
+except ImportError:
+    import elementtree.ElementTree as ElementTree
+
 
 from enthought.testing.utils import getExceptionFromStack
 

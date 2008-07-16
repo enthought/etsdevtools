@@ -1,6 +1,13 @@
-import xml.etree.ElementTree as ElementTree
-from xml.parsers.expat import ExpatError
+
 import os.path
+from xml.parsers.expat import ExpatError
+
+# Note:  xml.etree was added in Python 2.5.
+try:
+    import xml.etree.ElementTree as ElementTree
+except ImportError:
+    import elementtree.ElementTree as ElementTree
+
 
 try:
     set

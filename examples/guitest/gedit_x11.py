@@ -6,9 +6,14 @@
 # License: BSD Style.
 
 from enthought import guitest
-import time
+import time, sys
 
-guitest.StartApp('gedit')
+try:
+    guitest.StartApp('gedit')
+except:
+    print 'This example does not work on this platform.'
+    sys.exit()
+
 print "Waiting for window ..."
 time.sleep(3)
 # The title for the window can be a regular expression.

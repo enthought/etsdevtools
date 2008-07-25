@@ -1,6 +1,9 @@
 # Standard library
 import unittest
 
+# Third party library
+import nose
+
 # Enthought library
 from enthought.traits.api import HasTraits, Any
 from enthought.debug.memory_tracker import MemoryState, get_all_referrers
@@ -88,10 +91,12 @@ class MemoryStateTestCase(unittest.TestCase):
         l.append(leaf)
 
         leaks = state.find_leak_boundary_ids(leaf)
+
+        raise nose.SkipTest
         # FIXME:
         #   This assertion fails on Linux under Python 2.4, probably
         #   similar issue as below.
-        #self.assertEqual(len(leaks), 1)
+        self.assertEqual(len(leaks), 1)
 
         leaked_ids = leaks[id(l)]
 
@@ -130,18 +135,19 @@ class MemoryStateTestCase(unittest.TestCase):
         print [type(item) for item in referrers]
         print root.__dict__ in referrers
 
+        raise nose.SkipTest
         # FIXME:
         #   this assertion succeeds on OS X 10.4 but fails
         #   on Linux and Windows.  It is unclear why.
-        #self.assertEqual(len(leaks), 1)
+        self.assertEqual(len(leaks), 1)
         
         leak_holder, leaked_objects = leaks[0]
         #print leaked_objects[0].name
-
+        
         # FIXME:
-        #   These two assertions don'y work properly with nosetests
-        #self.assertEqual(root, leak_holder)
-        #self.assertEqual(intermediate, leaked_objects[0])
+        #   These two assertions don't work properly with nosetests
+        self.assertEqual(root, leak_holder)
+        self.assertEqual(intermediate, leaked_objects[0])
 
 
     def _test_find_leak_boundary_oldstyle_class(self):

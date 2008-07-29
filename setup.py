@@ -5,11 +5,32 @@
 #
 
 """
-ETS Development Tools
+Enthought tools to support Python development.
 
-<description text needed>
+The DevTools project includes a set of packages that can be used during the
+development of a software project, for understanding, debugging, testing, and
+inspecting code. 
+
+- **Enthought Developer Tool Suite** (enthought.developer): A collection of
+  utilities, designed to ease the development and debugging of Traits-based
+  programs. They can be used as plug-ins to your Envisage application while
+  you are developing it, and then removed when you are ready to release it.
+- **Endo**: A Traits-aware tool for processing API documentation of Python 
+  code. It extracts not only docstrings, but also plain comments that 
+  immediately precede variable assignments (both module-scope variables and
+  class attributes).
+- **Gotcha**: A profiling tool based on the Hotshot profiler, which uses 
+  Chaco for plotting profile data. Can be used as an Envisage plug-in. 	 
+- **enthought.guitest**: A collection of utilities for unit testing user
+  interfaces (translation of the Perl X11::GUITest and Win32::GuiTest modules).
+- **enthought.testing**: Scripts related to running unit tests, based on 
+  testoob, and also allowing running test suites in separate processes and
+  aggregating the results. 	 
+- **enthought.debug**: A collection of debugging tools, not to be included in
+  production code. NOTE: These tools are functional, but are not being 
+  developed or supported. They have been mainly superceded by the tools 
+  in the Enthought Developer Tool Suite.
 """
-
 
 from distutils import log
 from distutils.command.build import build as distbuild

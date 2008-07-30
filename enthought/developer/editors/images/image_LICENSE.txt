@@ -1,0 +1,31 @@
+The icons are mostly derived work from other icons. As such they are
+licensed accordingly to the original license:
+
+Project                 License                   File
+----------------------------------------------------------------------------
+CP (Crystal Project)    LGPL                      image_LICENSE_CP.txt
+Eclipse                 Eclipse Public License    image_LICENSE_Eclipse.txt
+Enthought               BSD 3-Clause              LICENSE.txt
+GV (Gael Varoquaux)     Public Domain             N/A
+OOo                     LGPL                      image_LICENSE_OOo.txt
+
+Unless stated in this file, icons are the work of Enthought, and are
+released under a 3 clause BSD license.
+
+Files and orginal authors:
+----------------------------------------------------------------------------
+enthought/developer/editors/images:
+                            add.png | CP
+                          clear.png | CP
+                          clone.png | GV
+                          close.png | CP
+                 default_active.png | Enthought
+                 default_canvas.png | Enthought
+                  default_hover.png | Enthought
+               default_inactive.png | Enthought
+                           drag.png | GV
+                        feature.png | OOo
+                           load.png | Eclipse
+                       maximize.png | CP
+                       minimize.png | CP
+                           save.png | Eclipse

@@ -1,0 +1,39 @@
+The icons are mostly derived work from other icons. As such they are
+licensed accordingly to the original license:
+
+Project                 License                   File
+----------------------------------------------------------------------------
+CP (Crystal Project)    LGPL                      image_LICENSE_CP.txt
+Eclipse                 Eclipse Public License    image_LICENSE_Eclipse.txt
+Enthought               BSD 3-Clause              LICENSE.txt
+GV (Gael Varoquaux)     Public Domain             N/A
+Nuvola                  LGPL                      image_LICENSE_Nuvola.txt
+
+Unless stated in this file, icons are the work of Enthought, and are
+released under a 3 clause BSD license.
+
+Files and orginal authors:
+----------------------------------------------------------------------------
+enthought/developer/features/images:
+           connect_drag_feature.png | GV
+           connect_file_feature.png | GV
+           connect_from_feature.png | Enthought
+         connect_linked_feature.png | Eclipse
+         connect_object_feature.png | Nuvola
+             connect_to_feature.png | Enthought
+       connect_unlinked_feature.png | Eclipse
+            connections_feature.png | Eclipse
+             debug_dock_feature.png | GV
+           debug_object_feature.png | GV
+               debug_ui_feature.png | GV
+           debug_window_feature.png | GV
+                   drag_feature.png | Nuvola
+              drag_file_feature.png | Nuvola
+               dragdrop_feature.png | Nuvola
+                   drop_feature.png | Nuvola
+              drop_file_feature.png | Nuvola
+         no_connections_feature.png | Eclipse
+                options_feature.png | CP
+             popup_menu_feature.png | GV
+                   save_feature.png | GV
+                   tool_feature.png | Nuvola

@@ -1,2 +1,2 @@
-The DevTools project, a part of the Enthought Tool Suite.
+The ETSDevTools project, a part of the Enthought Tool Suite.
 

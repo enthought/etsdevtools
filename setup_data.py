@@ -61,6 +61,6 @@ INFO = {
         TRAITSGUI,
         TRAITS_UI,
         ],
-    'name': 'DevTools',
+    'name': 'ETSDevTools',
     'version': '3.0.0b1',
     }

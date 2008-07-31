@@ -7,7 +7,7 @@
 """
 Enthought tools to support Python development.
 
-The DevTools project includes a set of packages that can be used during the
+The ETSDevTools project includes a set of packages that can be used during the
 development of a software project, for understanding, debugging, testing, and
 inspecting code.
 

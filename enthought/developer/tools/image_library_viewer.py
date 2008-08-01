@@ -178,7 +178,6 @@ image_table_editor = TableEditor(
     ],
     auto_size           = False,
     editable            = False,
-    row_height          = 39,
     edit_on_first_click = False,
     show_toolbar        = False,
     filter_name         = 'filter',

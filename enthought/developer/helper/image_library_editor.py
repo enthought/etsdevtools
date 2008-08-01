@@ -22,7 +22,7 @@ from enthought.traits.api \
            on_trait_change
     
 from enthought.traits.ui.api \
-    import View, HSplit, Item, ListEditor
+    import View, VGroup, HSplit, Item, ListEditor, InstanceEditor
     
 from enthought.traits.ui.image.image \
     import ImageLibrary, ImageInfo
@@ -75,10 +75,10 @@ class ImageLibraryEditor ( HasPrivateTraits ):
     # The LibraryManager being used to keep track of modified images:
     library = Constant( LibraryManager )
     
-    #-- Overridable Class Constants --------------------------------------------
-    
     # The label/title of the editor for use in the view:
-    editor_title = 'Image Library Editor'
+    editor_title = Str( 'Image Library Editor' )
+    
+    #-- Overridable Class Constants --------------------------------------------
     
     # The persistence id for the image library editor:
     editor_id = ('enthought.developer.tools.image_library_editor.'
@@ -89,36 +89,43 @@ class ImageLibraryEditor ( HasPrivateTraits ):
     
     #-- Traits View Definitions ------------------------------------------------
     
-    view = View(
-        HSplit(
-            Item( 'library',
-                  show_label = False,
-                  label      = 'Library Manager',
-                  style      = 'custom',
-                  dock       = 'horizontal',
-                  item_theme = '@std:GL5TB'
-            ),
-            Item( 'items',
-                  id         = 'items',
-                  show_label = False,
-                  label      = editor_title,
-                  style      = 'custom',
-                  dock       = 'horizontal',
-                  editor     = ListEditor( use_notebook = True,
+    def traits_view ( self ):
+        return View(
+            HSplit(
+                VGroup(
+                    Item( 'library',
+                          show_label = False,
+                          style      = 'custom',
+                          editor     = InstanceEditor()
+                    ),
+                    label       = 'Library Manager',
+                    group_theme = '@std:GL5TB',
+                    dock        = 'horizontal'
+                ),
+                VGroup(
+                    Item( 'items',
+                          id         = 'items',
+                          show_label = False,
+                          style      = 'custom',
+                          editor     = ListEditor(
+                                           use_notebook = True,
                                            deletable    = True,
                                            page_name    = '.name',
                                            export       = 'DockWindowShell',
                                            dock_style   = 'tab' )
+                    ),
+                    label       = self.editor_title,
+                    group_theme = '@std:GL5TB',
+                    dock        = 'horizontal'
+                ),
+                group_theme = '@std:XG0',
+                id          = 'splitter'
             ),
-            group_theme = '@std:XG0',
-            id          = 'splitter'
-        ),
-        id        = editor_id,
-        title     = editor_title,
-        width     = 0.7,
-        height    = 0.5,
-        resizable = True
-    )
+            id        = self.editor_id,
+            width     = 0.7,
+            height    = 0.5,
+            resizable = True
+        )
     
     #-- Traits Event Handlers --------------------------------------------------
     

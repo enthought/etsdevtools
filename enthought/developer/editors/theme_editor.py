@@ -70,7 +70,8 @@ class ThemeEditorAdapter ( ListCanvasAdapter ):
     # The titles to display for the various test items:
     Person_title       = Str( 'A Test Person' )
     ShoppingList_title = Str( 'A Shopping List' )
-    Debug_title        = Str
+    ALabel_title       = Str( 'A Label' )
+    title              = Str
     
     # Turn debugging on for the Debug instance:
     Debug_debug = Bool( True )
@@ -88,7 +89,7 @@ class ThemeEditorAdapter ( ListCanvasAdapter ):
 #  Test classes for use with the ListCanvasEditor:
 #-------------------------------------------------------------------------------
 
-class Person ( HasTraits ):
+class BasePerson ( HasTraits ):
     
     name   = Str
     age    = Int
@@ -98,11 +99,30 @@ class Person ( HasTraits ):
         VGroup( 'name', 'age', 'gender' )
     )
     
+base_person = BasePerson()
+
+class Person ( BasePerson ):
+    
+    pass
+    
 person = Person()    
 
-class ShoppingList ( HasTraits ):
+default_shopping_list = [
+    'Carrots',
+    'Potatoes (5 lb. bag)',
+    'Cocoa Puffs',
+    'Ice Cream (French Vanilla)',
+    'Peanut Butter',
+    'Whole wheat bread',
+    'Ground beef (2 lbs.)',
+    'Paper towels',
+    'Soup (3 cans)',
+    'Laundry detergent'
+]
+
+class BaseShoppingList ( HasTraits ):
     
-    shopping_list = List( Str )
+    shopping_list = List( Str, default_shopping_list )
     
     view = View(
         Item( 'shopping_list',
@@ -115,18 +135,28 @@ class ShoppingList ( HasTraits ):
         )
     )
 
-shopping_list = ShoppingList( shopping_list = [
-    'Carrots',
-    'Potatoes (5 lb. bag)',
-    'Cocoa Puffs',
-    'Ice Cream (French Vanilla)',
-    'Peanut Butter',
-    'Whole wheat bread',
-    'Ground beef (2 lbs.)',
-    'Paper towels',
-    'Soup (3 cans)',
-    'Laundry detergent'
-] )
+base_shopping_list = BaseShoppingList()
+
+class ShoppingList ( BaseShoppingList ):
+    
+    pass
+
+shopping_list = ShoppingList()
+
+class ALabel ( HasTraits ):
+    
+    empty = Str
+    
+    view = View(
+        Item( 'empty',
+              show_label = False,
+              width      = -1,
+              height     = -1,
+              editor     = NullEditor()
+        )
+    )
+    
+label = ALabel()    
  
 class Debug ( HasTraits ):
     
@@ -154,6 +184,9 @@ class _ThemeEditor ( UIEditor ):
     # Indicate that the editor is resizable. This value overrides the default.
     scrollable = True
     
+    # The display mode for the sample editor items:
+    mode = Enum( 'Label and content', 'Label only', 'Content only' )
+    
     # The list of items the test theme is editing using a ListCanvasEditor:
     items = List( [ debug, person, shopping_list ] )
     
@@ -164,10 +197,9 @@ class _ThemeEditor ( UIEditor ):
         """
         return self.edit_traits( context = { 'object': self.value,
                                              'editor': self },
-                                 view    = self.default_traits_view(), 
                                  parent  = parent )
 
-    def default_traits_view ( self ):
+    def traits_view ( self ):
         """ Returns the default traits view for the object's class.
         """
         return View(
@@ -191,6 +223,8 @@ class _ThemeEditor ( UIEditor ):
                 ),
                 HGroup( 
                     spring,
+                    Item( 'editor.mode' ), 
+                    '30',
                     Item( 'alignment', style = 'custom' ),
                     spring,
                     group_theme = Theme( '@std:GL5', 
@@ -210,6 +244,18 @@ class _ThemeEditor ( UIEditor ):
             ),
             kind = 'subpanel',
         )
+        
+    #-- Trait Event Handlers ---------------------------------------------------
+    
+    def _mode_changed ( self, mode ):
+        """ Handle the editor sample item's mode being changed.
+        """
+        if mode == 'Label and content':
+            self.items = [ debug, person, shopping_list ]
+        elif mode == 'Label only':
+            self.items = [ debug, label ]
+        else:
+            self.items = [ debug, base_person, base_shopping_list ]
                     
 #-------------------------------------------------------------------------------
 #  Create the editor factory object:

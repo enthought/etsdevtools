@@ -1353,7 +1353,7 @@ class ListCanvasItem ( ListCanvasPanel ):
             return
             
         if mode > 0:
-            self.control.ReleaseMouse()
+            self.release_mouse()
             self.canvas.begin_drag( self, mode, x, y, event )
         
     def active_left_up ( self, x, y, event ):
@@ -1369,7 +1369,7 @@ class ListCanvasItem ( ListCanvasPanel ):
         """ Handles a mouse motion event while in the inactive state.
         """
         self.state = 'hover'
-        self.control.CaptureMouse()
+        self.capture_mouse()
         self._set_cursor( x, y )
         self._set_tooltip()
         
@@ -1378,7 +1378,7 @@ class ListCanvasItem ( ListCanvasPanel ):
         """
         if not self.in_control( x, y ):
             self.state = 'inactive'
-            self.control.ReleaseMouse()
+            self.release_mouse()
             return
             
         self._set_cursor( x, y )
@@ -1388,7 +1388,6 @@ class ListCanvasItem ( ListCanvasPanel ):
             inactive state.
         """
         self.activate()
-        self.control.ReleaseMouse()
         self.active_left_down( x, y, event )
         
     #-- Toolbar Button Event Handlers ------------------------------------------
@@ -1399,7 +1398,7 @@ class ListCanvasItem ( ListCanvasPanel ):
         canvas = self.canvas
         clone  = canvas.adapter.get_clone( self.object )
         if clone is not None:
-            self.control.ReleaseMouse()
+            self.release_mouse()
             canvas.add_object( clone, hidden = True )
             do_later( self._drag_clone, x, y, event )
     
@@ -1408,7 +1407,7 @@ class ListCanvasItem ( ListCanvasPanel ):
         """
         drag_object = self.canvas.adapter.get_drag( self.object )
         if drag_object is not None:
-            self.control.ReleaseMouse()
+            self.release_mouse()
             PythonDropSource( self.control, drag_object )
     
     def minimize_left_up ( self, x, y, event ):
@@ -2081,7 +2080,7 @@ class ListCanvas ( ListCanvasPanel ):
         if ((self.snap_info.distance > 0) and self._drag_snapping and 
              self.guide_info.snapping):
             self._drag_guides = self._guide_lines( self._drag_set )
-        self.control.CaptureMouse()
+        self.capture_mouse()
         self._refresh_canvas_drag( True )
         
     def snap_x ( self, x, dx = 0 ):

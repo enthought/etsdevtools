@@ -33,7 +33,8 @@ from os.path \
     import join
     
 from enthought.traits.api \
-    import HasTraits, List, Str, on_trait_change
+    import HasTraits, List, TraitListObject, TraitSetObject, TraitDictObject, \
+           Str, on_trait_change
 
 from enthought.traits.trait_base \
     import traits_home
@@ -80,7 +81,17 @@ class SaveStateFeature ( DockWindowFeature ):
         """
         db = get_ui_db( mode = 'c' )
         if db is not None:
-            db[ self.id ] = self.dock_control.object.get( *self.names )
+            values = self.dock_control.object.get( *self.names )
+            for name, value in values.items():
+                if isinstance( value, TraitListObject ):
+                    values[ name ] = list( value )
+                elif isinstance( value, TraitSetObject ):
+                    values[ name ] = set( value )
+                elif isinstance( value, TraitDictObject ):
+                    values[ name ] = dict( value )
+                    
+            db[ self.id ] = values
+            
             db.close()
                 
 #-- Overidable Class Methods ---------------------------------------------------

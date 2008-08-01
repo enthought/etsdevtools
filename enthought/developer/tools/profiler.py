@@ -46,6 +46,18 @@ from enthought.developer.api \
     
 from enthought.developer.helper.profiler \
     import begin_profiling, end_profiling, profile
+    
+#-------------------------------------------------------------------------------
+#  Constants:
+#-------------------------------------------------------------------------------
+
+HandlerTemplate = """
+def template ( method, profile ):
+    def %(method_name)s ( %(args)s, **kw ):
+        return profile( method, %(args)s, **kw )
+    return %(method_name)s
+handler = template( method, profile )
+"""
 
 #-------------------------------------------------------------------------------
 #  Profiler table editor definition:
@@ -263,7 +275,8 @@ class Profiler ( HasPrivateTraits ):
     #---------------------------------------------------------------------------
                 
     def get_module_class ( self, file_position ):
-        """ Returns the module_name, module and class for a specified file position.
+        """ Returns the module_name, module and class for a specified file
+            position.
         """
         # Get the full module name:
         module_name = '%s.%s' % ( file_position.package_name,
@@ -293,10 +306,19 @@ class Profiler ( HasPrivateTraits ):
         """
         method = getattr( klass, method_name, None )
         if method is not None:
-            def handler ( *args, **kw ):
-                return profile( method, *args, **kw )
+            # We create different handler versions so that the argument counts
+            # match up for cases handled by the traits notification wrappers
+            # (i.e. self + 0..4 arguments):
+            arg_count = method.im_func.func_code.co_argcount
+            if 1 <= arg_count <= 5:
+                args = 'a1, a2, a3, a4, a5'[: 4 * arg_count - 2 ]
+            else:
+                args = '*args'
+                
+            exec HandlerTemplate % { 'method_name': method_name, 'args': args }
             
             setattr( klass, method.__name__, handler )
+            
             return method
             
         # fixme: Report some kind of error here...

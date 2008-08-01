@@ -273,6 +273,9 @@ class ProfilerStats ( HasPrivateTraits ):
     def _selected_changed ( self, stats ):
         """ Handles the 'selected' trait being changed.
         """
+        if stats is None:
+            return
+            
         # Update the view's export information:
         self.owner.stats_position = FilePosition( file_name = stats.file_name,
                                                   line      = stats.line )

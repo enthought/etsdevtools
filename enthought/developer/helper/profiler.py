@@ -31,13 +31,16 @@ profiler = None
 profile_name = ''
 
 #-------------------------------------------------------------------------------
-#  Find the newest 'gotcha' profile in a specified directory:
+#  Finds the newest profile in a specified directory:
 #-------------------------------------------------------------------------------
 
 def find_profile ( create = True, path = '' ):
+    """ Finds the newest profile in a specified directory.
+    """
     path = path.strip()
     if path == '':
         path = os.getcwd()
+        
     highest = 0
     for file in os.listdir( path ):
         if (file[:9] == 'profiler_') and (file[-5:] == '.prof'):
@@ -45,8 +48,10 @@ def find_profile ( create = True, path = '' ):
                 highest = max( highest, int( file[9:-5] ) )
             except:
                 pass
+            
     if create:
         highest += 1
+        
     return os.path.join( path, 'profiler_%d.prof' % highest )
 
 #-------------------------------------------------------------------------------

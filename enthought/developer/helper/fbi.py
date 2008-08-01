@@ -77,8 +77,8 @@ from enthought.developer.tools.universal_inspector \
 from enthought.developer.tools.listener \
     import Listener
 
-#from enthought.developer.tools.profiler \
-#    import Profiler
+from enthought.developer.tools.profiler \
+    import Profiler
 
 from enthought.developer.helper.file_position \
     import FilePosition
@@ -133,7 +133,7 @@ TheFavoritesBrowser = FavoritesBrowser(
 TheInspector = UniversalInspector(
     id = 'enthought.developer.helper.fbi.universal_inspector.state'
 )
-#TheProfiler = Profiler()
+TheProfiler = Profiler()
 
 #-------------------------------------------------------------------------------
 #  Returns the canonic form of a specified file name:
@@ -876,7 +876,7 @@ class FBI ( Handler ):
     listener = Constant( TheListener )
 
     # A profiler:
-    #profiler = Constant( TheProfiler )
+    profiler = Constant( TheProfiler )
 
     # A wiretap:
     wiretap = Property
@@ -993,39 +993,45 @@ class FBI ( Handler ):
                        Item( 'class_browser@',
                              show_label = False,
                              label      = 'Class Browser',
-                             export     = 'DockShellWindow'
+                             export     = 'DockShellWindow',
+                             editor     = InstanceEditor()
                        ),
                        Item( 'object_source@',
                              show_label = False,
                              label      = 'Object Source',
-                             export     = 'DockShellWindow'
+                             export     = 'DockShellWindow',
+                             editor     = InstanceEditor()
                        ),
                        Item( 'favorites_browser@',
                              show_label = False,
                              label      = 'Favorites Browser',
-                             export     = 'DockShellWindow'
+                             export     = 'DockShellWindow',
+                             editor     = InstanceEditor()
                        ),
                        Item( 'inspector@',
                              show_label = False,
                              label      = 'Universal Inspector',
-                             export     = 'DockShellWindow'
+                             export     = 'DockShellWindow',
+                             editor     = InstanceEditor()
                        ),
                        Item( 'wiretap@',
                              show_label = False,
                              label      = 'Wire Tap',
-                             editor     = InstanceEditor(),
-                             export     = 'DockShellWindow'
+                             export     = 'DockShellWindow',
+                             editor     = InstanceEditor()
                        ),
                        Item( 'listener@',
                              show_label = False,
                              label      = 'Listener',
-                             export     = 'DockShellWindow'
+                             export     = 'DockShellWindow',
+                             editor     = InstanceEditor()
                        ),
-                       #Item( 'profiler@',
-                       #      show_label = False,
-                       #      label      = 'Profiler',
-                       #      export     = 'DockShellWindow'
-                       #),
+                       Item( 'profiler@',
+                             show_label = False,
+                             label      = 'Profiler',
+                             export     = 'DockShellWindow',
+                             editor     = InstanceEditor()
+                       ),
                        Item( 'fbi_viewer@',
                              show_label = False,
                              label      = 'Source View',

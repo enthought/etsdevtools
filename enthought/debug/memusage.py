@@ -48,3 +48,12 @@ if sys.platform[:5] == 'linux':
             return int(l[22]) 
         except: 
             return
+
+if sys.platform == 'darwin':
+    import commands
+    def get_mem_usage(pid=os.getpid()):
+        """Return virtual memory size in bytes of the running python.
+        """
+        l = commands.getoutput('ps -p %s -o vsz'%pid).split()
+        return int(l[1])*1024
+

@@ -23,7 +23,7 @@ from os.path \
 
 from enthought.traits.api \
     import HasPrivateTraits, Str, Instance, List, Int, Float, File, Range, \
-           Any
+           Any, TraitValue, Property, property_depends_on, on_trait_change
 
 from enthought.traits.ui.api \
     import View, VGroup, Tabbed, Item, TableEditor, ListEditor
@@ -113,64 +113,154 @@ class Stats ( HasPrivateTraits ):
         self.cumulative_time  *= fraction
 
 #-------------------------------------------------------------------------------
-#  ProfilerStats table editor definition:
+#  Static table editor column definition:
 #-------------------------------------------------------------------------------
 
-profiler_stats_table_editor = TableEditor(
-    columns = [ ObjectColumn( name     = 'path_name', 
-                              label    = 'Path',
-                              editable = False ),
-                ObjectColumn( name     = 'module_name', 
-                              label    = 'Module',
-                              editable = False ),
-                ObjectColumn( name     = 'function',
-                              editable = False ),
-                ObjectColumn( name     = 'line',
-                              editable = False,
-                              horizontal_alignment = 'center' ),
-                ObjectColumn( name     = 'cumulative_calls',
+columns = [ 
+    ObjectColumn( name     = 'path_name', 
+                  label    = 'Path',
+                  editable = False ),
+    ObjectColumn( name     = 'module_name', 
+                  label    = 'Module',
+                  editable = False ),
+    ObjectColumn( name     = 'function',
+                  editable = False ),
+    ObjectColumn( name     = 'line',
+                  editable = False,
+                  horizontal_alignment = 'center' ),
+]
+
+other_columns = [
+    ObjectColumn( name     = 'file_name',
+                  label    = 'File Name',
+                  editable = False )
+]
+
+#-------------------------------------------------------------------------------
+#  'StatsCollection' class:
+#-------------------------------------------------------------------------------
+            
+class StatsCollection ( HasPrivateTraits ):
+    
+    # The individual profile statistics records:
+    stats = List( Stats )
+    
+    # The currently selected stats item:
+    selected = Instance( Stats )
+    
+    # The maximum number of cumulative calls for all of the stats:
+    max_cumulative_calls = Property
+    
+    # The maximum number of calls for all of the stats:
+    max_n_calls = Property
+    
+    # The maximum total time for all of the stats:
+    max_total_time = Property
+    
+    # The maximum total time per call for all of the stats:
+    max_total_time_per_call = Property
+    
+    # The maximum cumulative time for all of the stats:
+    max_cumulative_time = Property
+    
+    # The maximum cumulative time per call for all of the stats:
+    max_cumulative_time_per_call = Property
+    
+    #-- Traits View Definitions ------------------------------------------------
+    
+    def default_traits_view ( self ):
+        return View(
+            Item( 'stats',
+                  show_label = False,
+                  editor     = TableEditor(
+                      columns = columns + [ 
+                          ObjectColumn(
+                              name     = 'cumulative_calls',
                               label    = 'C. Calls',
                               format   = '%.0f',
                               editable = False,
-                              horizontal_alignment = 'center' ),
-                ObjectColumn( name     = 'n_calls',
+                              maximum  = TraitValue(
+                                  delegate = self,
+                                  name     = 'max_cumulative_calls' ) ),
+                          ObjectColumn( 
+                              name     = 'n_calls',
                               label    = '# Calls',
                               format   = '%.0f',
                               editable = False,
-                              horizontal_alignment = 'center' ),
-                ObjectColumn( name     = 'total_time',
+                              maximum  = TraitValue(
+                                  delegate = self,
+                                  name     = 'max_n_calls' ) ),
+                          ObjectColumn(
+                              name     = 'total_time',
                               label    = 'T. Time',
                               format   = '%.5f',
                               editable = False,
-                              horizontal_alignment = 'center' ),
-                ObjectColumn( name     = 'total_time_per_call',
+                              maximum  = TraitValue(
+                                  delegate = self,
+                                  name     = 'max_total_time' ) ),
+                          ObjectColumn(
+                              name     = 'total_time_per_call',
                               label    = 'T. Time/Call',
                               format   = '%.5f',
                               editable = False,
-                              horizontal_alignment = 'center' ),
-                ObjectColumn( name     = 'cumulative_time',
+                              maximum  = TraitValue(
+                                  delegate = self,
+                                  name     = 'max_total_time_per_call' ) ),
+                          ObjectColumn( 
+                              name     = 'cumulative_time',
                               label    = 'C. Time',
                               format   = '%.5f',
                               editable = False,
-                              horizontal_alignment = 'center' ),
-                ObjectColumn( name     = 'cumulative_time_per_call',
+                              maximum  = TraitValue(
+                                  delegate = self,
+                                  name     = 'max_cumulative_time' ) ),
+                          ObjectColumn( 
+                              name     = 'cumulative_time_per_call',
                               label    = 'C. Time/Call',
                               format   = '%.5f',
                               editable = False,
-                              horizontal_alignment = 'center' ) ],
-    other_columns = [ ObjectColumn( name     = 'file_name',
-                                    label    = 'File Name',
-                                    editable = False ) ],
-    filters            = [ EvalFilterTemplate,
-                           RuleFilterTemplate,
-                           MenuFilterTemplate ],
-    search             = EvalTableFilter(),
-    auto_size          = False,
-    selection_bg_color = 0xFBD391,
-    selection_color    = 'black',
-    selected           = 'selected'
-)
-            
+                              maximum  = TraitValue(
+                                  delegate = self,
+                                  name = 'max_cumulative_time_per_call' ) ) ],
+                      other_columns      = other_columns,
+                      filters            = [ EvalFilterTemplate,
+                                             RuleFilterTemplate,
+                                             MenuFilterTemplate ],
+                      search             = EvalTableFilter(),
+                      auto_size          = False,
+                      selection_bg_color = 0xFBD391,
+                      selection_color    = 'black',
+                      selected           = 'selected'
+                )
+            )
+        )
+    
+    #-- Property Implementations -----------------------------------------------
+    
+    @property_depends_on( 'stats' )
+    def _get_max_cumulative_calls ( self ):
+        return max( [ stat.cumulative_calls for stat in self.stats ] ) 
+    
+    @property_depends_on( 'stats' )
+    def _get_max_n_calls ( self ):
+        return max( [ stat.n_calls for stat in self.stats ] ) 
+    
+    @property_depends_on( 'stats' )
+    def _get_max_total_time ( self ):
+        return max( [ stat.total_time for stat in self.stats ] ) 
+        
+    @property_depends_on( 'stats' )
+    def _get_max_total_time_per_call ( self ):
+        return max( [ stat.total_time_per_call for stat in self.stats ] ) 
+        
+    @property_depends_on( 'stats' )
+    def _get_max_cumulative_time ( self ):
+        return max( [ stat.cumulative_time for stat in self.stats ] ) 
+        
+    @property_depends_on( 'stats' )
+    def _get_max_cumulative_time_per_call ( self ):
+        return max( [ stat.cumulative_time_per_call for stat in self.stats ] ) 
+    
 #-------------------------------------------------------------------------------
 #  'ProfilerStats' class:
 #-------------------------------------------------------------------------------
@@ -194,16 +284,13 @@ class ProfilerStats ( HasPrivateTraits ):
     hs_stats = Any
     
     # The individual profile statistics records:
-    stats = List( Stats )
+    stats = Instance( StatsCollection, () )
     
     # The individual profile statistics records for the currently selected item:
-    dd_stats = List( Stats )
+    dd_stats = Instance( StatsCollection, () )
     
     # Selection history:
-    selected_stats = List( Stats )
-    
-    # The currently selected Stats item:
-    selected = Instance( Stats )
+    selected_stats = Instance( StatsCollection, () )
     
     # Dictionary of all functions that call a specified function (closure)
     # (i.e. keys are tuples of the form: ( file, line, function )):
@@ -219,37 +306,33 @@ class ProfilerStats ( HasPrivateTraits ):
 
     traits_view = View(
         Tabbed(
-            VGroup( 
-                Item( 'stats',
-                      id         = 'stats',
-                      show_label = False,
-                      editor     = profiler_stats_table_editor
-                ),
-                label = 'Profile',
-                dock  = 'tab'
+            Item( 'stats',
+                  label      = 'Profile',
+                  id         = 'stats',
+                  style      = 'custom',
+                  show_label = False,
+                  dock       = 'tab'
             ),
-            VGroup( 
-                Item( 'dd_stats',
-                      id         = 'dd_stats',
-                      show_label = False,
-                      editor     = profiler_stats_table_editor
-                ),
-                label = 'Profile For Current Selection',
-                dock  = 'tab'
+            Item( 'dd_stats',
+                  label      = 'Profile For Current Selection',
+                  id         = 'dd_stats',
+                  style      = 'custom',
+                  show_label = False,
+                  dock       = 'tab'
             ),
-            VGroup( 
-                Item( 'selected_stats',
-                      id         = 'selected_stats',
-                      show_label = False,
-                      editor     = profiler_stats_table_editor
-                ),
-                label = 'Selection History',
-                dock  = 'tab'
+            Item( 'selected_stats',
+                  label      = 'Selection History',
+                  id         = 'selected_stats',
+                  style      = 'custom',
+                  show_label = False,
+                  dock       = 'tab'
             ),
             id = 'tabbed'
         ),
         id = 'enthought.developer.tools.profile_viewer.ProfilerStats'
     )
+        
+    #-- Trait Event Handlers ---------------------------------------------------
     
     #---------------------------------------------------------------------------
     #  Handles the 'file_name' trait being changed:  
@@ -262,7 +345,7 @@ class ProfilerStats ( HasPrivateTraits ):
         stats         = [ Stats( key, value ) 
                           for key, value in self.hs_stats.stats.items() ]
         stats.sort( lambda l, r: cmp( r.cumulative_time, l.cumulative_time ) )
-        self.stats = stats[ : self.owner.max_rows ]
+        self.stats.stats = stats[ : self.owner.max_rows ]
         self.compute_callers()
         self.compute_callees()
                        
@@ -270,12 +353,13 @@ class ProfilerStats ( HasPrivateTraits ):
     #  Handles the 'selected' trait being changed:  
     #---------------------------------------------------------------------------
 
+    @on_trait_change('stats:selected,dd_stats:selected,selected_stats:selected')
     def _selected_changed ( self, stats ):
         """ Handles the 'selected' trait being changed.
         """
         if stats is None:
             return
-            
+        
         # Update the view's export information:
         self.owner.stats_position = FilePosition( file_name = stats.file_name,
                                                   line      = stats.line )
@@ -283,11 +367,12 @@ class ProfilerStats ( HasPrivateTraits ):
         # Update the selection history:
         file_name = stats.file_name
         line      = stats.line
-        for stats2 in self.selected_stats:
+        for stats2 in self.selected_stats.stats:
             if (file_name == stats2.file_name) and (line == stats2.line):
                 break
         else:
-            self.selected_stats = (self.selected_stats + [ stats ])[-10:]
+            self.selected_stats.stats = \
+                (self.selected_stats.stats + [ stats ])[-10:]
             
         # Provide the detailed 'drill-down' information for the selection:
         self.drill_down( stats )
@@ -347,7 +432,7 @@ class ProfilerStats ( HasPrivateTraits ):
         dd_stats = [ Stats( callee, hs_stats[ callee ], fraction )
                      for callee, fraction in callees.items() ]
         dd_stats.sort( lambda l, r: cmp( r.cumulative_time, l.cumulative_time ))
-        self.dd_stats = dd_stats[ : self.owner.max_rows ]
+        self.dd_stats.stats = dd_stats[ : self.owner.max_rows ]
 
     #---------------------------------------------------------------------------
     #  Get the adjusted fraction of calls within a specified closure for a

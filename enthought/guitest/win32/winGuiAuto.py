@@ -26,18 +26,26 @@ def findTopWindow(wantedText=None, wantedClass=None, selectionFunction=None):
     function, or any combination of these. (Multiple selection criteria are
     ANDed. If this isn't what's wanted, use a selection function.)
 
-    Arguments:
-    wantedText          Text which the required window's captions must contain.
-    wantedClass         Class to which the required window must belong.
-    selectionFunction   Window selection function. Reference to a function
-                        should be passed here. The function should take hwnd as
-                        an argument, and should return True when passed the
-                        hwnd of a desired window.
+    Parameters
+    ----------
+    wantedText          
+        Text which the required window's captions must contain.
+    wantedClass         
+        Class to which the required window must belong.
+    selectionFunction   
+        Window selection function. Reference to a function
+        should be passed here. The function should take hwnd as
+        an argument, and should return True when passed the
+        hwnd of a desired window.
                     
-    Raises:
-    WinGuiAutoError     When no window found.
+    Raises
+    ------
+    WinGuiAutoError     
+        When no window found.
 
-    Usage example:      optDialog = findTopWindow(wantedText="Options")
+    Usage example::
+        
+        optDialog = findTopWindow(wantedText="Options")
     '''
     topWindows = findTopWindows(wantedText, wantedClass, selectionFunction)
     if topWindows:
@@ -52,22 +60,31 @@ def findTopWindow(wantedText=None, wantedClass=None, selectionFunction=None):
 
 def findTopWindows(wantedText=None, wantedClass=None, selectionFunction=None):
     '''Find the hwnd of top level windows.
+    
     You can identify windows using captions, classes, a custom selection
     function, or any combination of these. (Multiple selection criteria are
     ANDed. If this isn't what's wanted, use a selection function.)
 
-    Arguments:
-    wantedText          Text which required windows' captions must contain.
-    wantedClass         Class to which required windows must belong.
-    selectionFunction   Window selection function. Reference to a function
-                        should be passed here. The function should take hwnd as
-                        an argument, and should return True when passed the
-                        hwnd of a desired window.
+    Parameters
+    ----------
+    wantedText          
+        Text which required windows' captions must contain.
+    wantedClass         
+        Class to which required windows must belong.
+    selectionFunction   
+        Window selection function. Reference to a function
+        should be passed here. The function should take hwnd as
+        an argument, and should return True when passed the
+        hwnd of a desired window.
 
-    Returns:            A list containing the window handles of all top level
-                        windows matching the supplied selection criteria.
+    Returns
+    -------
+    A list containing the window handles of all top level
+    windows matching the supplied selection criteria.
 
-    Usage example:      optDialogs = findTopWindows(wantedText="Options")
+    Usage example::
+        
+        optDialogs = findTopWindows(wantedText="Options")
     '''
     results = []
     topWindows = []
@@ -84,17 +101,24 @@ def findTopWindows(wantedText=None, wantedClass=None, selectionFunction=None):
     
 def dumpWindow(hwnd):
     '''Dump all controls from a window into a nested list
+    
     Useful during development, allowing to you discover the structure of the
     contents of a window, showing the text and class of all contained controls.
 
-    Arguments:      The window handle of the top level window to dump.
+    Parameters
+    ----------
+    hwnd
+        The window handle of the top level window to dump.
 
-    Returns         A nested list of controls. Each entry consists of the
-                    control's hwnd, its text, its class, and its sub-controls,
-                    if any.
+    Returns
+    -------
+    A nested list of controls. Each entry consists of the
+    control's hwnd, its text, its class, and its sub-controls, if any.
 
-    Usage example:  replaceDialog = findTopWindow(wantedText='Replace')
-                    pprint.pprint(dumpWindow(replaceDialog))
+    Usage example::
+        
+        replaceDialog = findTopWindow(wantedText='Replace')
+        pprint.pprint(dumpWindow(replaceDialog))
     '''
     windows = []
     try:
@@ -115,31 +139,42 @@ def findControl(topHwnd,
                 wantedClass=None,
                 selectionFunction=None):
     '''Find a control.
+    
     You can identify a control using caption, classe, a custom selection
     function, or any combination of these. (Multiple selection criteria are
     ANDed. If this isn't what's wanted, use a selection function.)
 
-    Arguments:
-    topHwnd             The window handle of the top level window in which the
-                        required controls reside.
-    wantedText          Text which the required control's captions must contain.
-    wantedClass         Class to which the required control must belong.
-    selectionFunction   Control selection function. Reference to a function
-                        should be passed here. The function should take hwnd as
-                        an argument, and should return True when passed the
-                        hwnd of the desired control.
+    Parameters
+    ----------
+    topHwnd             
+        The window handle of the top level window in which the
+        required controls reside.
+    wantedText          
+        Text which the required control's captions must contain.
+    wantedClass         
+        Class to which the required control must belong.
+    selectionFunction   
+        Control selection function. Reference to a function
+        should be passed here. The function should take hwnd as
+        an argument, and should return True when passed the
+        hwnd of the desired control.
 
-    Returns:            The window handle of the first control matching the
-                        supplied selection criteria.
+    Returns
+    -------
+    The window handle of the first control matching the
+    supplied selection criteria.
                     
-    Raises:
-    WinGuiAutoError     When no control found.
+    Raises
+    ------
+    WinGuiAutoError, when no control found.
 
-    Usage example:      optDialog = findTopWindow(wantedText="Options")
-                        okButton = findControl(optDialog,
-                                               wantedClass="Button",
-                                               wantedText="OK")
-                        '''
+    Usage example::
+        
+        optDialog = findTopWindow(wantedText="Options")
+        okButton = findControl(optDialog,
+                               wantedClass="Button",
+                               wantedText="OK")
+    '''
     controls = findControls(topHwnd,
                             wantedText=wantedText,
                             wantedClass=wantedClass,
@@ -161,28 +196,38 @@ def findControls(topHwnd,
                  wantedClass=None,
                  selectionFunction=None):
     '''Find controls.
+    
     You can identify controls using captions, classes, a custom selection
     function, or any combination of these. (Multiple selection criteria are
     ANDed. If this isn't what's wanted, use a selection function.)
 
-    Arguments:
-    topHwnd             The window handle of the top level window in which the
-                        required controls reside.
-    wantedText          Text which the required controls' captions must contain.
-    wantedClass         Class to which the required controls must belong.
-    selectionFunction   Control selection function. Reference to a function
-                        should be passed here. The function should take hwnd as
-                        an argument, and should return True when passed the
-                        hwnd of a desired control.
+    Parameters
+    ----------
+    topHwnd             
+        The window handle of the top level window in which the
+        required controls reside.
+    wantedText          
+        Text which the required controls' captions must contain.
+    wantedClass         
+        Class to which the required controls must belong.
+    selectionFunction   
+        Control selection function. Reference to a function
+        should be passed here. The function should take hwnd as
+        an argument, and should return True when passed the
+        hwnd of a desired control.
 
-    Returns:            The window handles of the controls matching the
-                        supplied selection criteria.    
+    Returns
+    -------
+    The window handles of the controls matching the
+    supplied selection criteria.    
 
-    Usage example:      optDialog = findTopWindow(wantedText="Options")
-                        def findButtons(hwnd, windowText, windowClass):
-                            return windowClass == "Button"
-                        buttons = findControl(optDialog, wantedText="Button")
-                        '''
+    Usage example::
+
+        optDialog = findTopWindow(wantedText="Options")
+        def findButtons(hwnd, windowText, windowClass):
+            return windowClass == "Button"
+        buttons = findControl(optDialog, wantedText="Button")
+    '''
     def searchChildWindows(currentHwnd):
         results = []
         childWindows = []
@@ -216,34 +261,46 @@ def findControls(topHwnd,
 def getTopMenu(hWnd):
     '''Get a window's main, top level menu.
     
-    Arguments:
-    hWnd            The window handle of the top level window for which the top
-                    level menu is required.
+    Parameters
+    ----------
+    hWnd            
+        The window handle of the top level window for which the top
+        level menu is required.
 
-    Returns:        The menu handle of the window's main, top level menu.
+    Returns
+    -------
+    The menu handle of the window's main, top level menu.
 
-    Usage example:  hMenu = getTopMenu(hWnd)'''
+    Usage example::
+        
+        hMenu = getTopMenu(hWnd)'''
     return ctypes.windll.user32.GetMenu(ctypes.c_long(hWnd))
 
 def activateMenuItem(hWnd, menuItemPath):
-    '''Activate a menu item
+    '''Activate a menu item.
     
-    Arguments:
-    hWnd                The window handle of the top level window whose menu you 
-                        wish to activate.
-    menuItemPath        The path to the required menu item. This should be a
-                        sequence specifying the path through the menu to the
-                        required item. Each item in this path can be specified
-                        either as an index, or as a menu name.
+    Parameters
+    ----------
+    hWnd                
+        The window handle of the top level window whose menu you 
+        wish to activate.
+    menuItemPath        
+        The path to the required menu item. This should be a
+        sequence specifying the path through the menu to the
+        required item. Each item in this path can be specified
+        either as an index, or as a menu name.
                     
-    Raises:
-    WinGuiAutoError     When the requested menu option isn't found.
+    Raises
+    ------
+    WinGuiAutoError when the requested menu option isn't found.
 
-    Usage example:      activateMenuItem(notepadWindow, ('file', 'open'))
+    Usage example::
+        
+        activateMenuItem(notepadWindow, ('file', 'open'))
     
-                        Which is exactly equivalent to...
+    Which is exactly equivalent to::
                     
-                        activateMenuItem(notepadWindow, (0, 1))'''
+        activateMenuItem(notepadWindow, (0, 1))'''
     # By Axel Kowald (kowald@molgen.mpg.de)
     # Modified by S Brunning to accept strings in addition to indicies.
 
@@ -298,22 +355,28 @@ def activateMenuItem(hWnd, menuItemPath):
 def getMenuInfo(hMenu, uIDItem):
     '''Get various info about a menu item.
     
-    Arguments:
-    hMenu               The menu in which the item is to be found.
-    uIDItem             The item's index
+    Parameters
+    ----------
+    hMenu               
+        The menu in which the item is to be found.
+    uIDItem             
+        The item's index
 
-    Returns:            Menu item information object. This object is basically
-                        a 'bunch'
-                        (see http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/52308).
-                        It will have useful attributes: name, itemCount,
-                        submenu, isChecked, isDisabled, isGreyed, and
-                        isSeperator
+    Returns
+    -------
+    Menu item information object. This object is basically a 'bunch'
+    (see http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/52308).
+    It will have useful attributes: name, itemCount,
+    submenu, isChecked, isDisabled, isGreyed, and isSeperator
                     
-    Raises:
-    WinGuiAutoError     When the requested menu option isn't found.       
+    Raises
+    ------
+    WinGuiAutoError when the requested menu option isn't found.       
 
-    Usage example:      submenuInfo = getMenuInfo(hMenu, submenu)
-                        hMenu, hMenuItemCount = submenuInfo.submenu, submenuInfo.itemCount'''
+    Usage example::
+        
+        submenuInfo = getMenuInfo(hMenu, submenu)
+        hMenu, hMenuItemCount = submenuInfo.submenu, submenuInfo.itemCount'''
     # An object to hold the menu info
     class MenuInfo(Bunch):
         pass
@@ -354,21 +417,27 @@ def getMenuInfo(hMenu, uIDItem):
 def clickButton(hwnd):
     '''Simulates a single mouse click on a button
 
-    Arguments:
-    hwnd    Window handle of the required button.
+    Parameters
+    ----------
+    hwnd    
+        Window handle of the required button.
 
-    Usage example:  okButton = findControl(fontDialog,
-                                           wantedClass="Button",
-                                           wantedText="OK")
-                    clickButton(okButton)
+    Usage example::
+        
+        okButton = findControl(fontDialog,
+                               wantedClass="Button",
+                               wantedText="OK")
+        clickButton(okButton)
     '''
     _sendNotifyMessage(hwnd, win32con.BN_CLICKED)
 
 def clickStatic(hwnd):
     '''Simulates a single mouse click on a static
 
-    Arguments:
-    hwnd    Window handle of the required static.
+    Parameters
+    ----------
+    hwnd    
+        Window handle of the required static.
 
     Usage example:  TODO
     '''
@@ -377,8 +446,10 @@ def clickStatic(hwnd):
 def doubleClickStatic(hwnd):
     '''Simulates a double mouse click on a static
 
-    Arguments:
-    hwnd    Window handle of the required static.
+    Parameters
+    ----------
+    hwnd    
+        Window handle of the required static.
 
     Usage example:  TODO
     '''
@@ -387,13 +458,19 @@ def doubleClickStatic(hwnd):
 def getComboboxItems(hwnd):
     '''Returns the items in a combo box control.
 
-    Arguments:
-    hwnd            Window handle for the combo box.
+    Parameters
+    ----------
+    hwnd            
+        Window handle for the combo box.
 
-    Returns:        Combo box items.
+    Returns
+    -------
+    Combo box items.
 
-    Usage example:  fontCombo = findControl(fontDialog, wantedClass="ComboBox")
-                    fontComboItems = getComboboxItems(fontCombo)
+    Usage example::
+        
+        fontCombo = findControl(fontDialog, wantedClass="ComboBox")
+        fontComboItems = getComboboxItems(fontCombo)
     '''
     
     return _getMultipleWindowValues(hwnd,
@@ -403,14 +480,18 @@ def getComboboxItems(hwnd):
 def selectComboboxItem(hwnd, item):
     '''Selects a specified item in a Combo box control.
 
-    Arguments:
-    hwnd            Window handle of the required combo box.
-    item            The reqired item. Either an index, of the text of the
-                    required item.
+    Parameters
+    ----------
+    hwnd            
+        Window handle of the required combo box.
+    item           
+        The reqired item. Either an index, of the text of the required item.
 
-    Usage example:  fontComboItems = getComboboxItems(fontCombo)
-                    selectComboboxItem(fontCombo,
-                                       random.choice(fontComboItems))
+    Usage example::
+        
+        fontComboItems = getComboboxItems(fontCombo)
+        selectComboboxItem(fontCombo,
+                           random.choice(fontComboItems))
     '''
     try: # item is an index Use this to select
         0 + item
@@ -424,10 +505,14 @@ def selectComboboxItem(hwnd, item):
 def getListboxItems(hwnd):
     '''Returns the items in a list box control.
 
-    Arguments:
-    hwnd            Window handle for the list box.
+    Parameters
+    ----------
+    hwnd            
+        Window handle for the list box.
 
-    Returns:        List box items.
+    Returns
+    -------
+    List box items.
 
     Usage example:  TODO
     '''
@@ -439,10 +524,12 @@ def getListboxItems(hwnd):
 def selectListboxItem(hwnd, item):
     '''Selects a specified item in a list box control.
 
-    Arguments:
-    hwnd            Window handle of the required list box.
-    item            The reqired item. Either an index, of the text of the
-                    required item.
+    Parameter
+    ---------
+    hwnd            
+        Window handle of the required list box.
+    item            
+        The reqired item. Either an index, of the text of the required item.
 
     Usage example:  TODO
     '''
@@ -458,12 +545,18 @@ def selectListboxItem(hwnd, item):
 def getEditText(hwnd):
     '''Returns the text in an edit control.
 
-    Arguments:
-    hwnd            Window handle for the edit control.
+    Parameters
+    ----------
+    hwnd            
+        Window handle for the edit control.
 
-    Returns         Edit control text lines.
+    Returns
+    -------
+    Edit control text lines.
 
-    Usage example:  pprint.pprint(getEditText(editArea))
+    Usage example::
+        
+        pprint.pprint(getEditText(editArea))
     '''
     return _getMultipleWindowValues(hwnd,
                                     getCountMessage=win32con.EM_GETLINECOUNT,
@@ -472,31 +565,38 @@ def getEditText(hwnd):
 def setEditText(hwnd, text, append=False):
     '''Set an edit control's text.
     
-    Arguments:
-    hwnd            The edit control's hwnd.
-    text            The text to send to the control. This can be a single
-                    string, or a sequence of strings. If the latter, each will
-                    be become a a seperate line in the control.
-    append          Should the new text be appended to the existing text?
-                    Defaults to False, meaning that any existing text will be
-                    replaced. If True, the new text will be appended to the end
-                    of the existing text.
-                    Note that the first line of the new text will be directly
-                    appended to the end of the last line of the existing text.
-                    If appending lines of text, you may wish to pass in an
-                    empty string as the 1st element of the 'text' argument.
+    Parameters
+    ----------
+    hwnd            
+        The edit control's hwnd.
+    text            
+        The text to send to the control. This can be a single
+        string, or a sequence of strings. If the latter, each will
+        be become a a seperate line in the control.
+    append          
+        Should the new text be appended to the existing text?
+        Defaults to False, meaning that any existing text will be
+        replaced. If True, the new text will be appended to the end
+        of the existing text.
+        Note that the first line of the new text will be directly
+        appended to the end of the last line of the existing text.
+        If appending lines of text, you may wish to pass in an
+        empty string as the 1st element of the 'text' argument.
 
-    Usage example:  print "Enter various bits of text."
-                    setEditText(editArea, "Hello, again!")
-                    time.sleep(.5)
-                    setEditText(editArea, "You still there?")
-                    time.sleep(.5)
-                    setEditText(editArea, ["Here come", "two lines!"])
-                    time.sleep(.5)
+    Usage example::
+        
+        print "Enter various bits of text."
+        setEditText(editArea, "Hello, again!")
+        time.sleep(.5)
+        setEditText(editArea, "You still there?")
+        time.sleep(.5)
+        setEditText(editArea, ["Here come", "two lines!"])
+        time.sleep(.5)
                     
-                    print "Add some..."
-                    setEditText(editArea, ["", "And a 3rd one!"], append=True)
-                    time.sleep(.5)'''
+        print "Add some..."
+        setEditText(editArea, ["", "And a 3rd one!"], append=True)
+        time.sleep(.5)
+    '''
     
     # Ensure that text is a list        
     try:
@@ -529,13 +629,19 @@ def _getMultipleWindowValues(hwnd, getCountMessage, getValueMessage):
     items, and another to retrieve them. This internal utility function
     performs the common processing for this pattern.
 
-    Arguments:
-    hwnd                Window handle for the window for which items should be
-                        retrieved.
-    getCountMessage     Item count message.
-    getValueMessage     Value retrieval message.
+    Parameters
+    ----------
+    hwnd                
+        Window handle for the window for which items should be retrieved.
+    getCountMessage     
+        Item count message.
+    getValueMessage     
+        Value retrieval message.
 
-    Returns:            Retrieved items.'''
+    Returns
+    -------
+    Retrieved items.
+    '''
     result = []
     
     VALUE_LENGTH = 256

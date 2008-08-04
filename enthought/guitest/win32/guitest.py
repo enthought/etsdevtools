@@ -1044,10 +1044,10 @@ def SendKeys(keys, delay=50):
     characters that have special meaning. This allows sending control
     codes and modifiers:
 
-	~ means ENTER
-	+ means SHIFT 
-	^ means CTRL 
-	% means ALT
+	- ~ means ENTER
+	- + means SHIFT 
+	- ^ means CTRL 
+	- % means ALT
 
     The parens allow character grouping. You may group several
     characters, so that a specific keyboard modifier applies to all of
@@ -1057,8 +1057,9 @@ def SendKeys(keys, delay=50):
     sends a '+' and a '{'). You can also use them to specify certain
     named actions:
 
+    ===========   ======================
 	Name          Action
-
+    ===========   ======================
 	{BACKSPACE}   Backspace
 	{BS}          Backspace
 	{BKSP}        Backspace
@@ -1082,15 +1083,16 @@ def SendKeys(keys, delay=50):
 	{TAB}         Tab
 	{UP}          Up arrow
 	{PAUSE}       Pause
-        {F1}          Function Key 1
-        ...           ...
-        {F24}         Function Key 24
-        {SPC}         Spacebar
-        {SPACE}       Spacebar
-        {SPACEBAR}    Spacebar
-        {LWI}         Left Windows Key
-        {RWI}         Right Windows Key 
-        {APP}         Open Context Menu Key
+    {F1}          Function Key 1
+    ...           ...
+    {F24}         Function Key 24
+    {SPC}         Spacebar
+    {SPACE}       Spacebar
+    {SPACEBAR}    Spacebar
+    {LWI}         Left Windows Key
+    {RWI}         Right Windows Key 
+    {APP}         Open Context Menu Key
+    ===========   ======================
 
     All these named actions take an optional integer argument, like in
     {RIGHT 5}.  For all of them, except PAUSE, the argument means a
@@ -1107,17 +1109,17 @@ def SendMouse(command):
     """This function emulates mouse input.  The `command` parameter is
     a string containing one or more of the following substrings:
 
-        {LEFTDOWN}    left button down
-        {LEFTUP}      left button up
-        {MIDDLEDOWN}  middle button down
-	{MIDDLEUP}    middle button up
-	{RIGHTDOWN}   right button down
-	{RIGHTUP}     right button up
-	{LEFTCLICK}   left button single click
-	{MIDDLECLICK} middle button single click
-	{RIGHTCLICK}  right button single click
-	{ABSx,y}      move to absolute coordinate ( x, y )
-        {RELx,y}      move to relative coordinate ( x, y )
+    - {LEFTDOWN}    left button down
+    - {LEFTUP}      left button up
+    - {MIDDLEDOWN}  middle button down
+	- {MIDDLEUP}    middle button up
+	- {RIGHTDOWN}   right button down
+	- {RIGHTUP}     right button up
+	- {LEFTCLICK}   left button single click
+	- {MIDDLECLICK} middle button single click
+	- {RIGHTCLICK}  right button single click
+	- {ABSx,y}      move to absolute coordinate ( x, y )
+    - {RELx,y}      move to relative coordinate ( x, y )
 
     Note: Absolute mouse coordinates range from 0 to 65535.  Relative
     coordinates can be positive or negative.  If you need pixel
@@ -1125,14 +1127,14 @@ def SendMouse(command):
 
     Also equivalent low-level functions are available:
 
-        SendLButtonUp()
-        SendLButtonDown()
-        SendMButtonUp()
-        SendMButtonDown()
-        SendRButtonUp()
-        SendRButtonDown()
-        SendMouseMoveRel(x,y)
-        SendMouseMoveAbs(x,y)
+    - SendLButtonUp()
+    - SendLButtonDown()
+    - SendMButtonUp()
+    - SendMButtonDown()
+    - SendRButtonUp()
+    - SendRButtonDown()
+    - SendMouseMoveRel(x,y)
+    - SendMouseMoveAbs(x,y)
     """
     p = re.compile(r'\{(.+?)\}')
     mouse_abs = re.compile(r'abs(-?\d+),\s*(-?\d+)')

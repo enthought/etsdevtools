@@ -92,25 +92,27 @@ class Connection ( HasStrictTraits ):
     
     # The mode (i.e. direction) of connection supported. The meaning of the
     # various values are:
+    #
     # - to:   Data is only copied to the associated trait.
     # - from: Data is only copied from the associated trait.
-    # - both: Data is copied to and from the associated trait (i.e. whenever
-    # data is modified on either end of a connection, it is copied to the
-    # trait on the other end of the connection):
+    # - both: Data is copied to and from the associated trait (i.e., whenever
+    #   data is modified on either end of a connection, it is copied to the
+    #   trait on the other end of the connection):
     mode = Enum( 'to', 'from', 'both' )
     
     # The type of drag and drop operations supported (the direction is
     # determined by the 'mode' trait; that is: to = drop target only, from =
     # drag source only; both = both drag source and drop target). The meaning of
     # the various values is as follows:
+    # 
     # - object: The value is treated as a normal Python object and is not
-    #           modified. If the 'mode' is 'from' or 'both', left clicking the
-    #           feature image will also initiate a 'quick-drag' operation.
+    #   modified. If the 'mode' is 'from' or 'both', left clicking the
+    #   feature image will also initiate a 'quick-drag' operation.
     # - file:   The value is a file, and supports various types of conversions
-    #           to the format accepted by the drop target. If the 'mode' is
-    #           'to' or 'both', left clicking the feature image will also 
-    #           the standard file prompt. If 'mode' is 'from', left clicking
-    #           the image will initiate a 'quick-drag' operation.
+    #   to the format accepted by the drop target. If the 'mode' is
+    #   'to' or 'both', left clicking the feature image will also 
+    #   the standard file prompt. If 'mode' is 'from', left clicking
+    #   the image will initiate a 'quick-drag' operation.
     # - none:   Drag and drop is not allowed.
     drag = DragMode
     

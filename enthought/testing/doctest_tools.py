@@ -13,7 +13,7 @@ def doctest_for_module(module):
     """ Create a TestCase from a module's doctests that will be run by the
         standard unittest.main().
 
-        Example tests/test_foo.py:
+        Example tests/test_foo.py::
 
             import unittest
 
@@ -31,11 +31,11 @@ def doctest_for_module(module):
                 # module foo.
                 unittest.main()
 
-        Alternatively, you can say
+        Alternatively, you can say::
 
             FooDocTest = doctest_for_module(foo)
 
-        instead of
+        instead of::
 
             class FooDocTest(doctest_for_module(foo)):
                 pass

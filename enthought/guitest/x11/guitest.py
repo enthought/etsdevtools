@@ -264,25 +264,26 @@ def SendKeys(*args):
     The keystrokes to send are those specified in KEYS.  Some characters
     have special meaning, they are:
 
-            Modifier Keys:
-            ^    	CTRL
-            %    	ALT
-            +    	SHIFT
+    Modifier Keys
+    -------------
+    
+    - ^    CTRL
+    - %    ALT
+    - +    SHIFT
 
-            Other Keys:
-            ~    	ENTER
-            
-       	ENTER
-            	  	TAB
-            ( and ) MODIFIER USAGE
-            { and } QUOTE CHARACTERS
+    Other Keys
+    ----------
+    
+    - ~    ENTER
+    - ()   modifier delimiters
+    - {}   quote delimiters
 
-    Simply, one can send a text string like so:
+    Simply, one can send a text string like so::
 
             SendKeys('Hello, how are you today?');
 
-    Parenthesis allow a modifier to work on one or more characters.  For
-    example:
+    Parentheses allow a modifier to work on one or more characters.  For
+    example::
 
             SendKeys('%(f)q'); # Alt-f, then press q
             SendKeys('%(fa)^(m)'); # Alt-f, Alt-a, Ctrl-m
@@ -296,27 +297,27 @@ def SendKeys(*args):
     be repeated using a number that is space delimited after the
     preceeding key.
 
-    Quote Special Characters
+    Quote Special Characters::
 
-            SendKeys('{{}'); # {
-            SendKeys('{+}'); # +
+        SendKeys('{{}'); # {
+        SendKeys('{+}'); # +
 
-            You can also use QuoteStringForSendKeys to perform quoting.
+    You can also use QuoteStringForSendKeys to perform quoting.
 
-    Aliased Key Names
-
+    Aliased Key Names::
+        
             SendKeys('{BAC}'); # Backspace
             SendKeys('{F1 F2 F3}'); # F1, F2, F3
             SendKeys('{TAB 3}'); # Press TAB 3 times
             SendKeys('{SPC 3 a b c}'); # Space 3 times, a, b, c
 
-    Special Functionality
-
+    Special Functionality::
+        
             # Pause execution for 500 milliseconds
             SendKeys('{PAUSE 500}');
 
-    Combinations
-
+    Combinations::
+        
             SendKeys('abc+(abc){TAB PAUSE 500}'); # a, b, c, A, B, C, Tab, Pause 500
             SendKeys('+({a b c})'); # A, B, C
 
@@ -331,8 +332,9 @@ def SendKeys(*args):
     key is BackSpace, so you could use {BackSpace} in place of {bac} if
     you really wanted to.
 
+            ====    ===========
             Name    Action
-            -------------------
+            ====    ===========
             BAC     BackSpace
             BS      BackSpace
             BKS     BackSpace
@@ -370,8 +372,9 @@ def SendKeys(*args):
             SPC     Space
             TAB     Tab
             UP      Up
+            ====    ===========
 
-    zero is returned on failure, non-zero for success.
+    Zero is returned on failure, non-zero for success.
 
     """
   return _guitest.SendKeys(*args)

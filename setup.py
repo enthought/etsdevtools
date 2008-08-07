@@ -30,6 +30,14 @@ inspecting code.
   production code. NOTE: These tools are functional, but are not being
   developed or supported. They have been mainly superceded by the tools
   in the Enthought Developer Tool Suite.
+  
+Prerequisites
+-------------
+You must have the following libraries installed before building or installing
+ETSDevTools:
+    
+* `Numpy <http://pypi.python.org/pypi/numpy/1.1.1>`_ version 1.0.4 or later. 
+* `setuptools <http://pypi.python.org/pypi/setuptools/0.6c8>`_
 """
 
 

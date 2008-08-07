@@ -19,10 +19,10 @@ ENTHOUGHTBASE = etsdep('EnthoughtBase', '3.0.0b2')
 ENTHOUGHTBASE_UI = etsdep('EnthoughtBase[ui]', '3.0.0b2')  # e.util.wx.* imported in developer
 ENVISAGECORE = etsdep('EnvisageCore', '3.0.0b2')
 ENVISAGEPLUGINS = etsdep('EnvisagePlugins', '3.0.0b2')  # -- imported only in enthought.gotcha
-TRAITSBACKENDWX = etsdep('TraitsBackendWX', '3.0.0')  # -- imported mostly by enthought.developer, but one from enthought.gotcha
-TRAITSGUI = etsdep('TraitsGUI', '3.0.0')
-TRAITSGUI_DOCK = etsdep('TraitsGUI[dock]', '3.0.0')  # -- imported only by enthought.developer.
-TRAITS_UI = etsdep('Traits[ui]', '3.0.0')
+TRAITSBACKENDWX = etsdep('TraitsBackendWX', '3.0.1b1')  # -- imported mostly by enthought.developer, but one from enthought.gotcha
+TRAITSGUI = etsdep('TraitsGUI', '3.0.1b1')
+TRAITSGUI_DOCK = etsdep('TraitsGUI[dock]', '3.0.1b1')  # -- imported only by enthought.developer.
+TRAITS_UI = etsdep('Traits[ui]', '3.0.1b1')
 
 
 # A dictionary of the pre_setup information.

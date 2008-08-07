@@ -326,12 +326,15 @@ class OutputHTML(OutputBase):
         template = self.template_loader.load('module_index')
 
         # prepare hierarchy of packages, modules
-        mods = [(m.abs_name.lower(), m) for m in module_list]
-        mods.sort()
-        packages = [ m[1] for m in mods if m[1].is_package() ]
-        module_hierarchy = self._add_links(hierarchicalize_modules(module_list))
-        package_hierarchy = self._add_links(hierarchicalize_modules(packages))
-
+        mods_with_names = [(m.abs_name.lower(), m) for m in module_list]
+        mods_with_names.sort()
+        
+        modules_sorted = [ m[1] for m in mods_with_names ]
+        packages_sorted = [ m[1] for m in mods_with_names if m[1].is_package() ]
+        
+        module_hierarchy = self._add_links(hierarchicalize_modules(modules_sorted))
+        package_hierarchy = self._add_links(hierarchicalize_modules(packages_sorted))
+            
         # generate an overall docstring by concatenating the docstrings for
         # top-level packages (usually there will be only one)
         docstring = "\n".join([ self._format_docstring(m, m.docstring) for m, l, s in package_hierarchy ])

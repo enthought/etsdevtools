@@ -5,7 +5,7 @@
 {% for letter in letter_list %}
 <h2 id="letter-{{letter}}">{{letter}}</h2>
 <ul>
-  {% for link, display_name, text in objects[letter] %}
+  {% for display_name, link, text in objects[letter] %}
   <li><a href="{{link}}">{{display_name}}</a>{% if text %}: {{text}}{% endif %}</li>
   {% endfor %}
 </ul>

@@ -380,11 +380,15 @@ class OutputHTML(OutputBase):
             display_name = c.name
             text = "%s" % c.abs_name
 
-            classes_grouped[letter] = classes_grouped.get(letter, [ ]) + [ (link, display_name, text) ]
+            classes_grouped[letter] = classes_grouped.get(letter, [ ]) + [ (display_name, link, text) ]
 
         # list of available first letters (for links at top of index)
         letter_list = classes_grouped.keys()
         letter_list.sort()
+        
+        # sort by class name within letter categories
+        for letter in letter_list:
+            alpha_sort(classes_grouped[letter])
 
         objects = classes_grouped
         

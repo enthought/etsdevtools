@@ -1,3 +1,13 @@
+#------------------------------------------------------------------------------
+# Copyright (c) 2006 by Enthought, Inc.
+# All rights reserved.
+#------------------------------------------------------------------------------
+""" A collection of utilities for unit testing user interfaces.  
+    Part of the DevTools project of the Enthought Tool Suite.
+    
+    These utilities are a translation of the Perl X11::GUITest and 
+    Win32::GuiTest modules.
+"""
 from sys import platform
 
 if platform == 'win32':

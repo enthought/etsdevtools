@@ -1,6 +1,7 @@
 """
-A traits-aware documentation tool
----------------------------------
+A traits-aware documentation tool. 
+Part of the DevTools project of the Enthought Tool Suite.
+
 :Author: David Baer
 :Contact: dbaer@14853.net
 :Organization: `Enthought, Inc.`_

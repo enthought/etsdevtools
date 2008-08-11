@@ -16,7 +16,7 @@
 #
 #-------------------------------------------------------------------------------
 """ A collection of utilities for development and debugging of Traits-based
-    programs. Part of the DevTools project of the Enthought Tool Suite.
+    programs. Part of the ETSDevTools project of the Enthought Tool Suite.
     
     These utilities can be used as plug-ins to your Envisage application while
     you are developing it, and then removed when you are ready to release it.

@@ -3,7 +3,7 @@
 # All rights reserved.
 #------------------------------------------------------------------------------
 """ A collection of utilities for unit testing user interfaces.  
-    Part of the DevTools project of the Enthought Tool Suite.
+    Part of the ETSDevTools project of the Enthought Tool Suite.
     
     These utilities are a translation of the Perl X11::GUITest and 
     Win32::GuiTest modules.

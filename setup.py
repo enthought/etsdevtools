@@ -19,8 +19,6 @@ inspecting code.
   code. It extracts not only docstrings, but also plain comments that
   immediately precede variable assignments (both module-scope variables and
   class attributes).
-- **Gotcha**: A profiling tool based on the Hotshot profiler, which uses
-  Chaco for plotting profile data. Can be used as an Envisage plug-in.
 - **enthought.guitest**: A collection of utilities for unit testing user
   interfaces (translation of the Perl X11::GUITest and Win32::GuiTest modules).
 - **enthought.testing**: Scripts related to running unit tests, based on

@@ -37,3 +37,14 @@ from tool_feature \
 from add_standard_features \
     import add_standard_features
     
+### Import all features.###
+from drag_drop_feature import DragDropFeature
+from drop_file_feature import DropFileFeature
+from connect_feature import ConnectFeature
+from popup_menu_feature import PopupMenuFeature
+from options_feature import OptionsFeature
+from save_state_feature import SaveStateFeature
+from save_feature import SaveFeature
+from custom_feature import ACustomFeature
+from dock_control_feature import DockControlFeature
+from debug_feature import DebugFeature

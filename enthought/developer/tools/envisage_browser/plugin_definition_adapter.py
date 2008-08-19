@@ -24,9 +24,6 @@ from enthought.traits.ui.api \
 from enthought.traits.ui.menu \
     import NoButtons
     
-from enthought.envisage \
-    import ExtensionItem
-    
 from enthought.developer.tools.envisage_browser.object_adapter \
     import ObjectAdapter, Export
     
@@ -65,18 +62,9 @@ class PluginDefinitionAdapter ( ObjectAdapter ):
     nodes = Property( List )
     
     # Re-exported PluginDefinition traits:    
-    autostart        = Export
-    class_name       = Export
-    enabled          = Export
+    activator        = Export
     id               = Export
     name             = Export
-    provider_name    = Export
-    provider_url     = Export
-    version          = Export
-    
-    requires         = Export
-    extension_points = Export
-    extensions       = Export
 
     #---------------------------------------------------------------------------
     #  Traits view definitions:    
@@ -88,19 +76,11 @@ class PluginDefinitionAdapter ( ObjectAdapter ):
                        VGroup(
                            Item( 'name~' ),
                            Item( 'id~' ),
-                           Item( 'version~' ),
-                           Item( 'provider_name~' ),
-                           Item( 'provider_url~' ),
                            label       = 'Description',
                            show_border = True
                        ),
                        VGroup(
-                           Item( 'class_name~' ),
-                           Item( 'file_name~' ),
-                           HGroup( 
-                               Item( 'autostart~', width = -40 ),
-                               Item( 'enabled~',   width = -40 )
-                           ),
+                           Item( 'application~' ),
                            label       = 'Implementation',
                            show_border = True,
                        ),
@@ -124,28 +104,19 @@ class PluginDefinitionAdapter ( ObjectAdapter ):
                buttons   = NoButtons
            )
                
-#-- Property Implementations ---------------------------------------------------
+#-- Property Implementations -------------------------------------------------
 
-    def _get_adapted_required_by ( self ):
-        if self._adapted_required_by is None:
-            self._adapted_required_by = self.application.get_plugins_using(
-                                                                       self.id )
-            
-        return self._adapted_required_by
-        
-    def _get_adapted_requires ( self ):
-        if self._adapted_requires is None:
-            gpf = self.application.get_plugin_for
-            self._adapted_requires = [ gpf( id ) for id in self.requires ]
-            
-        return self._adapted_requires
-        
     def _get_adapted_extensions ( self ):
         if self._adapted_extensions is None:
+            self._adapted_extensions = []
             gef = self.application.get_extension_for
-            fn  = self.file_name
-            self._adapted_extensions = [ gef( ep, fn ) 
-                                         for ep in self.extensions ]
+            fn  = self.file_name    
+            for trait_name in self.adaptee.trait_names():
+                trait = self.adaptee.trait(trait_name)
+                ep_id = getattr(trait, 'contributes_to') 
+                if ep_id is not None:
+                    self._adapted_extensions.extend(gef(ep, fn) for ep in 
+                          self.adaptee.get_extensions(ep_id))
             
         return self._adapted_extensions
         
@@ -159,34 +130,27 @@ class PluginDefinitionAdapter ( ObjectAdapter ):
         return self._adapted_extensions_all
         
     def _get_extension_points_all ( self ):
-        if self._extension_points_all is None:
-            items       = []
-            module      = self.module
-            module_name = module.__name__
-            for name in dir( module ):
-                item = getattr( module, name )
-                try:
-                    if (issubclass( item, ExtensionItem ) and
-                        (item.__module__ == module_name)):
-                        items.append( item )
-                except:
-                    pass
-            
-            self._extension_points_all = self.extension_points + items
-            
-        return self._extension_points_all
-        
+        # if self._extension_points_all is None:
+        #    items       = []
+        #    module      = self.module
+        #    module_name = module.__name__
+        #    for name in dir( module ):
+        #        item = getattr( module, name )
+        #        try:
+        #            if (issubclass( item, ExtensionItem ) and
+        #                (item.__module__ == module_name)):
+        #                items.append( item )
+        #        except:
+        #            pass
+        #
+        #    self._extension_points_all = self.extension_points + items
+        #    
+        # return self._extension_points_all
+        return self.adaptee.get_extension_points()
+
     def _get_nodes ( self ):
         if self._nodes is None:
             nodes = []
-            if len( self.adapted_required_by ) > 0:
-                nodes.append( RequiredByAdapter( 
-                                  required_by = self.adapted_required_by ) )
-                                  
-            if len( self.requires ) > 0:
-                nodes.append( RequiresAdapter( 
-                                  requires = self.adapted_requires ) )
-                
             if len( self.extension_points_all ) > 0:
                 file_name   = self.file_name
                 application = self.application
@@ -196,7 +160,7 @@ class PluginDefinitionAdapter ( ObjectAdapter ):
                                                   application = application )
                       for ep in self.extension_points_all ] ) )
                 
-            if len( self.extensions ) > 0:
+            if len( self.adapted_extensions ) > 0:
                 nodes.append( ExtensionsAdapter( 
                                   extensions = self.adapted_extensions ) )
                 

@@ -82,7 +82,7 @@ class EnthoughtDeveloperPlugin( Plugin ):
                 get_traceback_viewer_view, get_fbi_viewer_view, 
                 get_traits_ui_db_view, get_app_monitor_view, get_logger_view, 
                 get_wiretap_view, get_listener_view, get_object_viewer_view, 
-                get_profiler_view, get_profile_viewer_view, 
+                get_profiler_view, get_profile_viewer_view, get_browser_view,
                 get_break_points_view]
 
     def _action_sets_default(self):

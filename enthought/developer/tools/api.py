@@ -41,4 +41,4 @@ from profiler import Profiler
 from profile_viewer import ProfileViewer
 # FIXME: This one seems to be based on Envisage 2 and needs to be upgraded to
 # Envisage 3.
-#from envisage_browser.browser import ApplicationBrowser
+from envisage_browser.browser import ApplicationBrowser

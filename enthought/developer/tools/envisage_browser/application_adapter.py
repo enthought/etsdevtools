@@ -23,16 +23,16 @@ from os.path \
     
 from enthought.traits.api \
     import HasPrivateTraits, Str, File, List, Dict, Property
-           
+       
 from enthought.traits.ui.api \
     import View, VGroup, Tabbed, Item
     
 from enthought.traits.ui.menu \
     import NoButtons
     
-from enthought.envisage.core.plugin_definition \
-    import PluginDefinition
-    
+from enthought.envisage.api import \
+    Plugin
+
 from enthought.developer.tools.envisage_browser.object_adapter_base \
     import ObjectAdapterBase
     
@@ -186,7 +186,8 @@ class ApplicationAdapter ( ObjectAdapterBase ):
             classes = {}
             
             for plugin in self.plugin_definitions_list:
-                for klass in plugin.extension_points_all:
+                for ep in plugin.extension_points_all:
+                    klass = ep.__class__
                     classes[ klass.__name__ ] = ( {}, plugin.file_name )
                     
             for plugin in self.plugin_definitions_list:
@@ -224,32 +225,22 @@ class ApplicationAdapter ( ObjectAdapterBase ):
     def _file_name_changed ( self, file_name ):
         """ Handles the 'file_name' trait being changed.
         """
-        module = self.import_module_from_file( file_name )
-        if module is not None:
-            plugins = getattr( module, 'PLUGIN_DEFINITIONS', None )
-            if plugins is not None:
-                for plugin in plugins:
-                    module = self.import_module_from_file( plugin )
-                    if module is not None:
-                        object = None
-                        try:
-                            object = module.__plugin_definitions__.values()[0]
-                        except:
-                            for name in dir( module ):
-                                item = getattr( module, name )
-                                try:
-                                    if (issubclass( item, PluginDefinition ) and
-                                        (item is not PluginDefinition)):
-                                        object = item()
-                                        break
-                                except:
-                                    pass
-                        if object is not None:
-                            self._plugin_definition( object, module )
-                        else:
-                            print 'No plugin found for:', plugin
-                    else:
-                        print 'No module found for:', plugin
+        app_module = self.import_module_from_file( file_name )
+        if app_module is not None:
+            names = dir(app_module)
+            for name in names:
+                item = getattr(app_module, name)
+                object = None     
+                try:
+                    if (issubclass( item, Plugin ) and
+                         (item is not Plugin)):
+                         object = item()
+                         __import__(item.__module__)
+                         plugin_module = sys.modules[item.__module__]    
+                except:
+                    pass        
+                if object is not None:
+                     self._plugin_definition( object, plugin_module )
                                 
 #-- Private Methods ------------------------------------------------------------
 

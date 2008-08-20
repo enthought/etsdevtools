@@ -20,7 +20,7 @@ import sys
 from enthought.traits.api \
     import push_exception_handler
 
-from enthought.envisage \
+from enthought.envisage.api \
     import Plugin
     
 from enthought.developer.helper.fbi \
@@ -37,17 +37,16 @@ class FBIPlugin ( Plugin ):
     #  'Plugin' interface:  
     #---------------------------------------------------------------------------
 
-    def start ( self, application ):
+    def start ( self ):
         """ Starts the plugin. 
         """
         # Tell the FBI to wiretap all unauthorized exceptions:
         enable_fbi()
-        push_exception_handler( handler = lambda obj, name, old, new: fbi(),
-                                locked  = False,
-                                main    = True )
-
-    def stop ( self, application ):
-        """ Stops the plugin. 
-        """
-        pass
+        # FIXME: Should this code be removed? enable_fbi calls 
+        # push_exception_handler with locked=True, and therefore, including
+        # this code raises an error about the Traits notification exception
+        # handler being locked.
+        #push_exception_handler( handler = lambda obj, name, old, new: fbi(),
+        #                        locked  = False,
+        #                        main    = True )
 

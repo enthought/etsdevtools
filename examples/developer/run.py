@@ -29,16 +29,16 @@ from enthought.developer.helper.fbi \
 
 if __name__ == '__main__':
     
+    # FIXME: Need to remove this. This is not necessary as the FBI plugin 
+    # calls enable_fbi.
     # Allow the FBI to handle any exceptions that occur:
-    enable_fbi()
+    # enable_fbi()
 
     # Create an Envisage application:
-    # FIXME: Including the FBIPlugin raises an error about the traits exception
-    # notification handler being locked. This needs to be investigated.
     application = WorkbenchApplication(
         plugins = [CorePlugin(), WorkbenchPlugin(), PythonShellPlugin(),
                    EnthoughtDeveloperPlugin(), 
-        #          FBIPlugin()
+                   FBIPlugin()
                    ],
         argv               = sys.argv,
         id                 = 'Enthought Developer Tools',

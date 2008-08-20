@@ -183,10 +183,10 @@ class ApplicationBrowser ( Handler ):
     # The UIInfo object associated with the browser:
     info = Instance( UIInfo )
     
-    # The name of the Envisage plugin definition file currently being viewed:
+    # The name of the Envisage application file currently being viewed:
     file_name = File( drop_file = DropFile( 
                           extensions = [ '.py' ],
-                          tooltip    = 'Drop an Envisage plugin definitions '
+                          tooltip    = 'Drop an Envisage application '
                                        'file here.' ) )
     
     # The Envisage ApplicationAdapter object being browsed:

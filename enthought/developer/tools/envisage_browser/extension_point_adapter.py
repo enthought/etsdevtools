@@ -18,12 +18,14 @@
 
 import sys
 
+from types import FunctionType
+
 from os.path \
     import join, exists
 
 from enthought.traits.api \
     import List, Property
-    
+
 from enthought.traits.ui.api \
     import View, Tabbed, VGroup, Item, Include, ListEditor
     
@@ -86,7 +88,7 @@ class ExtensionPointClassAdapter ( ObjectAdapter ):
 #-- Property Implementations ---------------------------------------------------
 
     def _get_name ( self ):
-        return self.adaptee.__name__
+        return self.adaptee.id
     
 #-------------------------------------------------------------------------------
 #  'ExtensionPointAdapter' class:
@@ -196,8 +198,12 @@ class ExtensionPointAdapter ( ObjectAdapter ):
 #-- Property Implementations ---------------------------------------------------
 
     def _get_name ( self ):
-        return 'Instance of ' + self.adaptee.__class__.__name__
-        
+        if isinstance(self.adaptee, FunctionType):
+            name = self.adaptee.func_name
+        else:
+            name = 'Instance of ' + self.adaptee.__class__.__name__
+        return name
+
     def _get_names ( self ):
         if self._names is None:
             self._names = self.get_names()

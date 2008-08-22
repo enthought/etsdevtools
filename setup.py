@@ -28,12 +28,12 @@ inspecting code.
   production code. NOTE: These tools are functional, but are not being
   developed or supported. They have been mainly superceded by the tools
   in the Enthought Developer Tool Suite.
-  
+
 Prerequisites
 -------------
 You must have the following libraries installed before building or installing
 ETSDevTools:
-    
+
 * `Numpy <http://pypi.python.org/pypi/numpy/1.1.1>`_ version 1.1.0 or later is
   preferred. Version 1.0.4 will work, but some tests may fail.
 * `setuptools <http://pypi.python.org/pypi/setuptools/0.6c8>`_
@@ -42,15 +42,13 @@ ETSDevTools:
 
 # NOTE: Setuptools must be imported BEFORE numpy.distutils or else things do
 # not work!
-from setuptools import find_packages
-from setuptools.command.develop import develop
+import setuptools
 
-from distutils import log
-from distutils.command.build import build as distbuild
 from make_docs import HtmlBuild
-from numpy.distutils.core import setup
 from pkg_resources import DistributionNotFound, parse_version, require, \
     VersionConflict
+import distutils
+import numpy
 import os
 import zipfile
 
@@ -85,7 +83,8 @@ def configuration(parent_package='', top_path=None):
 # Build the full set of packages by appending any found by setuptools'
 # find_packages to those discovered by numpy.distutils.
 config = configuration().todict()
-packages = find_packages(exclude=config['packages'] + ['docs', 'examples'])
+packages = setuptools.find_packages(exclude=config['packages'] + ['docs',
+    'examples'])
 config['packages'] += packages
 
 
@@ -104,21 +103,21 @@ def generate_docs():
         require("Sphinx>=%s" % required_sphinx_version)
         sphinx_installed = True
     except (DistributionNotFound, VersionConflict):
-        log.warn('Sphinx install of version %s could not be verified.'
-            ' Trying simple import...' % required_sphinx_version)
+        distutils.log.warn('Sphinx install of version %s could not be '
+            'verified.  Trying simple import...' % required_sphinx_version)
         try:
             import sphinx
             if parse_version(sphinx.__version__) < parse_version(
                 required_sphinx_version):
-                log.error("Sphinx version must be >=" + \
+                distutils.log.error("Sphinx version must be >=" + \
                     "%s." % required_sphinx_version)
             else:
                 sphinx_installed = True
         except ImportError:
-            log.error("Sphinx install not found.")
+            distutils.log.error("Sphinx install not found.")
 
     if sphinx_installed:
-        log.info("Generating %s documentation..." % INFO['name'])
+        distutils.log.info("Generating %s documentation..." % INFO['name'])
         docsrc = source_dir
         target = dest_dir
 
@@ -136,14 +135,15 @@ def generate_docs():
             del build
 
         except:
-            log.error("The documentation generation failed.  Falling back to "
-                "the zip file.")
+            distutils.log.error('The documentation generation failed.  '
+                'Falling back to the zip file.')
 
             # Unzip the docs into the 'html' folder.
             unzip_html_docs(html_zip, doc_dir)
     else:
         # Unzip the docs into the 'html' folder.
-        log.info("Installing %s documentation from zip file.\n" % INFO['name'])
+        distutils.log.info("Installing %s documentation from zip file.\n" % \
+            INFO['name'])
         unzip_html_docs(html_zip, doc_dir)
 
 def unzip_html_docs(src_path, dest_dir):
@@ -162,19 +162,20 @@ def unzip_html_docs(src_path, dest_dir):
                 os.mkdir(cur_name)
     file.close()
 
-class my_develop(develop):
+
+class MyDevelop(setuptools.command.develop.develop):
     def run(self):
-        develop.run(self)
+        setuptools.command.develop.develop.run(self)
         generate_docs()
 
-class my_build(distbuild):
+class MyBuild(numpy.distutils.command.build.build):
     def run(self):
-        distbuild.run(self)
+        numpy.distutils.command.build.build.run(self)
         generate_docs()
 
 
 # The actual setup call.
-setup(
+numpy.distutils.core.setup(
     author = 'Enthought, Inc',
     author_email = 'info@enthought.com',
     classifiers = [c.strip() for c in """\
@@ -193,8 +194,8 @@ setup(
         Topic :: Software Development :: Libraries
         """.splitlines() if len(c.strip()) > 0],
     cmdclass = {
-        'develop': my_develop,
-        'build': my_build
+        'develop': MyDevelop,
+        'build': MyBuild
         },
     dependency_links = [
         'http://code.enthought.com/enstaller/eggs/source',

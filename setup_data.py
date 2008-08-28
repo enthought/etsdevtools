@@ -39,7 +39,12 @@ INFO = {
             ENVISAGEPLUGINS,
             ],
         'fbi': [
+            # fbi.py internally uses the developer code so requires everything
+            # that the developer extra requires.
+            APPTOOLS,
+            ENTHOUGHTBASE_UI,
             TRAITSBACKENDWX,
+            TRAITSGUI_DOCK,
             ],
 
         # All non-ets dependencies should be in this extra to ensure users can

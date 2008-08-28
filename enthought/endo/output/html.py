@@ -419,7 +419,7 @@ class OutputHTML(OutputBase):
             link = object_link(obj)
             text = obj.abs_name
 
-            result[letter] = result.get(letter, [ ]) + [ (link, display_name, text) ]
+            result[letter] = result.get(letter, [ ]) + [ (display_name, link, text) ]
 
         return result
     _find_variables_and_functions = staticmethod(_find_variables_and_functions)

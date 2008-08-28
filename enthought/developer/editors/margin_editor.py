@@ -78,24 +78,3 @@ class MarginEditor ( BasicEditorFactory ):
     # The editor class to be created:
     klass = _MarginEditor
        
-#-------------------------------------------------------------------------------
-#  Test Code:
-#-------------------------------------------------------------------------------
-    
-if __name__ == '__main__':
-    from enthought.traits.api import HasTraits, Instance 
-    from enthought.traits.ui.ui_traits import Margin
-    
-    class Test ( HasTraits ):
-        margin = Instance( Margin, () )
-        
-        view = View(
-            Item( 'margin', 
-                  show_label = False,
-                  editor     = MarginEditor()
-            ),
-            resizable = True
-        )
-        
-    Test().configure_traits()
-    

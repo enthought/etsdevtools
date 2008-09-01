@@ -61,7 +61,21 @@ all_flags = [
     ( wx.ALIGN_CENTER_VERTICAL,   'ALIGN_CENTER_VERTICAL' ),
     ( wx.ALIGN_CENTER_HORIZONTAL, 'ALIGN_CENTER_HORIZONTAL' )
 ]    
-                                      
+
+def wx_flag_names_for ( flags ):
+    """ Converts wxPython sizer flags to a human readable text string.
+    """
+    names = []
+    for bit, name in all_flags:
+        if (flags & bit) == bit:
+            names.append( name )
+            flags &= ~bit
+            
+    if flags != 0:
+        names.append( '%8X' % flags )
+        
+    return ', '.join( names )
+
 #-------------------------------------------------------------------------------
 #  'UIDebugEditor' class:
 #-------------------------------------------------------------------------------
@@ -147,15 +161,7 @@ class WXSizerItem ( HasPrivateTraits ):
         return str( self.item.GetProportion() )
         
     def _get_flags ( self ):
-        flags = self.item.GetFlag()
-        names = []
-        for bit, name in all_flags:
-            if (flags & bit) == bit:
-                names.append( name )
-                flags &= ~bit
-        if flags != 0:
-            names.append( '%8X' % flags )
-        return ', '.join( names )
+        return wx_flag_names_for( self.item.GetFlag() )
         
     def _get_border ( self ):
         return str( self.item.GetBorder() )

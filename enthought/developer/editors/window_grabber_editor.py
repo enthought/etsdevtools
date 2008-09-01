@@ -54,6 +54,9 @@ class WindowGrabber ( ThemedControl ):
     # The image to display when inactive:
     image_inactive = Image( 'window_grabber_inactive' )
     
+    # The image to display when the mouse is hovering over the editor:
+    image_hover = Image( 'window_grabber_hover' )
+    
     # The image to display when active but not over a valid window:
     image_tracking = Image( 'window_grabber_tracking' )
     
@@ -62,14 +65,22 @@ class WindowGrabber ( ThemedControl ):
     
     #-- wxPython Event Handlers ------------------------------------------------
     
+    def normal_enter ( self, x, y, event ):
+        self.image = self.image_hover
+        
+    def normal_leave ( self, x, y, event ):
+        self.image = self.image_inactive
+        
     def normal_left_down ( self, x, y, event ):
         self.state = 'tracking'
         self.image = self.image_tracking
+        self.control.SetCursor( wx.StockCursor( wx.CURSOR_QUESTION_ARROW ) )
         
     def tracking_left_up ( self, x, y, event ):
         self.state    = 'normal'
         self.selected = self._get_window_at( x, y )
         self.image    = self.image_inactive
+        self.control.SetCursor( wx.NullCursor )
         
     def tracking_motion ( self, x, y, event ):
         self.over = self._get_window_at( x, y )

@@ -14,7 +14,7 @@ def etsdep(p, min, max=None, literal=False):
 
 
 # Declare our ETS project dependencies.
-APPTOOLS = etsdep('AppTools', '3.0.1')  # import of enthought.io in enthought.developer
+APPTOOLS = etsdep('AppTools', '3.1.0')  # import of enthought.io in enthought.developer
 ENTHOUGHTBASE = etsdep('EnthoughtBase', '3.0.1')
 ENTHOUGHTBASE_UI = etsdep('EnthoughtBase[ui]', '3.0.1')  # e.util.wx.* imported in developer
 ENVISAGECORE = etsdep('EnvisageCore', '3.0.1')

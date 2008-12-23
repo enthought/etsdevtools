@@ -1084,7 +1084,7 @@ def SendKeys(keys, delay=50):
 	{UP}          Up arrow
 	{PAUSE}       Pause
     {F1}          Function Key 1
-    ...           ...
+    \.\.\.        \.\.\.
     {F24}         Function Key 24
     {SPC}         Spacebar
     {SPACE}       Spacebar

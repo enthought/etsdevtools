@@ -332,9 +332,9 @@ def SendKeys(*args):
     key is BackSpace, so you could use {BackSpace} in place of {bac} if
     you really wanted to.
 
-            ====    ===========
+            ======  ===========
             Name    Action
-            ====    ===========
+            ======  ===========
             BAC     BackSpace
             BS      BackSpace
             BKS     BackSpace
@@ -347,7 +347,7 @@ def SendKeys(*args):
             ENT     Return
             ESC     Escape
             F1      F1
-            ...     ...
+            \.\.\.  \.\.\.
             F12     F12
             HEL     Help
             HOM     Home
@@ -372,7 +372,7 @@ def SendKeys(*args):
             SPC     Space
             TAB     Tab
             UP      Up
-            ====    ===========
+            ======  ===========
 
     Zero is returned on failure, non-zero for success.
 

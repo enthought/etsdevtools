@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 #
-# Copyright (c) 2008 by Enthought, Inc.
+# Copyright (c) 2008-2009 by Enthought, Inc.
 # All rights reserved.
-#
+
 
 """
 Enthought tools to support Python development.
@@ -49,12 +49,14 @@ import numpy
 import os
 import zipfile
 
+
 # FIXME: This works around a setuptools bug which gets setup_data.py metadata
 # from incorrect packages. Ticket #1592
 #from setup_data import INFO
 setup_data = dict(__name__='', __file__='setup_data.py')
 execfile('setup_data.py', setup_data)
 INFO = setup_data['INFO']
+
 
 # Pull the description values for the setup keywords from our file docstring.
 DOCLINES = __doc__.split("\n")
@@ -120,9 +122,6 @@ numpy.distutils.core.setup(
         'develop': MyDevelop,
         'build': MyBuild
         },
-    dependency_links = [
-        'http://code.enthought.com/enstaller/eggs/source',
-        ],
     description = DOCLINES[1],
     entry_points = {
         'console_scripts': [
@@ -154,3 +153,4 @@ numpy.distutils.core.setup(
     zip_safe = False,
     **config
     )
+

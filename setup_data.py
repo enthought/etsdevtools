@@ -54,11 +54,9 @@ INFO = {
             'docutils',
             'elementtree',
             'nose',
-            'Pyro',
             'reportlab',
             'setuptools',
             'testoob',
-            'win32',
             'wxPython',
             ],
         },
@@ -69,4 +67,12 @@ INFO = {
     'name': 'ETSDevTools',
     'version': '3.0.2',
     }
+
+# Platform specific dependencies.
+import sys
+if sys.platform == 'win32':
+    INFO['extras_require']['nonets'].extend([
+        'pywin32',
+        'Pyro',
+        ])
 

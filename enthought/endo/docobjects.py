@@ -18,7 +18,6 @@ and providing a namespace for resolving identifiers."""
 import sys
 import compiler.ast as ast
 from enthought.endo.namespace import Namespace
-from enthought.util.api import Set
 
 # need types.FunctionType and types.TypeType
 import types
@@ -33,11 +32,11 @@ warnings = None
 from util import alpha_sort
 
 # traits primitives
-TRAITS_PRIMITIVES = Set([ 'enthought.traits.api.' + x for x in 
+TRAITS_PRIMITIVES = set([ 'enthought.traits.api.' + x for x in 
                           [ 'Trait' ] ])
 _trait_vars = {}
 # traits base classes -- constructed later
-HAS_TRAITS_BASES = Set()
+HAS_TRAITS_BASES = set()
 # base type for all traits
 CTRAIT_TYPE = None
 
@@ -451,7 +450,7 @@ class Module(DocObject):
         return result
     fromAST = staticmethod(fromAST)
 
-    def resolve_imports(self, module_db, visited = Set()):
+    def resolve_imports(self, module_db, visited = set()):
         """
         module_db is a mapping of fully qualified module names to module objects
 
@@ -948,7 +947,7 @@ def build_class_hierarchy(module_list):
     result = [ ]
 
     klass_to_children = { }
-    top_klasses = Set([])
+    top_klasses = set([])
 
     # find all classes in documented modules
     klasses = reduce(lambda x, y: x + y, [ list(mod.get_descendants(Class)) for
@@ -966,7 +965,7 @@ def build_class_hierarchy(module_list):
             # make sure that this class is in our hierarchy database
             if not klass_to_children.has_key(ancestor):
                 # if not in db yet, add entry
-                klass_to_children[ancestor] = Set()
+                klass_to_children[ancestor] = set()
 
             if not ancestor.is_concrete():
                 # can't trace opaque references -- top class by default!
@@ -1000,7 +999,7 @@ def build_class_hierarchy(module_list):
             # link child classes from parents
             for base in bases:
                 if not klass_to_children.has_key(base):
-                    klass_to_children[base] = Set([ancestor])
+                    klass_to_children[base] = set([ancestor])
                 else:
                     klass_to_children[base].add(ancestor)
             

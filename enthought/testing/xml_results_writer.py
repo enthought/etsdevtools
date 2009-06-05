@@ -2,7 +2,6 @@
 import os.path
 from xml.parsers.expat import ExpatError
 
-from enthought.util.api import Set as set
 
 # Note:  xml.etree was added in Python 2.5.
 try:

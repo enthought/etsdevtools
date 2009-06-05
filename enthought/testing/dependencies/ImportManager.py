@@ -22,13 +22,6 @@ import os
 import sys
 import imp
 
-from enthought.util.api import Set as set
-
-try: # backward compatibility for Python < 2.3
-    True, False
-except NameError:
-    True, False = 1, 0
-
 
 class ImportLock:
     """Lock for multi-threaded imports.

@@ -22,24 +22,12 @@ import os
 import sys
 import imp
 
+from enthought.util.api import Set as set
 
 try: # backward compatibility for Python < 2.3
     True, False
 except NameError:
     True, False = 1, 0
-
-try: # backward compatibility for Python < 2.4
-    set
-except NameError: # fallback for Python < 2.4
-    try:
-        from sets import Set as set
-    except ImportError: # fallback for Python < 2.3
-        from UserDict import UserDict
-        class set(UserDict):
-            def add(self, item):
-                self.data[item] = item
-            def remove(self, item):
-                del self._dict[item]
 
 
 class ImportLock:

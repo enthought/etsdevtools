@@ -2,21 +2,14 @@
 import os.path
 from xml.parsers.expat import ExpatError
 
+from enthought.util.api import Set as set
+
 # Note:  xml.etree was added in Python 2.5.
 try:
     import xml.etree.ElementTree as ElementTree
 except ImportError:
     import elementtree.ElementTree as ElementTree
 
-
-try:
-    set
-except NameError:
-    # Python 2.3 compatibility
-    from sets import Set as set
-except ImportError:
-    # Python 2.2. compatibility
-    from testoob.compatibility.sets import Set as set
 
 def _setToString(s):
     text = ""

@@ -18,7 +18,7 @@ and providing a namespace for resolving identifiers."""
 import sys
 import compiler.ast as ast
 from enthought.endo.namespace import Namespace
-from sets import Set
+from enthought.util.api import Set
 
 # need types.FunctionType and types.TypeType
 import types

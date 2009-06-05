@@ -17,7 +17,7 @@ classes, or functions called in attribute/trait definitions.
 
 Here is the basic functionality to make this happen."""
 
-from sets import Set
+from enthought.util.api import Set
 
 # local imports
 from util import alpha_sort

@@ -39,15 +39,16 @@ ETSDevTools:
 * `setuptools <http://pypi.python.org/pypi/setuptools/0.6c8>`_
 """
 
+import traceback
+import sys
 
 # NOTE: Setuptools must be imported BEFORE numpy.distutils or else things do
 # not work!
 import setuptools
 
 import distutils
+from distutils import log
 import numpy
-import os
-import zipfile
 
 
 # FIXME: This works around a setuptools bug which gets setup_data.py metadata
@@ -90,13 +91,23 @@ config['packages'] += packages
 class MyDevelop(setuptools.command.develop.develop):
     def run(self):
         setuptools.command.develop.develop.run(self)
-        self.run_command('build_docs')
+        try:
+            self.run_command('build_docs')
+        except:
+            log.warn("Couldn't build documentation:\n%s" %
+                     traceback.format_exception(*sys.exc_info()))
+
 
 
 class MyBuild(numpy.distutils.command.build.build):
     def run(self):
         numpy.distutils.command.build.build.run(self)
-        self.run_command('build_docs')
+        try:
+            self.run_command('build_docs')
+        except:
+            log.warn("Couldn't build documentation:\n%s" %
+                     traceback.format_exception(*sys.exc_info()))
+
 
 
 # The actual setup call.

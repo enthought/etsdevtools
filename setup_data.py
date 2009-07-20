@@ -58,7 +58,6 @@ INFO = {
             'reportlab',
             'setuptools',
             'testoob',
-            'win32',
             'wxPython',
             ],
         },
@@ -69,4 +68,9 @@ INFO = {
     'name': 'ETSDevTools',
     'version': '3.0.4',
     }
+
+# Add a "nonets" dependency if on Windows.
+import sys
+if sys.platform == 'win32':
+    INFO['extras_require']['nonets'].append('win32')
 

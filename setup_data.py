@@ -69,8 +69,12 @@ INFO = {
     'version': '3.0.4',
     }
 
-# Add a "nonets" dependency if on Windows.
+
+# Add additional "nonets" dependencies if on Windows.
 import sys
 if sys.platform == 'win32':
-    INFO['extras_require']['nonets'].append('win32')
+    # NOTE: win32all is an old name for pywin32.  However, the code in AppTools
+    # still seems to be using the win32all API.  It needs testing and possibly
+    # updating to work with pywin32.
+    INFO['extras_require']['nonets'].append('win32all')
 

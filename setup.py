@@ -139,7 +139,6 @@ numpy.distutils.core.setup(
             'endo = enthought.endo.scripts.endo:main',
             'endo-readstate = enthought.endo.scripts.readstate:main',
             'ets_endo = enthought.endo.scripts.ets_endo:main',
-            'marathon = enthought.testing.marathon:main'
             ]
         },
     extras_require = INFO['extras_require'],

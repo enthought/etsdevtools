@@ -19,8 +19,6 @@ inspecting code.
   code. It extracts not only docstrings, but also plain comments that
   immediately precede variable assignments (both module-scope variables and
   class attributes).
-- **enthought.guitest**: A collection of utilities for unit testing user
-  interfaces (translation of the Perl X11::GUITest and Win32::GuiTest modules).
 - **enthought.testing**: Scripts related to running unit tests, based on
   testoob, and also allowing running test suites in separate processes and
   aggregating the results.
@@ -74,7 +72,6 @@ def configuration(parent_package='', top_path=None):
         quiet=True,
     )
 
-    config.add_subpackage('enthought.guitest')
     config.add_subpackage('enthought')
 
     return config

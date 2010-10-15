@@ -14,15 +14,15 @@ def etsdep(p, min, max=None, literal=False):
 
 
 # Declare our ETS project dependencies.
-APPTOOLS = etsdep('AppTools', '3.3.2')  # import of enthought.io in enthought.developer
-ENTHOUGHTBASE = etsdep('EnthoughtBase', '3.0.5')
-ENTHOUGHTBASE_UI = etsdep('EnthoughtBase[ui]', '3.0.5')  # e.util.wx.* imported in developer
+APPTOOLS = etsdep('AppTools', '3.4.0')  # import of enthought.io in enthought.developer
+ENTHOUGHTBASE = etsdep('EnthoughtBase', '3.0.6')
+ENTHOUGHTBASE_UI = etsdep('EnthoughtBase[ui]', '3.0.6')  # e.util.wx.* imported in developer
 ENVISAGECORE = etsdep('EnvisageCore', '3.1.3')
 ENVISAGEPLUGINS = etsdep('EnvisagePlugins', '3.1.3')  # -- imported only in enthought.gotcha
-TRAITSBACKENDWX = etsdep('TraitsBackendWX', '3.3.1')  # -- imported mostly by enthought.developer, but one from enthought.gotcha
-TRAITSGUI = etsdep('TraitsGUI', '3.3.1')
-TRAITSGUI_DOCK = etsdep('TraitsGUI[dock]', '3.3.1')  # -- imported only by enthought.developer.
-TRAITS_UI = etsdep('Traits[ui]', '3.3.1')
+TRAITSBACKENDWX = etsdep('TraitsBackendWX', '3.5.0')  # -- imported mostly by enthought.developer, but one from enthought.gotcha
+TRAITSGUI = etsdep('TraitsGUI', '3.5.0')
+TRAITSGUI_DOCK = etsdep('TraitsGUI[dock]', '3.5.0')  # -- imported only by enthought.developer.
+TRAITS_UI = etsdep('Traits[ui]', '3.5.0')
 
 
 # A dictionary of the pre_setup information.
@@ -50,9 +50,7 @@ INFO = {
         # All non-ets dependencies should be in this extra to ensure users can
         # decide whether to require them or not.
         'nonets': [
-            'cElementTree',
             'docutils',
-            'elementtree',
             'nose',
             'Pyro',
             'reportlab',
@@ -66,12 +64,11 @@ INFO = {
         TRAITS_UI,
         ],
     'name': 'ETSDevTools',
-    'version': '3.0.5',
-    }
+    'version': '3.1.0',
+}
 
 
 # Add additional "nonets" dependencies if on Windows.
 import sys
 if sys.platform == 'win32':
     INFO['extras_require']['nonets'].append('pywin32')
-

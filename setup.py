@@ -44,7 +44,6 @@ import sys
 # not work!
 import setuptools
 
-import distutils
 from distutils import log
 import numpy
 

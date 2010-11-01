@@ -84,28 +84,6 @@ packages = setuptools.find_packages(exclude=config['packages'] + ['docs',
 config['packages'] += packages
 
 
-class MyDevelop(setuptools.command.develop.develop):
-    def run(self):
-        setuptools.command.develop.develop.run(self)
-        try:
-            self.run_command('build_docs')
-        except:
-            log.warn("Couldn't build documentation:\n%s" %
-                     traceback.format_exception(*sys.exc_info()))
-
-
-
-class MyBuild(numpy.distutils.command.build.build):
-    def run(self):
-        numpy.distutils.command.build.build.run(self)
-        try:
-            self.run_command('build_docs')
-        except:
-            log.warn("Couldn't build documentation:\n%s" %
-                     traceback.format_exception(*sys.exc_info()))
-
-
-
 # The actual setup call.
 numpy.distutils.core.setup(
     author = 'Enthought, Inc',
@@ -127,10 +105,6 @@ numpy.distutils.core.setup(
         Topic :: Software Development
         Topic :: Software Development :: Libraries
         """.splitlines() if len(c.strip()) > 0],
-    cmdclass = {
-        'develop': MyDevelop,
-        'build': MyBuild
-        },
     description = DOCLINES[1],
     entry_points = {
         'console_scripts': [
@@ -151,7 +125,6 @@ numpy.distutils.core.setup(
         'enthought',
         ],
     platforms = ["Windows", "Linux", "Mac OS-X", "Unix", "Solaris"],
-    setup_requires = 'setupdocs>=1.0',
     tests_require = [
         'nose >= 0.10.3',
         ],

@@ -1,0 +1,208 @@
+=====
+Endo
+=====
+
+A traits-aware documentation tool.
+
+:Author: David Baer
+:Contact: dbaer@14853.net
+:Organization: `Enthought, Inc.`_
+:Copyright: Copyright (C) 2005 by `Enthought, Inc.`_
+:Date: 2005-08-17
+
+Contents
+********
+1. `About this document`_
+2. `Usage`_
+3. `Customization`_
+
+About this document
+*******************
+This document describes how to use Endo, a traits-aware documentation
+tool for Python.
+
+.. License info should go here
+
+Usage
+*****
+Command-line syntax::
+
+| python endo.py [options] [-r [package_name=path/to/package]]*
+|                [[module_prefix=]path/to/module.py]*
+|
+|
+| options:
+|   -h, --help            show this help message and exit
+|   --debug               turn on debugging messages
+|   --verbose             show detailed status messages
+|   -s, --silent          ignores all warnings
+|   --dump-state=FILE     dump parser state to file and quit
+|
+|
+| Input options:
+|   Specify what you want to document
+|   -r[NAME=]PATH, --package=[NAME=]PATH
+|                       document package located at PATH (with dotted name
+|                       NAME)
+|   -pNAME, --package-name=NAME default package name
+|   --rst               interpret docstrings as ReStructured Text
+|   --include-protected include protected methods/functions in documentation
+|
+|
+| Output options:
+|   -dDIR, --document-dir=DIR
+|                       write documentation here
+|
+|
+| Customization options:
+|   Customize the generated documentation
+|   --css=FILE          add CSS stylesheet
+|   --override-templates=DIR check this directory first for templates (revert to
+|                       default if not found)
+|   --data=FILE         additional data files to copy
+|   --header-file=FILE  file containing HTML text to use as header
+|   --header=STRING     HTML text to use as a header
+|   --footer-file=FILE  file containing HTML text to use as a footer
+|   --footer=STRING     HTML text to use as a footer
+
+Examples
+^^^^^^^^
+
+::
+
+  python endo.py --verbose --include-protected --rst \
+                 -r /var/code/enthought/ -d /home/user/docs/enthought_api
+
+Executing the script with these options would document the package contained
+in the directory /var/code/enthought/, which is assumed to have the name
+'enthought'.  (This is equivalent to '-r enthought=/var/code/enthought/').
+Endo documents all modules in this directory, as well as all
+subpackages in the subdirectories of /var/code/enthought.
+
+In this case, all objects, including those with leading underscores,
+will be documented (--include-protected).  Documentation strings will
+be interpreted as ReStructured Text (--rst).  Endo will print status
+messages to the screen as it processes and documents each module
+(--verbose).  The documentation will be generated in the directory
+/home/user/docs/enthought_api.
+
+::
+
+  python endo.py --override-templates=/home/user/mytemplates \
+                 --css=/home/user/stylesheet1.css \
+                 --footer="This was generated using Endo" \
+                 -d /home/user/docs spam.py mypackage=eggs.py
+
+In this example Endo documents spam and eggs, found in the
+current directory.  The documentation will be generated in
+/home/user/docs.  The module spam is treated as part of the default
+package, while eggs is given a package name and becomes
+mypackage.eggs.
+
+A number of customization features are demonstrated here.  Endo will
+look for HTML templates in /home/user/mytemplates first, defaulting to
+the template set included in the distribution for any templates not
+present in this directory (see `Templates`_).  An additional stylesheet,
+/home/user/stylesheet1.css, is given, whose rules will be applied
+*after* the default stylesheet's rules.  The footer text will appear
+at the bottom of each generated page.
+
+
+Customization
+*************
+There are a number of ways to customize Endo's output.
+
+  * The --css switch allows you to specify additional stylesheets.
+  * The --header, --footer, --header-file, and --footer-file switches
+    allow you to include custom HTML at the top of each page.
+
+Templates
+^^^^^^^^^
+The most powerful feature for customizing output is the template
+system.  Endo uses HTML templates to separate the form of the
+documentation from the information needed to produce it.  This allows
+you a great deal of freedom to create different presentations of the
+same information.
+
+Endo's template engine uses a straightforward syntax.  Tags, enclosed
+in ``{% %}`` or ``{{ }}``, allow you to create control structures and to
+bring information into the output.  Everything else is copied directly
+into the generated HTML files.
+
+When a template is rendered, it has a *context*, a set of names and
+associated values.  Endo is responsible for generating the context,
+but it is the templates that produce the HTML pages.
+
+Template tags:
+
+``{{ EXPR }}``
+   Evaluate EXPR against the template context and insert the result
+   in the output.  Use Python syntax.
+
+``{% assign VAR=EXPR %}``
+   Assign the name VAR in the current context to the value of EXPR.
+
+``{% block NAME %}{% endblock %}``
+   Everything enclosed in a block may be overridden by an extending template.
+
+``{% extends "base_template" %}``
+   Render "base_template", but replace all blocks that are overridden in
+   this template
+
+``{% for VAR1[,VAR2[,VAR3]] in LIST_EXPR %}{% endfor %}``
+   A for loop, just as in Python.
+
+``{% if TEST %} [{% else %}] {% endif %}``
+   Evaluate test and execute the appropriate block.
+
+``{% include TEMPLATE [PARAM1=EXPR1 [PARAM2=EXPR2]] %}``
+   Evaluate the specified template against the current context (with
+   specified additional parameters), and insert the resulting text
+   in the output.
+
+
+The basic templates are listed below.  There are more specialized templates,
+but these are generally smaller and easier to understand.  You can find the
+templates in the data/ subdirectory of the distribution.  Template files have the
+suffix '.html', though the suffix is dropped in ``{% base %}`` and ``{% include %}``.
+
++--------------+-------------------+------------------+---------------------------+
+| Template     | Description       | Context variable | Meaning                   |
++==============+===================+==================+===========================+
+| base         | Basic page layout | title            | Page title (window)       |
+|              |                   +------------------+---------------------------+
+|              |                   | header_title     | Title to show at the top  |
+|              |                   |                  | of the page               |
+|              |                   +------------------+---------------------------+
+|              |                   | stylesheet       | Primary stylesheet        |
+|              |                   +------------------+---------------------------+
+|              |                   | extrastylesheets | List of stylesheets to    |
+|              |                   |                  | apply to page             |
+|              |                   +------------------+---------------------------+
+|              |                   | customheader,    | Custom header and footer  |
+|              |                   | customfooter     |                           |
++--------------+-------------------+------------------+---------------------------+
+| module_index | Hierarchical      | docstring        | Docstring to display at   |
+| (extends     | module and package|                  | top of index              |
+| base)        | index             +------------------+---------------------------+
+|              |                   | package_hierarchy|                           |
+|              |                   +------------------+---------------------------+
+|              |                   | module_hierarchy |                           |
++--------------+-------------------+------------------+---------------------------+
+| alpha_list   | Display an        | letter_list      | List of first letters     |
+| (extends     | alphabetical index+------------------+---------------------------+
+| base)        | (class, namespace)| objects          | Dictionary mapping first  |
+|              |                   |                  | letters to a list of      |
+|              |                   |                  | tuples (link,             |
+|              |                   |                  | display_name, description)|
++--------------+-------------------+------------------+---------------------------+
+| hierarchy,   | Display           | hierarchy        | List of tuples (object,   |
+| hierarchy_r  | hierarchical tree |                  | link, subobjects), where  |
+| (recursive)  | control           |                  | subobjects has the same   |
+| (extends     |                   |                  |                           |
+| base)        |                   |                  |                           |
+|              |                   |                  | format as hierarchy       |
++--------------+-------------------+------------------+---------------------------+
+
+
+.. _`Enthought, Inc.` : http://www.enthought.com/

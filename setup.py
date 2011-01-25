@@ -37,14 +37,10 @@ ETSDevTools:
 * `setuptools <http://pypi.python.org/pypi/setuptools/0.6c8>`_
 """
 
-import traceback
-import sys
-
 # NOTE: Setuptools must be imported BEFORE numpy.distutils or else things do
 # not work!
 import setuptools
 
-from distutils import log
 import numpy
 
 
@@ -133,5 +129,4 @@ numpy.distutils.core.setup(
     version = INFO['version'],
     zip_safe = False,
     **config
-    )
-
+)

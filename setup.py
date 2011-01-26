@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 #
-# Copyright (c) 2008-2009 by Enthought, Inc.
+# Copyright (c) 2008-2011 by Enthought, Inc.
 # All rights reserved.
-
 
 """
 Enthought tools to support Python development.
@@ -109,7 +108,6 @@ numpy.distutils.core.setup(
             'ets_endo = enthought.endo.scripts.ets_endo:main',
             ]
         },
-    extras_require = INFO['extras_require'],
     include_package_data = True,
     install_requires = INFO['install_requires'],
     license = 'BSD',

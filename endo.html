@@ -1,0 +1,361 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Endo &mdash; ETSDevTools v3.1.2 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '3.1.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="shortcut icon" href="_static/et.ico"/>
+    <link rel="top" title="ETSDevTools v3.1.2 documentation" href="index.html" />
+    <link rel="prev" title="Welcome to the ETSDevTools documentation!" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to the ETSDevTools documentation!"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">ETSDevTools v3.1.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="endo">
+<h1>Endo<a class="headerlink" href="#endo" title="Permalink to this headline">¶</a></h1>
+<p>A traits-aware documentation tool.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Author:</th><td class="field-body">David Baer</td>
+</tr>
+<tr class="field"><th class="field-name">Contact:</th><td class="field-body"><a class="reference external" href="mailto:dbaer&#37;&#52;&#48;14853&#46;net">dbaer<span>&#64;</span>14853<span>&#46;</span>net</a></td>
+</tr>
+<tr class="field"><th class="field-name">Organization:</th><td class="field-body"><a class="reference external" href="http://www.enthought.com/">Enthought, Inc.</a></td>
+</tr>
+<tr class="field"><th class="field-name">Copyright:</th><td class="field-body">Copyright (C) 2005 by <a class="reference external" href="http://www.enthought.com/">Enthought, Inc.</a></td>
+</tr>
+<tr class="field"><th class="field-name">Date:</th><td class="field-body">2005-08-17</td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="contents">
+<h2>Contents<a class="headerlink" href="#contents" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><a class="reference internal" href="#about-this-document">About this document</a></li>
+<li><a class="reference internal" href="#usage">Usage</a></li>
+<li><a class="reference internal" href="#customization">Customization</a></li>
+</ol>
+</div>
+<div class="section" id="about-this-document">
+<h2>About this document<a class="headerlink" href="#about-this-document" title="Permalink to this headline">¶</a></h2>
+<p>This document describes how to use Endo, a traits-aware documentation
+tool for Python.</p>
+</div>
+<div class="section" id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<p>Command-line syntax:</p>
+<div class="highlight-python"><pre>| python endo.py [options] [-r [package_name=path/to/package]]*
+|                [[module_prefix=]path/to/module.py]*
+|
+|
+| options:
+|   -h, --help            show this help message and exit
+|   --debug               turn on debugging messages
+|   --verbose             show detailed status messages
+|   -s, --silent          ignores all warnings
+|   --dump-state=FILE     dump parser state to file and quit
+|
+|
+| Input options:
+|   Specify what you want to document
+|   -r[NAME=]PATH, --package=[NAME=]PATH
+|                       document package located at PATH (with dotted name
+|                       NAME)
+|   -pNAME, --package-name=NAME default package name
+|   --rst               interpret docstrings as ReStructured Text
+|   --include-protected include protected methods/functions in documentation
+|
+|
+| Output options:
+|   -dDIR, --document-dir=DIR
+|                       write documentation here
+|
+|
+| Customization options:
+|   Customize the generated documentation
+|   --css=FILE          add CSS stylesheet
+|   --override-templates=DIR check this directory first for templates (revert to
+|                       default if not found)
+|   --data=FILE         additional data files to copy
+|   --header-file=FILE  file containing HTML text to use as header
+|   --header=STRING     HTML text to use as a header
+|   --footer-file=FILE  file containing HTML text to use as a footer
+|   --footer=STRING     HTML text to use as a footer</pre>
+</div>
+<div class="section" id="examples">
+<h3>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><pre>python endo.py --verbose --include-protected --rst \
+               -r /var/code/enthought/ -d /home/user/docs/enthought_api</pre>
+</div>
+<p>Executing the script with these options would document the package contained
+in the directory /var/code/enthought/, which is assumed to have the name
+&#8216;enthought&#8217;.  (This is equivalent to &#8216;-r enthought=/var/code/enthought/&#8217;).
+Endo documents all modules in this directory, as well as all
+subpackages in the subdirectories of /var/code/enthought.</p>
+<p>In this case, all objects, including those with leading underscores,
+will be documented (&#8211;include-protected).  Documentation strings will
+be interpreted as ReStructured Text (&#8211;rst).  Endo will print status
+messages to the screen as it processes and documents each module
+(&#8211;verbose).  The documentation will be generated in the directory
+/home/user/docs/enthought_api.</p>
+<div class="highlight-python"><pre>python endo.py --override-templates=/home/user/mytemplates \
+               --css=/home/user/stylesheet1.css \
+               --footer="This was generated using Endo" \
+               -d /home/user/docs spam.py mypackage=eggs.py</pre>
+</div>
+<p>In this example Endo documents spam and eggs, found in the
+current directory.  The documentation will be generated in
+/home/user/docs.  The module spam is treated as part of the default
+package, while eggs is given a package name and becomes
+mypackage.eggs.</p>
+<p>A number of customization features are demonstrated here.  Endo will
+look for HTML templates in /home/user/mytemplates first, defaulting to
+the template set included in the distribution for any templates not
+present in this directory (see <a class="reference internal" href="#templates">Templates</a>).  An additional stylesheet,
+/home/user/stylesheet1.css, is given, whose rules will be applied
+<em>after</em> the default stylesheet&#8217;s rules.  The footer text will appear
+at the bottom of each generated page.</p>
+</div>
+</div>
+<div class="section" id="customization">
+<h2>Customization<a class="headerlink" href="#customization" title="Permalink to this headline">¶</a></h2>
+<p>There are a number of ways to customize Endo&#8217;s output.</p>
+<blockquote>
+<ul class="simple">
+<li>The &#8211;css switch allows you to specify additional stylesheets.</li>
+<li>The &#8211;header, &#8211;footer, &#8211;header-file, and &#8211;footer-file switches
+allow you to include custom HTML at the top of each page.</li>
+</ul>
+</blockquote>
+<div class="section" id="templates">
+<h3>Templates<a class="headerlink" href="#templates" title="Permalink to this headline">¶</a></h3>
+<p>The most powerful feature for customizing output is the template
+system.  Endo uses HTML templates to separate the form of the
+documentation from the information needed to produce it.  This allows
+you a great deal of freedom to create different presentations of the
+same information.</p>
+<p>Endo&#8217;s template engine uses a straightforward syntax.  Tags, enclosed
+in <tt class="docutils literal"><span class="pre">{%</span> <span class="pre">%}</span></tt> or <tt class="docutils literal"><span class="pre">{{</span> <span class="pre">}}</span></tt>, allow you to create control structures and to
+bring information into the output.  Everything else is copied directly
+into the generated HTML files.</p>
+<p>When a template is rendered, it has a <em>context</em>, a set of names and
+associated values.  Endo is responsible for generating the context,
+but it is the templates that produce the HTML pages.</p>
+<p>Template tags:</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">{{</span> <span class="pre">EXPR</span> <span class="pre">}}</span></tt></dt>
+<dd>Evaluate EXPR against the template context and insert the result
+in the output.  Use Python syntax.</dd>
+<dt><tt class="docutils literal"><span class="pre">{%</span> <span class="pre">assign</span> <span class="pre">VAR=EXPR</span> <span class="pre">%}</span></tt></dt>
+<dd>Assign the name VAR in the current context to the value of EXPR.</dd>
+<dt><tt class="docutils literal"><span class="pre">{%</span> <span class="pre">block</span> <span class="pre">NAME</span> <span class="pre">%}{%</span> <span class="pre">endblock</span> <span class="pre">%}</span></tt></dt>
+<dd>Everything enclosed in a block may be overridden by an extending template.</dd>
+<dt><tt class="docutils literal"><span class="pre">{%</span> <span class="pre">extends</span> <span class="pre">&quot;base_template&quot;</span> <span class="pre">%}</span></tt></dt>
+<dd>Render &#8220;base_template&#8221;, but replace all blocks that are overridden in
+this template</dd>
+<dt><tt class="docutils literal"><span class="pre">{%</span> <span class="pre">for</span> <span class="pre">VAR1[,VAR2[,VAR3]]</span> <span class="pre">in</span> <span class="pre">LIST_EXPR</span> <span class="pre">%}{%</span> <span class="pre">endfor</span> <span class="pre">%}</span></tt></dt>
+<dd>A for loop, just as in Python.</dd>
+<dt><tt class="docutils literal"><span class="pre">{%</span> <span class="pre">if</span> <span class="pre">TEST</span> <span class="pre">%}</span> <span class="pre">[{%</span> <span class="pre">else</span> <span class="pre">%}]</span> <span class="pre">{%</span> <span class="pre">endif</span> <span class="pre">%}</span></tt></dt>
+<dd>Evaluate test and execute the appropriate block.</dd>
+<dt><tt class="docutils literal"><span class="pre">{%</span> <span class="pre">include</span> <span class="pre">TEMPLATE</span> <span class="pre">[PARAM1=EXPR1</span> <span class="pre">[PARAM2=EXPR2]]</span> <span class="pre">%}</span></tt></dt>
+<dd>Evaluate the specified template against the current context (with
+specified additional parameters), and insert the resulting text
+in the output.</dd>
+</dl>
+<p>The basic templates are listed below.  There are more specialized templates,
+but these are generally smaller and easier to understand.  You can find the
+templates in the data/ subdirectory of the distribution.  Template files have the
+suffix &#8216;.html&#8217;, though the suffix is dropped in <tt class="docutils literal"><span class="pre">{%</span> <span class="pre">base</span> <span class="pre">%}</span></tt> and <tt class="docutils literal"><span class="pre">{%</span> <span class="pre">include</span> <span class="pre">%}</span></tt>.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="18%" />
+<col width="24%" />
+<col width="23%" />
+<col width="35%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Template</th>
+<th class="head">Description</th>
+<th class="head">Context variable</th>
+<th class="head">Meaning</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td rowspan="5">base</td>
+<td rowspan="5">Basic page layout</td>
+<td>title</td>
+<td>Page title (window)</td>
+</tr>
+<tr><td>header_title</td>
+<td>Title to show at the top
+of the page</td>
+</tr>
+<tr><td>stylesheet</td>
+<td>Primary stylesheet</td>
+</tr>
+<tr><td>extrastylesheets</td>
+<td>List of stylesheets to
+apply to page</td>
+</tr>
+<tr><td>customheader,
+customfooter</td>
+<td>Custom header and footer</td>
+</tr>
+<tr><td rowspan="3">module_index
+(extends
+base)</td>
+<td rowspan="3">Hierarchical
+module and package
+index</td>
+<td>docstring</td>
+<td>Docstring to display at
+top of index</td>
+</tr>
+<tr><td>package_hierarchy</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>module_hierarchy</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td rowspan="2">alpha_list
+(extends
+base)</td>
+<td rowspan="2">Display an
+alphabetical index
+(class, namespace)</td>
+<td>letter_list</td>
+<td>List of first letters</td>
+</tr>
+<tr><td>objects</td>
+<td>Dictionary mapping first
+letters to a list of
+tuples (link,
+display_name, description)</td>
+</tr>
+<tr><td>hierarchy,
+hierarchy_r
+(recursive)
+(extends
+base)</td>
+<td>Display
+hierarchical tree
+control</td>
+<td>hierarchy</td>
+<td><p class="first">List of tuples (object,
+link, subobjects), where
+subobjects has the same</p>
+<p class="last">format as hierarchy</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/e-logo-rev.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Endo</a><ul>
+<li><a class="reference internal" href="#contents">Contents</a></li>
+<li><a class="reference internal" href="#about-this-document">About this document</a></li>
+<li><a class="reference internal" href="#usage">Usage</a><ul>
+<li><a class="reference internal" href="#examples">Examples</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#customization">Customization</a><ul>
+<li><a class="reference internal" href="#templates">Templates</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Welcome to the ETSDevTools documentation!</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/endo.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to the ETSDevTools documentation!"
+             >previous</a> |</li>
+        <li><a href="index.html">ETSDevTools v3.1.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2008, Enthought.
+      Last updated on Jan 27, 2011.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.5.
+    </div>
+  </body>
+</html>

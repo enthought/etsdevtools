@@ -47,7 +47,7 @@ def doctest_for_module(module):
         def run(self, result=None):
             # doctest doesn't like nose.result.TextTestResult objects,
             # so we try to determine if thats what we're dealing
-            # with and use its internal result attribute instead 
+            # with and use its internal result attribute instead
             if hasattr(result, 'result'):
                 doctest.DocTestSuite(module).run(result.result)
             else:

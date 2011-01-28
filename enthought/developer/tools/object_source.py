@@ -153,7 +153,7 @@ class ObjectSource ( HasPrivateTraits ):
 
     # The name of the plugin:
     name = Str( 'Object Source' )
-    
+
     # The current item being inspected:
     item = Instance( HasTraits,
                      droppable = 'Drop an object with traits here.',

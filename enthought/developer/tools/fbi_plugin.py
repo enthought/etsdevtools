@@ -1,18 +1,18 @@
 #-------------------------------------------------------------------------------
-#  
+#
 #  FBI plugin for handling exceptions that occur while running an Envisage
-#  application. 
-#  
+#  application.
+#
 #  Written by: David C. Morrill
-#  
+#
 #  Date: 10/18/2005
-#  
+#
 #  (c) Copyright 2005 by Enthought, Inc.
-#  
+#
 #-------------------------------------------------------------------------------
 
 #-------------------------------------------------------------------------------
-#  Imports:  
+#  Imports:
 #-------------------------------------------------------------------------------
 
 import sys
@@ -22,27 +22,27 @@ from enthought.traits.api \
 
 from enthought.envisage.api \
     import Plugin
-    
+
 from enthought.developer.helper.fbi \
     import enable_fbi, fbi
 
 #-------------------------------------------------------------------------------
-#  'FBIPlugin' class:  
+#  'FBIPlugin' class:
 #-------------------------------------------------------------------------------
-    
+
 class FBIPlugin ( Plugin ):
     """ FBIPython plugin. """
-    
+
     #---------------------------------------------------------------------------
-    #  'Plugin' interface:  
+    #  'Plugin' interface:
     #---------------------------------------------------------------------------
 
     def start ( self ):
-        """ Starts the plugin. 
+        """ Starts the plugin.
         """
         # Tell the FBI to wiretap all unauthorized exceptions:
         enable_fbi()
-        # FIXME: Should this code be removed? enable_fbi calls 
+        # FIXME: Should this code be removed? enable_fbi calls
         # push_exception_handler with locked=True, and therefore, including
         # this code raises an error about the Traits notification exception
         # handler being locked.

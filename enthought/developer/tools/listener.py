@@ -189,7 +189,7 @@ class Listener ( HasPrivateTraits ):
 
     # The name of the plugin:
     name = Str( 'Listener' )
-    
+
     # The receiver of the trait whose listeners are to be displayed:
     trait_value = TraitValue(
                       droppable = 'Drop a trait here to display its listeners',

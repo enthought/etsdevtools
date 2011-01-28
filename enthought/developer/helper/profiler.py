@@ -1,13 +1,13 @@
 #-------------------------------------------------------------------------------
-#  
+#
 #  Package initialization for the Gotcha! Python profiling tool.
-#  
+#
 #  Written by: David C. Morrill
-#  
+#
 #  Date: 07/30/2003
-#  
-#  (c) Copyright 2003 by Enthought, Inc. 
-#  
+#
+#  (c) Copyright 2003 by Enthought, Inc.
+#
 #-------------------------------------------------------------------------------
 
 #-------------------------------------------------------------------------------
@@ -40,7 +40,7 @@ def find_profile ( create = True, path = '' ):
     path = path.strip()
     if path == '':
         path = os.getcwd()
-        
+
     highest = 0
     for file in os.listdir( path ):
         if (file[:9] == 'profiler_') and (file[-5:] == '.prof'):
@@ -48,10 +48,10 @@ def find_profile ( create = True, path = '' ):
                 highest = max( highest, int( file[9:-5] ) )
             except:
                 pass
-            
+
     if create:
         highest += 1
-        
+
     return os.path.join( path, 'profiler_%d.prof' % highest )
 
 #-------------------------------------------------------------------------------
@@ -60,29 +60,29 @@ def find_profile ( create = True, path = '' ):
 
 def begin_profiling ( path = '' ):
     global profiler, profile_name
-    
+
     if profiler is None:
         profile_name = find_profile( path = path )
         profiler     = Profile( profile_name )
-       
+
 #-------------------------------------------------------------------------------
 #  End profiling:
 #-------------------------------------------------------------------------------
 
 def end_profiling ( ):
     global profiler
-    
+
     if profiler is not None:
         profiler.close()
         profiler = None
-    
+
 #-------------------------------------------------------------------------------
 #  Profile a specified function (if profiling is active):
 #-------------------------------------------------------------------------------
 
 def profile ( func, *args, **keywords ):
     global profiler
-    
+
     if profiler is None:
         return apply( func, args, keywords )
     else:
@@ -90,7 +90,7 @@ def profile ( func, *args, **keywords ):
 
 def stats ( num_funcs = 20 ):
     import hotshot, hotshot.stats
-    
+
     stats = hotshot.stats.load( profile_name )
     #stats.strip_dirs()
     #stats.sort_stats( 'time', 'calls' )

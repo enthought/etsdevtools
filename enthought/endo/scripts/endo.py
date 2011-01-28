@@ -31,7 +31,7 @@ try:
 except:
     from enthought.traits.trait_base import ETSConfig
 ETSConfig.toolkit = 'null'
-    
+
 import enthought.endo as endo
 import enthought.endo.docobjects as docobjects
 import enthought.endo.docerror as docerror
@@ -329,7 +329,7 @@ def main():
     #option_parser.add_option("-r", "--recursive", dest="recursive",
     #                         help="walk a directory recursively",
     #                         action="store_true", default=False)
-    
+
     add_endo_options(option_parser)
     (options, args) = option_parser.parse_args()
 

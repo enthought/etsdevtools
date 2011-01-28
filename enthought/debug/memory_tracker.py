@@ -145,7 +145,7 @@ class MemoryState(HasTraits):
         objs = gc.get_objects()
 
         return objs
-    
+
     def get_new_objects(self):
         ids = self.difference_ids
         id_map = id_to_existing_objects()
@@ -198,7 +198,7 @@ def id_to_existing_objects():
     # an extra reference to everything
     del object_dict[id(sys._getframe())]
     return object_dict
-    
+
 
 def id_dict_to_object_tuples(id_dict):
     """ Convert a dictionary of id: [id1, id2, ...] into a list of tuples

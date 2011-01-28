@@ -1,12 +1,12 @@
 #-------------------------------------------------------------------------------
-#  
+#
 #  Actions for the developer plugin.
-#  
-#  Author: David C. Morrill 
+#
+#  Author: David C. Morrill
 #          Vibha Srinivasan <vibha@enthought.com>
-#  
+#
 #  (c) Copyright 2006-2008 by Enthought, Inc.
-#  
+#
 #-------------------------------------------------------------------------------
 # Imports
 from enthought.pyface.action.api import Action as PyfaceAction

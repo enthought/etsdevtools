@@ -23,7 +23,7 @@ from enthought.traits.api \
 from enthought.traits.ui.api \
     import View, HSplit, VSplit, VGroup, Item, TreeEditor, TreeNodeObject, \
            ObjectTreeNode, TableEditor, Handler
-    
+
 from enthought.traits.ui.table_column \
     import ObjectColumn
 
@@ -32,22 +32,22 @@ from enthought.traits.ui.menu \
 
 from enthought.traits.ui.wx.editor \
     import Editor
-    
+
 from enthought.traits.ui.wx.basic_editor_factory \
     import BasicEditorFactory
 
 from enthought.pyface.timer.api \
     import do_later
-    
+
 from enthought.developer.api \
     import HasPayload
-    
+
 #-------------------------------------------------------------------------------
-#  Constants:  
+#  Constants:
 #-------------------------------------------------------------------------------
-        
+
 # Map from wxPython bit to corresponding name:
-all_flags = [ 
+all_flags = [
     ( wx.EXPAND,                  'EXPAND' ),
     ( wx.ALL,                     'ALL' ),
     ( wx.TOP,                     'TOP' ),
@@ -60,7 +60,7 @@ all_flags = [
     ( wx.ALIGN_BOTTOM,            'ALIGN_BOTTOM' ),
     ( wx.ALIGN_CENTER_VERTICAL,   'ALIGN_CENTER_VERTICAL' ),
     ( wx.ALIGN_CENTER_HORIZONTAL, 'ALIGN_CENTER_HORIZONTAL' )
-]    
+]
 
 def wx_flag_names_for ( flags ):
     """ Converts wxPython sizer flags to a human readable text string.
@@ -70,23 +70,23 @@ def wx_flag_names_for ( flags ):
         if (flags & bit) == bit:
             names.append( name )
             flags &= ~bit
-            
+
     if flags != 0:
         names.append( '%8X' % flags )
-        
+
     return ', '.join( names )
 
 #-------------------------------------------------------------------------------
 #  'UIDebugEditor' class:
 #-------------------------------------------------------------------------------
-                               
+
 class UIDebugEditor ( Editor ):
-        
+
     #---------------------------------------------------------------------------
     #  Finishes initializing the editor by creating the underlying toolkit
     #  widget:
     #---------------------------------------------------------------------------
-        
+
     def init ( self, parent ):
         """ Finishes initializing the editor by creating the underlying toolkit
             widget.
@@ -98,7 +98,7 @@ class UIDebugEditor ( Editor ):
     #---------------------------------------------------------------------------
     #  Handles the user entering input data in the edit control:
     #---------------------------------------------------------------------------
-  
+
     def update_object ( self, event ):
         """ Handles the user entering input data in the edit control.
         """
@@ -109,13 +109,13 @@ class UIDebugEditor ( Editor ):
                 break
             control = parent
         UIDebugger(root = WXWindow( window = control ) ).edit_traits()
-        
+
     #---------------------------------------------------------------------------
     #  Updates the editor when the object trait changes external to the editor:
     #---------------------------------------------------------------------------
-        
+
     def update_editor ( self ):
-        """ Updates the editor when the object trait changes external to the 
+        """ Updates the editor when the object trait changes external to the
             editor.
         """
         pass
@@ -123,54 +123,54 @@ class UIDebugEditor ( Editor ):
 #-------------------------------------------------------------------------------
 #  Create the editor factory object:
 #-------------------------------------------------------------------------------
-                
+
 ToolkitEditorFactory = BasicEditorFactory( klass = UIDebugEditor )
 
 #-------------------------------------------------------------------------------
-#  'SizerItem' class:  
+#  'SizerItem' class:
 #-------------------------------------------------------------------------------
 
 class WXSizerItem ( HasPrivateTraits ):
-    
+
     #---------------------------------------------------------------------------
-    #  Trait definitions:  
+    #  Trait definitions:
     #---------------------------------------------------------------------------
-        
+
     item       = Instance( wx.SizerItem )
     kind       = Property
     calc_min   = Property
     proportion = Property
     flags      = Property
     border     = Property
-    
+
     #---------------------------------------------------------------------------
-    #  Property implementations:  
+    #  Property implementations:
     #---------------------------------------------------------------------------
-        
+
     def _get_kind ( self ):
         obj = self.item.GetWindow()
         if obj is not None:
             return obj.__class__.__name__
         return self.item.GetSizer().__class__.__name__
-        
+
     def _get_calc_min ( self ):
         dx, dy = self.item.CalcMin()
         return str( ( dx, dy ) )
-        
+
     def _get_proportion ( self ):
         return str( self.item.GetProportion() )
-        
+
     def _get_flags ( self ):
         return wx_flag_names_for( self.item.GetFlag() )
-        
+
     def _get_border ( self ):
         return str( self.item.GetBorder() )
-        
+
 #-------------------------------------------------------------------------------
-#  Tabele editor to use for displaying Sizer item information:  
+#  Tabele editor to use for displaying Sizer item information:
 #-------------------------------------------------------------------------------
-        
-sizer_item_table_editor = TableEditor(        
+
+sizer_item_table_editor = TableEditor(
     columns = [ ObjectColumn( name = 'kind',       editable = False ),
                 ObjectColumn( name = 'calc_min',   editable = False ),
                 ObjectColumn( name = 'proportion', editable = False ),
@@ -180,17 +180,17 @@ sizer_item_table_editor = TableEditor(
     configurable = False,
     sortable     = False
 )
-    
+
 #-------------------------------------------------------------------------------
-#  'WXWindow' class:  
+#  'WXWindow' class:
 #-------------------------------------------------------------------------------
-        
+
 class WXWindow ( TreeNodeObject ):
-    
+
     #---------------------------------------------------------------------------
-    #  Trait definitions:  
+    #  Trait definitions:
     #---------------------------------------------------------------------------
-        
+
     window    = Instance( wx.Window )
     name      = Property
     position  = Property
@@ -201,12 +201,12 @@ class WXWindow ( TreeNodeObject ):
     items     = Property( List )
     result    = Property( Code )
     evaluate  = Str
-    
+
     #---------------------------------------------------------------------------
-    #  Traits view definitions:  
+    #  Traits view definitions:
     #---------------------------------------------------------------------------
-        
-    view = View( 
+
+    view = View(
         VSplit(
             VGroup( 'position~', 'size~', 'sizer~', 'min_size~', 'best_size~',
                     label = 'Information',
@@ -222,20 +222,20 @@ class WXWindow ( TreeNodeObject ):
             id = 'splitter'
         ),
         id   = 'enthought.developer.tools.ui_debugger.item',
-        kind = 'subpanel' 
+        kind = 'subpanel'
     )
-                 
+
     #---------------------------------------------------------------------------
     #  Handles 'evaluate' being changed:
     #---------------------------------------------------------------------------
-                                  
+
     def _evaluate_changed ( self ):
         self.trait_property_changed( 'result', None, None )
-    
+
     #---------------------------------------------------------------------------
-    #  Implementation of the various trait properties:  
+    #  Implementation of the various trait properties:
     #---------------------------------------------------------------------------
-        
+
     def _get_name ( self ):
         w = self.window
         try:
@@ -250,48 +250,48 @@ class WXWindow ( TreeNodeObject ):
                     label = ''
         if label != '':
             label = ' (%s)' % label
-            
+
         return self.window.__class__.__name__ + label
-        
+
     def _get_size ( self ):
         dx, dy = self.window.GetSizeTuple()
-        
+
         return str( ( dx, dy ) )
-        
+
     def _get_position ( self ):
         x, y = self.window.GetPositionTuple()
-        
+
         return str( ( x, y ) )
-        
+
     def _get_sizer ( self ):
         sizer = self.window.GetSizer()
         if sizer is None:
             return ''
         dx, dy = sizer.CalcMin()
-        
+
         return '%s( %d, %d )' % ( sizer.__class__.__name__, dx, dy )
-        
+
     def _get_min_size ( self ):
         dx, dy = self.window.GetMinSize()
-        
+
         return str( ( dx, dy ) )
-        
+
     def _get_best_size ( self ):
         dx, dy = self.window.GetEffectiveMinSize()
-        
+
         return str( ( dx, dy ) )
-                                  
+
     def _get_result ( self ):
         try:
             result = eval( self.evaluate, { '_':  self.window,
                                             '__': self.window.GetSizer() } )
             if isinstance( result, ( list, tuple ) ):
-                return '\n'.join( [ '[%d]: %s' % ( i, str( x ) ) 
+                return '\n'.join( [ '[%d]: %s' % ( i, str( x ) )
                                       for i, x in enumerate( result ) ] )
             return str( result )
         except:
             return '???'
-            
+
     def _get_items ( self ):
         sizer = self.window.GetSizer()
         if sizer is None:
@@ -305,50 +305,50 @@ class WXWindow ( TreeNodeObject ):
                 items.append( WXSizerItem( item = item ) )
         except:
             pass
-        
+
         return items
 
     #---------------------------------------------------------------------------
-    #  Returns whether chidren of this object are allowed or not:  
+    #  Returns whether chidren of this object are allowed or not:
     #---------------------------------------------------------------------------
 
     def tno_allows_children ( self, node ):
         """ Returns whether chidren of this object are allowed or not.
         """
         return True
-    
+
     #---------------------------------------------------------------------------
-    #  Returns whether or not the object has children:  
+    #  Returns whether or not the object has children:
     #---------------------------------------------------------------------------
 
     def tno_has_children ( self, node = None ):
         """ Returns whether or not the object has children.
         """
         return (len( self.window.GetChildren() ) > 0)
-        
+
     #---------------------------------------------------------------------------
-    #  Gets the object's children:  
+    #  Gets the object's children:
     #---------------------------------------------------------------------------
 
     def tno_get_children ( self, node ):
         """ Gets the object's children.
         """
-        return [ WXWindow( window = window ) 
+        return [ WXWindow( window = window )
                  for window in self.window.GetChildren() ]
-        
+
     #---------------------------------------------------------------------------
-    #  Returns the 'draggable' version of a specified object:  
+    #  Returns the 'draggable' version of a specified object:
     #---------------------------------------------------------------------------
-                
+
     def tno_get_drag_object ( self, node ):
         """ Returns the 'draggable' version of a specified object.
         """
         return self.window
-    
+
 #-------------------------------------------------------------------------------
-#  Defines the window browser tree editor:  
+#  Defines the window browser tree editor:
 #-------------------------------------------------------------------------------
-        
+
 window_tree_editor = TreeEditor(
     nodes = [
         ObjectTreeNode( node_for = [ WXWindow ],
@@ -366,7 +366,7 @@ window_tree_editor = TreeEditor(
 class WindowPayloadHandler ( TraitHandler ):
 
     #---------------------------------------------------------------------------
-    #  Verifies that a specified value is valid for a trait:  
+    #  Verifies that a specified value is valid for a trait:
     #---------------------------------------------------------------------------
 
     def validate ( self, object, name, value ):
@@ -374,43 +374,43 @@ class WindowPayloadHandler ( TraitHandler ):
         """
         if value is None:
             return None
-            
+
         if isinstance( value, wx.Window ):
             return value
-            
-        if (isinstance( value, HasPayload ) and 
+
+        if (isinstance( value, HasPayload ) and
             isinstance( value.payload, wx.Window )):
             return value.payload
-            
+
         raise TraitError
-        
+
 #-------------------------------------------------------------------------------
-#  'UIDebugger' class:  
+#  'UIDebugger' class:
 #-------------------------------------------------------------------------------
 
 class UIDebugger ( Handler ):
-    
+
     #---------------------------------------------------------------------------
-    #  Trait definitions:  
+    #  Trait definitions:
     #---------------------------------------------------------------------------
-    
+
     # The name of the plugin:
     name = Str( 'UI Debugger' )
-    
+
     # The current wx Window being 'debugged':
     window = Trait( None, WindowPayloadHandler(),
                     droppable = 'Drop a wx.Window object here.' )
-    
+
     # Root of a wxWindow window hierarchy:
     root = Instance( WXWindow, allow_none = True )
-    
+
     # The currently selected window:
     selected = Instance( WXWindow, allow_none = True )
-    
+
     #---------------------------------------------------------------------------
-    #  Traits view definitions:  
+    #  Traits view definitions:
     #---------------------------------------------------------------------------
-        
+
     view = View(
         HSplit(
             Item( 'root',
@@ -430,19 +430,19 @@ class UIDebugger ( Handler ):
         title = 'UI Debugger',
         id    = 'enthought.developer.tools.ui_debugger'
     )
-        
+
     #---------------------------------------------------------------------------
     #  Handles the 'window' trait being changed:
     #---------------------------------------------------------------------------
-    
+
     def _window_changed ( self, window ):
         if window is not None:
             self.root = WXWindow( window = window )
             do_later( self.set, window = None )
-                
+
 #-------------------------------------------------------------------------------
 #  Create export objects:
 #-------------------------------------------------------------------------------
 
 view = UIDebugger()
-    
+

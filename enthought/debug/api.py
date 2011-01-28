@@ -57,17 +57,17 @@ def class_hierarchy(clazz, lead=""):
     print lead + str(clazz)
     for child in clazz.__bases__:
         class_hierarchy(child, lead + "  ")
-        
+
 class timeit ( object ):
     """ A class for displaying the time taken by sections of code.
         Usage is: t = timeit() ...code... t() ...code... t() ...
     """
-    
+
     def __init__ ( self, prefix = 'Time' ):
         self.prefix = prefix
         self.count  = 0
         self.now    = time.time()
-        
+
     def __call__ ( self, suffix = '' ):
         now = time.time()
         if suffix == '':

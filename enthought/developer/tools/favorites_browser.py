@@ -70,7 +70,7 @@ class FavoritesBrowser ( HasPrivateTraits ):
 
     # The name of the plugin:
     name = Str( 'Favorites Browser' )
-    
+
     # The persistent id used for saving the favorites data:
     id = Str( 'enthought.developer.tools.favorites_browser.state',
               save_state_id = True )

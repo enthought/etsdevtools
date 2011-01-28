@@ -1,14 +1,14 @@
 #-------------------------------------------------------------------------------
-#  
+#
 #  Defines the PluginDefinitionAdapter class for adapting Envisage
 #  PluginDefinition objects for use with the Envisage plugin browser.
-#  
+#
 #  Written by: David C. Morrill
-#  
+#
 #  Date: 06/16/2006
-#  
+#
 #  (c) Copyright 2006 by David C. Morrill
-#  
+#
 #-------------------------------------------------------------------------------
 
 #-------------------------------------------------------------------------------
@@ -20,13 +20,13 @@ from enthought.traits.api \
 
 from enthought.traits.ui.api \
     import View, VGroup, HGroup, Tabbed, Item
-    
+
 from enthought.traits.ui.menu \
     import NoButtons
-    
+
 from enthought.developer.tools.envisage_browser.object_adapter \
     import ObjectAdapter, Export
-    
+
 from enthought.developer.tools.envisage_browser.extension_point_adapter \
     import ExtensionPointClassAdapter
 
@@ -35,41 +35,41 @@ from enthought.developer.tools.envisage_browser.extension_point_adapter \
 #-------------------------------------------------------------------------------
 
 class PluginDefinitionAdapter ( ObjectAdapter ):
-    
+
     #---------------------------------------------------------------------------
-    #  Trait definitions:    
+    #  Trait definitions:
     #---------------------------------------------------------------------------
-    
+
     # The module the associated plugin was defined in:
     module = Any
-    
+
     # The list of plugins that require this one (adapted version):
     adapted_required_by = Property( List )
-    
+
     # The list of required plugins (adapted version):
     adapted_requires = Property( List )
-    
+
     # The list of exported extensions (adapted version):
     adapted_extensions = Property( List )
-    
+
     # The list of all exported extensions (including children)(adapted version):
     adapted_extensions_all = Property( List )
-    
+
     # List of all extension points (including ExtensionItem's):
     extension_points_all = Property( List )
-    
+
     # The child nodes for the tree view:
     nodes = Property( List )
-    
-    # Re-exported PluginDefinition traits:    
+
+    # Re-exported PluginDefinition traits:
     activator        = Export
     id               = Export
     name             = Export
 
     #---------------------------------------------------------------------------
-    #  Traits view definitions:    
+    #  Traits view definitions:
     #---------------------------------------------------------------------------
-    
+
     view = View(
                Tabbed(
                    VGroup(
@@ -103,32 +103,32 @@ class PluginDefinitionAdapter ( ObjectAdapter ):
                resizable = True,
                buttons   = NoButtons
            )
-               
+
 #-- Property Implementations -------------------------------------------------
 
     def _get_adapted_extensions ( self ):
         if self._adapted_extensions is None:
             self._adapted_extensions = []
             gef = self.application.get_extension_for
-            fn  = self.file_name    
+            fn  = self.file_name
             for trait_name in self.adaptee.trait_names():
                 trait = self.adaptee.trait(trait_name)
-                ep_id = getattr(trait, 'contributes_to') 
+                ep_id = getattr(trait, 'contributes_to')
                 if ep_id is not None:
-                    self._adapted_extensions.extend(gef(ep, fn) for ep in 
+                    self._adapted_extensions.extend(gef(ep, fn) for ep in
                           self.adaptee.get_extensions(ep_id))
-            
+
         return self._adapted_extensions
-        
+
     def _get_adapted_extensions_all ( self ):
         if self._adapted_extensions_all is None:
             result = self.adapted_extensions[:]
             for extension in self.adapted_extensions:
                 result.extend( extension.get_all_children() )
             self._adapted_extensions_all = result
-            
+
         return self._adapted_extensions_all
-        
+
     def _get_extension_points_all ( self ):
         # if self._extension_points_all is None:
         #    items       = []
@@ -144,7 +144,7 @@ class PluginDefinitionAdapter ( ObjectAdapter ):
         #            pass
         #
         #    self._extension_points_all = self.extension_points + items
-        #    
+        #
         # return self._extension_points_all
         return self.adaptee.get_extension_points()
 
@@ -159,47 +159,47 @@ class PluginDefinitionAdapter ( ObjectAdapter ):
                                                   file_name   = file_name,
                                                   application = application )
                       for ep in self.extension_points_all ] ) )
-                
+
             if len( self.adapted_extensions ) > 0:
-                nodes.append( ExtensionsAdapter( 
+                nodes.append( ExtensionsAdapter(
                                   extensions = self.adapted_extensions ) )
-                
+
             self._nodes = nodes
-            
+
         return self._nodes
-        
+
 #-------------------------------------------------------------------------------
-#  'RequiredByAdapter' class:  
+#  'RequiredByAdapter' class:
 #-------------------------------------------------------------------------------
-                
+
 class RequiredByAdapter ( HasPrivateTraits ):
-    
+
     #---------------------------------------------------------------------------
-    #  Trait definitions:  
+    #  Trait definitions:
     #---------------------------------------------------------------------------
-    
+
     required_by = List
-        
+
 #-------------------------------------------------------------------------------
-#  'RequiresAdapter' class:  
+#  'RequiresAdapter' class:
 #-------------------------------------------------------------------------------
-                
+
 class RequiresAdapter ( HasPrivateTraits ):
-    
+
     #---------------------------------------------------------------------------
-    #  Trait definitions:  
+    #  Trait definitions:
     #---------------------------------------------------------------------------
-    
+
     requires = List
-    
+
 #-------------------------------------------------------------------------------
 #  'ExtensionPointsAdapter' class:
 #-------------------------------------------------------------------------------
 
 class ExtensionPointsAdapter ( HasPrivateTraits ):
-    
+
     #---------------------------------------------------------------------------
-    #  Traits definitions:  
+    #  Traits definitions:
     #---------------------------------------------------------------------------
 
     extension_points = List
@@ -209,10 +209,10 @@ class ExtensionPointsAdapter ( HasPrivateTraits ):
 #-------------------------------------------------------------------------------
 
 class ExtensionsAdapter ( HasPrivateTraits ):
-    
+
     #---------------------------------------------------------------------------
-    #  Traits definitions:  
+    #  Traits definitions:
     #---------------------------------------------------------------------------
 
     extensions = List
-    
+

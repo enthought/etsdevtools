@@ -29,7 +29,7 @@ from enthought.traits.ui.api \
 
 from enthought.pyface.api \
     import error, confirm, YES
-    
+
 from enthought.developer.api \
     import FilePosition
 
@@ -40,7 +40,7 @@ from enthought.developer.api \
 class FileSpaceBaseNode ( TreeNodeObject ):
 
     #---------------------------------------------------------------------------
-    #  Returns whether chidren of this object are allowed or not:  
+    #  Returns whether chidren of this object are allowed or not:
     #---------------------------------------------------------------------------
 
     def tno_allows_children ( self, node ):
@@ -61,7 +61,7 @@ class FileSpaceBaseNode ( TreeNodeObject ):
         extensions    = self.file_space.extensions
         no_extensions = (len( extensions ) == 0)
         dirs          = []
-        
+
         for file in listdir( path ):
             fn = join( path, file )
             if isfile( fn ):
@@ -72,25 +72,25 @@ class FileSpaceBaseNode ( TreeNodeObject ):
                     return True
             elif isdir( fn ):
                 dirs.append( fn )
-                
+
         level += 1
         if level < self.file_space.levels:
             for dir in dirs:
                 if self.include( dir, level ):
                     return True
-                    
+
         return False
-        
+
     #---------------------------------------------------------------------------
-    #  Returns whether a specified file is included in the file space:  
+    #  Returns whether a specified file is included in the file space:
     #---------------------------------------------------------------------------
-    
+
     def include_file ( self, fn ):
         """ Returns whether a specified file is included in the file space.
         """
         file_space      = self.file_space
         base, extension = splitext( fn )
-        return (((file_space.filter is None) and 
+        return (((file_space.filter is None) and
                   len( file_space.extensions == 0)) or
                 (extension in file_space.extensions) or
                 ((file_space.filter is not None) and file_space.filter( fn )))
@@ -107,33 +107,33 @@ class FileSpaceNode ( FileSpaceBaseNode ):
 
     # The valid file space roots:
     roots = List # ( FileSpaceRootNode )
-    
+
     # The file space filter function:
     filter = Callable
-    
+
     # The list of legal file extensions:
     extensions = List( Str )
-    
+
     # The number of levels to search for valid files:
     levels = Int( 3 )
-           
+
     #---------------------------------------------------------------------------
-    #  Returns the persistent state of the object:  
+    #  Returns the persistent state of the object:
     #---------------------------------------------------------------------------
 
     def __getstate__ ( self ):
         return self.get( 'roots', 'extensions', 'levels' )
-    
+
     #---------------------------------------------------------------------------
-    #  Handles the 'roots' trait being changed:  
+    #  Handles the 'roots' trait being changed:
     #---------------------------------------------------------------------------
-    
+
     def _roots_changed ( self, roots ):
         """ Handles the 'roots' trait being changed.
         """
         for root in roots:
             root.file_space = self
-            
+
     def _roots_items_changed ( self, event ):
         """ Handles the 'roots' trait being changed.
         """
@@ -169,16 +169,16 @@ class FileSpaceRootNode ( FileSpaceBaseNode ):
     #  Traits view definitions:
     #---------------------------------------------------------------------------
 
-    view = View( 
+    view = View(
                Item( 'path', width = -300 ),
                Item( 'name' ),
                buttons = [ 'OK', 'Cancel' ],
                title   = 'New File Space Root',
                id = 'enthought.developer.tools.file_space.FileSpaceRootNode'
            )
-           
+
     #---------------------------------------------------------------------------
-    #  Returns the persistent state of the object:  
+    #  Returns the persistent state of the object:
     #---------------------------------------------------------------------------
 
     def __getstate__ ( self ):
@@ -197,7 +197,7 @@ class FileSpaceRootNode ( FileSpaceBaseNode ):
 
             new_path = join( self.path, child.dir_name )
             if isfile( new_path ):
-                error( self.handler.parent, 
+                error( self.handler.parent,
                        ("Cannot create the directory '%s'.\nThere is already a "
                         "file with that name.") % child.dir_name )
                 return
@@ -234,7 +234,7 @@ class FileSpaceRootNode ( FileSpaceBaseNode ):
         """
         if not self.initialized:
             self.initialized = True
-            
+
             path          = self.path
             file_space    = self.file_space
             filter        = file_space.filter
@@ -243,7 +243,7 @@ class FileSpaceRootNode ( FileSpaceBaseNode ):
             no_extensions = (len( extensions ) == 0)
             files         = []
             dirs          = []
-            
+
             if isdir( path ):
                 for file in listdir( path ):
                     fn = join( path, file )
@@ -276,14 +276,14 @@ class FileSpaceRootNode ( FileSpaceBaseNode ):
         """
         if self.name != '':
             return self.name
-            
+
         return self.path
 
     #---------------------------------------------------------------------------
     #  Sets the label for a specified node:
     #---------------------------------------------------------------------------
 
-    def tno_set_label ( self, node, label ):        
+    def tno_set_label ( self, node, label ):
         """ Sets the label for a specified object.
         """
         self.name = label
@@ -322,20 +322,20 @@ class FileSpaceRootNode ( FileSpaceBaseNode ):
                'Delete File Space Root' ) == YES)
 
     #---------------------------------------------------------------------------
-    #  Deletes a child at a specified index from the object's children:  
+    #  Deletes a child at a specified index from the object's children:
     #---------------------------------------------------------------------------
 
     def tno_delete_child ( self, node, index ):
         """ Deletes a child at a specified index from the object's children.
         """
         # fixme: This doesn't work right for a cut/paste operation, since it
-        # will delete the object, then try to paste the now non-existent 
+        # will delete the object, then try to paste the now non-existent
         # file/directory somewhere else...
         self.children[ index ].delete()
         del self.children[ index ]
 
     #---------------------------------------------------------------------------
-    #  Appends a child to the object's children:  
+    #  Appends a child to the object's children:
     #---------------------------------------------------------------------------
 
     def tno_append_child ( self, node, child ):
@@ -355,11 +355,11 @@ class FileSpaceRootNode ( FileSpaceBaseNode ):
             return [ ( DirectoryNode, True ) ]
 
         return []
-        
+
     #---------------------------------------------------------------------------
-    #  Returns the 'draggable' version of a specified object:  
+    #  Returns the 'draggable' version of a specified object:
     #---------------------------------------------------------------------------
-                
+
     def tno_get_drag_object ( self, node ):
         """ Returns the 'draggable' version of a specified object.
         """
@@ -400,7 +400,7 @@ class DirectoryNode ( FileSpaceRootNode ):
     #  Sets the label for a specified node:
     #---------------------------------------------------------------------------
 
-    def tno_set_label ( self, node, label ):        
+    def tno_set_label ( self, node, label ):
         """ Sets the label for a specified object.
         """
         old_name = self.path
@@ -448,13 +448,13 @@ class DirectoryNode ( FileSpaceRootNode ):
                         not_deleted += 1
                 elif isdir( fn ) and (not self.delete( fn )):
                     not_deleted += 1
-            if not_deleted == 0: 
+            if not_deleted == 0:
                 rmdir( path )
                 return True
         except:
             error( self.handler.parent, "Could not delete '%s'" % fn )
 
-        # Indicate that the directory was not deleted:                       
+        # Indicate that the directory was not deleted:
         return False
 
 #-------------------------------------------------------------------------------
@@ -472,7 +472,7 @@ class FileNode ( TreeNodeObject ):
 
     # The path to the associated file:
     path = Str
-    
+
     # The name of the file (no directory):
     name = Property
 
@@ -489,7 +489,7 @@ class FileNode ( TreeNodeObject ):
     #  Sets the label for a specified node:
     #---------------------------------------------------------------------------
 
-    def tno_set_label ( self, node, label ):        
+    def tno_set_label ( self, node, label ):
         """ Sets the label for a specified object.
         """
         old_name = self.path
@@ -514,11 +514,11 @@ class FileNode ( TreeNodeObject ):
         """
         return (confirm( self.handler.parent, "Delete '%s'" % self.name,
                          'Delete File' ) == YES)
-        
+
     #---------------------------------------------------------------------------
-    #  Returns the 'draggable' version of a specified object:  
+    #  Returns the 'draggable' version of a specified object:
     #---------------------------------------------------------------------------
-                
+
     def tno_get_drag_object ( self, node ):
         """ Returns the 'draggable' version of a specified object.
         """
@@ -536,9 +536,9 @@ class FileNode ( TreeNodeObject ):
         except:
             error( self.handler.parent, "Could not delete the file '%s'" %
                                         basename( self.path )[0] )
-                                        
+
     #---------------------------------------------------------------------------
-    #  Implementation of the 'name' property:  
+    #  Implementation of the 'name' property:
     #---------------------------------------------------------------------------
 
     def _get_name ( self ):
@@ -565,81 +565,81 @@ file_space_tree_editor = TreeEditor(
                        auto_close = True ),
                    ObjectTreeNode(
                        node_for   = [ FileSpaceRootNode ],
-                       children   = 'children', 
+                       children   = 'children',
                        name       = 'File Space Root',
                        auto_close = True ),
                    ObjectTreeNode(
                        node_for = [ FileNode ] ) ]
 )
-                             
+
 #-------------------------------------------------------------------------------
 #  'FileSpace' class:
 #-------------------------------------------------------------------------------
 
 class FileSpace ( HasPrivateTraits ):
-    
+
     #---------------------------------------------------------------------------
-    #  Trait definitions:  
+    #  Trait definitions:
     #---------------------------------------------------------------------------
 
     # The name of the plugin:
     name = Str( 'File Space' )
-    
+
     # The persistence id for this object:
     id = Str( 'enthought.developer.tools.file_space.state',
               save_state_id = True )
-    
+
     # The root file space node:
     root = Instance( FileSpaceNode, { 'extensions': [ '.py' ] },
                      save_state = True )
-    
+
     # Fake trait to force state save:
     update = Bool( save_state = True )
-    
+
     # The current file position:
     file_position = Instance( FilePosition,
                               connect = 'from: selected file position' )
-                              
+
     # The current file name:
     file_name = File( connect = 'from: selected file' )
-    
+
     # The current directory:
     directory = Directory( connect = 'from: selected directory' )
-    
+
     # Current path (file or directory):
     path = File( connect   = 'from: selected path',
                  draggable = 'Drag the selected path.' )
-    
+
     # The current selected node:
     selected = Any
-    
+
     #---------------------------------------------------------------------------
-    #  Traits view definitions:  
+    #  Traits view definitions:
     #---------------------------------------------------------------------------
 
-    view = View( 
-        Item( 'root', 
+    view = View(
+        Item( 'root',
               show_label = False,
               editor     = file_space_tree_editor
         ),
         title     = 'File Space',
         resizable = True
     )
-    
+
     #---------------------------------------------------------------------------
     #  Initializes the object:
     #---------------------------------------------------------------------------
-    
+
     def __init__ ( self, **traits ):
         """ Initializes the object.
         """
         super( FileSpace, self ).__init__( **traits )
         self._root_changed( None, self.root )
-        
+
 #-- Event Handlers -------------------------------------------------------------
 
     #---------------------------------------------------------------------------
-    #  Handles the 'root' trait being changed:  
+    #  Handles the 'root' trait being changed:
     #---------------------------------------------------------------------------
 
     def _root_changed ( self, old, new ):
@@ -647,13 +647,13 @@ class FileSpace ( HasPrivateTraits ):
         """
         self._set_listener( old, True )
         self._set_listener( new, False )
-        
+
     def _set_listener ( self, object, remove ):
         if object is not None:
-            object.on_trait_change( self.save_state, remove = remove ) 
-            
+            object.on_trait_change( self.save_state, remove = remove )
+
     #---------------------------------------------------------------------------
-    #  Handles the 'selected' trait being changed:  
+    #  Handles the 'selected' trait being changed:
     #---------------------------------------------------------------------------
 
     def _selected_changed ( self, selected ):
@@ -664,7 +664,7 @@ class FileSpace ( HasPrivateTraits ):
             self.file_position = FilePosition( file_name = selected.path )
         elif isinstance( selected, FileSpaceRootNode ):
             self.directory = self.path = selected.path
-            
+
     #---------------------------------------------------------------------------
     #  Forces the current state to be saved:
     #---------------------------------------------------------------------------
@@ -673,11 +673,11 @@ class FileSpace ( HasPrivateTraits ):
         """ Forces the current state to be saved.
         """
         self.update = not self.update
-        
-    
+
+
 #-------------------------------------------------------------------------------
 #  Create exported objects:
 #-------------------------------------------------------------------------------
 
-file_space = view = FileSpace() 
+file_space = view = FileSpace()
 

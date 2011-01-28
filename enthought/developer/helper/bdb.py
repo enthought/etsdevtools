@@ -40,7 +40,7 @@ logger.debug( "%s: %%s" %% (%s) )
 #  Trait definitions:
 #-------------------------------------------------------------------------------
 
-BPType = Enum( 'Breakpoint', 'Temporary', 'Count', 'Trace', 'Print', 'Log', 
+BPType = Enum( 'Breakpoint', 'Temporary', 'Count', 'Trace', 'Print', 'Log',
                'Patch' )
 
 #-------------------------------------------------------------------------------
@@ -168,11 +168,11 @@ class Bdb:
 
     def break_here ( self, frame ):
         line = frame.f_lineno
-        bps  = Breakpoint.bp_map.get( 
+        bps  = Breakpoint.bp_map.get(
                    ( self.canonic( frame.f_code.co_filename ), line ) )
         if bps is None:
             return False
-            
+
         return effective( bps, line, frame )
 
     def break_anywhere ( self, frame ):
@@ -258,7 +258,7 @@ class Bdb:
 
     #---------------------------------------------------------------------------
     #  Derived classes and clients can call the following methods to manipulate
-    #  breakpoints.  
+    #  breakpoints.
     #---------------------------------------------------------------------------
 
     def set_break ( self, file_name, line, bp_type = 'Breakpoint', code = '',
@@ -295,7 +295,7 @@ class Bdb:
             if (type is None) or (type == bp.bp_type):
                 bp.delete_me()
                 result.append( bp )
-            
+
         return bps
 
     def clear_all_breaks ( self ):
@@ -312,7 +312,7 @@ class Bdb:
         return (( self.canonic( file_name ), line ) in Breakpoint.bp_map)
 
     def get_breaks ( self, file_name, line ):
-        return Breakpoint.bp_map.get( ( self.canonic( file_name ), line ), 
+        return Breakpoint.bp_map.get( ( self.canonic( file_name ), line ),
                                       set() )
 
     def get_file_breaks ( self, file_name ):
@@ -322,7 +322,7 @@ class Bdb:
         result = []
         for bps in Breakpoint.bp_list.values():
             result.extend( bps )
-            
+
         return result
 
     #---------------------------------------------------------------------------
@@ -411,7 +411,7 @@ class Breakpoint ( HasPrivateTraits ):
 
     # Indexed by file name:
     bp_list  = {}
-    
+
     # Indexed by ( file_name, line_number ) tuple:
     bp_start = {}
     bp_map   = {}
@@ -434,7 +434,7 @@ class Breakpoint ( HasPrivateTraits ):
 
     # The line number the break point is on:
     line = Int
-    
+
     # The ending line number the break point is on (used by 'Trace'):
     end_line = Int
 
@@ -476,23 +476,23 @@ class Breakpoint ( HasPrivateTraits ):
     def register ( self ):
         """ Registers a break point.
         """
-        Breakpoint.bp_list.setdefault( self.file, set() ).add( self )                                        
-        Breakpoint.bp_start.setdefault( ( self.file, self.line ), 
+        Breakpoint.bp_list.setdefault( self.file, set() ).add( self )
+        Breakpoint.bp_start.setdefault( ( self.file, self.line ),
                                         set() ).add( self )
         for i in xrange( self.line, self.end_line ):
             Breakpoint.bp_map.setdefault( ( self.file, i ), set() ).add( self )
-            
+
     #---------------------------------------------------------------------------
-    #  Returns a specified source file line:  
+    #  Returns a specified source file line:
     #---------------------------------------------------------------------------
-    
+
     def source_for ( self, line ):
         if self._source_file is None:
             try:
                 self._source_file = read_file( self.file ).split( '\n' )
             except:
                 self._source_file = []
-                
+
         try:
             return self._source_file[ line - 1 ].strip()
         except:
@@ -574,7 +574,7 @@ class Breakpoint ( HasPrivateTraits ):
             lines = read_file( self.file ).split( '\n' )
         except:
             return False
-            
+
         n      = len( lines )
         line   = self.line - 1
         delta  = self.end_line - self.line
@@ -616,13 +616,13 @@ class Breakpoint ( HasPrivateTraits ):
         value.remove( self )
         if not value:
             del Breakpoint.bp_list[ self.file ]
-            
+
         index = ( self.file, self.line )
         value = Breakpoint.bp_start[ index ]
         value.remove( self )
         if not value:
             del Breakpoint.bp_start[ index ]
-            
+
         bp_map = Breakpoint.bp_map
         for i in xrange( self.line, self.end_line ):
             index = ( self.file, i )
@@ -648,7 +648,7 @@ def effective ( bps, line, frame ):
         of code.
     """
     global last_file, last_line, last_locals
-    
+
     result = False
     for bp in bps:
         if not bp.enabled:
@@ -669,17 +669,17 @@ def effective ( bps, line, frame ):
                         print '\n==== %s ====' % basename( last_file )
                     else:
                         blank_line = (line != (last_line + 1))
-                        
+
                     locals = format_locals( frame.f_locals, last_locals )
                     if locals != '':
                         print locals
-                        
+
                     if blank_line:
                         print
-                        
+
                     print '[%s/%s] %s' % ( line, bp.hits,
                                            bp.source_for( line ).strip() )
-                                           
+
                     last_locals = frame.f_locals.copy()
                     last_line   = line
                 else:
@@ -689,17 +689,17 @@ def effective ( bps, line, frame ):
                 if bp._code is None:
                     if code == '':
                         continue
-                        
+
                     if bp_type == 'Print':
                         code = "print %s, %s" % ( repr( code + ':' ), code )
                     elif bp_type == 'Log':
                         code = logger_template % ( code, code )
-                        
+
                     try:
                         bp._code = compile( code, '<string>', 'exec' )
                     except:
                         continue
-    
+
                 if bp.ignore <= 0:
                     try:
                         exec bp._code in frame.f_globals, frame.f_locals
@@ -769,10 +769,10 @@ def format_locals ( new_locals, old_locals ):
     for name, value in new_locals.items():
         if value != old_locals.get( name, NoMatch ):
             show_locals[ name ] = value
-            
+
     if len( show_locals ) == 0:
         return ''
-            
+
     result = []
     names  = show_locals.keys()
     names.sort()
@@ -781,9 +781,9 @@ def format_locals ( new_locals, old_locals ):
     for name in names:
         value = repr( show_locals[ name ] )
         if len( value ) > max_value:
-            value = '%s...%s' % ( value[ : (max_value + 1) / 2 ], 
+            value = '%s...%s' % ( value[ : (max_value + 1) / 2 ],
                                   value[ -(max_value / 2): ] )
         result.append( '    %s%s' % ( (name + ':').ljust( max_len ), value ) )
-        
+
     return '\n'.join( result )
-    
+

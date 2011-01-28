@@ -11,9 +11,9 @@ def get_dependent(module_name):
       dep_map = pickle.load(open(dependent_pickle_name, "r"))
       if dep_map.has_key(module_name):
          return dep_map[module_name]
-      
+
    return None
-   
+
 def store_dependent(module_name, module):
    if os.path.exists(dependent_pickle_name):
       dep_map = pickle.load(open(dependent_pickle_name, "r"))
@@ -36,7 +36,7 @@ def generate_dot_file(filename):
    f = open(filename, "w")
    f.write(s)
    f.close()
-   
+
 
 class Dependent(object):
    def __init__(self, name, path, script=False):
@@ -47,17 +47,17 @@ class Dependent(object):
       else:
          self.dependents = self._find_dependencies_subprocess()
          store_dependent(self.name, self)
-              
+
    def _exec_script(self):
       global_dict = globals()
       global_dict['__name__'] = self.name
       global_dict['__file__'] = self.path
       global_dict['sys.argv'] = self.path
-   
+
       before = sys.modules.keys()
       sys.path.append(os.path.dirname(self.path))
       execfile(self.path, global_dict)
-   
+
       after = sys.modules.keys()
 
       dependents = []
@@ -70,20 +70,20 @@ class Dependent(object):
                   new_dependent = Dependent(m.__name__, m.__path__)
                   dependents.append(new_dependent)
                   store_dependent(m.__name__, new_dependent)
-                  
+
       return dependents
 
-         
+
    def _find_dependencies_subprocess(self):
       dependent = get_dependent(self.name)
-      if dependent is None:         
+      if dependent is None:
 
          # put something in the map now & pickle it so
          # subprocesses wont get stuck in a loop
          store_dependent(self.name, '')
-         
+
          subprocess.call([sys.executable, sys.argv[0], "-m", self.name])
-         
+
          store_dependent(self.name, self)
 
          f = open(self.name + ".pickle", "r")
@@ -115,7 +115,7 @@ class Dependent(object):
 def find_dependencies_script(filename):
    script = Dependent(os.path.basename(filename).split(".")[0], filename, script=True)
    store_dependent(script.name, script)
-   
+
    return
 
 def find_dependencies_module(module):
@@ -139,7 +139,7 @@ def find_dependencies_module(module):
 
    f = open(module + ".pickle", "w")
    pickle.dump(dependents, f)
-   
+
    return dependents
 
 def clean_pickles():
@@ -147,12 +147,12 @@ def clean_pickles():
    pickles = glob.glob("*.pickle")
    for pickle in pickles:
       os.unlink(pickle)
-   
+
 def usage():
    print "usage:"
    print "  %s: <-m|-s> <module|script> [[-o] [filename]]" % sys.argv[0]
    sys.exit(65)
-     
+
 
 if __name__ == "__main__":
    if len(sys.argv) < 3:
@@ -175,11 +175,11 @@ if __name__ == "__main__":
             print_dependencies(name)
       else:
          usage()
-         
+
    # only clean the pickles up if its a script, so the module subprocesses can find
    # them later
    #
    # TODO: add a command line flag for keeping the pickles
-   # 
+   #
    elif "-s" == sys.argv[1]:
-      clean_pickles()         
+      clean_pickles()

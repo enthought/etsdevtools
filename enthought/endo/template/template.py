@@ -3,10 +3,10 @@
 # Project: endo
 # Date:    2005-07-29
 # Author:  David Baer
-# 
+#
 # Description:
 #  Simple template engine
-# 
+#
 ###########################################################################
 
 """
@@ -165,7 +165,7 @@ def _parse_seq(tok_iterator, endblock = [ ]):
                 result.append((NODE_GENID, arg))
 
     return ((NODE_SEQ, result), break_tok)
-            
+
 
 class Template:
     """
@@ -299,7 +299,7 @@ class Template:
                 arg = node[1]
                 new_id = gen_id()
                 context[arg] = new_id
-                
+
         return result
 
     def render(self, context = { }, blocks = [ ]):
@@ -324,4 +324,4 @@ class Template:
                 name = node[1]
                 result[name] = (NODE_SEQ, [ node ])
         return result
-                
+

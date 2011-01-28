@@ -1,15 +1,15 @@
 #-------------------------------------------------------------------------------
-#  
-#  Defines the ApplicationAdapter class which contains all of the top-level 
+#
+#  Defines the ApplicationAdapter class which contains all of the top-level
 #  information for defining a complete Envisage application needed by the
 #  Envisage browser.
-#  
+#
 #  Written by: David C. Morrill
-#  
+#
 #  Date: 06/16/2006
-#  
+#
 #  (c) Copyright 2006 by David C. Morrill
-#  
+#
 #-------------------------------------------------------------------------------
 
 #-------------------------------------------------------------------------------
@@ -20,51 +20,51 @@ import sys
 
 from os.path \
     import abspath, split, splitext
-    
+
 from enthought.traits.api \
     import HasPrivateTraits, Str, File, List, Dict, Property
-       
+
 from enthought.traits.ui.api \
     import View, VGroup, Tabbed, Item
-    
+
 from enthought.traits.ui.menu \
     import NoButtons
-    
+
 from enthought.envisage.api import \
     Plugin
 
 from enthought.developer.tools.envisage_browser.object_adapter_base \
     import ObjectAdapterBase
-    
+
 from enthought.developer.tools.envisage_browser.object_adapter \
     import ObjectAdapter
-    
+
 #-------------------------------------------------------------------------------
 #  'ApplicationAdapter' class:
 #-------------------------------------------------------------------------------
 
 class ApplicationAdapter ( ObjectAdapterBase ):
-    
+
     #---------------------------------------------------------------------------
-    #  Trait definitions:  
+    #  Trait definitions:
     #---------------------------------------------------------------------------
-    
+
     # The dictionary mapping plugin ID's to PluginDefinitionAdapter objects:
     plugin_definitions = Dict
-    
+
     # A list form of all of the plugin definitions:
     plugin_definitions_list = Property
-    
+
     # A list of all extension points in the application:
     extension_points = Property
-    
+
     # A list of all extension point names (in use):
     extension_point_names = Property
 
     #---------------------------------------------------------------------------
-    #  Traits view definitions:  
+    #  Traits view definitions:
     #---------------------------------------------------------------------------
-        
+
     view = View(
                Tabbed(
                    VGroup(
@@ -78,7 +78,7 @@ class ApplicationAdapter ( ObjectAdapterBase ):
                    ),
                    VGroup(
                        Item( 'file_name~' ),
-                       VGroup( 
+                       VGroup(
                            Item( 'source~', show_label = False )
                        ),
                        label = 'Source Code',
@@ -92,7 +92,7 @@ class ApplicationAdapter ( ObjectAdapterBase ):
                resizable = True,
                buttons   = NoButtons
            )
-    
+
 #-- Public Methods -------------------------------------------------------------
 
     def get_plugins_using ( self, id ):
@@ -100,19 +100,19 @@ class ApplicationAdapter ( ObjectAdapterBase ):
         """
         return [ plugin for plugin in self.plugin_definitions_list
                  if id in plugin.requires ]
-        
+
     def get_plugin_for ( self, id ):
         """ Returns an adapted plugin definition for the specified plugin id.
         """
         plugin = self.plugin_definitions.get( id )
         if plugin is not None:
             return plugin
-            
+
         return UnknownPluginAdapter( id = id )
-        
-    def get_extension_for ( self, extension_point, file_name, 
+
+    def get_extension_for ( self, extension_point, file_name,
                                   container = None ):
-        """ Returns an adapted extension point for the specified extension 
+        """ Returns an adapted extension point for the specified extension
             point object.
         """
         for klass in extension_point.__class__.__mro__:
@@ -126,11 +126,11 @@ class ApplicationAdapter ( ObjectAdapterBase ):
                     try:
                         return adapter( adaptee     = extension_point,
                                         file_name   = file_name,
-                                        application = self, 
+                                        application = self,
                                         container   = container )
                     except:
                         pass
-                    
+
         from extension_point_adapter import ExtensionPointAdapter
         return ExtensionPointAdapter( adaptee     = extension_point,
                                       file_name   = file_name,
@@ -158,7 +158,7 @@ class ApplicationAdapter ( ObjectAdapterBase ):
         if n < 0:
             del sys.path[0]
         return module
-        
+
     def import_module ( self, name ):
         """ Imports and returns the module specified by 'name'.
         """
@@ -166,11 +166,11 @@ class ApplicationAdapter ( ObjectAdapterBase ):
             module = __import__( name )
             for component in name.split( '.' )[1:]:
                 module = getattr( module, component )
-            
+
             return module
         except:
             return None
-            
+
 #-- Property Implementations ---------------------------------------------------
 
     def _get_plugin_definitions_list ( self ):
@@ -178,18 +178,18 @@ class ApplicationAdapter ( ObjectAdapterBase ):
             values = self.plugin_definitions.values()
             values.sort( lambda l, r: cmp( l.name, r.name ) )
             self._plugin_definitions_list = values
-            
+
         return self._plugin_definitions_list
-        
+
     def _get_extension_points ( self ):
         if self._extension_points is None:
             classes = {}
-            
+
             for plugin in self.plugin_definitions_list:
                 for ep in plugin.extension_points_all:
                     klass = ep.__class__
                     classes[ klass.__name__ ] = ( {}, plugin.file_name )
-                    
+
             for plugin in self.plugin_definitions_list:
                 file_name   = plugin.file_name
                 module_name = plugin.module.__name__
@@ -202,7 +202,7 @@ class ApplicationAdapter ( ObjectAdapterBase ):
                                 refs[0][ module_name ] = module_refs = \
                                     ( [], file_name )
                             module_refs[0].append( extension_point )
-                        
+
             eps = [ ExtensionPointFileRefs( name        = name,
                                             refs        = refs[0],
                                             file_name   = refs[1],
@@ -211,15 +211,15 @@ class ApplicationAdapter ( ObjectAdapterBase ):
             eps.sort( lambda l, r: cmp( l.name, r.name ) )
             self._extension_points      = eps
             self._extension_point_names = [ epfr.name for epfr in eps ]
-            
+
         return self._extension_points
-        
+
     def _get_extension_point_names ( self ):
         if self._extension_point_names is None:
             self.extension_points
-            
+
         return self._extension_point_names
-    
+
 #-- Event Handlers -------------------------------------------------------------
 
     def _file_name_changed ( self, file_name ):
@@ -230,18 +230,18 @@ class ApplicationAdapter ( ObjectAdapterBase ):
             names = dir(app_module)
             for name in names:
                 item = getattr(app_module, name)
-                object = None     
+                object = None
                 try:
                     if (issubclass( item, Plugin ) and
                          (item is not Plugin)):
                          object = item()
                          __import__(item.__module__)
-                         plugin_module = sys.modules[item.__module__]    
+                         plugin_module = sys.modules[item.__module__]
                 except:
-                    pass        
+                    pass
                 if object is not None:
                      self._plugin_definition( object, plugin_module )
-                                
+
 #-- Private Methods ------------------------------------------------------------
 
     def _plugin_definition ( self, plugin, module ):
@@ -249,13 +249,13 @@ class ApplicationAdapter ( ObjectAdapterBase ):
         """
         from enthought.developer.tools.envisage_browser.plugin_definition_adapter \
              import PluginDefinitionAdapter
-             
+
         self.plugin_definitions[ plugin.id ] = PluginDefinitionAdapter(
             adaptee     = plugin,
             module      = module,
             file_name   = self._module_file_name( module ),
             application = self )
-            
+
     def _module_file_name ( self, module ):
         """ Returns the source file name for a specified module.
         """
@@ -263,33 +263,33 @@ class ApplicationAdapter ( ObjectAdapterBase ):
         base, ext = splitext( file_name )
         if ext == '.pyc':
             return base + '.py'
-            
+
         return file_name
-        
+
 #-------------------------------------------------------------------------------
 #  'ExtensionPointFileRefs' class:
 #-------------------------------------------------------------------------------
 
 class ExtensionPointFileRefs ( ObjectAdapter ):
-    
+
     #---------------------------------------------------------------------------
-    #  Trait definitions:  
+    #  Trait definitions:
     #---------------------------------------------------------------------------
-    
+
     # The name of the extension point class:
     name = Str
-    
+
     # The dictionary of ( file_name, extension points list ) pairs of all
     # extensions derived from this ExtensionPoint class:
     refs = Dict
-    
+
     # List of ExtensionPointRefs derived from 'refs':
     file_refs = Property( List )
 
     #---------------------------------------------------------------------------
-    #  Traits view definitions:  
+    #  Traits view definitions:
     #---------------------------------------------------------------------------
-        
+
     view = View(
                Tabbed(
                    VGroup(
@@ -322,7 +322,7 @@ class ExtensionPointFileRefs ( ObjectAdapter ):
                resizable = True,
                buttons   = NoButtons
            )
-           
+
 #-- Property Implementations ---------------------------------------------------
 
     def _get_file_refs ( self ):
@@ -335,29 +335,29 @@ class ExtensionPointFileRefs ( ObjectAdapter ):
                      for module_name, refs in self.refs.items() ]
             refs.sort( lambda l, r: cmp( l.module_name, r.module_name ) )
             self._file_refs = refs
-            
+
         return self._file_refs
-        
+
 #-------------------------------------------------------------------------------
 #  'ExtensionPointRefs' class:
 #-------------------------------------------------------------------------------
 
 class ExtensionPointRefs ( ObjectAdapter ):
-    
+
     #---------------------------------------------------------------------------
-    #  Trait definitions:  
+    #  Trait definitions:
     #---------------------------------------------------------------------------
-    
+
     # The name of the module containing the Extension Point instances:
     module_name = Str
-    
+
     # The list of extension points derived from this ExtensionPoint class:
     refs = List
 
     #---------------------------------------------------------------------------
-    #  Traits view definitions:  
+    #  Traits view definitions:
     #---------------------------------------------------------------------------
-        
+
     view = View(
                Tabbed(
                    VGroup(
@@ -392,25 +392,25 @@ class ExtensionPointRefs ( ObjectAdapter ):
            )
 
 #-------------------------------------------------------------------------------
-#  'UnknownPluginAdapter' class:  
+#  'UnknownPluginAdapter' class:
 #-------------------------------------------------------------------------------
-                
+
 class UnknownPluginAdapter ( HasPrivateTraits ):
-    
+
     #---------------------------------------------------------------------------
-    #  Trait definitions:  
+    #  Trait definitions:
     #---------------------------------------------------------------------------
-    
+
     # The id of the unknown plugin:
     id = Str
-        
+
     #---------------------------------------------------------------------------
-    #  Traits view definitions:   
+    #  Traits view definitions:
     #---------------------------------------------------------------------------
-    
+
     view = View(
                VGroup(
-                   VGroup( 
+                   VGroup(
                        Item( 'id~', label = 'Name' ),
                        label       = 'Description',
                        show_border = True
@@ -424,4 +424,4 @@ class UnknownPluginAdapter ( HasPrivateTraits ):
                resizable = True,
                buttons   = NoButtons
            )
-        
+

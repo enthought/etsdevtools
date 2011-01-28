@@ -1,13 +1,13 @@
 #-------------------------------------------------------------------------------
-#  
+#
 #  A custom editor for Margin/Border instances.
-#  
+#
 #  Written by: David C. Morrill
-#  
+#
 #  Date: 11/27/2007
-#  
-#  (c) Copyright 2007 by Enthought, Inc.                                      
-#  
+#
+#  (c) Copyright 2007 by Enthought, Inc.
+#
 #-------------------------------------------------------------------------------
 
 """ A custom editor for Margin/Border instances.
@@ -18,20 +18,20 @@
 #-------------------------------------------------------------------------------
 
 from enthought.traits.ui.api \
-    import View, VGroup, Item   
-    
+    import View, VGroup, Item
+
 from enthought.traits.ui.api \
     import Theme
-    
+
 from enthought.traits.ui.basic_editor_factory \
     import BasicEditorFactory
-    
+
 from enthought.traits.ui.wx.ui_editor \
-    import UIEditor       
-    
+    import UIEditor
+
 from enthought.traits.ui.wx.themed_slider_editor \
     import ThemedSliderEditor
-    
+
 #-------------------------------------------------------------------------------
 #  Constants:
 #-------------------------------------------------------------------------------
@@ -46,35 +46,35 @@ slider_editor = ThemedSliderEditor( slider_color = 0x8B9BDB )
 class _MarginEditor ( UIEditor ):
     """ A custom editor for Margin/Border instances.
     """
-    
+
     # Mark the editor as being resizable:
     scrollable = True
-    
+
     #-- Traits View Definitions ------------------------------------------------
-    
+
     view = View(
         VGroup(
-            Item( 'left',   editor = slider_editor ),  
-            Item( 'right',  editor = slider_editor ),                         
-            Item( 'top',    editor = slider_editor ),  
-            Item( 'bottom', editor = slider_editor ),  
+            Item( 'left',   editor = slider_editor ),
+            Item( 'right',  editor = slider_editor ),
+            Item( 'top',    editor = slider_editor ),
+            Item( 'bottom', editor = slider_editor ),
             group_theme  = '@std:GL5',
             item_theme   = Theme( '@std:GreyItemInset',
-                                  content = ( -6, -6, -7, -2 ) ),       
+                                  content = ( -6, -6, -7, -2 ) ),
             label_theme  = Theme( '@std:BlueLabelInset',
                                   content = ( -6, -4, -7, 0 ),
                                   label   = ( -3, 8 ) )
         ),
         kind = 'subpanel'
     )
-                    
+
 #-------------------------------------------------------------------------------
 #  Create the editor factory object:
 #-------------------------------------------------------------------------------
 
 # Editor factory for Margin/Border objects:
 class MarginEditor ( BasicEditorFactory ):
-    
+
     # The editor class to be created:
     klass = _MarginEditor
-       
+

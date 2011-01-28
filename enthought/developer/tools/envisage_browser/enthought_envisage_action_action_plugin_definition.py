@@ -1,14 +1,14 @@
 #-------------------------------------------------------------------------------
-#  
-#  Extension point adapters for ExtensionPoint subclasses defined in: 
+#
+#  Extension point adapters for ExtensionPoint subclasses defined in:
 #  - enthought.envisage.action.action_plugin_definition.py
-#  
+#
 #  Written by: David C. Morrill
-#  
+#
 #  Date: 06/17/2006
-#  
+#
 #  (c) Copyright 2006 by David C. Morrill
-#  
+#
 #-------------------------------------------------------------------------------
 
 """Copyright 2006 by David C. Morrill"""
@@ -19,13 +19,13 @@
 
 from enthought.traits.ui.api \
     import VGroup, HGroup, Item
-    
+
 from enthought.developer.tools.envisage_browser.object_adapter \
     import Export
 
 from enthought.developer.tools.envisage_browser.extension_point_adapter \
     import ExtensionPointAdapter
-    
+
 #-------------------------------------------------------------------------------
 #  'ActionSetAdapter' class:
 #-------------------------------------------------------------------------------
@@ -33,23 +33,23 @@ from enthought.developer.tools.envisage_browser.extension_point_adapter \
 class ActionSetAdapter ( ExtensionPointAdapter ):
 
     #---------------------------------------------------------------------------
-    #  Trait definitions:    
+    #  Trait definitions:
     #---------------------------------------------------------------------------
-    
+
     id   = Export
     name = Export
-    
+
     #---------------------------------------------------------------------------
-    #  Traits view definitions:  
+    #  Traits view definitions:
     #---------------------------------------------------------------------------
-    
-    content = VGroup( 
+
+    content = VGroup(
                   Item( 'name~' ),
                   Item( 'id~' ),
                   label       = 'Description',
                   show_border = True
               )
-    
+
 #-- ExtensionPointAdapter Overrides --------------------------------------------
 
     def get_children ( self ):
@@ -57,42 +57,42 @@ class ActionSetAdapter ( ExtensionPointAdapter ):
             this one.
         """
         return self.adaptee.actions + self.adaptee.groups + self.adaptee.menus
-        
+
     def get_names ( self ):
         """ Returns the list of trait names for the extension point.
         """
         return [ 'id' ]
-        
+
 #-------------------------------------------------------------------------------
-#  'ActionAdapter' class:  
+#  'ActionAdapter' class:
 #-------------------------------------------------------------------------------
 
 class ActionAdapter ( ExtensionPointAdapter ):
 
     #---------------------------------------------------------------------------
-    #  Trait definitions:    
+    #  Trait definitions:
     #---------------------------------------------------------------------------
 
     id            = Export
     name          = Export
     accelerator   = Export
-    checked       = Export 
-    description   = Export 
-    enabled       = Export 
-    image         = Export 
-    style         = Export 
-    tooltip       = Export 
-    class_name    = Export 
-    lazy_load     = Export 
-    function_name = Export 
+    checked       = Export
+    description   = Export
+    enabled       = Export
+    image         = Export
+    style         = Export
+    tooltip       = Export
+    class_name    = Export
+    lazy_load     = Export
+    function_name = Export
     method_name   = Export
     object        = Export
-    
+
     #---------------------------------------------------------------------------
-    #  Traits view definitions:  
+    #  Traits view definitions:
     #---------------------------------------------------------------------------
-    
-    content = VGroup( 
+
+    content = VGroup(
                   VGroup(
                       Item( 'name~' ),
                       Item( 'id~' ),
@@ -122,7 +122,7 @@ class ActionAdapter ( ExtensionPointAdapter ):
                       show_border = True
                   )
               )
-    
+
 #-- ExtensionPointAdapter Overrides --------------------------------------------
 
     def get_children ( self ):
@@ -130,48 +130,48 @@ class ActionAdapter ( ExtensionPointAdapter ):
             this one.
         """
         result = self.adaptee.locations[:]
-        
+
         if self.adaptee.enabled_when is not None:
             result.append( self.adaptee.enabled_when )
-            
+
         if self.adaptee.disabled_when is not None:
             result.append( self.adaptee.disabled_when )
-            
+
         return result
-        
+
     def get_names ( self ):
         """ Returns the list of trait names for the extension point.
         """
-        return [ 'id', '*accelerator', '*checked', 'description', '*enabled', 
+        return [ 'id', '*accelerator', '*checked', 'description', '*enabled',
                  '*image', '*style', '*tooltip', 'class_name', '*lazy_load',
                  '*function_name', '*method_name', '*object' ]
 
 #-------------------------------------------------------------------------------
-#  'LocationAdapter' class:  
+#  'LocationAdapter' class:
 #-------------------------------------------------------------------------------
 
 class LocationAdapter ( ExtensionPointAdapter ):
 
     #---------------------------------------------------------------------------
-    #  Trait definitions:    
+    #  Trait definitions:
     #---------------------------------------------------------------------------
-                 
+
     path   = Export
     after  = Export
     before = Export
-    
+
     #---------------------------------------------------------------------------
-    #  Traits view definitions:  
+    #  Traits view definitions:
     #---------------------------------------------------------------------------
-    
-    content = VGroup( 
+
+    content = VGroup(
                   Item( 'path~' ),
                   Item( 'after~' ),
                   Item( 'before~' ),
                   label       = 'Description',
                   show_border = True
               )
-    
+
 #-- ExtensionPointAdapter Overrides --------------------------------------------
 
     def get_names ( self ):
@@ -180,31 +180,31 @@ class LocationAdapter ( ExtensionPointAdapter ):
         return [ 'path', 'after', 'before' ]
 
 #-------------------------------------------------------------------------------
-#  'GroupAdapter' class:  
+#  'GroupAdapter' class:
 #-------------------------------------------------------------------------------
 
 class GroupAdapter ( ExtensionPointAdapter ):
 
     #---------------------------------------------------------------------------
-    #  Trait definitions:    
+    #  Trait definitions:
     #---------------------------------------------------------------------------
-                 
+
     id         = Export
     class_name = Export
     separator  = Export
-    
+
     #---------------------------------------------------------------------------
-    #  Traits view definitions:  
+    #  Traits view definitions:
     #---------------------------------------------------------------------------
-    
-    content = VGroup( 
+
+    content = VGroup(
                   Item( 'id~' ),
                   Item( 'class_name~' ),
                   Item( 'separator~', width = -40 ),
                   label       = 'Description',
                   show_border = True
               )
-    
+
 #-- ExtensionPointAdapter Overrides --------------------------------------------
 
     def get_children ( self ):
@@ -213,7 +213,7 @@ class GroupAdapter ( ExtensionPointAdapter ):
         """
         if self.adaptee.location is not None:
             return [ self.adaptee.location ]
-            
+
         return []
 
     def get_names ( self ):
@@ -222,31 +222,31 @@ class GroupAdapter ( ExtensionPointAdapter ):
         return [ 'id', 'class_name', 'separator' ]
 
 #-------------------------------------------------------------------------------
-#  'MenuAdapter' class:  
+#  'MenuAdapter' class:
 #-------------------------------------------------------------------------------
 
 class MenuAdapter ( ExtensionPointAdapter ):
 
     #---------------------------------------------------------------------------
-    #  Trait definitions:    
+    #  Trait definitions:
     #---------------------------------------------------------------------------
-                 
+
     name       = Export
     id         = Export
     class_name = Export
-    
+
     #---------------------------------------------------------------------------
-    #  Traits view definitions:  
+    #  Traits view definitions:
     #---------------------------------------------------------------------------
-    
-    content = VGroup( 
+
+    content = VGroup(
                   Item( 'name~' ),
                   Item( 'id~' ),
                   Item( 'class_name~' ),
                   label       = 'Description',
                   show_border = True
               )
-    
+
 #-- ExtensionPointAdapter Overrides --------------------------------------------
 
     def get_children ( self ):
@@ -254,10 +254,10 @@ class MenuAdapter ( ExtensionPointAdapter ):
             this one.
         """
         result = self.adaptee.groups[:]
-        
+
         if self.adaptee.location is not None:
             result.append( self.adaptee.location )
-            
+
         return result
 
     def get_names ( self ):
@@ -267,31 +267,31 @@ class MenuAdapter ( ExtensionPointAdapter ):
 
 
 #-------------------------------------------------------------------------------
-#  'EnabledWhenAdapter' class:  
+#  'EnabledWhenAdapter' class:
 #-------------------------------------------------------------------------------
 
 class EnabledWhenAdapter ( ExtensionPointAdapter ):
 
     #---------------------------------------------------------------------------
-    #  Trait definitions:    
+    #  Trait definitions:
     #---------------------------------------------------------------------------
-                 
+
     cookie        = Export
     parent_cookie = Export
     resource_type = Export
-    
+
     #---------------------------------------------------------------------------
-    #  Traits view definitions:  
+    #  Traits view definitions:
     #---------------------------------------------------------------------------
-    
-    content = VGroup( 
+
+    content = VGroup(
                   Item( 'cookie~' ),
                   Item( 'parent_cookie~' ),
                   Item( 'resource_type~' ),
                   label       = 'Description',
                   show_border = True
               )
-    
+
 #-- ExtensionPointAdapter Overrides --------------------------------------------
 
     def get_names ( self ):
@@ -300,8 +300,8 @@ class EnabledWhenAdapter ( ExtensionPointAdapter ):
         return [ 'cookie', 'parent_cookie', 'resource_type' ]
 
 #-------------------------------------------------------------------------------
-#  'DisabledWhenAdapter' class:  
+#  'DisabledWhenAdapter' class:
 #-------------------------------------------------------------------------------
 
 class DisabledWhenAdapter ( EnabledWhenAdapter ): pass
-        
+

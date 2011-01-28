@@ -1,5 +1,5 @@
 """
-A demonstration of the <i>Image Library Viewer</i> tool, which is part of the 
+A demonstration of the <i>Image Library Viewer</i> tool, which is part of the
 <b>enthought.developer</b> package.
 
 This demo is displayed as a popup window because it requires a fairly wide
@@ -31,7 +31,7 @@ copy the fully-qualified image library name to the system clipboard, which you
 can then paste into your Python source code to use the selected image in a
 Traits UI-based application.
 
-In order for this demo to run, you must have the enthought.developer package 
+In order for this demo to run, you must have the enthought.developer package
 installed.
 """
 
@@ -40,7 +40,7 @@ from enthought.developer.tools.image_library_viewer \
 
 # Create an instance of the Image Library Viewer as the demo to run:
 popup = ImageLibraryViewer()
-        
+
 # Run the demo (if invoked from the command line):
 if __name__ == '__main__':
     popup.configure_traits()

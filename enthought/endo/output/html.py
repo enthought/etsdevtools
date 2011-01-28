@@ -4,10 +4,10 @@
 # Project: docutils
 # Date:    2005-07-11
 # Author:  David Baer
-# 
+#
 # Description:
 #  HTML output backend
-# 
+#
 ###########################################################################
 
 """HTML output backend
@@ -70,7 +70,7 @@ class OutputHTML(OutputBase):
         self.template_loader = TemplateLoader(self.options.additional_templates + [ self.DATA_PATH ])
         self.exceptions = [ ]
         self.rst_errors = [ ]
-        
+
     def _downgrade_headers(html_body):
         h = html_body
 
@@ -84,10 +84,10 @@ class OutputHTML(OutputBase):
 
     def _para_body(self, html_body, index=0):
         """Extracts the contents of a paragraph tag pair.
-        
-        The *index* parameter determines which paragraph tag pair in 
+
+        The *index* parameter determines which paragraph tag pair in
         *html_body* has its contents extracted.
-        
+
         Returns **None** if *html_body* contains no paragraph tags.
         """
         p_list = re.findall(_match_para_contents, html_body)
@@ -95,8 +95,8 @@ class OutputHTML(OutputBase):
             return p_list[index]
         else:
             return None
-            
-            
+
+
     def _format_docstring(self, context, docstring):
         """format docstring according to user options
 
@@ -105,7 +105,7 @@ class OutputHTML(OutputBase):
            * docstring is the string to format
         """
         options = self.options
-        
+
         if options.debug:
             print "Formatting docstring for",context.abs_name
         if options.rst:
@@ -133,7 +133,7 @@ class OutputHTML(OutputBase):
                 html_body = docstring_parts['html_body']
 
                 html_body = self._downgrade_headers(html_body)
-                
+
                 return html_body
             except KeyboardInterrupt, exc:
                 raise exc
@@ -156,7 +156,7 @@ class OutputHTML(OutputBase):
 
         # just format as text (also fallback in case of exception in rst formatting)
         return '<pre>%s</pre>' % encode_entities(docstring)
-        
+
     def _format_name_links(n, package_namespace):
         "split name n into name components and link each one"
         name_parts = n.split('.')
@@ -227,11 +227,11 @@ class OutputHTML(OutputBase):
             stylesheet = "module.css"
             template_name = 'module'
             obj.sort_sub_modules()
-            sub_modules = [ (x.name, 
-                             object_link(x), 
+            sub_modules = [ (x.name,
+                             object_link(x),
                              self._para_body(
-                                 self._format_docstring(x, 
-                                     re.split('\.[ (\\n)]', 
+                                 self._format_docstring(x,
+                                     re.split('\.[ (\\n)]',
                                          x.docstring.strip())[0])))
                             for x in obj.sub_modules if not x.is_package() ]
             sub_packages = [ (x.name, object_link(x), x.docstring.strip().split('\n')[0])
@@ -239,7 +239,7 @@ class OutputHTML(OutputBase):
             imported_objects = [ (name, imp_obj.abs_name, object_link(imp_obj))
                                  for name, imp_obj in
                                  obj.get_imported_objects() ]
-                
+
         elif isinstance(obj, docobjects.Class):
             # open output file
             fn = "%s.html" % normative_obj_name
@@ -281,11 +281,11 @@ class OutputHTML(OutputBase):
                        '<pre>%s = %s\n\n</pre>' %
                        (a.name, unparse(a.rhs_expr, a, False)))
                       for a in attr_children ]
-        classes = [ (c.name, 
-                     object_link(c), 
+        classes = [ (c.name,
+                     object_link(c),
                      self._para_body(
-                         self._format_docstring(c, 
-                             re.split('\.[ (\\n)]', 
+                         self._format_docstring(c,
+                             re.split('\.[ (\\n)]',
                                  c.docstring.strip())[0])))
                     for c in class_children ]
         functions = [ (f.name, format_params(f.argnames, f.defaults, f),
@@ -328,13 +328,13 @@ class OutputHTML(OutputBase):
         # prepare hierarchy of packages, modules
         mods_with_names = [(m.abs_name.lower(), m) for m in module_list]
         mods_with_names.sort()
-        
+
         modules_sorted = [ m[1] for m in mods_with_names ]
         packages_sorted = [ m[1] for m in mods_with_names if m[1].is_package() ]
-        
+
         module_hierarchy = self._add_links(hierarchicalize_modules(modules_sorted))
         package_hierarchy = self._add_links(hierarchicalize_modules(packages_sorted))
-            
+
         # generate an overall docstring by concatenating the docstrings for
         # top-level packages (usually there will be only one)
         docstring = "\n".join([ self._format_docstring(m, m.docstring) for m, l, s in package_hierarchy ])
@@ -342,7 +342,7 @@ class OutputHTML(OutputBase):
         # render template with local variables as arguments and write to disk
         of.write(template.render(vars()))
         of.close()
-        
+
     def _find_classes(module_list):
         "find all classes at top level of modules"
         return reduce(lambda x, y: x + y, [ m.divide_children()[1] for m in module_list ])
@@ -385,13 +385,13 @@ class OutputHTML(OutputBase):
         # list of available first letters (for links at top of index)
         letter_list = classes_grouped.keys()
         letter_list.sort()
-        
+
         # sort by class name within letter categories
         for letter in letter_list:
             alpha_sort(classes_grouped[letter])
 
         objects = classes_grouped
-        
+
         # render template with local variables as arguments and write to disk
         of.write(template.render(vars()))
 
@@ -437,7 +437,7 @@ class OutputHTML(OutputBase):
         extrastyle = self.get_extra_style()
 
         objects = self._find_variables_and_functions(module_list)
-        
+
         # various template arguments
         header_title = "Namespace Index"
         title = "%s -- %s" % (package_name, header_title)
@@ -470,7 +470,7 @@ class OutputHTML(OutputBase):
         return result
 
     _add_links = classmethod(_add_links)
-            
+
     def write_class_hierarchy(self):
         """Write class hierarchy index
 
@@ -493,7 +493,7 @@ class OutputHTML(OutputBase):
 
         # load template for collapsible tree-control view of hierarchy
         t = self.template_loader.load('hierarchy')
-        
+
         # render template with local variables as arguments and write to disk
         of = open(os.path.join(output_dir, 'class_hierarchy.html'), 'wt')
         show_abs_name = True
@@ -516,14 +516,14 @@ class OutputHTML(OutputBase):
                 print_exception(exc_type, exc_value, exc_traceback,
                                 file=sys.stdout)
                 sys.stdout.write('\n\n')
-    
+
     def generate(self):
         "Generate HTML documentation in output directory"
         options = self.options
         output_dir = options.docdir
         package_namespace = self.package_namespace
         module_list = self.modules
-        
+
         if len(module_list) == 0:
             # nothing to document!
             sys.stderr.write("There are no modules to document!\n")
@@ -562,5 +562,5 @@ class OutputHTML(OutputBase):
         if len(self.rst_errors) > 0:
             self.print_exception_list("The following RST errors were encountered:", self.rst_errors)
 
-        
+
 

@@ -1,15 +1,15 @@
 #-------------------------------------------------------------------------------
-#  
+#
 #  Defines the base adapter class used for creating Envisage ExtensionPoint
 #  adapters. This is also the class used as the adapter for Envisage extension
-#  points for which an explicit adapter class cannot be found. 
-#  
+#  points for which an explicit adapter class cannot be found.
+#
 #  Written by: David C. Morrill
-#  
+#
 #  Date: 06/16/2006
-#  
+#
 #  (c) Copyright 2006 by David C. Morrill
-#  
+#
 #-------------------------------------------------------------------------------
 
 #-------------------------------------------------------------------------------
@@ -28,30 +28,30 @@ from enthought.traits.api \
 
 from enthought.traits.ui.api \
     import View, Tabbed, VGroup, Item, Include, ListEditor
-    
+
 from enthought.traits.ui.menu \
     import NoButtons
-    
+
 from enthought.developer.tools.envisage_browser.object_adapter \
     import ObjectAdapter
-    
+
 #-------------------------------------------------------------------------------
 #  'ExtensionPointClassAdapter' class:
 #-------------------------------------------------------------------------------
 
 class ExtensionPointClassAdapter ( ObjectAdapter ):
-    
+
     #---------------------------------------------------------------------------
-    #  Trait definitions:    
+    #  Trait definitions:
     #---------------------------------------------------------------------------
 
     # The name of the extension point:
     name = Property
 
     #---------------------------------------------------------------------------
-    #  Traits view definitions:  
+    #  Traits view definitions:
     #---------------------------------------------------------------------------
-        
+
     view = View(
                Tabbed(
                    VGroup(
@@ -70,7 +70,7 @@ class ExtensionPointClassAdapter ( ObjectAdapter ):
                    ),
                    VGroup(
                        Item( 'file_name~' ),
-                       VGroup( 
+                       VGroup(
                            Item( 'source~', show_label = False )
                        ),
                        label = 'Source Code',
@@ -84,35 +84,35 @@ class ExtensionPointClassAdapter ( ObjectAdapter ):
                resizable = True,
                buttons   = NoButtons
            )
-    
+
 #-- Property Implementations ---------------------------------------------------
 
     def _get_name ( self ):
         return self.adaptee.id
-    
+
 #-------------------------------------------------------------------------------
 #  'ExtensionPointAdapter' class:
 #-------------------------------------------------------------------------------
 
 class ExtensionPointAdapter ( ObjectAdapter ):
-    
+
     #---------------------------------------------------------------------------
-    #  Trait definitions:    
+    #  Trait definitions:
     #---------------------------------------------------------------------------
 
     # The name of the extension point:
     name = Property
-    
+
     # The list of available trait names:
     names = Property
-    
+
     # List of all parent objects:
     parents = List
-    
+
     #---------------------------------------------------------------------------
-    #  Traits view definitions:  
+    #  Traits view definitions:
     #---------------------------------------------------------------------------
-        
+
     traits_view = View(
         Tabbed(
             VGroup(
@@ -127,14 +127,14 @@ class ExtensionPointAdapter ( ObjectAdapter ):
             ),
             VGroup(
                 Item( 'file_name~' ),
-                VGroup( 
+                VGroup(
                     Item( 'source~', show_label = False ),
                 ),
                 label = 'Source Code',
                 dock  = 'tab'
             ),
             VGroup(
-                Item( 'parents@', 
+                Item( 'parents@',
                       show_label = False,
                       editor     = ListEditor( use_notebook = True,
                                                view         = 'simple' )
@@ -155,17 +155,17 @@ class ExtensionPointAdapter ( ObjectAdapter ):
         resizable = True,
         buttons   = NoButtons
     )
-    
+
     simple = View(
         VGroup(
             Include( 'content' )
         )
     )
-           
+
 #-- Public Methods -------------------------------------------------------------
 
     def get_all_children ( self ):
-        """ Returns adapted version of all extension points contained within 
+        """ Returns adapted version of all extension points contained within
             this one.
         """
         gef       = self.application.get_extension_for
@@ -177,24 +177,24 @@ class ExtensionPointAdapter ( ObjectAdapter ):
             ep = gef( child, file_name, container )
             result.append( ep )
             queue.extend( [ ( ep, child ) for child in ep.get_children() ] )
-            
+
         return result
-        
+
     def get_children ( self ):
         """ Returns the unadapted extension points immediately contained within
             this one.
-            
+
             Note: This method should be overridden by subclasses.
         """
         return []
-        
+
     def get_names ( self ):
         """ Returns the list of trait names for the extension point.
-            
+
             Note: This method should be overridden by subclasses.
         """
         return []
-    
+
 #-- Property Implementations ---------------------------------------------------
 
     def _get_name ( self ):
@@ -207,9 +207,9 @@ class ExtensionPointAdapter ( ObjectAdapter ):
     def _get_names ( self ):
         if self._names is None:
             self._names = self.get_names()
-        
+
         return self._names
-        
+
     def _parents_default ( self ):
         parents = []
         item    = self
@@ -217,7 +217,7 @@ class ExtensionPointAdapter ( ObjectAdapter ):
             item = item.container
             parents.append( item )
         return parents
-        
+
     def _get_class_source ( self, name ):
         fname  = '_' + name
         result = getattr( self, fname )
@@ -226,13 +226,13 @@ class ExtensionPointAdapter ( ObjectAdapter ):
             if class_name == '':
                 setattr( self, fname, '' )
                 return ''
-                
+
             root   = join( *class_name.split( '.' )[:-1] ) + '.py'
             result = ''
             for path in sys.path:
                 name = join( path, root )
                 if exists( name ):
-                    fh = None 
+                    fh = None
                     try:
                         fh     = file( name, 'rb' )
                         result = fh.read()
@@ -241,8 +241,8 @@ class ExtensionPointAdapter ( ObjectAdapter ):
                     if fh is not None:
                         fh.close()
                     break
-                    
+
             setattr( self, fname, result )
-            
+
         return result
-        
+

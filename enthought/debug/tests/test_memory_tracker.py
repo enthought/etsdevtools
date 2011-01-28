@@ -140,10 +140,10 @@ class MemoryStateTestCase(unittest.TestCase):
         #   this assertion succeeds on OS X 10.4 but fails
         #   on Linux and Windows.  It is unclear why.
         self.assertEqual(len(leaks), 1)
-        
+
         leak_holder, leaked_objects = leaks[0]
         #print leaked_objects[0].name
-        
+
         # FIXME:
         #   These two assertions don't work properly with nosetests
         self.assertEqual(root, leak_holder)

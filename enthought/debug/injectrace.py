@@ -54,7 +54,7 @@ def tracelog(*args):
     file and line where this tracing statement was inserted.
     """
     logger = logging.getLogger()
-    
+
     msg = _format(args)
 
     logger.debug(msg)
@@ -105,7 +105,7 @@ def trace_enter(fun):
 
     return wrapped
 
-        
+
 # Inject into builtins for debugging.
 import __builtin__
 __builtin__.__dict__['trace'] = trace

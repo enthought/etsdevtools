@@ -1,14 +1,14 @@
 #-------------------------------------------------------------------------------
-#  
+#
 #  Defines the HasState interface that allows plugins with persistent state to
 #  easily manage that state.
-#  
+#
 #  Wrtten by: David C. Morrill
-#  
+#
 #  Date: 07/06/2005
-#  
+#
 #  (c) Copyright 2006 by David C. Morrill
-#  
+#
 #-------------------------------------------------------------------------------
 
 #-------------------------------------------------------------------------------
@@ -25,37 +25,37 @@ from enthought.traits.api \
 
 from enthought.traits.trait_base \
     import traits_home
-    
+
 #-------------------------------------------------------------------------------
 #  'HasState' class:
 #-------------------------------------------------------------------------------
 
 class HasState ( HasPrivateTraits ):
-    
+
     #---------------------------------------------------------------------------
-    #  Trait definitions:  
+    #  Trait definitions:
     #---------------------------------------------------------------------------
 
     # The persistence id for the plugin:
     id = Str
-    
+
     #---------------------------------------------------------------------------
-    #  Initializes the object:  
+    #  Initializes the object:
     #---------------------------------------------------------------------------
 
     def __init__ ( self, **traits ):
         super( HasState, self ).__init__( **traits )
         self.restore_state()
-    
+
     #---------------------------------------------------------------------------
-    #  Returns the persistent state of the object:  
+    #  Returns the persistent state of the object:
     #---------------------------------------------------------------------------
 
     def get_state ( self ):
         return self.get()
-    
+
     #---------------------------------------------------------------------------
-    #  Saves the current state of the plugin:  
+    #  Saves the current state of the plugin:
     #---------------------------------------------------------------------------
 
     def save_state ( self ):
@@ -67,9 +67,9 @@ class HasState ( HasPrivateTraits ):
             if db is not None:
                 db[ id ] = self.get_state()
                 db.close()
-        
+
     #---------------------------------------------------------------------------
-    #  Restores the previously saved state of the plugin:  
+    #  Restores the previously saved state of the plugin:
     #---------------------------------------------------------------------------
 
     def restore_state ( self ):
@@ -101,4 +101,4 @@ class HasState ( HasPrivateTraits ):
                                 flag = mode, protocol = -1 )
         except:
             return None
-        
+

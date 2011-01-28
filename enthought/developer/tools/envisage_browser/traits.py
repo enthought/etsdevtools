@@ -1,13 +1,13 @@
 #-------------------------------------------------------------------------------
-#  
+#
 #  Trait definitions for use with the Envisage plugin definition browser
-#  
+#
 #  Written by: David Morrill
-#  
+#
 #  Date: 06/16/2006
-#  
+#
 #  (c) Copyright 2006 by David C. Morrill
-#  
+#
 #-------------------------------------------------------------------------------
 
 #-------------------------------------------------------------------------------
@@ -16,27 +16,27 @@
 
 from os \
     import access, R_OK
-    
+
 from enthought.traits.api \
     import TraitHandler, TraitFactory
-    
+
 #-------------------------------------------------------------------------------
 #  'TextFile' trait:
 #-------------------------------------------------------------------------------
 
 def TextFile ( default = '', **metadata ):
     return Trait( default, trait_text_file, **metedata )
-    
+
 TextFile = TraitFactory( TextFile )
 
-    
+
 class TraitTextFile ( TraitHandler ):
     is_mapped = True
 
     def validate ( self, object, name, value ):
         if access( value, R_OK ):
             return value
-            
+
         self.error( object, name, self.repr( value ) )
 
     def mapped_value ( self, value ):
@@ -47,7 +47,7 @@ class TraitTextFile ( TraitHandler ):
         finally:
             if fh is not None:
                 fh.close()
-                
+
         return mapped
 
     def post_setattr ( self, object, name, value ):
@@ -63,5 +63,5 @@ class TraitTextFile ( TraitHandler ):
         from enthought.traits.ui.api import FileEditor
         return FileEditor()
 
-# Create a resusable instance:        
-trait_text_file = TraitTextFile()        
+# Create a resusable instance:
+trait_text_file = TraitTextFile()

@@ -1,14 +1,14 @@
 #-------------------------------------------------------------------------------
-#  
-#  Extension point adapters for ExtensionPoint subclasses defined in: 
+#
+#  Extension point adapters for ExtensionPoint subclasses defined in:
 #  - enthought.plugins.python_shell.python_shell_plugin_definition.py
-#  
+#
 #  Written by: David C. Morrill
-#  
+#
 #  Date: 06/18/2006
-#  
+#
 #  (c) Copyright 2006 by David C. Morrill
-#  
+#
 #-------------------------------------------------------------------------------
 
 #-------------------------------------------------------------------------------
@@ -20,10 +20,10 @@ from enthought.traits.api \
 
 from enthought.traits.ui.api \
     import VSplit, Item, TableEditor
-    
+
 from enthought.traits.ui.table_column \
     import ObjectColumn
-    
+
 from enthought.developer.tools.envisage_browser.object_adapter \
     import Export
 
@@ -48,7 +48,7 @@ commands_table_editor = TableEditor(
     columns  = [ ObjectColumn( name = 'command', width = 0.97 ) ],
     editable = False
 )
-    
+
 #-------------------------------------------------------------------------------
 #  'NamespaceAdapter' class:
 #-------------------------------------------------------------------------------
@@ -56,20 +56,20 @@ commands_table_editor = TableEditor(
 class NamespaceAdapter ( ExtensionPointAdapter ):
 
     #---------------------------------------------------------------------------
-    #  Trait definitions:    
+    #  Trait definitions:
     #---------------------------------------------------------------------------
-    
+
     bindings = Export
     commands = Export
-    
+
     bindings_list = Property
     commands_list = Property
-    
+
     #---------------------------------------------------------------------------
-    #  Traits view definitions:  
+    #  Traits view definitions:
     #---------------------------------------------------------------------------
-    
-    content = VSplit( 
+
+    content = VSplit(
                   Item( 'bindings_list~',
                         show_label = False,
                         dock       = 'tab',
@@ -82,9 +82,9 @@ class NamespaceAdapter ( ExtensionPointAdapter ):
                   ),
                   id = 'splitter'
               )
-              
+
 #-- ExtensionPointAdapter Overrides --------------------------------------------
-        
+
     def get_names ( self ):
         """ Returns the list of trait names for the extension point.
         """
@@ -96,8 +96,8 @@ class NamespaceAdapter ( ExtensionPointAdapter ):
         if self._bindings_list is None:
             self._bindings_list = [ Binding( name = name, value = str( value ) )
                                     for name, value in self.bindings.items() ]
-        return self._bindings_list 
-        
+        return self._bindings_list
+
     def _get_commands_list ( self ):
         if self._commands_list is None:
             self._commands_list = [
@@ -106,27 +106,27 @@ class NamespaceAdapter ( ExtensionPointAdapter ):
         return self._commands_list
 
 #-------------------------------------------------------------------------------
-#  'Binding' class:  
+#  'Binding' class:
 #-------------------------------------------------------------------------------
-    
+
 class Binding ( HasPrivateTraits ):
-    
+
     #---------------------------------------------------------------------------
-    #  Trait definitions:  
+    #  Trait definitions:
     #---------------------------------------------------------------------------
 
     name  = Str
     value = Str
-    
+
 #-------------------------------------------------------------------------------
 #  'Command' class:
 #-------------------------------------------------------------------------------
-        
+
 class Command ( HasPrivateTraits ):
-    
+
     #---------------------------------------------------------------------------
-    #  Trait definitions:  
+    #  Trait definitions:
     #---------------------------------------------------------------------------
 
     command = Str
-    
+

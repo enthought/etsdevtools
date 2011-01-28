@@ -1,17 +1,17 @@
 #-------------------------------------------------------------------------------
-#  
-#  FBI (Frame Based Inspector) Plugin. 
-#  
+#
+#  FBI (Frame Based Inspector) Plugin.
+#
 #  Written by: David C. Morrill
-#  
+#
 #  Date: 1/4/2006
-#  
+#
 #  (c) Copyright 2006 by Enthought, Inc.
-#  
+#
 #-------------------------------------------------------------------------------
 
 #-------------------------------------------------------------------------------
-#  Imports:  
+#  Imports:
 #-------------------------------------------------------------------------------
 
 from enthought.envisage.core.core_plugin_definition \
@@ -35,7 +35,7 @@ PluginDefinition(
     provider_url  = 'www.enthought.com',
     enabled       = True,
     autostart     = True,
-    
+
     # The Id's of the plugins that this plugin requires:
     requires = [
         'enthought.envisage.core',

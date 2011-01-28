@@ -17,7 +17,7 @@ def generate_dot(parent, dependents):
         for i in range(len(dirs_to_omit)):
             dir = dirs_to_omit[i]
             dirs_to_omit[i] = dir.lower()
-                                      
+
     s = ''
     for d in dependents:
         try:
@@ -45,7 +45,7 @@ def generate_dot_file(top, dep_map, filename):
    f.close()
 
 def main():
-    
+
     try:
         opts, args = getopt.getopt(sys.argv[1:], "p", ["chart"])
     except getopt.GetoptError, ex:
@@ -64,7 +64,7 @@ def main():
             package_flag = True
         if opt == "--chart":
             chart_flag = True
-    
+
     import_manager = ImportManager.ImportManager()
     import_manager.notifyOfNewFiles(ImportSpy.circular_tester)
     ImportSpy.activate(import_manager)
@@ -74,20 +74,19 @@ def main():
     else:
         #todo: tinker with __name__
         execfile(args[0])
-        
+
     sys.path_hooks = sys.path_hooks[:-1]
-        
+
     if chart_flag:
         dot_file = "dependencies.dot"
         generate_dot_file(args[0], ImportSpy.dependency_map, dot_file)
-        
+
         #try to find 'dot'
         import subprocess
         if 0 == subprocess.call('dot -T svg -o %s %s' % (args[0] + ".svg", dot_file)):
             os.unlink(dot_file)
-        
+
 
 if __name__ == "__main__":
     main()
-        
-    
+

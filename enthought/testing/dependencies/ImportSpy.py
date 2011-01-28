@@ -93,7 +93,7 @@ if path_hooks is not None:
             """Replaces imp.find_module."""
             global indent
             if debug: print '  '*indent + "Find module(self, %s)" % fullname
-            indent += 1                        
+            indent += 1
 
             try:
                 self.file, self.filename, self.info = self._imp.find_module(
@@ -135,7 +135,7 @@ if path_hooks is not None:
                         dependency_map[parent].append(fullname)
                     else:
                         dependency_map[parent] = [fullname]
-            
+
             incomplete_imports.append(fullname)
             mod = self._imp.load_module(fullname, self.file, self.filename, self.info)
             incomplete_imports.remove(fullname)

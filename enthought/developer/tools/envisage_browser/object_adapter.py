@@ -17,39 +17,39 @@
 
 from enthought.traits.api \
     import HasTraits, Instance, Any, Property, Delegate
-    
+
 from enthought.developer.tools.envisage_browser.object_adapter_base \
     import ObjectAdapterBase
-        
+
 #-------------------------------------------------------------------------------
-#  Trait definitions: 
+#  Trait definitions:
 #-------------------------------------------------------------------------------
-        
+
 # A trait re-exported from the adapted object:
 Export = Delegate( 'adaptee' )
-    
+
 #-------------------------------------------------------------------------------
 #  'ObjectAdapter' class:
 #-------------------------------------------------------------------------------
 
 class ObjectAdapter ( ObjectAdapterBase ):
-    
+
     #---------------------------------------------------------------------------
-    #  Trait definitions:    
+    #  Trait definitions:
     #---------------------------------------------------------------------------
 
     # The object we are adapting:
     adaptee = Any
-    
+
     # The list of base classes for the adapted object:
     base_classes = Property
 
-    # The application this object is associated with: 
+    # The application this object is associated with:
     application = Any # Instance( ApplicationAdapter )
 
     # The object containing this ExtensionItem (optional):
     container = Instance( 'ObjectAdapter' )
-   
+
 #-- Property Implementations ---------------------------------------------------
 
     def _get_base_classes ( self ):
@@ -62,6 +62,6 @@ class ObjectAdapter ( ObjectAdapterBase ):
                     bc.append( klass )
                     queue.extend( klass.__bases__ )
             self._base_classes = bc
-            
+
         return self._base_classes
 

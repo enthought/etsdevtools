@@ -10,7 +10,7 @@ from os \
 
 from os.path \
     import exists, join, isdir, isfile, splitext
-    
+
 # Enthought library imports.
 from enthought.envisage.api import IExtensionRegistry
 from enthought.envisage.api import ExtensionPoint
@@ -28,44 +28,44 @@ logger = logging.getLogger(__name__)
 class ObjectFileNode(ObjectTreeNode):
     """
     """
-    
+
     node_for = [FileNode]
-    
+
     label = 'name'
-    
+
 #    def get_icon(self, object, is_expanded):
 #        if splitext(object.file_name)[1] == '.py':
 #            return 'python'
 #        else:
 #            return super(ObjectFileNode, self).get_icon(object, is_expanded)
-    
+
     def get_menu(self, object):
         """
         """
-        
+
         actions = [TraitsAction(name = 'Open',
                                 action = 'open')]
-        
+
         if splitext(object.file_name)[1] == '.py':
             actions.append(TraitsAction(name = 'Run',
                                         action = 'run'))
         menu = TraitsMenu( *actions )
         return menu
-        
+
 #-------------------------------------------------------------------------------
 #  Tree editor definition:
 #-------------------------------------------------------------------------------
-    
+
 class FileBrowserHandler(Handler):
-    
+
     info = Any
-    
+
     def init_info(self, info):
         self.info = info
-        
+
     def run(self, info, object):
         self.info.object.run(object.file_name)
-        
+
 tree_editor = TreeEditor(
     editable  = False,
     selected  = 'selected',
@@ -79,12 +79,12 @@ tree_editor = TreeEditor(
         ObjectFileNode()
     ]
 )
-    
+
 class FileBrowserView(View, FileBrowser):
     """ A view containing a file browser. """
 
     #### 'IView' interface ####################################################
-    
+
     # The part's globally unique identifier.
     id = 'enthought.developer.tools.file_browser'
 
@@ -97,13 +97,13 @@ class FileBrowserView(View, FileBrowser):
 
     #### 'IExtensionPointUser' interface ######################################
 
-    traits_view = TraitsView( 
-        Item( name       = 'root', 
+    traits_view = TraitsView(
+        Item( name       = 'root',
               editor     = tree_editor,
               show_label = False
               ), handler=FileBrowserHandler
               )
-    
+
     ###########################################################################
     # 'View' interface.
     ###########################################################################
@@ -116,13 +116,13 @@ class FileBrowserView(View, FileBrowser):
         # Register the file browser as a service.
         self.window.application.register_service(FileBrowser, self)
         return self.ui.control
-    
+
     def run(self, filename=None, shell=None):
         """
         """
         if filename is None:
             filename = self.path
-            
+
         if shell is None:
             shell = self.window.get_view_by_id(
                 'enthought.plugins.python_shell_view'
@@ -130,7 +130,7 @@ class FileBrowserView(View, FileBrowser):
 
         if shell is not None:
             self.run_dir(shell, filename)
-        
+
     def run_dir(self, view, path):
         if isfile(path):
             self.run_script(view, path)
@@ -140,7 +140,7 @@ class FileBrowserView(View, FileBrowser):
         for dir in glob.iglob(join(path, '*') + sep):
             self.run_dir(view, dir)
         return
-            
+
     def run_script(self, view, filename):
         view.execute_command('%run  ' + '"%s"' % filename, hidden=False)
 

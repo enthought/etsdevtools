@@ -3,10 +3,10 @@
 # Project: docutils
 # Date:    2005-07-11
 # Author:  David Baer
-# 
+#
 # Description:
 #  Base class for output backends
-# 
+#
 ###########################################################################
 
 "Basic output architecture"
@@ -30,7 +30,7 @@ class OutputBase:
         self.modules = [ ]
         self.modules_by_name = { }
         self.package_namespace = Namespace(name = options.package)
-        
+
     def add_module(self, module):
         "Add a parsed module (docobjects.Module) to be documented"
         self.modules.append(module)
@@ -56,6 +56,6 @@ class OutputBase:
 
     def generate(self):
         pass
-    
+
 
 

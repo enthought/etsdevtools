@@ -19,7 +19,7 @@ from os.path \
 
 from cPickle \
     import load
-    
+
 from cStringIO \
     import StringIO
 
@@ -63,7 +63,7 @@ class UniversalInspector ( HasPrivateTraits ):
 
     # The name of the plugin:
     name = Str( 'Universal Inspector' )
-    
+
     # The persistence id for this object:
     id = Str( 'enthought.developer.tools.universal_inspector.state',
               save_state_id = True )
@@ -174,7 +174,7 @@ class UniversalInspector ( HasPrivateTraits ):
                     except:
                         try:
                             inspector = ObjectInspector(
-                                object    = self._object_from_pickle( 
+                                object    = self._object_from_pickle(
                                                 read_file( item ) ),
                                 name      = name,
                                 full_name = full_name )
@@ -204,7 +204,7 @@ class UniversalInspector ( HasPrivateTraits ):
             do_later( self.set, item = None )
 
     #-- Private Methods --------------------------------------------------------
-    
+
     def _object_from_pickle ( self, data ):
         """ Tries the return the objects contained in a 'pickle' buffer.
         """
@@ -216,12 +216,12 @@ class UniversalInspector ( HasPrivateTraits ):
         except:
             import traceback
             traceback.print_exc()
-            
+
         if len( object ) == 1:
             object = object[0]
-            
+
         return object
-        
+
 #-------------------------------------------------------------------------------
 #  'ObjectInspector' class:
 #-------------------------------------------------------------------------------

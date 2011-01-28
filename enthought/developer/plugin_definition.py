@@ -1,14 +1,14 @@
 #-------------------------------------------------------------------------------
-#  
+#
 #  Sample plugin definition for the enthought.developer.tools and associated
 #  DockWindow features.
-#  
+#
 #  Written by: David C. Morrill
-#  
+#
 #  Date: 06/25/2006
-#  
+#
 #  (c) Copyright 2006 by David C. Morrill
-#  
+#
 #-------------------------------------------------------------------------------
 
 #-------------------------------------------------------------------------------
@@ -20,13 +20,13 @@ from enthought.envisage.core.core_plugin_definition \
 
 from enthought.envisage.workbench.workbench_plugin_definition \
     import Workbench, Perspective, View, Feature
-    
+
 from enthought.envisage.action.action_plugin_definition \
     import Action, Group, Location, Menu
-    
+
 from enthought.envisage.workbench.action.action_plugin_definition \
     import WorkbenchActionSet
-    
+
 #-------------------------------------------------------------------------------
 #  Constants:
 #-------------------------------------------------------------------------------
@@ -130,7 +130,7 @@ workbench = Workbench(
             ]
         )
     ],
-    
+
     views = views
 )
 
@@ -168,7 +168,7 @@ workbench_action_set = WorkbenchActionSet(
         Action( name        = 'Invoke FBI',
                 tooltip     = 'Invoke the FBI debugger',
                 object      = 'import://enthought.developer.helper.fbi.FBIInvoker',
-                method_name = 'invoke', 
+                method_name = 'invoke',
                 id          = 'enthought.developer.helper.fbi.fbi_invoker',
                 lazy_load   = True,
                 locations   = [
@@ -182,7 +182,7 @@ workbench_action_set = WorkbenchActionSet(
         Action( name        = 'Restore break points',
                 tooltip     = 'Restores all previously saved break points',
                 object      = 'import://enthought.developer.helper.fbi.break_points',
-                method_name = 'restore', 
+                method_name = 'restore',
                 id          = 'enthought.developer.helper.fbi.break_points.restore',
                 lazy_load   = True,
                 locations   = [
@@ -195,36 +195,36 @@ workbench_action_set = WorkbenchActionSet(
         ),
     ]
 )
-    
+
 #-------------------------------------------------------------------------------
 #  The test plugin definition:
 #-------------------------------------------------------------------------------
 
 class EnthoughtDeveloperPluginDefinition ( PluginDefinition ):
-    
+
     # The plugin's globally unique identifier:
     id = ID
-    
+
     # General information about the plugin.
     name          = "Enthought Developer Tools Plugin"
     version       = "1.0.0"
     provider_name = "David C. Morrill"
     provider_url  = "www.enthought.com"
-    
+
     # The Ids of the plugins that this plugin requires:
-    requires = [ 
+    requires = [
         'enthought.envisage.core',
-        'enthought.envisage.workbench' 
+        'enthought.envisage.workbench'
     ]
 
     # The extension points offered by this plugin.
     extension_points = []
-    
+
     # The contributions that this plugin makes:
     extensions = [
         workbench_action_set,
         workbench,
-        
+
         Feature( class_name = 'enthought.developer.features.drag_drop_feature.'
                               'DragDropFeature' ),
         Feature( class_name = 'enthought.developer.features.drop_file_feature.'

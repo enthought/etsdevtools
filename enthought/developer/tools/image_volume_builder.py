@@ -1,13 +1,13 @@
 #-------------------------------------------------------------------------------
-#  
+#
 #  A feature-enabled tool for building Traits UI ImageLibrary image volumes.
-#  
+#
 #  Written by: David C. Morrill
-#  
+#
 #  Date: 12/01/2007
-#  
+#
 #  (c) Copyright 2007 by Enthought, Inc.
-#  
+#
 #-------------------------------------------------------------------------------
 
 """ A feature-enabled tool for building Traits UI ImageLibrary image volumes.
@@ -19,36 +19,36 @@
 
 from os \
     import remove
-    
+
 from os.path \
     import abspath, dirname, basename, join, splitext, isdir, exists
-    
+
 from time \
     import time
 
 from zipfile \
     import ZipFile, ZIP_DEFLATED
-    
+
 from enthought.traits.api \
     import HasPrivateTraits, File, Str, List, Button, Property, cached_property
-    
+
 from enthought.traits.ui.api \
     import View, HGroup, VGroup, Tabbed, Item, Label, Theme, FileEditor, \
            TableEditor, ListStrEditor
-    
+
 from enthought.traits.ui.table_column \
     import ObjectColumn
-    
+
 from enthought.traits.ui.image.image \
     import ImageLibrary, ImageVolume, ImageVolumeInfo, ImageInfo, FastZipFile, \
            time_stamp_for
-    
+
 from enthought.traits.ui.wx.history_editor \
     import HistoryEditor
-     
+
 from enthought.developer.helper.themes \
     import LabelTheme, InsetTheme
-   
+
 #-------------------------------------------------------------------------------
 #  Constants:
 #-------------------------------------------------------------------------------
@@ -58,7 +58,7 @@ ImageExtensions = ( '.png', '.jpg', '.jpeg', '.gif' )
 
 # The standard Group Theme we are using:
 GroupTheme = Theme( '@std:XG1', content = 4 )
-    
+
 #-------------------------------------------------------------------------------
 #  The table editor used to list the files being included in the volume:
 #-------------------------------------------------------------------------------
@@ -70,93 +70,93 @@ volume_contents_editor = TableEditor(
     ],
     show_toolbar       = False,
     editable           = False,
-    auto_size          = False, 
+    auto_size          = False,
     selection_bg_color = 0xFBD391,
     selection_color    = 'black'
-)    
-    
+)
+
 #-------------------------------------------------------------------------------
 #  'ImageVolumeItem' class:
 #-------------------------------------------------------------------------------
 
 class ImageVolumeItem ( HasPrivateTraits ):
-    
+
     # The file name of the item:
     file_name = File
-    
+
     # The image name of the item:
     image_name = Str
-    
+
 #-------------------------------------------------------------------------------
 #  'ImageVolumeBuilder' class:
-#-------------------------------------------------------------------------------    
+#-------------------------------------------------------------------------------
 
 class ImageVolumeBuilder ( HasPrivateTraits ):
-    """ A feature-enabled tool for building Traits UI ImageLibrary image 
+    """ A feature-enabled tool for building Traits UI ImageLibrary image
         volumes.
     """
-    
+
     #-- Volume Information -----------------------------------------------------
-    
+
     # The category of the ImageVolume being built:
     category = Str( 'General' )
-    
+
     # The description of the ImageVolume being built:
     description = Str( 'No volume description specified.' )
-    
+
     # The keywords associated with the ImageVolume being built:
     keywords = List( Str )
-    
+
     #-- Image Information ------------------------------------------------------
-    
+
     # The image category:
     image_category = Str
-    
+
     # The image description:
     image_description = Str
-    
+
     # The image keywords:
     image_keywords = List( Str )
-    
+
     #-- Copyright/License Information ------------------------------------------
-    
+
     # The image/volume copyright:
     copyright = Str( 'No copyright information specified.' )
-    
+
     # The image/volume license:
     license = Str( 'No license information specified.' )
-    
+
     # The file containing the license text:
     license_file = File
-    
+
     #-- Volume Content ---------------------------------------------------------
-    
+
     # The files to be used to build the image volume:
-    files = List( File, 
+    files = List( File,
                 connect = 'to: list of file names to build image volume with' )
-                
+
     # The filtered list of files to build the image volume from:
     build_files = Property( List, depends_on = 'files[]' )
-    
+
     #-- Volume File Name -------------------------------------------------------
-    
+
     # The zip file name of the image volume:
     volume_name = File
-    
+
     # The fully qualified zip file name of the volume:
     fq_volume_name = Property
-    
+
     # Is the current volume name valid?
     is_valid_name = Property( depends_on = 'volume_name, files' )
-   
+
     # The button for building the image library:
     build = Button( 'Build' )
-    
+
     # Status message:
     status = Str
-    
+
     #-- Traits View Definitions ------------------------------------------------
-    
+
     view = View(
         VGroup(
             Tabbed(
@@ -180,8 +180,8 @@ class ImageVolumeBuilder ( HasPrivateTraits ):
                     HGroup(
                         VGroup(
                             Label( 'Volume keywords', LabelTheme ),
-                            Item( 'keywords', 
-                                  editor = ListStrEditor( auto_add = True ) 
+                            Item( 'keywords',
+                                  editor = ListStrEditor( auto_add = True )
                             ),
                             show_labels = False
                         ),
@@ -203,8 +203,8 @@ class ImageVolumeBuilder ( HasPrivateTraits ):
                     HGroup(
                         VGroup(
                             Label( 'Image keywords', LabelTheme ),
-                            Item( 'image_keywords', 
-                                  editor = ListStrEditor( auto_add = True ) 
+                            Item( 'image_keywords',
+                                  editor = ListStrEditor( auto_add = True )
                             ),
                             show_labels = False
                         ),
@@ -247,7 +247,7 @@ class ImageVolumeBuilder ( HasPrivateTraits ):
                 id = 'tabbed'
             ),
             HGroup(
-                Item( 'volume_name', 
+                Item( 'volume_name',
                       id      = 'volume_name',
                       label   = 'File name',
                       editor  = FileEditor( entries = 10 ),
@@ -276,23 +276,23 @@ class ImageVolumeBuilder ( HasPrivateTraits ):
         height    = 0.75,
         resizable = True
     )
-   
+
     #-- Property Implementations -----------------------------------------------
-    
+
     def _get_fq_volume_name ( self ):
         name      = abspath( self.volume_name )
         root, ext = splitext( name )
         if ext == '':
             name += '.zip'
-            
+
         return name
-    
+
     @cached_property
     def _get_is_valid_name ( self ):
-        return ((len( self.volume_name ) > 0)      and 
+        return ((len( self.volume_name ) > 0)      and
                 (not isdir( self.fq_volume_name )) and
                 (len( self.build_files ) > 0))
-        
+
     @cached_property
     def _get_build_files ( self ):
         n   = self._find_common_prefix_length()
@@ -301,9 +301,9 @@ class ImageVolumeBuilder ( HasPrivateTraits ):
                                   image_name = inf( file_name, n ) )
                  for file_name in self.files
                  if splitext( file_name )[1] in ImageExtensions ]
-                 
+
     #--Traits Event Handlers ---------------------------------------------------
-    
+
     def _license_file_changed ( self, file_name ):
         """ Handles the license file trait being changed.
         """
@@ -313,10 +313,10 @@ class ImageVolumeBuilder ( HasPrivateTraits ):
             fh.close()
         except:
             return
-            
+
         if (len( license ) > 0) and (license.find( '\x00' ) < 0):
             self.license = license
-    
+
     def _build_changed ( self ):
         """ Handles the user requesting that the volume be built.
         """
@@ -324,20 +324,20 @@ class ImageVolumeBuilder ( HasPrivateTraits ):
         if exists( file_name ):
             # fixme: Handle the case of the file name already existing here...
             pass
-        
+
         self._build_volume( file_name )
-    
+
     #-- Private Methods --------------------------------------------------------
-    
+
     def _find_common_prefix_length ( self ):
-        """ Returns the length of the longest common file prefix shared by all 
+        """ Returns the length of the longest common file prefix shared by all
             input files.
         """
         files = [ abspath( file ) for file in self.files ]
-        
+
         if len( files ) == 0:
             return 0
-            
+
         prefix = join( dirname( files[0] ), '' )
         while True:
             n = len( prefix )
@@ -346,29 +346,29 @@ class ImageVolumeBuilder ( HasPrivateTraits ):
                     break
             else:
                 return n
-                
+
             new_prefix = join( dirname( dirname( prefix ) ), '' )
             if new_prefix == prefix:
                 return n
-    
+
             prefix = new_prefix
-            
+
     def _image_name_for ( self, file_name, n ):
         """ Returns the coresponding image name for a specified **file_name**
             with a specified common prefix length of **n**.
         """
         return file_name[ n: ].replace( '\\', '_' ).replace( '/', '_' )
-        
+
     def _build_volume ( self, file_name ):
         """ Creates the image volume using the specified file name and the
             current user supplied information and input files.
         """
         # Set the current status:
         self.status = 'Saving to %s...' % file_name
-        
+
         # Create an image volume to hold the information collected. Note that we
         # set a bogus time stamp to force the ImageLibrary to reload all of the
-        # image information from the actual files so that we end up with the 
+        # image information from the actual files so that we end up with the
         # correct image sizes:
         volume = ImageVolume(
             category   = self.category,
@@ -379,28 +379,28 @@ class ImageVolumeBuilder ( HasPrivateTraits ):
                                copyright   = self.copyright,
                                license     = self.license ) ]
         )
-        
+
         # Create an ImageInfo descriptor for each image file that will become
         # part of the volume:
         volume_name   = splitext( basename( file_name ) )[0]
         volume.images = [ ImageInfo(
                               name        = item.image_name,
-                              image_name  = '@%s:%s' % ( volume_name, 
+                              image_name  = '@%s:%s' % ( volume_name,
                                                          item.image_name ),
                               description = self.image_description,
                               category    = self.image_category,
                               keywords    = self.image_keywords )
                           for item in self.build_files ]
-            
+
         # Pre-compute the images code, because it can require a long time
         # to load all of the images so that we can determine their size, and we
         # don't want that time to interfere with the time stamp of the image
         # volume:
         images_code = volume.images_code
-        
+
         # Create the new zip file:
         zf = ZipFile( file_name, 'w', ZIP_DEFLATED )
-        
+
         # Assume that an error will occur:
         error = True
         fh    = None
@@ -413,20 +413,20 @@ class ImageVolumeBuilder ( HasPrivateTraits ):
                 fh.close()
                 fh = None
                 zf.writestr( item.image_name, data )
-            
+
             # Write the volume manifest source code to the zip file:
             zf.writestr( 'image_volume.py', volume.image_volume_code )
-            
+
             # Write the image info source code to the zip file:
             zf.writestr( 'image_info.py', images_code )
-            
+
             # Done creating the new zip file:
             zf.close()
             zf = None
-            
+
             # Add the new image volume to the image library:
             ImageLibrary.add_volume( file_name )
-            
+
             # Now invoke the normal volume save so that it can add the correct
             # image info data and license file:
             volume = [ volume for volume in ImageLibrary.volumes
@@ -435,19 +435,19 @@ class ImageVolumeBuilder ( HasPrivateTraits ):
             volume.zip_file = FastZipFile( path = file_name )
 
             volume.save()
-            
+
             # Set the final status:
             self.status = '%s has been saved successfully.' % file_name
-            
+
             # Indicate no errors occurred:
             error = False
-        finally: 
+        finally:
             if fh is not None:
                 fh.close()
-                
+
             if zf is not None:
                 zf.close()
-                
+
             if error:
                 self.status = 'An error occurred trying to save %s.' % file_name
                 remove( file_name )
@@ -460,12 +460,12 @@ if __name__ == '__main__':
     from enthought.traits.api    import Instance
     from file_sieve              import FileSieve
     from enthought.traits.ui.api import VSplit
-        
+
     class VolumeBuilder ( HasPrivateTraits ):
-        
+
         viewer  = Instance( FileSieve )
         builder = Instance( ImageVolumeBuilder, () )
-        
+
         view = View(
             VSplit(
                 Item( 'viewer',
@@ -476,7 +476,7 @@ if __name__ == '__main__':
                       id    = 'builder',
                       style = 'custom'
                 ),
-                show_labels = False, 
+                show_labels = False,
                 id          = 'splitter'
             ),
             id        = 'enthought.developer.tools.image_volume_builder'
@@ -486,12 +486,12 @@ if __name__ == '__main__':
             height    = 0.75,
             resizable = True
         )
-        
+
         def _viewer_default ( self ):
             result = FileSieve()
             result.sync_trait( 'selected_files', self.builder, 'files',
                                mutual = False )
             return result
-        
+
     VolumeBuilder().configure_traits()
-    
+

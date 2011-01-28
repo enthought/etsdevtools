@@ -1,12 +1,12 @@
 #-------------------------------------------------------------------------------
-#  
+#
 #  Set up or remove FBI breakpoints from a specified breakpoints file.
-#  
+#
 #  Author: David C. Morrill
 #  Date:   09/19/2007
-#  
+#
 #  (c) Copyright 2007 by Enthought, Inc.
-#  
+#
 #-------------------------------------------------------------------------------
 
 #-------------------------------------------------------------------------------
@@ -17,32 +17,32 @@ import sys
 
 from enthought.developer.helper.ex_fbi \
     import SavedBreakPoints
-    
+
 #-------------------------------------------------------------------------------
 #  Execute:
 #-------------------------------------------------------------------------------
 
 if __name__ == '__main__':
-    
+
     # Load the file containing all current externally set breakpoints:
     bp = SavedBreakPoints()
-    
+
     # If no command line arguments specified, clear all defined break points:
     if len( sys.argv ) < 2:
         bp.clear_bp()
         bp.save()
-        
+
         # All done, exit:
         sys.exit( 0 )
-    
+
     # Get the breakpoints associated with the specified file:
     source_file = bp.source_file_for( sys.argv[1] )
-    
+
     # If no line number arguments begin with a '+' or '-' or '?' or '#' or '@'
     # or '!', then delete all current break points for the specified file:
     if len( [ line for line in sys.argv[2:] if line[0:1] in '+-?#@!' ] ) == 0:
         source_file.clear_bp()
-       
+
     # Process each command line source file line number:
     for line in sys.argv[2:]:
         code = ''
@@ -53,7 +53,7 @@ if __name__ == '__main__':
             n     = (len( lines[0] ) - len( lines[0].lstrip() ))
             code  = '[[nl]]'.join( [ x[n:] for x in lines ] )
             line  = line[ : col ]
-            
+
         lines = line.split( ',' )
         c     = line[0:1]
         if c in '?#@!':
@@ -68,7 +68,7 @@ if __name__ == '__main__':
                 end_line = line
                 if len( lines ) > 1:
                     end_line = int( lines[1] )
-                    
+
                 # A line number starting with '@' means set a trace break point:
                 source_file.set_bp( line, end_line = end_line,
                                           bp_type  = 'Trace' )
@@ -85,7 +85,7 @@ if __name__ == '__main__':
             else:
                 # A negative line number means remove the break point:
                 source_file.reset_bp( -line )
-            
+
     # Save the external breakpoint file:
-    bp.save()    
+    bp.save()
 

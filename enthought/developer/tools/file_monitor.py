@@ -428,7 +428,7 @@ class FileMonitor ( HasPrivateTraits ):
 
     # The name of the plugin:
     name = Str( 'File Monitor' )
-    
+
     # The persistence id for this object:
     id = Str( 'enthought.developer.tools.file_monitor.state',
               save_state_id = True )

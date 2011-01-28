@@ -3,10 +3,10 @@
 # Project: endo
 # Date:    2005-06-09
 # Author:  David Baer
-# 
+#
 # Description:
 #   Documentable objects
-# 
+#
 ###########################################################################
 
 """Architecture for documentable objects in Python code.
@@ -32,7 +32,7 @@ warnings = None
 from util import alpha_sort
 
 # traits primitives
-TRAITS_PRIMITIVES = set([ 'enthought.traits.api.' + x for x in 
+TRAITS_PRIMITIVES = set([ 'enthought.traits.api.' + x for x in
                           [ 'Trait' ] ])
 _trait_vars = {}
 # traits base classes -- constructed later
@@ -49,7 +49,7 @@ def _is_trait(val):
               or ( type(val) == types.TypeType and
                    issubclass(val, enthought.traits.api.BaseTraitHandler))
               # Find traits like DictStrAny
-              or isinstance(val, enthought.traits.api.BaseTraitHandler) 
+              or isinstance(val, enthought.traits.api.BaseTraitHandler)
             )
 
 # attempt to build a list of traits primitives from enthought.traits.api package
@@ -60,10 +60,10 @@ try:
 except ImportError:
     local_warnings.warn("enthought.traits.api not found\n")
 
-            
-TRAITS_PRIMITIVES.update([ 'enthought.traits.api.' + sym 
+
+TRAITS_PRIMITIVES.update([ 'enthought.traits.api.' + sym
     for sym in _traits_vars.keys()
-    if _is_trait(_traits_vars[sym]) or 
+    if _is_trait(_traits_vars[sym]) or
     # Find traits like Constant or Delegate
     ( ord('A') <= ord(sym[0]) <= ord('Z') and
     type(_traits_vars[sym]) == types.FunctionType ) ])
@@ -80,15 +80,15 @@ try:
     _traits_vars = vars(enthought.traits.ui.api)
 except ImportError:
     local_warnings.warn("enthought.traits.ui.api not found\n")
-    
-TRAITS_PRIMITIVES.update([ 'enthought.traits.ui.api.' + sym 
+
+TRAITS_PRIMITIVES.update([ 'enthought.traits.ui.api.' + sym
     for sym in _traits_vars.keys() if _is_trait(_traits_vars[sym]) ])
-HAS_TRAITS_BASES.update([ 'enthought.traits.ui.api.' + sym 
+HAS_TRAITS_BASES.update([ 'enthought.traits.ui.api.' + sym
             for sym in _traits_vars.keys()
-            if isinstance(_traits_vars[sym], enthought.traits.api.MetaHasTraits) 
+            if isinstance(_traits_vars[sym], enthought.traits.api.MetaHasTraits)
             and issubclass(_traits_vars[sym], enthought.traits.api.HasTraits) ] )
 
-    
+
 def _indent_multiline_string(s, indent):
     i = ' ' * indent
     return ''.join([ '%s%s\n' % (i, line) for line in s.split('\n') ])
@@ -132,7 +132,7 @@ class DocObject(Namespace):
     """ documentable object parent class
 
     Notable attributes:
-    
+
      - name   : name of object
      - file   : filename (path relative to top of tree) of file in which object
                 is defined
@@ -143,7 +143,7 @@ class DocObject(Namespace):
                 documentation for object (Python docstring if available)
      - children:
                 DocObject nodes that are "children" of this object
-    
+
                 (e.g. class methods, attributes)
     """
     def __init__(self, name, abs_name, file, lineno, parent_module = None,
@@ -151,7 +151,7 @@ class DocObject(Namespace):
         """Constructor
 
           Don't call this directly -- instead, use the fromAST static methods
-          
+
           - name     : object name
           - abs_name : dotted object name
           - file     : file where defined
@@ -199,7 +199,7 @@ class DocObject(Namespace):
                     continue
                 # single attr assignment
                 attr_name = child.nodes[0].name
-                    
+
                 # check for protected attribute
                 if attr_name[0] == '_' and not options.include_protected:
                     continue
@@ -228,11 +228,11 @@ class DocObject(Namespace):
 
                             # TODO: give 'qualification' more info
                             func_obj.qualifications.append(qualification)
-                            
+
                             # do not append this as an attribute
                             continue
-                                
-                    
+
+
                 child_object = Attribute.fromAST(options, filename, child,
                                                      module_object)
                 name_in_module = child.nodes[0].name
@@ -306,11 +306,11 @@ class DocObject(Namespace):
         return attr_children, class_children, func_children, traits_children
 
     _divide_list = staticmethod(_divide_list)
-    
+
     def divide_children(self):
         """
         Split children of documentable object
-        
+
         Returns tuple: (attr_children, class_children, func_children, trait_children)
         """
         return self._divide_list(self.children)
@@ -408,7 +408,7 @@ class Module(DocObject):
     def add_sub_module(self, module_obj):
         """ Add module to package """
         self.sub_modules.append(module_obj)
-        
+
     def sort_sub_modules(self):
         """ Sort submodules by name """
         sm = [ (m.name, m) for m in self.sub_modules ]
@@ -455,7 +455,7 @@ class Module(DocObject):
         module_db is a mapping of fully qualified module names to module objects
 
         visited is the set of visited module objects -- ensures that we don't
-           
+
         """
 
         name_prefix = self.name_prefix()
@@ -572,7 +572,7 @@ class Module(DocObject):
             # end if
 
         # end while loop
-        
+
         ###  keep silent for now -- useful for debugging
         #if len(self.unresolved_names) > 0:
         #    warnings.warn("unresolved names in module %s\n" % self.name)
@@ -592,7 +592,7 @@ class Module(DocObject):
                 return self.abs_name + '.'
             else:
                 return self.abs_name[:pos+1]
-    
+
     def get_imported_objects(self):
         """
         return all objects in this module's namespace but which are not
@@ -600,11 +600,11 @@ class Module(DocObject):
 
         result format: [ (local_name, obj), (local_name, obj), ... ]
         """
-        result = [ (name, obj) for name, obj in self.get_objects() 
+        result = [ (name, obj) for name, obj in self.get_objects()
                     if obj.parent_module is not self ]
         alpha_sort(result)
         return result
-        
+
     def print_node(self, indent):
         indent_str = " " * indent
         indented_docstring = _indent_multiline_string(self.docstring, indent)
@@ -616,7 +616,7 @@ class Module(DocObject):
 
 class Function(DocObject):
     """ documentable function """
-    def __init__(self, name, file, lineno, argnames, defaults, parent_module, 
+    def __init__(self, name, file, lineno, argnames, defaults, parent_module,
                  varargs=0, kwargs=0, docstring = "", children = [ ]):
         DocObject.__init__(self, name, parent_module.abs_name + '.' + name,
                            file, lineno, parent_module, docstring, children)
@@ -657,7 +657,7 @@ class Class(DocObject):
                  docstring = "", children = [ ]):
         DocObject.__init__(self, name, parent_module.abs_name + '.' + name,
                            file, lineno, parent_module, docstring, children)
-                           
+
         self.bases = bases
 
         # cache for inherited_children calls
@@ -710,7 +710,7 @@ class Class(DocObject):
         "build tuple of dictionaries of inherited stuff"
         if self._inh_result is not None:
             return self._inh_result
-        
+
         result = { }
         for base in self.get_bases():
             # get inherited stuff
@@ -720,9 +720,9 @@ class Class(DocObject):
         result.update(dict([ (obj.name, obj) for obj in self.children ]))
 
         self._inh_result = result
-        
+
         return result
-        
+
     def inherited_children(self):
         "Like divide_children, only compiles all the objects from base classes"
         inherited_stuff = self._inh()
@@ -732,7 +732,7 @@ class Class(DocObject):
             if inherited_stuff.has_key(obj.name):
                 del inherited_stuff[obj.name]
         return self._divide_list(inherited_stuff.values())
-    
+
     def print_node(self, indent):
         super_classes = _indent_multiline_string(
                             ''.join([ 'inherits from %s\n'
@@ -745,7 +745,7 @@ class Class(DocObject):
     def has_traits(self):
         if self.abs_name in HAS_TRAITS_BASES:
             return True
-        
+
         for base in self.bases:
             # each base is an ast.Name -- need to resolve it
             base_name = self._base_to_string(base)
@@ -787,7 +787,7 @@ class Attribute(DocObject):
 
         # can set this later to save work
         self.known_trait = None
-        
+
         #used for limitting recursive calls to is_trait
         self.traits_recursion_depth = 0
 
@@ -814,10 +814,10 @@ class Attribute(DocObject):
     def is_trait(self):
         """ returns True iff attribute is a trait """
         self.traits_recursion_depth += 1
-        if self.known_trait: 
+        if self.known_trait:
             self.traits_recursion_depth -= 1
             return True
-        if self.known_trait == False: 
+        if self.known_trait == False:
             self.traits_recursion_depth -= 1
             return False
 
@@ -825,7 +825,7 @@ class Attribute(DocObject):
             if not self.parent_module.has_traits():
                 self.traits_recursion_depth -= 1
                 return False
-                
+
         # catch attributes that would cause a stack overflow
         if (self.traits_recursion_depth > 20):
             warnings.warn("max recursion depth, object may be self-referential: " + str(self))
@@ -911,7 +911,7 @@ class Attribute(DocObject):
                 if isinstance(base_attr, Attribute) and base_attr.is_trait():
                     self.traits_recursion_depth -= 1
                     return True
-            
+
         # fall-through condition -- not a trait
         self.known_trait = False
         self.traits_recursion_depth -= 1
@@ -975,7 +975,7 @@ def build_class_hierarchy(module_list):
             if not isinstance(ancestor, Class) and not isinstance(ancestor, Attribute):
                 # can't do anything with this (?)
                 continue
-            
+
             while isinstance(ancestor, Attribute):
                 rhs = ancestor.rhs_expr
                 if isinstance(rhs, ast.Name):
@@ -995,14 +995,14 @@ def build_class_hierarchy(module_list):
 
             # add base classes of ancestor to the stack
             ancestor_stack.extend(bases)
-            
+
             # link child classes from parents
             for base in bases:
                 if not klass_to_children.has_key(base):
                     klass_to_children[base] = set([ancestor])
                 else:
                     klass_to_children[base].add(ancestor)
-            
+
     result = _order_hierarchy(list(top_klasses), klass_to_children)
 
     return result

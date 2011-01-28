@@ -60,7 +60,7 @@ class FBIViewer ( HasPrivateTraits ):
 
     # The name of the plugin:
     name = Str( 'FBI Viewer' )
-    
+
     # The persistence id for this object:
     id = Str( 'enthought.developer.tools.fbi_viewer.state',
               save_state_id = True )
@@ -224,7 +224,7 @@ class AnFBIViewer ( HasPrivateTraits ):
 
     view = View(
         VGroup(
-            TTitle( 'title' ), 
+            TTitle( 'title' ),
             HGroup(
                 Item( 'object_only',
                       label        = 'For this object only',

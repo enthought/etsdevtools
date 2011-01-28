@@ -4,7 +4,7 @@ import sys
 
 if os.name == "nt":
     from win32 import win32pdh
-    
+
     # from win32pdhutil, part of the win32all package
     def GetPerformanceAttributes(object, counter, instance = None,
                                  inum=-1, format = win32pdh.PDH_FMT_LONG,
@@ -30,23 +30,23 @@ if os.name == "nt":
                 win32pdh.RemoveCounter(hc)
         finally:
             win32pdh.CloseQuery(hq)
-    
+
     def get_mem_usage(processName="python", instance=0):
         return GetPerformanceAttributes("Process", "Virtual Bytes",
                                         processName, instance,
                                         win32pdh.PDH_FMT_LONG, None)
-    
-if sys.platform[:5] == 'linux': 
-    def get_mem_usage(_proc_pid_stat='/proc/%s/stat' % os.getpid()): 
-        """ Return virtual memory size in bytes of the running python. 
-        """ 
 
-        try: 
-            f = open(_proc_pid_stat,'r') 
-            l = f.readline().split(' ') 
-            f.close() 
-            return int(l[22]) 
-        except: 
+if sys.platform[:5] == 'linux':
+    def get_mem_usage(_proc_pid_stat='/proc/%s/stat' % os.getpid()):
+        """ Return virtual memory size in bytes of the running python.
+        """
+
+        try:
+            f = open(_proc_pid_stat,'r')
+            l = f.readline().split(' ')
+            f.close()
+            return int(l[22])
+        except:
             return
 
 if sys.platform == 'darwin':

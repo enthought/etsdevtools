@@ -15,18 +15,18 @@ Note: This demo requires the enthought.developer package to be installed.
 
 from enthought.developer.tools.image_browser \
      import ImageBrowser
-     
+
 from enthought.traits.ui.image.image \
      import ImageLibrary
-     
+
 # Get the image library volume called 'std':
 volume = ImageLibrary.catalog[ 'std' ]
 
 # Create the demo using a subset of the images available in the 'std' volume:
 demo = ImageBrowser(
            image_names = [ image.image_name for image in volume.images ] )
-        
+
 # Run the demo (if invoked from the command line):
 if __name__ == '__main__':
     demo.configure_traits()
-    
+

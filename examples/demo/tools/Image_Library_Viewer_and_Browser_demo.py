@@ -15,8 +15,8 @@ can just as easily be connected together by the end user using the <i>feature
 user interface</i>.
 
 All of the tools in the <b>enthought.developer</b> package follow the <i>small,
-sharp, visual tools</i> design model, which is intended to allow developers 
-and end users to create new tools by the interconnection of the other tools, 
+sharp, visual tools</i> design model, which is intended to allow developers
+and end users to create new tools by the interconnection of the other tools,
 similar to the shell command line tool model, but oriented toward visual tools.
 
 The top portion of the Image Library Viewer is a <i>live filter</i>, meaning
@@ -44,35 +44,35 @@ copy the fully-qualified image library name to the system clipboard, which you
 can then paste into your Python source code to use the selected image in a
 Traits UI-based application.
 
-If you select one or more images in the image library viewer, you will see a 
+If you select one or more images in the image library viewer, you will see a
 full size version of the image appear in the browser view.
 
-In order for this demo to run, you must have the enthought.developer package 
+In order for this demo to run, you must have the enthought.developer package
 installed.
 """
 
 from enthought.traits.api \
     import HasTraits, Instance
-    
+
 from enthought.traits.ui.api \
     import View, VSplit, Item
-    
+
 from enthought.developer.tools.image_library_viewer \
      import ImageLibraryViewer
-     
+
 from enthought.developer.tools.image_browser \
      import ImageBrowser
-     
+
 class ImageTool ( HasTraits ):
-    
+
     # The image library viewer we are using:
     viewer = Instance( ImageLibraryViewer )
-    
+
     # The image browser we are using:
     browser = Instance( ImageBrowser, () )
-    
+
     #-- Traits UI View Definitions -----------------------------------------
-    
+
     view = View(
         VSplit(
             Item( 'viewer',  style = 'custom', dock = 'horizontal' ),
@@ -87,18 +87,18 @@ class ImageTool ( HasTraits ):
         height    = 0.75,
         resizable = True
     )
-    
+
     #-- Default Value Handlers ---------------------------------------------
-    
+
     def _viewer_default ( self ):
         viewer = ImageLibraryViewer()
         viewer.sync_trait( 'image_names', self.browser )
-        
+
         return viewer
 
 # Create an instance of the ImageTool as the demo to run:
 popup = ImageTool()
-        
+
 # Run the demo (if invoked from the command line):
 if __name__ == '__main__':
     popup.configure_traits()

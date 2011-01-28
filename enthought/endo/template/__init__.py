@@ -3,10 +3,10 @@
 # Project: endo
 # Date:    2005-08-17
 # Author:  David Baer
-# 
+#
 # Description:
 #  HTML template engine
-# 
+#
 ###########################################################################
 
 "Simple HTML template engine"

@@ -1,14 +1,14 @@
 #-------------------------------------------------------------------------------
-#  
+#
 #  Defines the 'get_pickle' and 'set_pickle' functions for easy getting and
 #  setting of persistent values in the traits ui database.
-#  
+#
 #  Written by: David C. Morrill
-#  
+#
 #  Date: 07/15/2006
-#  
+#
 #  (c) Copyright 2006 by David C. Morrill
-#  
+#
 #-------------------------------------------------------------------------------
 
 """ Copyright 2006 by David C. Morrill """
@@ -21,12 +21,12 @@ import shelve
 import os
 
 from enthought.traits.trait_base \
-    import traits_home                             
-    
+    import traits_home
+
 #-------------------------------------------------------------------------------
-#  Opens the traits UI database:  
+#  Opens the traits UI database:
 #-------------------------------------------------------------------------------
-        
+
 def get_ui_db ( mode = 'r' ):
     """ Opens the traits UI database.
     """
@@ -35,7 +35,7 @@ def get_ui_db ( mode = 'r' ):
                             flag = mode, protocol = -1 )
     except:
         return None
-        
+
 #-------------------------------------------------------------------------------
 #  Gets the value of a specified pickle name:
 #-------------------------------------------------------------------------------
@@ -48,9 +48,9 @@ def get_pickle ( name, default = None ):
     if db is not None:
         result = db.get( name, default )
         db.close()
-        
+
     return result
-        
+
 #-------------------------------------------------------------------------------
 #  Sets the value of a specified pickle name:
 #-------------------------------------------------------------------------------
@@ -63,6 +63,6 @@ def set_pickle ( name, value ):
         db[ name ] = value
         db.close()
         return True
-        
+
     return False
 

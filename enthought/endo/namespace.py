@@ -3,10 +3,10 @@
 # Project: docutils
 # Date:    2005-06-13
 # Author:  David Baer
-# 
+#
 # Description:
-# 
-# 
+#
+#
 ###########################################################################
 
 """Basic namespace architecture
@@ -23,7 +23,7 @@ from util import alpha_sort
 
 class Namespace:
     """
-    A namespace 
+    A namespace
     """
     def __init__(self, parent = None, name = ''):
         # outer namespace (e.g. module namespace for a class)
@@ -72,7 +72,7 @@ class Namespace:
 
                 # step backward
                 i -= 1
-            
+
         # if not locally available, try parent namespace
         elif self.parent is not None:
             return self.parent.resolve(identifier)
@@ -97,6 +97,6 @@ class Namespace:
         alpha_sort(result)
 
         return result
-            
-        
+
+
 

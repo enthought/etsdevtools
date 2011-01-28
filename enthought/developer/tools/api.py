@@ -1,28 +1,28 @@
 #-------------------------------------------------------------------------------
-#  
+#
 #  Enthought developer tools.
 #
 #  These tools are intended to help developers debug and test Traits-based
-#  code running within an application framework. 
-#  
+#  code running within an application framework.
+#
 #  Package owner/architect: David C. Morrill
-#  
+#
 #  Date: 06/25/2006
-#  
+#
 #  (c) Copyright 2006 by David C. Morrill
-#  
-#  NOTE: Modifications to the contents of this package in the Enthought SVN 
+#
+#  NOTE: Modifications to the contents of this package in the Enthought SVN
 #  repository should only be made with the approval of the package owner.
 #  Unapproved changes are subject to immediate reversion of the affected files.
 #  This is to ensure consistency in the package development and to allow for
 #  feature documentation and tracking.
-#  
+#
 #-------------------------------------------------------------------------------
 # Commonly used imports.
 
 from universal_inspector import UniversalInspector
 from object_source       import ObjectSource
-from class_browser       import ClassBrowser    
+from class_browser       import ClassBrowser
 from favorites_browser   import FavoritesBrowser
 from ui_debugger         import UIDebugger
 from file_space          import FileSpace

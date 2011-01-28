@@ -2,14 +2,14 @@
 #
 #  Copyright (c) 2006, Enthought, Inc.
 #  All rights reserved.
-# 
+#
 #  This software is provided without warranty under the terms of the BSD
 #  license included in enthought/LICENSE.txt and may be redistributed only
 #  under the conditions described in the aforementioned license.  The license
 #  is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 #  Thanks for using Enthought open source!
-# 
+#
 #  Author: David C. Morrill
 #  Date:   07/04/2006
 #
@@ -18,7 +18,7 @@
 """ Adds an 'options' feature to DockWindow which allows users to configure
     a view's options if the object associated with a DockControl has an
     'options' view.
-"""    
+"""
 
 #-------------------------------------------------------------------------------
 #  Imports:

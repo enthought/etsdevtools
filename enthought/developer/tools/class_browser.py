@@ -1093,7 +1093,7 @@ class ClassBrowser ( HasPrivateTraits ):
 
     # The name of the plugin:
     name = Str( 'Class Browser' )
-    
+
     # Root of the class browser tree:
     root = Instance( ClassBrowserPaths )
 

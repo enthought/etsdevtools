@@ -1,13 +1,13 @@
 #------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
-# 
+#
 # This software is provided without warranty under the terms of the BSD
 # license included in enthought/LICENSE.txt and may be redistributed only
 # under the conditions described in the aforementioned license.  The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 # Thanks for using Enthought open source!
-# 
+#
 # Author: David C. Morrill
 # Date: 12/08/2004
 # Description: View Editing Tool (VET)
@@ -27,29 +27,29 @@ import enthought.traits.ui
 
 from os \
     import popen4, environ
-    
+
 from os.path \
     import abspath, splitext, split, join, exists, isdir
 
 from threading \
     import Thread
-                         
+
 from enthought.traits.api \
     import HasTraits, HasStrictTraits, HasPrivateTraits, \
            Str, List, Instance, Event, Any, true, false, Regex, Code
-           
+
 from enthought.traits.ui.api \
     import View, Group, Item, UIInfo, TreeEditor, TreeNode, \
            EnumEditor, Handler, EditorFactory, TextEditor, HSplit, \
            VSplit, message
-           
+
 from enthought.traits.ui.menu \
     import MenuBar, Menu, Action, CloseAction, UndoAction, RedoAction, \
            Separator, OKCancelButtons
-                                        
+
 from enthought.traits.trait_base \
-    import traits_home  
-    
+    import traits_home
+
 from class_browser \
     import ClassBrowser, ClassBrowserPaths, CBPath, CBClass, cb_tree_editor
 
@@ -74,21 +74,21 @@ cmenu   = Menu()
 caction = Action()
 
 # Generated 'View' traits:
-ViewAttrs    = [ 'title', 'kind', 'style', 'apply', 'revert', 'undo', 'ok', 
+ViewAttrs    = [ 'title', 'kind', 'style', 'apply', 'revert', 'undo', 'ok',
                  'resizable', 'help', 'help_id', 'x', 'y', 'width', 'height' ]
 
 # Generated 'Group' traits:
-GroupAttrs    = [ 'id', 'label', 'orientation', 'show_border', 'show_labels', 
-                  'show_left', 'selected', 'layout', 'padding', 'help', 
+GroupAttrs    = [ 'id', 'label', 'orientation', 'show_border', 'show_labels',
+                  'show_left', 'selected', 'layout', 'padding', 'help',
                   'defined_when', 'visible_when', 'enabled_when', ]
-                  
+
 # Characters that are invalid in a Python name:
 bad_chars = '`~!@#$%^&*()-+={}[]\\|\'";:,./<>?'
-                  
+
 #-------------------------------------------------------------------------------
-#  Export template:  
+#  Export template:
 #-------------------------------------------------------------------------------
-                   
+
 export_template = """
 #-------------------------------------------------------------------------------
 #
@@ -117,15 +117,15 @@ from enthought.traits.ui.menu import MenuBar, Menu, Action, Separator
 #-------------------------------------------------------------------------------
 
 class %(class)s ( Handler ):
-%(methods)s    
+%(methods)s
     #---------------------------------------------------------------------------
-    #  Traits view definition:    
+    #  Traits view definition:
     #---------------------------------------------------------------------------
-        
-    traits_view = %(view)s 
-    
+
+    traits_view = %(view)s
+
 #-------------------------------------------------------------------------------
-#  '%(class)s' test case: 
+#  '%(class)s' test case:
 #-------------------------------------------------------------------------------
 
 if __name__ == '__main__':
@@ -174,31 +174,31 @@ codex_view = View( [ [ [ 'comment{Usage}' ],
                        '|[Method]' ] ],
                    title     = 'Method Definition',
                    resizable = True )
-                
+
 #-------------------------------------------------------------------------------
 #  Converts a trait value into a formatted Python attribute setter if the value
 #  is not the default one:
 #-------------------------------------------------------------------------------
- 
+
 def format_trait ( object, template, name, pad, indent ):
     value = getattr( object, name )
     if value == getattr( template, name ):
         return ''
-    return "\n%s%s%s = %s" % ( ' ' * indent, name, ' ' * (pad - len( name )), 
-                              `value` ) 
+    return "\n%s%s%s = %s" % ( ' ' * indent, name, ' ' * (pad - len( name )),
+                              `value` )
 
 #-------------------------------------------------------------------------------
-#  Returns a list of traits that need to be formatted:  
+#  Returns a list of traits that need to be formatted:
 #-------------------------------------------------------------------------------
-                                                      
+
 def format_names ( object, template, names ):
-    return [ name for name in names 
+    return [ name for name in names
              if getattr( object, name ) != getattr( template, name ) ]
-    
+
 #-------------------------------------------------------------------------------
-#  Converts a list of traits into a formatted Python attribute list:  
+#  Converts a list of traits into a formatted Python attribute list:
 #-------------------------------------------------------------------------------
-                                                            
+
 def format_traits ( object, template, names, indent, preceding = 0, pad = 0 ):
     """ Converts a list of traits into a formatted Python attribute list.
     """
@@ -209,32 +209,32 @@ def format_traits ( object, template, names, indent, preceding = 0, pad = 0 ):
         return "\n%s" % ( ' ' * (indent - 4) )
     pad = max( max( [ len( name ) for name in names ] ), pad )
     if (preceding == 0) and (len( names ) == 1):
-        return format_trait( object, template, names[0], pad, 1 )[1:] + ' '  
-    attrs = [ format_trait( object, template, name, pad, indent )  
+        return format_trait( object, template, names[0], pad, 1 )[1:] + ' '
+    attrs = [ format_trait( object, template, name, pad, indent )
               for name in names ]
     return "%s%s\n%s" % (
                ','[ preceding == 0:],
                ','.join( [ attr for attr in attrs if attr != '' ] ),
                ' ' * (indent - 4) )
-       
+
 #-------------------------------------------------------------------------------
-#  'VETPreferences' class:  
+#  'VETPreferences' class:
 #-------------------------------------------------------------------------------
 
 class VETPreferences ( HasStrictTraits ):
-    
+
     #---------------------------------------------------------------------------
-    #  Trait definitions:  
+    #  Trait definitions:
     #---------------------------------------------------------------------------
-    
+
     author          = Str  # Program author
     copyright_owner = Str  # Copyright holder
     module_comment  = Str  # Additional module comment text
-    
+
     #---------------------------------------------------------------------------
-    #  Traits view definition:    
+    #  Traits view definition:
     #---------------------------------------------------------------------------
-    
+
     traits_view = View( [ 'author', 'copyright_owner', 'module_comment#@',
                           '|{User Preferences}' ],
                         kind    = 'modal',
@@ -242,62 +242,62 @@ class VETPreferences ( HasStrictTraits ):
                         buttons = OKCancelButtons,
                         width   = 0.3,
                         height  = 0.25 )
-                        
+
 #-------------------------------------------------------------------------------
-#  'VETConstructor' class:  
+#  'VETConstructor' class:
 #-------------------------------------------------------------------------------
-                          
+
 class VETConstructor ( HasStrictTraits ):
-    
+
     #---------------------------------------------------------------------------
-    #  Trait definitions:  
+    #  Trait definitions:
     #---------------------------------------------------------------------------
-        
+
     # The error message to display:
     error = Str
-    
+
     # The arguments to pass to the class constructor:
     arguments = Any( '' )
-    
+
     #---------------------------------------------------------------------------
-    #  Traits view definitions:  
+    #  Traits view definitions:
     #---------------------------------------------------------------------------
-        
+
     traits_view = View( [ [ '{Object constructor}@',
                             'error~',
                             '|<>' ],
-                          [ Item( 'arguments', 
-                                  editor = TextEditor( evaluate = eval ) ) 
+                          [ Item( 'arguments',
+                                  editor = TextEditor( evaluate = eval ) )
                           ] ],
                           title   = 'Object Constructor',
                           kind    = 'livemodal',
                           buttons = OKCancelButtons )
-                              
+
 #-------------------------------------------------------------------------------
-#  'VETCode' class:  
+#  'VETCode' class:
 #-------------------------------------------------------------------------------
-                   
+
 class VETCode ( HasStrictTraits ):
-    
+
     #---------------------------------------------------------------------------
-    #  Trait definitions:  
+    #  Trait definitions:
     #---------------------------------------------------------------------------
-        
+
     tag     = MethodName
     comment = Str
     method  = Str
     body    = Code
-    
+
     #---------------------------------------------------------------------------
-    #  View definitions:    
+    #  View definitions:
     #---------------------------------------------------------------------------
-        
+
     traits_view = code_view
 
     #---------------------------------------------------------------------------
-    #  Returns a Python text version of the code handlers for the object:    
+    #  Returns a Python text version of the code handlers for the object:
     #---------------------------------------------------------------------------
-                        
+
     def format_code ( self, indent = 4 ):
         """ Returns a Python text version of the code handlers for the object.
         """
@@ -317,102 +317,102 @@ class VETCode ( HasStrictTraits ):
         if comment != '':
             result += ('%s    """ %s.\n%s    """\n' % ( pad, comment, pad ) )
         pad = ' ' * max( 0, indent + 4 - indenting )
-        return '%s%s\n' % ( 
+        return '%s%s\n' % (
                result, '\n'.join( [ pad + line for line in body ] ) )
 
     #---------------------------------------------------------------------------
-    #  Returns a Python text version of the function definition for the object:    
+    #  Returns a Python text version of the function definition for the object:
     #---------------------------------------------------------------------------
-                        
+
     def format_function ( self ):
-        """ Returns a Python text version of the function definition for the 
+        """ Returns a Python text version of the function definition for the
             object.
         """
         return ''
-               
+
 #-------------------------------------------------------------------------------
-#  'VETCodeX' class:  
+#  'VETCodeX' class:
 #-------------------------------------------------------------------------------
-                   
+
 class VETCodeX ( VETCode ):
-    
+
     #---------------------------------------------------------------------------
-    #  Trait definitions:  
+    #  Trait definitions:
     #---------------------------------------------------------------------------
-    
-    # The names of the method arguments (excluding 'self'):    
+
+    # The names of the method arguments (excluding 'self'):
     body = Code( 'return' )
-    args = Regex( '', 
+    args = Regex( '',
                 r'^([a-zA-Z_][a-zA-Z0-9_]*\s*,\s*)*([a-zA-Z_][a-zA-Z0-9_]*)*$' )
-                
+
     #---------------------------------------------------------------------------
-    #  Initializes the object:    
+    #  Initializes the object:
     #---------------------------------------------------------------------------
-                              
+
     def __init__ ( self, **traits ):
         super( VETCodeX, self ).__init__( **traits )
         self._args_changed()
-    
+
     #---------------------------------------------------------------------------
-    #  Event handlers:  
+    #  Event handlers:
     #---------------------------------------------------------------------------
-    
+
     def _tag_changed ( self ):
         self._args_changed()
-        
-    def _args_changed ( self ): 
+
+    def _args_changed ( self ):
         comma = ''
         if len( self.args ) > 0:
             comma = ', '
-        self.method = 'def %s ( self%s%s ):' % ( self.tag, comma, self.args ) 
-               
+        self.method = 'def %s ( self%s%s ):' % ( self.tag, comma, self.args )
+
 #-------------------------------------------------------------------------------
-#  'VETCodeF' class:  
+#  'VETCodeF' class:
 #-------------------------------------------------------------------------------
-                   
+
 class VETCodeF ( VETCodeX ):
-    
+
     #-------------------------------------------------------------------------------
     #  Trait definitions:
     #-------------------------------------------------------------------------------
-        
+
     tag = MethodName( 'my_function' )
-    
+
     #---------------------------------------------------------------------------
-    #  Event handlers:  
+    #  Event handlers:
     #---------------------------------------------------------------------------
-        
-    def _args_changed ( self ): 
+
+    def _args_changed ( self ):
         space = ''
         if len( self.args ) > 0:
             space = ' '
-        self.method = 'def %s (%s%s ):' % ( self.tag, space, self.args ) 
+        self.method = 'def %s (%s%s ):' % ( self.tag, space, self.args )
 
     #---------------------------------------------------------------------------
-    #  Returns a Python text version of the code handlers for the object:    
+    #  Returns a Python text version of the code handlers for the object:
     #---------------------------------------------------------------------------
-                        
+
     def format_code ( self ):
         """ Returns a Python text version of the code handlers for the object.
         """
         return ''
 
     #---------------------------------------------------------------------------
-    #  Returns a Python text version of the function definition for the object:    
+    #  Returns a Python text version of the function definition for the object:
     #---------------------------------------------------------------------------
-                        
+
     def format_function ( self ):
-        """ Returns a Python text version of the function definition for the 
+        """ Returns a Python text version of the function definition for the
             object.
         """
         return super( VETCodeF, self ).format_code( indent = 0 )
-         
+
 #-------------------------------------------------------------------------------
 #  'VETItemBase' class:
 #-------------------------------------------------------------------------------
 
 class VETItemBase ( Item ):
-    
+
     def _anytrait_changed ( self, name, old, new ):
         if name != 'container':
             try:
@@ -421,9 +421,9 @@ class VETItemBase ( Item ):
                 pass
 
     #---------------------------------------------------------------------------
-    #  Returns a Python text version of the object:    
+    #  Returns a Python text version of the object:
     #---------------------------------------------------------------------------
-                        
+
     def format ( self, indent = 0 ):
         """ Returns a Python text version of the object.
         """
@@ -440,82 +440,82 @@ class VETItemBase ( Item ):
                 pad = max( max( [ len( name ) for name in names ] ), pad )
             enames = editor.trait_names()
             enames.remove( 'trait_added' )
-            feditor = '\n%seditor%s = %s.%s(%s)' % ( 
-                          ' ' * (indent + 4), ' ' * (pad - 6), 
-                          veditor.package, veditor.class_name, 
+            feditor = '\n%seditor%s = %s.%s(%s)' % (
+                          ' ' * (indent + 4), ' ' * (pad - 6),
+                          veditor.package, veditor.class_name,
                           format_traits( editor, ceditor, enames, indent + 8 ) )
         return '\n%sItem(%s%s)' % (
                ' ' * indent,
                feditor,
-               format_traits( self, citem, names, indent + 4, len( feditor ), 
+               format_traits( self, citem, names, indent + 4, len( feditor ),
                               pad ) )
 
     #---------------------------------------------------------------------------
-    #  Returns a Python text version of the code handlers for the object:    
+    #  Returns a Python text version of the code handlers for the object:
     #---------------------------------------------------------------------------
-                        
+
     def format_code ( self ):
         """ Returns a Python text version of the code handlers for the object.
         """
         return ''
-        
+
     #---------------------------------------------------------------------------
-    #  Returns a Python text version of all imports needed by the Item:    
+    #  Returns a Python text version of all imports needed by the Item:
     #---------------------------------------------------------------------------
-                
+
     def format_imports ( self, modules ):
         """ Returns a Python text version of all imports needed by the Item.
         """
         return
-    
+
 #-------------------------------------------------------------------------------
-#  'VETItem' class:  
+#  'VETItem' class:
 #-------------------------------------------------------------------------------
-                                
-class VETItem  ( VETItemBase ):     
-    
+
+class VETItem  ( VETItemBase ):
+
     #---------------------------------------------------------------------------
-    #  Trait definitions:  
+    #  Trait definitions:
     #---------------------------------------------------------------------------
-        
+
     tag  = Str( 'Item' )
     code = List
-               
+
     item_attrs = [ 'id', 'name', 'label', 'object', 'style', 'resizable',
-                   'springy', 'emphasized', 'format_str', 'width', 'height', 
-                   'padding', 'defined_when', 'visible_when', 'enabled_when', 
+                   'springy', 'emphasized', 'format_str', 'width', 'height',
+                   'padding', 'defined_when', 'visible_when', 'enabled_when',
                    'tooltip', 'help' ]
 
     #---------------------------------------------------------------------------
-    #  Initializes the object:    
+    #  Initializes the object:
     #---------------------------------------------------------------------------
-                                      
+
     def __init__ ( self, **traits ):
-        self.code = [ VETCode( tag = 'defined' ), 
+        self.code = [ VETCode( tag = 'defined' ),
                       VETCode( tag = 'changed' ) ]
         super( VETItem, self ).__init__( **traits )
-        
+
     def _code_changed ( self ):
         for code in self.code:
             code.on_trait_change( self._editor_modified )
-        
+
     def _object_changed ( self ):
         self._tag_changed()
-        
+
     def _tag_changed ( self ):
         object = self.object
         tag    = self.tag
-        self.code[0].set( 
-            comment = "Initializes the %s's '%s' trait editor" % 
+        self.code[0].set(
+            comment = "Initializes the %s's '%s' trait editor" %
                       ( object, tag ),
             method  = 'def %s_%s_defined ( self, info ):' %
                       ( object, tag ) )
         self.code[1].set(
-            comment = "Handles the %s's '%s' trait changing value" % 
+            comment = "Handles the %s's '%s' trait changing value" %
                       ( object, tag ),
-            method  = 'def %s_%s_changed ( self, info ):' % 
+            method  = 'def %s_%s_changed ( self, info ):' %
                       ( object, tag ) )
-                      
+
     def _editor_changed ( self, old, new ):
         if old is not None:
             old.on_trait_change( self._editor_modified, remove = True )
@@ -527,20 +527,20 @@ class VETItem  ( VETItemBase ):
             self.container.view_modified = True
         except:
             pass
-        
+
     #---------------------------------------------------------------------------
-    #  Returns a Python text version of the code handlers for the object:    
+    #  Returns a Python text version of the code handlers for the object:
     #---------------------------------------------------------------------------
-                        
+
     def format_code ( self ):
         """ Returns a Python text version of the code handlers for the object.
         """
         return ''.join( [ item.format_code() for item in self.code[:2] ] )
-        
+
     #---------------------------------------------------------------------------
-    #  Returns a Python text version of all imports needed by the Item:    
+    #  Returns a Python text version of all imports needed by the Item:
     #---------------------------------------------------------------------------
-                
+
     def format_imports ( self, modules ):
         """ Returns a Python text version of all imports needed by the Item.
         """
@@ -548,11 +548,11 @@ class VETItem  ( VETItemBase ):
             module = self.code[2].package
             if module not in modules:
                 modules.append( module )
-                           
+
 #-------------------------------------------------------------------------------
-#  Adds a trait editor to a VETItem:  
+#  Adds a trait editor to a VETItem:
 #-------------------------------------------------------------------------------
-                                      
+
 def add_editor ( item, vet_editor ):
     editor = vet_editor.editor
     if editor is None:
@@ -563,128 +563,128 @@ def add_editor ( item, vet_editor ):
         item.code[2:] = [ vet_editor ]
         item.editor   = vet_editor.editor
     return None
-    
+
 #-------------------------------------------------------------------------------
-#  'VETSeparator' class:  
+#  'VETSeparator' class:
 #-------------------------------------------------------------------------------
-        
-class VETSeparator ( VETItemBase ):     
-    
+
+class VETSeparator ( VETItemBase ):
+
     #---------------------------------------------------------------------------
-    #  Trait definitions:  
+    #  Trait definitions:
     #---------------------------------------------------------------------------
-        
+
     tag  = Str( 'Separator' )
     name = Str( '_' )
-    
+
     item_attrs = [ 'name' ]
-    
+
 #-------------------------------------------------------------------------------
-#  'VETLabel' class:  
+#  'VETLabel' class:
 #-------------------------------------------------------------------------------
-        
+
 class VETLabel ( VETItemBase ):
-    
+
     #---------------------------------------------------------------------------
-    #  Trait definitions:  
+    #  Trait definitions:
     #---------------------------------------------------------------------------
-        
+
     tag   = Str( 'Label' )
     label = Str( 'label' )
-    
+
     item_attrs = [ 'label', 'style', 'emphasized' ]
-        
+
 #-------------------------------------------------------------------------------
 #  'VETGroup' class:
 #-------------------------------------------------------------------------------
-        
-class VETGroup ( Group ): 
-    
+
+class VETGroup ( Group ):
+
     #---------------------------------------------------------------------------
-    #  Trait definitions:  
+    #  Trait definitions:
     #---------------------------------------------------------------------------
-    
+
     tag           = Str( 'Group' )
     view_modified = Event
 
     #---------------------------------------------------------------------------
-    #  Event handlers:    
+    #  Event handlers:
     #---------------------------------------------------------------------------
-        
+
     def _anytrait_changed ( self, name, old, new ):
         if name != 'container':
             try:
                 self.container.view_modified = True
             except:
                 pass
-    
+
     def _content_changed ( self ):
         for item in self.content:
             item.container = self
-            
+
     def _content_items_changed ( self ):
         self._content_changed()
-        
+
     def _container_changed ( self, container ):
         for item in self.content:
             item.container = container
 
     #---------------------------------------------------------------------------
-    #  Returns a Python text version of the object:    
+    #  Returns a Python text version of the object:
     #---------------------------------------------------------------------------
-                        
+
     def format ( self, indent = 0 ):
         """ Returns a Python text version of the object.
         """
         nested = [ item.format( indent + 4 ) for item in self.content ]
         return '\n%sGroup(%s%s)' % (
-                   ' ' * indent,     
+                   ' ' * indent,
                    ','.join( nested ),
                    format_traits( self, cgroup, GroupAttrs, indent + 4,
                                   len( nested ) ) )
 
     #---------------------------------------------------------------------------
-    #  Returns a Python text version of the code handlers for the object:    
+    #  Returns a Python text version of the code handlers for the object:
     #---------------------------------------------------------------------------
-                        
+
     def format_code ( self ):
         """ Returns a Python text version of the code handlers for the object.
         """
         return ''.join( [ item.format_code() for item in self.content ] )
-        
+
     #---------------------------------------------------------------------------
-    #  Returns a Python text version of all imports needed by the Group:    
+    #  Returns a Python text version of all imports needed by the Group:
     #---------------------------------------------------------------------------
-                
+
     def format_imports ( self, modules ):
         """ Returns a Python text version of all imports needed by the Group.
         """
         for item in self.content:
             item.format_imports( modules )
-               
+
 #-------------------------------------------------------------------------------
-#  'VETView' class:  
+#  'VETView' class:
 #-------------------------------------------------------------------------------
-                        
+
 class VETView ( View ):
-    
+
     #---------------------------------------------------------------------------
-    #  Trait definitions:  
+    #  Trait definitions:
     #---------------------------------------------------------------------------
-        
+
     tag           = Str( 'View' )
     groups        = List( VETGroup )
     view_modified = Event
-    
+
     # Names of traits that when changed should trigger a rebuild of the UI:
-    update_traits = [ 'title', 'apply', 'revert', 'undo', 'ok', 'help',  
-                      'help_id', 'resizable', 'x', 'y', 'width', 'height', 
+    update_traits = [ 'title', 'apply', 'revert', 'undo', 'ok', 'help',
+                      'help_id', 'resizable', 'x', 'y', 'width', 'height',
                       'kind' ]
 
     #---------------------------------------------------------------------------
-    #  Event handlers:    
+    #  Event handlers:
     #---------------------------------------------------------------------------
-        
+
     def _anytrait_changed ( self, name, old, new ):
         if name in self.update_traits:
             self.view_modified = True
@@ -693,14 +693,14 @@ class VETView ( View ):
         for item in self.groups:
             item.container = self
         self.view_modified = True
-            
+
     def _groups_items_changed ( self ):
         self._groups_changed()
 
     #---------------------------------------------------------------------------
-    #  Returns a Python text version of the object:    
+    #  Returns a Python text version of the object:
     #---------------------------------------------------------------------------
-                        
+
     def format ( self, menubar, indent = 0 ):
         """ Returns a Python text version of the object.
         """
@@ -710,25 +710,25 @@ class VETView ( View ):
                 menubar = ',\n%s%s' % ( ' ' * (indent + 4), menubar )
             else:
                 menubar = ' ' + menubar
-        return 'View(%s%s%s)' % ( 
+        return 'View(%s%s%s)' % (
                    ','.join( nested ),
                    menubar,
-                   format_traits( self, cview, ViewAttrs, indent + 4, 
+                   format_traits( self, cview, ViewAttrs, indent + 4,
                                   len( nested ) + len( menubar ) ) )
 
     #---------------------------------------------------------------------------
-    #  Returns a Python text version of the code handlers for the object:    
+    #  Returns a Python text version of the code handlers for the object:
     #---------------------------------------------------------------------------
-                        
+
     def format_code ( self ):
         """ Returns a Python text version of the code handlers for the object.
         """
         return ''.join( [ item.format_code() for item in self.groups ] )
-        
+
     #---------------------------------------------------------------------------
-    #  Returns a Python text version of all imports needed by the View:    
+    #  Returns a Python text version of all imports needed by the View:
     #---------------------------------------------------------------------------
-                
+
     def format_imports ( self ):
         """ Returns a Python text version of all imports needed by the View.
         """
@@ -743,50 +743,50 @@ class VETView ( View ):
 #-------------------------------------------------------------------------------
 #  'VETHandler' class:
 #-------------------------------------------------------------------------------
-                      
+
 class VETHandler ( HasStrictTraits ):
-    
+
     #---------------------------------------------------------------------------
-    #  Trait definitions:    
+    #  Trait definitions:
     #---------------------------------------------------------------------------
-        
+
     tag   = Str( 'ViewHandler' )
     items = List
     view  = Instance( VETView )
-    
+
     #---------------------------------------------------------------------------
-    #  Event handlers:  
+    #  Event handlers:
     #---------------------------------------------------------------------------
-    
+
     def _tag_changed ( self ):
         self.view.view_modified = true
-    
+
 #-------------------------------------------------------------------------------
-#  'VETMethods' class:  
+#  'VETMethods' class:
 #-------------------------------------------------------------------------------
-        
+
 class VETMethods ( HasStrictTraits ):
-    
+
     #---------------------------------------------------------------------------
-    #  Trait definitions:    
+    #  Trait definitions:
     #---------------------------------------------------------------------------
-    
+
     code = List( VETCode )
     view = Instance( VETView )
 
     #---------------------------------------------------------------------------
-    #  Returns a Python text version of the code handlers for the object:    
+    #  Returns a Python text version of the code handlers for the object:
     #---------------------------------------------------------------------------
-                        
+
     def format_code ( self ):
         """ Returns a Python text version of the code handlers for the object.
         """
         return ''.join( [ item.format_code() for item in self.code ] )
 
     #---------------------------------------------------------------------------
-    #  Returns a Python text version of the functions for the object:    
+    #  Returns a Python text version of the functions for the object:
     #---------------------------------------------------------------------------
-                        
+
     def format_function ( self ):
         """ Returns a Python text version of the functions for the object.
         """
@@ -794,91 +794,91 @@ class VETMethods ( HasStrictTraits ):
         if result != '':
             result = function_template + result
         return result
-        
+
     #---------------------------------------------------------------------------
-    #  Event handlers:    
+    #  Event handlers:
     #---------------------------------------------------------------------------
-                
+
     def _code_items_changed ( self, event ):
         for item in event.added:
             item.on_trait_change( self._view_changed )
         for item in event.removed:
             item.on_trait_change( self._view_changed, remove = True )
         self.view.view_modified = True
-        
+
     def _view_changed ( self, view ):
         self.view.view_modified = True
-    
+
 #-------------------------------------------------------------------------------
-#  'VETMenuSeparator' class:  
+#  'VETMenuSeparator' class:
 #-------------------------------------------------------------------------------
-        
-class VETMenuSeparator ( HasStrictTraits ):     
-    
+
+class VETMenuSeparator ( HasStrictTraits ):
+
     #---------------------------------------------------------------------------
-    #  Trait definitions:  
+    #  Trait definitions:
     #---------------------------------------------------------------------------
-        
+
     tag  = Str( 'Separator' )
     view = Instance( VETView )
 
     #---------------------------------------------------------------------------
-    #  Returns a Python text version of the object:    
+    #  Returns a Python text version of the object:
     #---------------------------------------------------------------------------
-    
+
     def format ( self, indent = 0 ):
         """ Returns a Python text version of the object.
         """
-        return '\n%sSeparator()' % (' ' * indent) 
+        return '\n%sSeparator()' % (' ' * indent)
 
     #---------------------------------------------------------------------------
-    #  Returns a Python text version of the code handlers for the object:    
+    #  Returns a Python text version of the code handlers for the object:
     #---------------------------------------------------------------------------
-                        
+
     def format_code ( self ):
         """ Returns a Python text version of the code handlers for the object.
         """
         return ''
-        
+
     #---------------------------------------------------------------------------
-    #  Builds the run-time objects representing the menu:    
+    #  Builds the run-time objects representing the menu:
     #---------------------------------------------------------------------------
-                
+
     def build ( self ):
         """ Builds the run-time objects representing the menu.
         """
         return Separator()
-        
+
 #-------------------------------------------------------------------------------
-#  'VETAction' class:  
+#  'VETAction' class:
 #-------------------------------------------------------------------------------
-                
+
 class VETAction ( Action ):
-    
+
     #---------------------------------------------------------------------------
-    #  Trait definitions:  
+    #  Trait definitions:
     #---------------------------------------------------------------------------
-        
+
     name   = 'Action'
     action = 'do_action'
     view   = Instance( VETView )
-    code   = Instance( VETCode, { 
+    code   = Instance( VETCode, {
                    'comment': "Performs the action for the 'Action' menu item",
                    'method':  "def do_action ( self, info ):",
                    'body':    "raise NotImplementedError"
              } )
-           
-    item_attrs = [ 'id', 'name', 'style', 'tooltip', 'enabled', 'checked', 
+
+    item_attrs = [ 'id', 'name', 'style', 'tooltip', 'enabled', 'checked',
                    'enabled_when', 'checked_when', 'defined_when', 'action' ]
-                   
+
     #---------------------------------------------------------------------------
-    #  Event handlers:    
+    #  Event handlers:
     #---------------------------------------------------------------------------
-        
+
     def _anytrait_changed ( self ):
         if self.view is not None:
             self.view.view_modified = True
-                      
+
     def _id_changed ( self ):
         name = self.id
         if name == '':
@@ -891,121 +891,121 @@ class VETAction ( Action ):
     def _name_changed ( self, name ):
         self.code.comment = "Performs the action for the '%s' menu item" % name
         self._id_changed()
-        
+
     def _code_changed ( self ):
         self.code.on_trait_change( self._anytrait_changed )
 
     #---------------------------------------------------------------------------
-    #  Returns a Python text version of the object:    
+    #  Returns a Python text version of the object:
     #---------------------------------------------------------------------------
-                        
+
     def format ( self, indent = 0 ):
         """ Returns a Python text version of the object.
         """
         return '\n%sAction(%s)' % (
-               ' ' * indent, 
+               ' ' * indent,
                format_traits( self, caction, self.item_attrs, indent + 4 ) )
 
     #---------------------------------------------------------------------------
-    #  Returns a Python text version of the code handlers for the object:    
+    #  Returns a Python text version of the code handlers for the object:
     #---------------------------------------------------------------------------
-                        
+
     def format_code ( self ):
         """ Returns a Python text version of the code handlers for the object.
         """
         return self.code.format_code()
-        
+
     #---------------------------------------------------------------------------
-    #  Builds the run-time objects representing the menu:    
+    #  Builds the run-time objects representing the menu:
     #---------------------------------------------------------------------------
-                
+
     def build ( self ):
         """ Builds the run-time objects representing the menu.
         """
         return self
-        
+
 #-------------------------------------------------------------------------------
-#  'VETMenu' class:  
+#  'VETMenu' class:
 #-------------------------------------------------------------------------------
-                
+
 class VETMenu ( HasStrictTraits ):
-    
+
     #---------------------------------------------------------------------------
-    #  Trait definitions:    
+    #  Trait definitions:
     #---------------------------------------------------------------------------
-        
+
     name  = Str( 'Menu' )
     items = List
     view  = Instance( VETView )
-    
+
     item_attrs = [ 'name' ]
 
     #---------------------------------------------------------------------------
-    #  Returns a Python text version of the object:    
+    #  Returns a Python text version of the object:
     #---------------------------------------------------------------------------
-    
+
     def format ( self, indent = 0 ):
         """ Returns a Python text version of the object.
         """
         nested = [ item.format( indent + 4 ) for item in self.items ]
-        return '\n%sMenu(%s%s)' %  ( ' ' * indent, ','.join( nested ), 
+        return '\n%sMenu(%s%s)' %  ( ' ' * indent, ','.join( nested ),
                    format_traits( self, cmenu, self.item_attrs, indent + 4,
                                   len( nested ) ) )
 
     #---------------------------------------------------------------------------
-    #  Returns a Python text version of the code handlers for the object:    
+    #  Returns a Python text version of the code handlers for the object:
     #---------------------------------------------------------------------------
-                        
+
     def format_code ( self ):
         """ Returns a Python text version of the code handlers for the object.
         """
         return ''.join( [ item.format_code() for item in self.items ] )
-        
+
     #---------------------------------------------------------------------------
-    #  Builds the run-time objects representing the menu:    
+    #  Builds the run-time objects representing the menu:
     #---------------------------------------------------------------------------
-                
+
     def build ( self ):
         """ Builds the run-time objects representing the menu.
         """
         return Menu( name = self.name,
                      *[ item.build() for item in self.items ] )
-        
+
     #---------------------------------------------------------------------------
-    #  Event handlers:    
+    #  Event handlers:
     #---------------------------------------------------------------------------
-                
+
     def _items_items_changed ( self, event ):
         for item in event.added:
             item.view = self.view
         self.view.view_modified = True
-        
+
     def _name_changed ( self ):
         if self.view is not None:
             self.view.view_modified = True
-        
+
     def _view_changed ( self, view ):
         for item in self.items:
             item.view = view
-        
+
 #-------------------------------------------------------------------------------
-#  'VETMenuBar' class:  
+#  'VETMenuBar' class:
 #-------------------------------------------------------------------------------
-                
+
 class VETMenuBar ( HasStrictTraits ):
-    
+
     #---------------------------------------------------------------------------
-    #  Trait definitions:    
+    #  Trait definitions:
     #---------------------------------------------------------------------------
-        
+
     tag   = Str( 'Menubar' )
     menus = List( VETMenu )
     view  = Instance( VETView )
 
     #---------------------------------------------------------------------------
-    #  Returns a Python text version of the object:    
+    #  Returns a Python text version of the object:
     #---------------------------------------------------------------------------
-    
+
     def format ( self, indent = 0 ):
         """ Returns a Python text version of the object.
         """
@@ -1013,85 +1013,85 @@ class VETMenuBar ( HasStrictTraits ):
         return 'MenuBar(%s\n%s)' %  ( ','.join( nested ), ' ' * indent )
 
     #---------------------------------------------------------------------------
-    #  Returns a Python text version of the code handlers for the object:    
+    #  Returns a Python text version of the code handlers for the object:
     #---------------------------------------------------------------------------
-                        
+
     def format_code ( self ):
         """ Returns a Python text version of the code handlers for the object.
         """
         return ''.join( [ menu.format_code() for menu in self.menus ] )
-        
+
     #---------------------------------------------------------------------------
-    #  Builds the run-time objects representing the menu bar:    
+    #  Builds the run-time objects representing the menu bar:
     #---------------------------------------------------------------------------
-                
+
     def build ( self ):
         """ Builds the run-time objects representing the menu bar.
         """
         if len( self.menus ) == 0:
             return None
         return MenuBar( *[ menu.build() for menu in self.menus ] )
-        
+
     #---------------------------------------------------------------------------
-    #  Event handlers:    
+    #  Event handlers:
     #---------------------------------------------------------------------------
-                
+
     def _menus_items_changed ( self, event ):
         for item in event.added:
             item.view = self.view
         self.view.view_modified = True
-        
+
     def _view_changed ( self, view ):
         for menu in self.menus:
             menu.view = view
-        
+
 #-------------------------------------------------------------------------------
 #  'Templates' class:
 #-------------------------------------------------------------------------------
 
 class Templates ( HasStrictTraits ):
-    
+
     #---------------------------------------------------------------------------
-    #  Trait definitions:  
+    #  Trait definitions:
     #---------------------------------------------------------------------------
 
-    tag      = Str( 'Templates' )    
+    tag      = Str( 'Templates' )
     elements = List
-    
+
 #-------------------------------------------------------------------------------
-#  'ObjectWithTraits' class:  
+#  'ObjectWithTraits' class:
 #-------------------------------------------------------------------------------
-        
+
 class ObjectWithTraits ( HasStrictTraits ):
-    
+
     #---------------------------------------------------------------------------
-    #  Trait definitions:  
+    #  Trait definitions:
     #---------------------------------------------------------------------------
-        
+
     tag     = Str
     package = Str
     object  = Instance( HasTraits )
     traits  = List( Item )
-    
+
     #---------------------------------------------------------------------------
-    #  Handles the 'object' trait being changed:  
+    #  Handles the 'object' trait being changed:
     #---------------------------------------------------------------------------
-    
+
     def _object_changed ( self, object ):
         if self.tag == '':
             self.tag = object.__class__.__name__
         tag = self.tag
-        self.traits = [ VETItem( name = name, tag = name, object = tag ) 
+        self.traits = [ VETItem( name = name, tag = name, object = tag )
                         for name in object.editable_traits() ]
-                        
+
     def _tag_changed ( self, tag ):
         for item in self.traits:
             item.object = tag
-                        
+
 #-------------------------------------------------------------------------------
-#  Converts an object with traits to a Group with Items:  
+#  Converts an object with traits to a Group with Items:
 #-------------------------------------------------------------------------------
-                                                
+
 def owt_to_group ( target, owt ):
     """ Converts an object with traits to a Group with Items.
     """
@@ -1099,36 +1099,36 @@ def owt_to_group ( target, owt ):
     trait_names.remove( 'trait_added' )
     trait_names.sort()
     object = owt.tag
-    return VETGroup( 
-               content = [ VETItem( name = name, tag = name, object = object ) 
+    return VETGroup(
+               content = [ VETItem( name = name, tag = name, object = object )
                            for name in trait_names ] )
-    
+
 #-------------------------------------------------------------------------------
-#  'Objects' class:  
+#  'Objects' class:
 #-------------------------------------------------------------------------------
-        
+
 class Objects ( HasStrictTraits ):
-    
+
     #---------------------------------------------------------------------------
-    #  Trait definitions:    
+    #  Trait definitions:
     #---------------------------------------------------------------------------
-        
+
     objects = List( ObjectWithTraits )
-    
+
 #-------------------------------------------------------------------------------
 #  Imports an external class and creates an instance for the 'Objects' list:
 #-------------------------------------------------------------------------------
 
 def import_class ( objects, cb_class ):
-    """ Imports an external class and creates an instance for the 'Objects' 
+    """ Imports an external class and creates an instance for the 'Objects'
         list.
     """
     # Get the name of the class being imported/added:
     class_name = cb_class.name
-                
+
     # Get the fully qualified package name from the class's parent module:
     package = cb_class.parent.full_name
-    
+
     # Now attempt to import the class:
     klass = getattr( sys.modules.get( package ), class_name, None )
     if klass is None:
@@ -1140,12 +1140,12 @@ def import_class ( objects, cb_class ):
         except:
             pass
         if klass is None:
-            message( 
-                message = "Cannot import the class '%s' from the module '%s'." % 
+            message(
+                message = "Cannot import the class '%s' from the module '%s'." %
                           ( class_name, package ),
                 title   = 'Import Error' )
             return None
-            
+
     # Now attempt to create an instance of the class:
     cons = VETConstructor()
     args = ()
@@ -1160,7 +1160,7 @@ def import_class ( objects, cb_class ):
             args = cons.arguments
             if not type( args ) is tuple:
                 args = ( args, )
-        
+
     # Determine the default 'context name' to give the new class object:
     tag = 'object'
     if len( objects.objects ) > 0:
@@ -1176,105 +1176,105 @@ def import_class ( objects, cb_class ):
             else:
                 skipping = False
             tag += c
-    
+
     # Return the correct type of object to be added to 'Objects':
     return ObjectWithTraits( tag     = tag,
                              package = package,
                              object  = object )
-    
+
 #-------------------------------------------------------------------------------
-#  'VETEditor' class:  
+#  'VETEditor' class:
 #-------------------------------------------------------------------------------
-        
+
 class VETEditor ( HasStrictTraits ):
-    
+
     #---------------------------------------------------------------------------
-    #  Trait definitions:    
+    #  Trait definitions:
     #---------------------------------------------------------------------------
-    
+
     tag        = Str
     package    = Str
     class_name = Str
     editor     = Instance( EditorFactory )
-    
+
 #-------------------------------------------------------------------------------
-#  'VETEditorX' class:  
+#  'VETEditorX' class:
 #-------------------------------------------------------------------------------
-        
+
 class VETEditorX ( VETEditor ):
-    
+
     #---------------------------------------------------------------------------
-    #  Trait definitions:    
+    #  Trait definitions:
     #---------------------------------------------------------------------------
 
     package = Str( 'enthought.traits.ui' )
-    
+
     #---------------------------------------------------------------------------
-    #  Event handlers:    
+    #  Event handlers:
     #---------------------------------------------------------------------------
-        
+
     def _tag_changed ( self, tag ):
         self.class_name = tag + 'Editor'
-        self.editor     = getattr( enthought.traits.ui, self.class_name )()        
-        
+        self.editor     = getattr( enthought.traits.ui, self.class_name )()
+
 #-------------------------------------------------------------------------------
-#  'Editors' class:  
+#  'Editors' class:
 #-------------------------------------------------------------------------------
-        
+
 class Editors ( HasStrictTraits ):
-    
+
     #---------------------------------------------------------------------------
-    #  Trait definitions:    
+    #  Trait definitions:
     #---------------------------------------------------------------------------
-        
+
     editors = List( VETEditor )
-    
+
 #-------------------------------------------------------------------------------
 #  'Source' class:
 #-------------------------------------------------------------------------------
 
 class Source ( HasStrictTraits ):
-    
+
     #---------------------------------------------------------------------------
-    #  Trait definitions:  
+    #  Trait definitions:
     #---------------------------------------------------------------------------
-    
+
     items = List
-        
+
 #-------------------------------------------------------------------------------
 #  'VET' class:
 #-------------------------------------------------------------------------------
 
 class VET ( HasPrivateTraits ):
-    
+
     #---------------------------------------------------------------------------
-    #  Trait definitions:    
+    #  Trait definitions:
     #---------------------------------------------------------------------------
-        
+
     source      = Instance( Source )      # Source templates, editors, objects
     handler     = Instance( VETHandler )  # Current Handler being edited
     preferences = Instance( VETPreferences, () ) # User preference info
     code        = Code         # Python source code for the current Handler
     auto_update_view   = true  # Should View be rebuilt after each change?
     auto_update_source = true  # Should source be rebuilt after each change?
-    
+
 #-------------------------------------------------------------------------------
-#  'ViewHandler' class:  
+#  'ViewHandler' class:
 #-------------------------------------------------------------------------------
-        
+
 class ViewHandler ( Handler ):
-    
+
     #---------------------------------------------------------------------------
-    #  Trait definitions:  
+    #  Trait definitions:
     #---------------------------------------------------------------------------
-    
+
     pos  = Any  # Last position of the edit window
     size = Any  # Last size of the edit window
-        
+
     #---------------------------------------------------------------------------
     #  Positions a dialog-based user interface on the display:
     #---------------------------------------------------------------------------
-        
+
     def position ( self, info ):
         """ Positions a dialog-based user interface on the display.
         """
@@ -1285,49 +1285,49 @@ class ViewHandler ( Handler ):
         if info.ui.view.resizable and (self.size is not None):
             ndx, ndy = window.GetSizeTuple()
             odx, ody = self.size
-            window.SetSize( wx.Size( max( ndx, odx ), max( ndy, ody ) ) ) 
-        
+            window.SetSize( wx.Size( max( ndx, odx ), max( ndy, ody ) ) )
+
     #---------------------------------------------------------------------------
     #  Handles a dialog-based user interface being closed by the user:
     #---------------------------------------------------------------------------
-        
+
     def close ( self, info, is_ok ):
         """ Handles a dialog-based user interface being closed by the user.
         """
         return False
-        
+
 #-------------------------------------------------------------------------------
-#  'VETViewHandler' class:  
+#  'VETViewHandler' class:
 #-------------------------------------------------------------------------------
-                
+
 class VETViewHandler ( Handler ):
-    
+
     #---------------------------------------------------------------------------
-    #  Trait definitions:  
+    #  Trait definitions:
     #---------------------------------------------------------------------------
-    
+
     action = Any
-        
+
     #---------------------------------------------------------------------------
     #  Handles the user trying to close the source view:
     #---------------------------------------------------------------------------
-        
+
     def close ( self, info, is_ok ):
         """ Handles the user trying to close the source view.
         """
         self.action()
         return True
-        
+
 #-------------------------------------------------------------------------------
-#  'EditHandler' class:  
+#  'EditHandler' class:
 #-------------------------------------------------------------------------------
-                
+
 class EditHandler ( Handler ):
-    
+
     #---------------------------------------------------------------------------
     #  Trait definitions:
     #---------------------------------------------------------------------------
- 
+
     info            = Instance( UIInfo )
     vet             = Instance( VET )
     menubar         = Instance( VETMenuBar )
@@ -1337,11 +1337,11 @@ class EditHandler ( Handler ):
     busy            = false  # Is a test program currently running?
     source_view_ui  = Any    # The UI for the source view
     classes_view_ui = Any    # The UI for the class browser view
-    
+
     #---------------------------------------------------------------------------
     #  Initializes the controls of a user interface:
     #---------------------------------------------------------------------------
-    
+
     def init ( self, info ):
         """ Initializes the controls of a user interface.
         """
@@ -1352,59 +1352,59 @@ class EditHandler ( Handler ):
         self.objects = vet.source.items[2].objects
         self._frame  = info.ui.control
         view.on_trait_change( self.on_view_modified, 'view_modified' )
-        
+
         # Restore any saved user preference items:
         db = self._get_ui_db()
         if db is not None:
             # Restore the 'live view' window size and position:
             self.handler.pos    = db.get( 'pos' )
             self.handler.size   = db.get( 'size' )
-            
+
             # Restore whether or not the source view was open previously:
             is_source_view_open = db.get( 'is_source_view_open', False )
-            
+
             # Restore whether or not the class browser view was open previously:
             is_classes_view_open = db.get( 'is_classes_view_open', False )
-            
+
             # Restore the 'My Templates' folder:
-            vet.source.items[0].elements.append( 
+            vet.source.items[0].elements.append(
                 db.get( 'my_templates', Templates( tag = 'My Templates' ) ) )
-                
+
             # Restore the user preferences:
             vet.preferences = db.get( 'preferences', VETPreferences() )
-                
+
             db.close()
-            
+
             # Re-open the source view if it was open the last time we exited:
             if is_source_view_open:
                 self.view_source( info )
-            
-            # Re-open the class browser view if it was open the last time we 
+
+            # Re-open the class browser view if it was open the last time we
             # exited:
             if is_classes_view_open:
                 self.view_classes( info )
-            
+
         # Make sure the view and source have been initialized:
         self.on_view_modified()
-            
+
         # Indicate that initialization was successful:
         return True
-        
+
     #---------------------------------------------------------------------------
     #  Handles the user trying to close the editor:
     #---------------------------------------------------------------------------
-        
+
     def close ( self, info, is_ok ):
         """ Handles the user trying to close the editor.
         """
-        
+
         # Ask the user whether it is OK to close the editor:
-        dlg = wx.MessageDialog( self._frame, 
+        dlg = wx.MessageDialog( self._frame,
                                 'Exit the View Editing Tool?',
                                 'Exit VET',
                                 style = wx.OK | wx.CANCEL | wx.ICON_EXCLAMATION )
         rc = (dlg.ShowModal() == wx.ID_OK)
-        
+
         # If we are closing down, save all user preference items:
         if rc:
             db = self._get_ui_db( mode = 'c' )
@@ -1414,66 +1414,66 @@ class EditHandler ( Handler ):
                     window       = self._ui.control
                     db[ 'pos' ]  = window.GetPositionTuple()
                     db[ 'size' ] = window.GetSizeTuple()
-                    
+
                 # Save whether the source view is open or not:
                 db[ 'is_source_view_open' ] = (self.source_view_ui is not None)
-                    
+
                 # Save whether the class browser view is open or not:
                 db[ 'is_classes_view_open' ] = \
                     (self.classes_view_ui is not None)
-                
+
                 # Save the 'My Templates' folder if it exists:
                 vet = self.vet
                 for template in vet.source.items[0].elements:
                     if template.tag == 'My Templates':
                         db[ 'my_templates' ] = template
                         break
-                
+
                 # Save the user preferences:
                 db[ 'preferences' ] = vet.preferences
-                    
+
                 # Close the user preference data base:
                 db.close()
-                
+
             # Close the source view if it is open:
             if self.source_view_ui is not None:
                 self.source_view_ui.dispose()
-                
+
             # Close the class browser view if it is open:
             if self.classes_view_ui is not None:
                 self.classes_view_ui.dispose()
-            
+
         # Return whether or not it is OK to close the editor:
-        return rc    
-                        
+        return rc
+
     #---------------------------------------------------------------------------
     #  Gets a reference to the VET UI preference database:
     #---------------------------------------------------------------------------
-                        
+
     def _get_ui_db ( self, mode = 'r' ):
         try:
-            return shelve.open( join( traits_home(), 'vet' ), 
+            return shelve.open( join( traits_home(), 'vet' ),
                                 flag = mode, protocol = -1 )
         except:
             return None
-        
+
     #---------------------------------------------------------------------------
-    #  Resets the current View to the 'new' state:    
+    #  Resets the current View to the 'new' state:
     #---------------------------------------------------------------------------
-                
+
     def new_view ( self, info ):
         """ Resets the current View to the 'new' state.
         """
         del self.view.groups[0].content[:]
-        
+
     #---------------------------------------------------------------------------
-    #  Reloads a previously saved editor state file:    
+    #  Reloads a previously saved editor state file:
     #---------------------------------------------------------------------------
-                
-    def open_view ( self, info ):        
+
+    def open_view ( self, info ):
         """ Reloads a previously saved editor state file.
         """
-        dlg = wx.FileDialog( self._frame, 
+        dlg = wx.FileDialog( self._frame,
                              message = 'Open File',
                              style   = wx.OPEN )
         if self._save_filename is not None:
@@ -1498,7 +1498,7 @@ class EditHandler ( Handler ):
                 view.copy_traits( new_view, view.update_traits )
                 info.object.source.items[:] = object.source.items[:]
             except:
-                wx.MessageDialog( self._frame, 
+                wx.MessageDialog( self._frame,
                                   'Could not open: ' + filename,
                                   'Error',
                                   style = wx.OK | wx.ICON_ERROR ).ShowModal()
@@ -1506,9 +1506,9 @@ class EditHandler ( Handler ):
                 fh.close()
 
     #---------------------------------------------------------------------------
-    #  Saves the current editor state to the current file (if any):    
+    #  Saves the current editor state to the current file (if any):
     #---------------------------------------------------------------------------
-                
+
     def save_view ( self, info ):
         """ Saves the current editor state to the current file (if any).
         """
@@ -1520,7 +1520,7 @@ class EditHandler ( Handler ):
             fh = open( self._save_filename, 'wb' )
             cPickle.dump( info.object, fh, -1 )
         except:
-            wx.MessageDialog( self._frame, 
+            wx.MessageDialog( self._frame,
                               'Could not save to: ' + self._save_filename,
                               'Error',
                               style = wx.OK | wx.ICON_ERROR ).ShowModal()
@@ -1528,16 +1528,16 @@ class EditHandler ( Handler ):
             fh.close()
 
     #---------------------------------------------------------------------------
-    #  Saves the current editor state to a specified file:    
+    #  Saves the current editor state to a specified file:
     #---------------------------------------------------------------------------
-                
+
     def save_as_view ( self, info ):
         """ Saves the current editor state to a specified file.
         """
-        dlg = wx.FileDialog( self._frame, 
+        dlg = wx.FileDialog( self._frame,
                              message = 'Save File',
                              style   = wx.SAVE | wx.OVERWRITE_PROMPT )
-        filename = self._save_filename                     
+        filename = self._save_filename
         if filename is None:
             filename = self._class_to_file( info.object.handler.tag ) + '.vet'
         dlg.SetFilename( filename )
@@ -1548,22 +1548,22 @@ class EditHandler ( Handler ):
         if rc:
             self._save_filename = filename
             self.save_view( info )
-        
+
     #---------------------------------------------------------------------------
-    #  Exports the current Handler/View to a Python source file:    
+    #  Exports the current Handler/View to a Python source file:
     #---------------------------------------------------------------------------
-                                
+
     def export_view ( self, info ):
         """ Exports the current Handler/View to a Python source file.
         """
-        dlg = wx.FileDialog( self._frame, 
+        dlg = wx.FileDialog( self._frame,
                              message = 'Export to File',
                              style   = wx.SAVE | wx.OVERWRITE_PROMPT )
-        filename = self._export_filename                     
+        filename = self._export_filename
         if filename is None:
             filename = self._class_to_file( info.object.handler.tag ) + '.py'
         dlg.SetFilename( filename )
-           
+
         dlg.SetWildcard( '*.py' )
         rc       = (dlg.ShowModal() == wx.ID_OK)
         filename = abspath( dlg.GetPath() )
@@ -1572,11 +1572,11 @@ class EditHandler ( Handler ):
             self._export_filename = filename
             return self.export( info )
         return rc
-          
+
     #---------------------------------------------------------------------------
-    #  Exports the current Handler/View to the current export file:    
+    #  Exports the current Handler/View to the current export file:
     #---------------------------------------------------------------------------
-                        
+
     def export ( self, info ):
         """ Exports the current Handler/View to the current export file.
         """
@@ -1586,9 +1586,9 @@ class EditHandler ( Handler ):
             fh.write( self.format( info ) )
             rc = true
         except:
-            wx.MessageDialog( self._frame, 
+            wx.MessageDialog( self._frame,
                               'Could not save to file: ' + self._export_filename,
-                              'Error', 
+                              'Error',
                               style = wx.OK | wx.ICON_ERROR ).ShowModal()
             rc = False
         if fh is not None:
@@ -1597,11 +1597,11 @@ class EditHandler ( Handler ):
             except:
                 rc = False
         return rc
-          
+
     #---------------------------------------------------------------------------
     #  Formats the current Handler/View as a single Python text string:
     #---------------------------------------------------------------------------
-                        
+
     def format ( self, info ):
         """ Formats the current Handler/View as a single Python text string.
         """
@@ -1628,52 +1628,52 @@ class EditHandler ( Handler ):
                 'main_imports':   self._format_imports(),
                 'context':        self._format_context()
             })[1:]
-            
+
     #---------------------------------------------------------------------------
-    #  Returns information about the program author:    
+    #  Returns information about the program author:
     #---------------------------------------------------------------------------
-                        
+
     def _get_author ( self ):
         author = self.vet.preferences.author
         if author == '':
             return ''
         return '#\n#  Author: %s\n' % author
-            
+
     #---------------------------------------------------------------------------
-    #  Returns information about the program copyright owner:    
+    #  Returns information about the program copyright owner:
     #---------------------------------------------------------------------------
-                        
+
     def _get_copyright ( self ):
         co = self.vet.preferences.copyright_owner
         if co == '':
             return ''
         return '#\n#  (c) Copyright %s by %s\n' % ( time.strftime( '%Y' ), co )
-            
+
     #---------------------------------------------------------------------------
     #  Returns the extra module comment information:
     #---------------------------------------------------------------------------
-                        
+
     def _get_module_comment ( self ):
         mc = self.vet.preferences.module_comment
         if mc == '':
             return ''
         return '#\n#  %s\n' % ('\n#  '.join( mc.split( '\n' ) ))
-                
+
     #---------------------------------------------------------------------------
-    #  Formats all of the 'import' statements needed for the module test case:    
+    #  Formats all of the 'import' statements needed for the module test case:
     #---------------------------------------------------------------------------
-                                
+
     def _format_imports ( self ):
         result = []
         for owt in self.objects:
             if owt.package != '':
                 result.append( '    import %s' % owt.package )
         return '\n'.join( result )
-                
+
     #---------------------------------------------------------------------------
-    #  Formats all of the 'context' items needed for the module test case:    
+    #  Formats all of the 'context' items needed for the module test case:
     #---------------------------------------------------------------------------
-                                
+
     def _format_context ( self ):
         result  = []
         objects = self.objects
@@ -1685,22 +1685,22 @@ class EditHandler ( Handler ):
             package = owt.package
             if package != '':
                 package += '.'
-            result.append( "        '%s': %s%s%s()" % 
-                           ( owt.tag, blanks[ : max_tag - len( owt.tag ) ], 
+            result.append( "        '%s': %s%s%s()" %
+                           ( owt.tag, blanks[ : max_tag - len( owt.tag ) ],
                              package, owt.object.__class__.__name__ ) )
         return ',\n'.join( result )
-        
+
     #---------------------------------------------------------------------------
-    #  Displays a view of the current source code being generated:    
+    #  Displays a view of the current source code being generated:
     #---------------------------------------------------------------------------
-                
+
     def view_source ( self, info ):
         """ Displays a view of the current source code being generated.
         """
         info.view_source.enabled = False
         self.source_view_ui = self.vet.edit_traits(
             parent = info.ui.control,
-            view   = View( 
+            view   = View(
                 [ Item( 'code', style = 'custom', resizable = True ), '|<>' ],
                 id        = 'enthought.traits.vet.view_source',
                 title     = 'Source Code [View Editing Tool]',
@@ -1708,35 +1708,35 @@ class EditHandler ( Handler ):
                 resizable = True,
                 width     = .5,
                 height    = .5 ) )
-            
+
     #---------------------------------------------------------------------------
-    #  Handles the source view being closed:  
+    #  Handles the source view being closed:
     #---------------------------------------------------------------------------
-                        
+
     def closed_source_view ( self ):
         """ Handles the source view being closed.
         """
         self.info.view_source.enabled = True
         self.source_view_ui           = None
-        
+
     #---------------------------------------------------------------------------
-    #  Displays a view of the Python class hierarchy:    
+    #  Displays a view of the Python class hierarchy:
     #---------------------------------------------------------------------------
-                
+
     def view_classes ( self, info ):
         """ Displays a view of the Python class hierarchy.
         """
         info.view_classes.enabled = False
         paths = environ[ 'PYTHONPATH' ].split( ';' )
         paths.sort()
-        cb = ClassBrowser( root  = ClassBrowserPaths( 
-                           paths = [ CBPath( path         = path, 
+        cb = ClassBrowser( root  = ClassBrowserPaths(
+                           paths = [ CBPath( path         = path,
                                              show_methods = False,
                                              cache        = True )
                                      for path in paths ] ) )
-        self.classes_view_ui = cb.edit_traits( 
+        self.classes_view_ui = cb.edit_traits(
              parent = info.ui.control,
-             view   = View( [ Item( name      = 'root', 
+             view   = View( [ Item( name      = 'root',
                                     editor    = cb_tree_editor,
                                     resizable = True ),
                               '|<>' ],
@@ -1746,51 +1746,51 @@ class EditHandler ( Handler ):
                 resizable = True,
                 width     = .2,
                 height    = .3 ) )
-            
+
     #---------------------------------------------------------------------------
-    #  Handles the class browser view being closed:  
+    #  Handles the class browser view being closed:
     #---------------------------------------------------------------------------
-                        
+
     def closed_classes_view ( self ):
         """ Handles the class browser view being closed.
         """
         self.info.view_classes.enabled = True
         self.classes_view_ui           = None
-        
+
     #---------------------------------------------------------------------------
-    #  Allows the user to set their preferences:    
+    #  Allows the user to set their preferences:
     #---------------------------------------------------------------------------
-                
+
     def set_preferences ( self, info ):
         """ Allows the user to set their preferences.
         """
         self.vet.preferences.edit_traits()
         self.on_view_modified()
-            
+
     #---------------------------------------------------------------------------
-    #  Tests the current view by running it in a separate process:    
+    #  Tests the current view by running it in a separate process:
     #---------------------------------------------------------------------------
-                        
+
     def test_view ( self, info ):
         """ Tests the current view by running it in a separate process.
         """
         if self.busy:
-            wx.MessageDialog( self._frame, 
+            wx.MessageDialog( self._frame,
                               'A test program already running. Please '
                               'terminate it first.',
                               'Busy',
                               style = wx.OK | wx.ICON_ERROR ).ShowModal()
             return
         if (((self._export_filename is not None) and self.export( info )) or
-            self.export_view( info )): 
+            self.export_view( info )):
             self.busy = True
-            Thread( target = self._test_view, 
+            Thread( target = self._test_view,
                     args   = ( self._export_filename, ) ).start()
-                    
+
     #---------------------------------------------------------------------------
-    #  Runs a specified Python file as a process (invoked on a new thread):    
+    #  Runs a specified Python file as a process (invoked on a new thread):
     #---------------------------------------------------------------------------
-                                        
+
     def _test_view ( self, filename ):
         """ Runs a specified Python file as a process (invoked on a new thread).
         """
@@ -1804,14 +1804,14 @@ class EditHandler ( Handler ):
         self.busy = False
 
     #---------------------------------------------------------------------------
-    #  Imports a module's 'HasTraits' objects into the editor:    
+    #  Imports a module's 'HasTraits' objects into the editor:
     #---------------------------------------------------------------------------
-                                
+
     def import_object ( self, info ):
         """ Imports a module's 'HasTraits' objects into the editor.
         """
         # Get the name of the file to import:
-        dlg = wx.FileDialog( self._frame, 
+        dlg = wx.FileDialog( self._frame,
                              message = 'Select a module to import',
                              style   = wx.OPEN )
         dlg.SetWildcard( '*.py' )
@@ -1838,15 +1838,15 @@ class EditHandler ( Handler ):
                                   'Could not import: ' + filename, 'Error',
                                   style = wx.OK | wx.ICON_ERROR ).ShowModal()
             del sys.path[0]
-            
+
             # Find all subclasses of 'HasTraits' in the module:
             objects = self.objects
             for key in dir( module ):
                 try:
                     obj = getattr( module, key )
-                    if (issubclass( obj, HasTraits ) and 
+                    if (issubclass( obj, HasTraits ) and
                         (obj.__module__ == name)):
-                            
+
                         # Add an instance of the subclass to the 'objects' list:
                         owt = ObjectWithTraits( tag     = obj.__name__,
                                                 package = name,
@@ -1854,22 +1854,22 @@ class EditHandler ( Handler ):
                         objects.append( owt )
                 except:
                     pass
-            
+
     #---------------------------------------------------------------------------
-    #  Copies the current View source code to the clipboard:    
+    #  Copies the current View source code to the clipboard:
     #---------------------------------------------------------------------------
-                                        
+
     def copy_to_clipboard ( self, info ):
         """ Copies the current View source code to the clipboard.
         """
         from enthought.util.wx.clipboard import clipboard
-        
+
         clipboard.data = self.format( info )
 
     #---------------------------------------------------------------------------
     #  Toggles the current state of the 'auto_update_view' flag:
     #---------------------------------------------------------------------------
-                                
+
     def toggle_auto_update_view ( self, info ):
         """ Toggles the current state of the 'auto_update_view' flag.
         """
@@ -1879,26 +1879,26 @@ class EditHandler ( Handler ):
     #---------------------------------------------------------------------------
     #  Toggles the current state of the 'auto_update_source' flag:
     #---------------------------------------------------------------------------
-                                
+
     def toggle_auto_update_source ( self, info ):
         """ Toggles the current state of the 'auto_update_source' flag.
         """
         info.object.auto_update_source = not info.object.auto_update_source
         self.on_view_modified()
-        
+
     #---------------------------------------------------------------------------
-    #  Forces a rebuild of the View from its description:    
+    #  Forces a rebuild of the View from its description:
     #---------------------------------------------------------------------------
-        
+
     def force_rebuild ( self, info ):
         """ Forces a rebuild of the View from its description.
         """
         self.rebuild_view()
-        
+
     #---------------------------------------------------------------------------
-    #  Handles the View being modified:    
+    #  Handles the View being modified:
     #---------------------------------------------------------------------------
-                
+
     def on_view_modified ( self ):
         """ Handles the View being modified.
         """
@@ -1906,62 +1906,62 @@ class EditHandler ( Handler ):
             self.rebuild_view()
         if self.vet.auto_update_source:
             self.vet.code = self.format( self.info )
-     
+
     #---------------------------------------------------------------------------
-    #  Rebuilds the current View from its description:    
+    #  Rebuilds the current View from its description:
     #---------------------------------------------------------------------------
-                        
+
     def rebuild_view ( self ):
         """ Rebuilds the current View from its description.
         """
         # If there is a currently active UI, destroy it:
         cur_ui = self._ui
         if cur_ui is not None:
-            # Save its current position and size so we can position the new one 
+            # Save its current position and size so we can position the new one
             # at the same spot:
-            self.handler.pos  = cur_ui.control.GetPosition() 
-            self.handler.size = cur_ui.control.GetSizeTuple() 
-            
+            self.handler.pos  = cur_ui.control.GetPosition()
+            self.handler.size = cur_ui.control.GetSizeTuple()
+
         # Build the 'View' from the info in the tree:
         vet_view = self.view
         groups   = vet_view.groups
         view     = View( *groups )
-        view.copy_traits( vet_view, 
+        view.copy_traits( vet_view,
                           [ 'title', 'kind', 'style',
-                            'apply', 'revert', 'undo', 'ok', 'resizable', 
+                            'apply', 'revert', 'undo', 'ok', 'resizable',
                             'help', 'x', 'y', 'width', 'height' ] )
-             
+
         # Define the menu bar (if any):
         view.menubar = self.menubar.build()
-                            
+
         # Initialize the UI 'context' with all of the objects in the tree:
         context = {}
         for owt in self.objects:
             context[ owt.tag ] = owt.object
-       
+
         try:
             # Rebuild the UI:
-            self._ui = ui = view.ui( context, self._frame, 
-                                     kind    = 'live', 
+            self._ui = ui = view.ui( context, self._frame,
+                                     kind    = 'live',
                                      handler = self.handler )
-                                
-            # Dispose of the old UI if there is one:                         
+
+            # Dispose of the old UI if there is one:
             if cur_ui is not None:
                 cur_ui.dispose()
         except:
             pass
-                                     
+
         # Make sure that we retain the keyboard focus:
         self._frame.Raise()
-         
-        # Restore the container links:        
+
+        # Restore the container links:
         for item in groups:
             item.container = vet_view
-        
+
     #---------------------------------------------------------------------------
-    #  Converts a class name to a file name:    
+    #  Converts a class name to a file name:
     #---------------------------------------------------------------------------
-                
+
     def _class_to_file ( self, class_name ):
         result = ''
         last   = True
@@ -1972,12 +1972,12 @@ class EditHandler ( Handler ):
             last    = (cl != c)
             result += cl
         return result
-    
+
 #-------------------------------------------------------------------------------
-#  Define the VET tree editors:  
+#  Define the VET tree editors:
 #-------------------------------------------------------------------------------
-                   
-separator_editor = EnumEditor( 
+
+separator_editor = EnumEditor(
                        values = { 'Separator': '_',
                                   '1 pixel space': '1',
                                   '2 pixel space': '2',
@@ -1988,51 +1988,51 @@ separator_editor = EnumEditor(
                                   '7 pixel space': '7',
                                   '8 pixel space': '8' },
                        cols = 3 )
-        
+
 no_view    = View()
 
-view_view  = View( [ [ 'title', '|[Label]' ],      
-                     [ 'kind@', '|[Kind]<>'  ],      
-                       #'style@',   '_' ],     
+view_view  = View( [ [ 'title', '|[Label]' ],
+                     [ 'kind@', '|[Kind]<>'  ],
+                       #'style@',   '_' ],
                      [ 'apply', 'revert', 'undo', 'ok', 'help', '-[Buttons]>'],
                      [ 'help_id', '|[External Help Id]<>' ],
-                     [ 'resizable', '-[Options]>' ],       
-                     [ 'x', 'y', 'width', 'height', '|[Position and Size]' ], 
-                   ],    
+                     [ 'resizable', '-[Options]>' ],
+                     [ 'x', 'y', 'width', 'height', '|[Position and Size]' ],
+                   ],
                    title = 'View Properties' )
 
-group_view = View( [ [ 'label`Label of the group within the UI`', 
-                       'id{Handler}`Label of the group within the handler class`', 
+group_view = View( [ [ 'label`Label of the group within the UI`',
+                       'id{Handler}`Label of the group within the handler class`',
                        'tag{Tree}`Label of the group within the VET tree view`',
                        '|[Labels]' ],
                      [ 'layout@', 'orientation@', '|[Layout]<>' ],
                      #'style@', '_',
                      [ 'show_border', 'show_labels', 'show_left',
-                       'selected{Selected tab}', 
+                       'selected{Selected tab}',
                        '-[Options]>' ],
                      [ 'padding', '|[Padding]<>' ],
-                     [ 'defined_when', 'visible_when', 'enabled_when', 
-                       '|[Conditional Expressions]' ], 
+                     [ 'defined_when', 'visible_when', 'enabled_when',
+                       '|[Conditional Expressions]' ],
                      [ Item( 'help', style = 'custom', resizable = True ),
                        '|[Help Text (may include HTML tags)]<>' ]
                    ],
                    title = 'Group Properties' )
 
-item_view  = View( [ [ 'label`Label of the item within the UI`', 
-                       'id{Handler}`Label of the item within the handler class`', 
-                       'tag{Tree}`Label of the item within the VET tree view`', 
+item_view  = View( [ [ 'label`Label of the item within the UI`',
+                       'id{Handler}`Label of the item within the handler class`',
+                       'tag{Tree}`Label of the item within the VET tree view`',
                        '|[Labels]' ],
-                     [ "object`The view 'context' name for the object`~", 
-                       'name{.Name}~', 
+                     [ "object`The view 'context' name for the object`~",
+                       'name{.Name}~',
                        '-[Trait Reference]' ],
-                     [ 'style@`The editor display style for the item`', 
+                     [ 'style@`The editor display style for the item`',
                        '|[Style]<>' ],
-                     [ 'resizable`Should the item use all available space?`', 
-                       "springy`Should the item use all available space along its Group's orientation axis?`", 
-                       'emphasized`Should the item be emphasized in the UI?`', 
+                     [ 'resizable`Should the item use all available space?`',
+                       "springy`Should the item use all available space along its Group's orientation axis?`",
+                       'emphasized`Should the item be emphasized in the UI?`',
                        '-[Options]>' ],
-                     [ 'width`The width of the item in pixels`', 
-                       'height`The height of the item in pixels`', 
+                     [ 'width`The width of the item in pixels`',
+                       'height`The height of the item in pixels`',
                        '-[Size]' ],
                      [ 'padding`The amount of extra padding on each side of '
                        'the item in pixels`',
@@ -2049,14 +2049,14 @@ item_view  = View( [ [ 'label`Label of the item within the UI`',
                        '|[Conditional Expressions]' ],
                      [ [ 'tooltip`The tooltip text for the item (like this one)`',
                          '_' ],
-                       [ '{Help Text (may include HTML tags):}', 
+                       [ '{Help Text (may include HTML tags):}',
                          'help@#`The long form of help for the item`',
                          '|<>' ],
                        '|[Help]' ]
                    ],
                    title = 'Item Properties' )
 
-separator_view = View( [ [ 'tag', '|[Tag]<>' ], 
+separator_view = View( [ [ 'tag', '|[Tag]<>' ],
                          [ Item( name   = 'name',
                                  editor = separator_editor,
                                  style  = 'custom' ),
@@ -2068,35 +2068,35 @@ label_view = View( [ [ 'tag{Tree}', 'label{UI}', '|[Label]' ],
                      [ 'style@', '|[Style]<>' ],
                      [ 'emphasized', '-[Options]>' ] ],
                    title = 'Label Properties' )
-                   
+
 owt_view   = View( [ [ 'tag{Object}', '|[Trait Reference]' ] ],
-                   title = 'Object Properties' )       
-                   
+                   title = 'Object Properties' )
+
 handler_view = View( [ [ 'tag{Name}',
                          '|[Handler Class]' ] ],
                      title = 'Handler Properties' )
-                   
+
 menu_view    = View( [ [ 'name{Label}',
                          '|[]' ] ],
                      title = 'Menu Properties' )
 
-action_view  = View( [ [ 'name{Label}', 'id{Handler}', 'tooltip{Tool Tip}', 
+action_view  = View( [ [ 'name{Label}', 'id{Handler}', 'tooltip{Tool Tip}',
                          '|[Labels]' ],
                        [ 'style@', '|[Style]<>' ],
                        [ 'enabled', 'checked', '-[Status]>' ],
-                     [ 'enabled_when', 'checked_when', 'defined_when', 
+                     [ 'enabled_when', 'checked_when', 'defined_when',
                        '|[Conditional Expressions]' ],
-                     [ Item( 'code', 
+                     [ Item( 'code',
                              style     = 'custom',
                              resizable = True ),
                        '|<>' ]
                    ],
                    title = 'Action Properties' )
-                   
-editor_view = View( [ [ [ [ 'package~', 'class_name~', '|[]' ] ], 
-                        '|{Editor Information}' ], 
+
+editor_view = View( [ [ [ [ 'package~', 'class_name~', '|[]' ] ],
+                        '|{Editor Information}' ],
                       [ 'editor@', '|{Editor Properties}<>' ] ] )
-                   
+
 item_editor = TreeEditor( shared_editor = True )
 
 source_editor = TreeEditor(
@@ -2109,61 +2109,61 @@ source_editor = TreeEditor(
                   label      = '=Source',
                   view       = no_view,
                   rename     = False ),
-                             
+
         TreeNode( node_for   = [ Templates ],
                   name       = 'Template Folder',
                   children   = 'elements',
                   label      = 'tag',
                   view       = no_view,
-                  add        = [ Templates, VETGroup, VETSeparator, VETLabel, 
-                                 VETMenu, VETMenuSeparator, VETAction, 
+                  add        = [ Templates, VETGroup, VETSeparator, VETLabel,
+                                 VETMenu, VETMenuSeparator, VETAction,
                                  VETCodeX, VETCodeF ],
                   move       = [ VETCode ],
                   icon_group = 'templates',
                   icon_open  = 'templates' ),
-                             
+
         TreeNode( node_for   = [ VETCodeF ],
                   name       = 'Function',
                   label      = 'tag',
                   view       = codex_view,
                   icon_item  = 'function' ),
-                             
+
         TreeNode( node_for   = [ VETCodeX ],
                   name       = 'Method',
                   label      = 'tag',
                   view       = codex_view,
                   icon_item  = 'code' ),
-                             
+
         TreeNode( node_for   = [ VETCode ],
                   name       = 'Method',
                   label      = 'tag',
                   view       = code_view,
                   icon_item  = 'code' ),
-                             
+
         TreeNode( node_for   = [ VETGroup ],
                   name       = 'Group',
                   label      = 'tag',
                   view       = group_view,
                   icon_item  = 'group' ),
-                             
+
         TreeNode( node_for   = [ VETItem ],
                   name       = 'Item',
                   label      = 'tag',
                   view       = no_view,
                   icon_item  = 'trait' ),
-                             
+
         TreeNode( node_for   = [ VETSeparator ],
                   name       = 'Item Separator',
                   label      = 'tag',
                   view       = separator_view,
                   icon_item  = 'separator' ),
-                             
+
         TreeNode( node_for   = [ VETLabel ],
                   name       = 'Item Label',
                   label      = 'tag',
                   view       = label_view,
                   icon_item  = 'label' ),
-                             
+
         TreeNode( node_for   = [ Objects ],
                   auto_open  = True,
                   children   = 'objects',
@@ -2172,7 +2172,7 @@ source_editor = TreeEditor(
                   move       = [ ( CBClass, import_class ) ],
                   icon_group = 'objects',
                   icon_open  = 'objects' ),
-                             
+
         TreeNode( node_for   = [ ObjectWithTraits ],
                   auto_close = True,
                   rename     = False,
@@ -2181,32 +2181,32 @@ source_editor = TreeEditor(
                   view       = owt_view,
                   icon_group = 'object_with_traits',
                   icon_open  = 'object_with_traits' ),
-                             
+
         TreeNode( node_for   = [ Editors ],
                   children   = 'editors',
                   label      = '=Editors',
                   view       = no_view,
                   icon_group = 'editors',
-                  icon_open  = 'editors' ), 
-                             
+                  icon_open  = 'editors' ),
+
         TreeNode( node_for   = [ VETEditor ],
                   rename     = False,
                   label      = 'tag',
                   view       = editor_view,
-                  icon_item  = 'editor' ), 
-                             
+                  icon_item  = 'editor' ),
+
         TreeNode( node_for   = [ VETMenu ],
                   name       = 'Menu',
                   label      = 'name',
                   view       = menu_view,
                   icon_item  = 'menu' ),
-                             
+
         TreeNode( node_for   = [ VETMenuSeparator ],
-                  name       = 'Menu Separator', 
+                  name       = 'Menu Separator',
                   label      = 'tag',
                   view       = no_view,
                   icon_item  = 'menu_separator' ),
-                             
+
         TreeNode( node_for   = [ VETAction ],
                   name       = 'Action',
                   label      = 'name',
@@ -2229,7 +2229,7 @@ handler_editor = TreeEditor(
                   view       = handler_view,
                   icon_group = 'handler',
                   icon_open  = 'handler' ),
-                  
+
         TreeNode( node_for   = [ VETMethods ],
                   auto_open  = True,
                   name       = 'Methods',
@@ -2242,8 +2242,8 @@ handler_editor = TreeEditor(
                   label      = '=Methods',
                   view       = no_view,
                   icon_group = 'methods',
-                  icon_open  = 'methods' ), 
-                  
+                  icon_open  = 'methods' ),
+
         TreeNode( node_for   = [ VETView ],
                   auto_open  = True,
                   children   = 'groups',
@@ -2254,7 +2254,7 @@ handler_editor = TreeEditor(
                   rename     = False,
                   icon_group = 'view',
                   icon_open  = 'view'),
-                             
+
         TreeNode( node_for   = [ VETGroup ],
                   auto_open  = True,
                   name       = 'Group',
@@ -2266,7 +2266,7 @@ handler_editor = TreeEditor(
                   rename     = False,
                   icon_group = 'group',
                   icon_open  = 'group'),
-                             
+
         TreeNode( node_for   = [ VETItem ],
                   auto_close = True,
                   name       = 'Item',
@@ -2279,43 +2279,43 @@ handler_editor = TreeEditor(
                   move       = [ ( VETEditor, add_editor ) ],
                   icon_group = 'item',
                   icon_open  = 'item' ),
-                             
+
         TreeNode( node_for   = [ VETCodeF ],
                   name       = 'Function',
                   label      = 'tag',
                   view       = codex_view,
                   icon_item  = 'function' ),
-                             
+
         TreeNode( node_for   = [ VETCodeX ],
                   name       = 'Method',
                   label      = 'tag',
                   view       = codex_view,
                   icon_item  = 'code' ),
-                             
+
         TreeNode( node_for   = [ VETCode ],
                   name       = 'Code',
                   label      = 'tag',
                   view       = code_view,
                   icon_item  = 'code' ),
-                             
+
         TreeNode( node_for   = [ VETEditor ],
                   rename     = False,
                   label      = 'tag',
                   view       = editor_view,
-                  icon_item  = 'editor' ), 
-                             
+                  icon_item  = 'editor' ),
+
         TreeNode( node_for   = [ VETSeparator ],
                   name       = 'Separator',
                   label      = 'tag',
                   view       = separator_view,
                   icon_item  = 'separator' ),
-                             
+
         TreeNode( node_for   = [ VETLabel ],
                   name       = 'Label',
                   label      = 'tag',
                   view       = label_view,
                   icon_item  = 'label' ),
-                             
+
         TreeNode( node_for   = [ VETMenuBar ],
                   auto_open  = True,
                   name       = 'Menu Bar',
@@ -2325,7 +2325,7 @@ handler_editor = TreeEditor(
                   add        = [ VETMenu ],
                   icon_group = 'menu',
                   icon_open  = 'menu'),
-                             
+
         TreeNode( node_for   = [ VETMenu ],
                   auto_open  = True,
                   name       = 'Menu',
@@ -2335,7 +2335,7 @@ handler_editor = TreeEditor(
                   add        = [ VETAction, VETMenuSeparator, VETMenu ],
                   icon_group = 'menu',
                   icon_open  = 'menu'),
-                             
+
         TreeNode( node_for   = [ VETAction ],
                   auto_close = True,
                   name       = 'Action',
@@ -2346,7 +2346,7 @@ handler_editor = TreeEditor(
                   label      = 'name',
                   view       = action_view,
                   icon_item  = 'action' ),
-                             
+
         TreeNode( node_for   = [ VETMenuSeparator ],
                   name       = 'Separator',
                   label      = 'tag',
@@ -2354,7 +2354,7 @@ handler_editor = TreeEditor(
                   icon_item  = 'menu_separator' ),
      ]
 )
- 
+
 #-------------------------------------------------------------------------------
 #  Define the View to use:
 #-------------------------------------------------------------------------------
@@ -2381,7 +2381,7 @@ vet_menubar = MenuBar(
     Menu( UndoAction,
           RedoAction,
           Separator(),
-          Action( name   = 'Copy', 
+          Action( name   = 'Copy',
                   action = 'copy_to_clipboard' ),
           name = 'Edit' ),
     Menu( Action( name   = 'Auto-update view',
@@ -2410,33 +2410,33 @@ vet_menubar = MenuBar(
           name = 'Options' )
 )
 
-template_editor = Group( 
-    Item( name      = 'source', 
-          editor    = source_editor, 
+template_editor = Group(
+    Item( name      = 'source',
+          editor    = source_editor,
           resizable = True ),
     show_border = False,
     show_labels = False,
     label       = 'Templates'
 )
-                      
-class_browser_editor = Group(                      
-    Item( 'cb.root', 
+
+class_browser_editor = Group(
+    Item( 'cb.root',
           editor    = cb_tree_editor,
           resizable = True ),
     show_border = False,
     show_labels = False,
     label       = 'Classes'
 )
-                      
+
 source_browser_editor = Group( 'code@',
     show_border = False,
     show_labels = False,
     label       = 'Source'
 )
-                        
-view_editor = Group( 
-    Item( name      = 'handler', 
-          editor    = handler_editor, 
+
+view_editor = Group(
+    Item( name      = 'handler',
+          editor    = handler_editor,
           resizable = True ),
     show_border = False,
     show_labels = False,
@@ -2455,18 +2455,18 @@ edit_editor = Group(
 #vet_view = View( [ [ template_editor, view_editor, '-splitter1:=<>' ],
 #                   edit_editor, '|splitter2:=<>' ],
 
-vet_view = View( 
-    HSplit( 
-        VSplit( 
+vet_view = View(
+    HSplit(
+        VSplit(
             template_editor,
-            class_browser_editor, 
+            class_browser_editor,
             id          = 'splitter1',
             show_labels = False
         ),
         VSplit(
-            HSplit( 
-                view_editor, 
-                edit_editor, 
+            HSplit(
+                view_editor,
+                edit_editor,
                 id          = 'splitter2',
                 show_labels = False
             ),
@@ -2486,11 +2486,11 @@ vet_view = View(
     height    = .9,
     handler   = EditHandler()
 )
-    
+
 #-------------------------------------------------------------------------------
-#  Start the editor:  
+#  Start the editor:
 #-------------------------------------------------------------------------------
-      
+
 view = VETView( groups = [ VETGroup() ] )
 
 code_items = [
@@ -2499,7 +2499,7 @@ code_items = [
               method  = 'def init ( self, info ):',
               body    = 'return Handler.init( self, info )' ),
     VETCode(  tag     = 'close',
-              comment = 'Handles a request to close a dialog-based user ' 
+              comment = 'Handles a request to close a dialog-based user '
                         'interface by the user',
               method  = 'def close ( self, info, is_ok )',
               body    = 'return Handler.close( self, info, is_ok )' ),
@@ -2521,23 +2521,23 @@ code_items = [
     VETCodeF()
 ]
 
-handler_object = VETHandler( 
+handler_object = VETHandler(
     items = [
         VETMethods( view = view ),
         VETMenuBar( view = view ),
         view ],
     view = view
-)    
+)
 
-vet = VET( 
-          source = Source(  
-              items = [ 
-                  Templates( 
+vet = VET(
+          source = Source(
+              items = [
+                  Templates(
                       elements = [
                           Templates(
                               tag      = 'View',
                               elements = [
-                                  VETGroup( tag = 'Group' ), 
+                                  VETGroup( tag = 'Group' ),
                                   VETLabel(),
                                   VETSeparator(),
                                   VETSeparator( tag  = 'Spacer',
@@ -2548,7 +2548,7 @@ vet = VET(
                                   VETMenu(),
                                   VETAction(),
                                   VETMenuSeparator( tag = 'Menu Separator' ) ]),
-                          Templates( 
+                          Templates(
                               tag      = 'Methods',
                               elements = code_items )
                       ] ),
@@ -2558,7 +2558,7 @@ vet = VET(
                           VETEditorX( tag = 'Boolean' ),
                           VETEditorX( tag = 'Button' ),
                           #VETEditorX( tag = 'CheckList' ),
-                          VETEditorX( tag = 'Code' ), 
+                          VETEditorX( tag = 'Code' ),
                           VETEditorX( tag = 'Color' ),
                           VETEditorX( tag = 'RGBColor' ),
                           VETEditorX( tag = 'RGBAColor' ),
@@ -2568,14 +2568,14 @@ vet = VET(
                           #VETEditorX( tag = 'Enum' ),
                           VETEditorX( tag = 'File' ),
                           VETEditorX( tag = 'Font' ),
-                          VETEditorX( tag = 'KivaFont' ), 
+                          VETEditorX( tag = 'KivaFont' ),
                           #VETEditorX( tag = 'ImageEnum' ),
                           VETEditorX( tag = 'Instance' ),
-                          VETEditorX( tag = 'List' ), 
+                          VETEditorX( tag = 'List' ),
                           VETEditorX( tag = 'Plot' ),
                           VETEditorX( tag = 'Range' ),
-                          VETEditorX( tag = 'Text' ), 
-                          #VETEditorX( tag = 'Tree' ), 
+                          VETEditorX( tag = 'Text' ),
+                          #VETEditorX( tag = 'Tree' ),
                           #VETEditorX( tag = 'Tuple' )
                       ] ),
                   Objects()
@@ -2588,11 +2588,11 @@ try:
     paths = environ[ 'PYTHONPATH' ].split( ';' )
 except:
     paths = [ path for path in sys.path if isdir( path ) ]
-    
+
 paths.sort()
 
-cb = ClassBrowser( root  = ClassBrowserPaths( 
-                   paths = [ CBPath( path         = path, 
+cb = ClassBrowser( root  = ClassBrowserPaths(
+                   paths = [ CBPath( path         = path,
                                      show_methods = False,
                                      cache        = True )
                              for path in paths ] ) )
@@ -2600,4 +2600,4 @@ cb = ClassBrowser( root  = ClassBrowserPaths(
 view_object = handler_object.items[2]
 vet.configure_traits( context = { 'object': vet, 'cb': cb },
                       view    = vet_view )
-      
+

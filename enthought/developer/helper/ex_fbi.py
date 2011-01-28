@@ -16,39 +16,39 @@
 
 from os \
     import environ
-    
+
 from os.path \
     import abspath
-    
+
 from platform \
     import system
-    
+
 from enthought.traits.api \
     import HasPrivateTraits, Str, Int, Bool, List, Dict
-    
+
 #-------------------------------------------------------------------------------
 #  'SourceFile' class:
 #-------------------------------------------------------------------------------
-        
+
 class SourceFile ( HasPrivateTraits ):
-    
+
     # The file name of the source file:
     file_name = Str
-    
+
     # The source lines associated with the source file:
     source = List( Str )
-    
+
     # The line numbers containing break points:
     bp_lines = List( Int )
-    
+
     # Addition break point information:
     bp_info = List
-    
+
     # Was the list of break points modified:
     modified = Bool( False )
-    
+
     #-- Public Methods ---------------------------------------------------------
-    
+
     def save ( self, fh ):
         """ Saves all break points to a specified file handle.
         """
@@ -57,26 +57,26 @@ class SourceFile ( HasPrivateTraits ):
             bp_info = self.bp_info
             for i, line in enumerate( self.bp_lines ):
                 bp_type, code, end_line = bp_info[i]
-                
+
                 if code != '':
                     code = ':' + code
-                    
+
                 type = ''
                 if (code != '') or (bp_type != 'Breakpoint'):
                     type = '[%s%s]' % ( bp_type, code )
-                
+
                 source = self.source[ line - 1 ].strip()
-                
+
                 if end_line > line:
                     line = '%s,%s' % ( line, end_line )
-                    
+
                 fh.write( '  %s%s:: %s\n' % ( line, type, source ) )
-                          
+
     def restore ( self ):
         """ Restores all break points and activates them in the FBI debugger.
         """
         from fbi import fbi_object, fbi_bdb
-        
+
         file_name = self.file_name
         file_bps  = fbi_bdb.get_file_breaks( file_name ).copy()
         bp_info   = self.bp_info
@@ -91,23 +91,23 @@ class SourceFile ( HasPrivateTraits ):
                         (bp.code     == code)):
                         break
             else:
-                fbi_object.remove_break_point( file_name, line )                    
-                fbi_object.add_break_point( file_name, line, bp_type, code, 
+                fbi_object.remove_break_point( file_name, line )
+                fbi_object.add_break_point( file_name, line, bp_type, code,
                                             end_line )
-        
+
         for bp in file_bps:
-            fbi_object.remove_break_point( file_name, bp.line )                    
-    
+            fbi_object.remove_break_point( file_name, bp.line )
+
     def clear_bp ( self ):
         """ Clears (i.e. deletes) all break points in the source file.
         """
         del self.bp_lines[:]
         del self.bp_info[:]
-    
+
     def set_bp ( self, line, text = None, bp_type = 'Breakpoint', code = '',
                              end_line = None ):
         """ Sets a break point on the specified line number. If the optional
-            **text** argument is specified, it will check to see if the 
+            **text** argument is specified, it will check to see if the
             specified line matches the specified text, and if not, set the
             bp on the closest line matching the text. If no matching line is
             found, no breakpoint is set.
@@ -121,9 +121,9 @@ class SourceFile ( HasPrivateTraits ):
                 except:
                     self.bp_lines.append( line )
                     self.bp_info.append( info )
-                
+
             return
-            
+
         text = text.strip()
         if text != '':
             delta  = 0
@@ -139,9 +139,9 @@ class SourceFile ( HasPrivateTraits ):
                         if tline not in self.bp_lines:
                             self.bp_lines.append( tline )
                             self.bp_info.append( info )
-                        
+
                         return
-                    
+
                 tline = line - delta
                 if tline >= start:
                     done = False
@@ -149,14 +149,14 @@ class SourceFile ( HasPrivateTraits ):
                         if tline not in self.bp_lines:
                             self.bp_lines.append( tline )
                             self.bp_info.append( info )
-                        
+
                         return
-                    
+
                 if done:
                     break
-                
+
                 delta += 1
-    
+
     def reset_bp ( self, line ):
         """ Resets (i.e. deletes) a break point on the specified line number.
         """
@@ -166,8 +166,8 @@ class SourceFile ( HasPrivateTraits ):
             del self.bp_info[i]
         except:
             pass
-        
-    def toggle_bp ( self, line, bp_type = 'Breakpoint', code = '', 
+
+    def toggle_bp ( self, line, bp_type = 'Breakpoint', code = '',
                                 end_line = None ):
         """ Toggles the break point on the specified line number.
         """
@@ -178,9 +178,9 @@ class SourceFile ( HasPrivateTraits ):
         except:
             self.bp_lines.append( line )
             self.bp_info.append( ( bp_type, code, end_line ) )
-    
+
     #-- Traits Event Handlers --------------------------------------------------
-    
+
     def _file_name_changed ( self, file_name ):
         """ Handles the 'file_name' trait being changed.
         """
@@ -190,30 +190,30 @@ class SourceFile ( HasPrivateTraits ):
             self.source = fh.readlines()
         except:
             pass
-            
+
         if fh is not None:
             fh.close()
-            
+
     def _bp_lines_items_changed ( self ):
         """ Handles the list of break points being modified.
         """
         self.modified = True
-            
+
 #-------------------------------------------------------------------------------
 #  'SavedBreakPoints' class:
 #-------------------------------------------------------------------------------
-                        
+
 class SavedBreakPoints ( HasPrivateTraits ):
-    
+
     # The name of the saved break points file:
     file_name = Str
-    
+
     # The source files containing break points. The keys are the fully
     # qualified source file names:
     source_files = Dict( Str, SourceFile )
-    
+
     #-- Public Methods ---------------------------------------------------------
-    
+
     def __init__ ( self, **traits ):
         file_name = environ.get( 'FBI' )
         if file_name is None:
@@ -222,7 +222,7 @@ class SavedBreakPoints ( HasPrivateTraits ):
                 file_name = '~/.fbi.bp'
         traits.setdefault( 'file_name', abspath( file_name ) )
         super( SavedBreakPoints, self ).__init__( **traits )
-    
+
     def save ( self ):
         """ Saves the current set of break points back to the break point file.
         """
@@ -233,34 +233,34 @@ class SavedBreakPoints ( HasPrivateTraits ):
                 source_file.save( fh )
         except:
             pass
-            
+
         if fh is not None:
             fh.close()
-            
+
     def restore ( self ):
         """ Restores all break points and activates them in the FBI debugger.
         """
         for source_file in self.source_files.values():
             source_file.restore()
-    
+
     def source_file_for ( self, file_name ):
-        """ Returns the SourceFile object corresponding to a specified file 
+        """ Returns the SourceFile object corresponding to a specified file
             name.
         """
         file_name   = abspath( file_name )
         source_file = self.source_files.setdefault( file_name, SourceFile() )
         source_file.file_name = file_name
-        
+
         return source_file
-        
+
     def clear_bp ( self ):
         """ Clears all currently defined break points.
         """
         for source_file in self.source_files.values():
             source_file.clear_bp()
-    
+
     #-- Trait Event Handlers ---------------------------------------------------
-    
+
     def _file_name_changed ( self, file_name ):
         """ Handles the 'file_name' trait being changed.
         """
@@ -286,20 +286,20 @@ class SavedBreakPoints ( HasPrivateTraits ):
                                 if ccol >= 0:
                                     code    = bp_type[ ccol + 1: ]
                                     bp_type = bp_type[ : ccol ]
-                                    
+
                             lcol = line.find( ',' )
                             if lcol >= 0:
                                 end_line = int( line[ lcol + 1: ] )
                                 line     = line[ :lcol ].strip()
                             else:
                                 end_line = int( line )
-                                
+
                             source_file.set_bp( int( line ),
                                                 stext[ col + 2: ].strip(),
                                                 bp_type, code, end_line )
         except:
             pass
-            
+
         if fh is not None:
             fh.close()
 

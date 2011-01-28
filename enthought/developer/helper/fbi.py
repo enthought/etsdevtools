@@ -43,7 +43,7 @@ from enthought.traits.ui.api \
 
 from enthought.traits.ui.value_tree \
     import ValueTree
-    
+
 from enthought.traits.ui.tabular_adapter \
     import TabularAdapter
 
@@ -301,13 +301,13 @@ class FBIModule ( HasPrivateTraits ):
 #)
 
 class FBIValueAdapter ( TabularAdapter ):
-    
+
     columns = [ ( 'Name',  'name' ),
                 ( 'Type',  'type' ),
                 ( 'Value', 'str_value' ) ]
-                
+
     type_alignment = Constant( 'center' )
-    
+
 fbi_value_editor = TabularEditor(
     editable   = False,
     adapter    = FBIValueAdapter(),
@@ -426,15 +426,15 @@ class StackFrame ( HasPrivateTraits ):
 #)
 
 class StackFrameAdapter ( TabularAdapter ):
-    
+
     columns = [ ( 'Function',  'function_name' ),
                 ( 'File Name', 'file_name' ),
                 ( 'File Path', 'file_path' ),
                 ( 'Line',      'line' ),
                 ( 'Source',    'source' ) ]
-                
+
     line_alignment = Constant( 'center' )
-    
+
 stack_frame_editor = TabularEditor(
     selected   = 'frame',
     editable   = False,
@@ -727,13 +727,13 @@ dw_table_editor = TableEditor(
 )
 
 #class DWTableAdapter ( TabularAdapter ):
-#    
+#
 #    columns = [ ( 'Object',    'object' ),
 #                ( 'Trait',     'trait' ),
 #                ( 'Condition', 'condition' ) ]
-#                
+#
 #    trait_alignment = Constant( 'center' )
-#    
+#
 #dw_table_editor = TabularEditor(
 #    editable   = False,
 #    adapter    = DWTableAdapter(),
@@ -761,17 +761,17 @@ class FBIBdb ( Bdb ):
         """ This method is called when we stop or break at this line.
         """
         global skip_bp
-        
+
         if skip_bp:
             skip_bp = False
         else:
-            fbi( msg = 'Step', offset = 3, debug_frame = frame, 
+            fbi( msg = 'Step', offset = 3, debug_frame = frame,
                  allow_exception = False )
 
     def user_return ( self, frame, return_value ):
         """ This method is called when a return trap is set here.
         """
-        fbi( msg = 'Return', offset = 3, debug_frame = frame, 
+        fbi( msg = 'Return', offset = 3, debug_frame = frame,
              allow_exception = False )
 
     def user_exception ( self, frame, ( exc_type, exc_value, exc_traceback ) ):
@@ -895,7 +895,7 @@ class FBI ( Handler ):
 
     # Is the FBI being run under an app that has a UI:
     has_ui = Bool( True )
-    
+
     # Is the FBI being run modally:
     is_modal = Bool( True )
 
@@ -932,27 +932,27 @@ class FBI ( Handler ):
     view = View(
                VSplit(
                    HFlow(
-                       TButton( 'step', 
+                       TButton( 'step',
                                 label        = 'Step',
                                 image        = 'fbi_step',
                                 width        = 80,
                                 enabled_when = 'debug_frame is not None' ),
-                       TButton( 'next', 
+                       TButton( 'next',
                                 label        = 'Next',
                                 image        = 'fbi_next',
                                 width        = 80,
                                 enabled_when = 'debug_frame is not None' ),
-                       TButton( 'ret', 
+                       TButton( 'ret',
                                 label        = 'Return',
                                 image        = 'fbi_return',
                                 width        = 80,
                                 enabled_when = 'debug_frame is not None' ),
-                       TButton( 'go', 
+                       TButton( 'go',
                                 label        = 'Go',
                                 image        = 'fbi_go',
                                 width        = 80,
                                 enabled_when = 'debug_frame is not None' ),
-                       TButton( 'quit', 
+                       TButton( 'quit',
                                 label        = 'Quit',
                                 image        = 'fbi_quit',
                                 width        = 80,
@@ -1219,7 +1219,7 @@ class FBI ( Handler ):
         """ Exits the user interface.
         """
         global is_modal
-        
+
         self.debug_frame     = None
         self.frames          = []
         self.local_variables = []
@@ -1247,7 +1247,7 @@ class FBI ( Handler ):
     #  Adds (or replaces) a break point:
     #---------------------------------------------------------------------------
 
-    def add_break_point ( self, file_name, line, bp_type = 'Breakpoint', 
+    def add_break_point ( self, file_name, line, bp_type = 'Breakpoint',
                                 code = '', end_line = None ):
         """ Adds (or replaces) a break point.
         """
@@ -1279,18 +1279,18 @@ class FBI ( Handler ):
             the file.
         """
         file_name = canonic( file_name )
-        
+
         if line is None:
             bps = fbi_bdb.clear_all_file_breaks( file_name, type = type )
         else:
             bps = fbi_bdb.clear_break( file_name, line, type = type )
-            
+
         if len( bps ) > 0:
             self.break_points.remove( *bps )
             lines = set()
             for bp in bps:
                 lines.update( xrange( bp.line, bp.end_line ) )
-                
+
             bp_lines = self.get_module( file_name ).bp_lines
             for line in lines:
                 if not fbi_bdb.get_break( file_name, line ):
@@ -1364,9 +1364,9 @@ def enable_fbi ( enabled = True, gui = True ):
     if enabled:
         sys.excepthook, saved_excepthook = fbi_exception, sys.excepthook
         try:
-            push_exception_handler( handler = lambda a, b, c, d: None, 
-                                    reraise_exceptions = True, 
-                                    main   = True, 
+            push_exception_handler( handler = lambda a, b, c, d: None,
+                                    reraise_exceptions = True,
+                                    main   = True,
                                     locked = True )
         except:
             print 'Could not set Traits notification exception handler'
@@ -1394,7 +1394,7 @@ def fbi_exception ( type, value, traceback, msg = '', gui = None, offset = 0,
     if enabled:
         fbi_enabled    = False
         sys.excepthook = saved_excepthook
-        
+
     if not has_features:
         has_features = True
         try:
@@ -1411,7 +1411,7 @@ def fbi_exception ( type, value, traceback, msg = '', gui = None, offset = 0,
             kind = 'live'
             if is_modal:
                 kind = 'livemodal'
-                
+
             fbi_ui = fbi_object.edit_traits( kind = kind )
         else:
             fbi_object.set( msg         = msg,
@@ -1421,7 +1421,7 @@ def fbi_exception ( type, value, traceback, msg = '', gui = None, offset = 0,
             has_gui = False
     else:
         fbi_object.set( msg = msg, frames = frames, debug_frame = debug_frame )
-        
+
         if is_modal:
             fbi_ui.control.ShowModal()
         else:
@@ -1469,41 +1469,41 @@ def fbi ( msg = '', stop = True, gui = None, monitor = None, remove = False,
         if gui is not None:
             has_gui = gui
         fbi_wiretap.wiretap( monitor, remove )
-        
+
     elif stop:
         if allow_exception:
             args = sys.exc_info()
         else:
             args = ( None, None, None )
-            
+
         fbi_exception( msg         = msg,
                        gui         = gui,
                        offset      = offset,
                        debug_frame = debug_frame,
                        *args )
-                       
+
 #-------------------------------------------------------------------------------
-#  Allows an application to easily set-up and use the FBI debugger:  
+#  Allows an application to easily set-up and use the FBI debugger:
 #-------------------------------------------------------------------------------
-                                              
+
 def use_fbi ( stop = False, restore = True, modal = True ):
     """ Allows an application to easily set-up and use the FBI debugger.
     """
     global fbi_object, skip_bp, is_modal
-    
+
     from enthought.developer.api import file_watch
     from ex_fbi                  import SavedBreakPoints
-    
+
     skip_bp  = (not stop)
     is_modal = modal
-    
+
     def bp_watch ( file_name ):
         SavedBreakPoints().restore()
-    
+
     enable_fbi()
-    file_name = SavedBreakPoints().file_name 
+    file_name = SavedBreakPoints().file_name
     file_watch.watch( bp_watch, file_name )
-    
+
     # Restore persistent break points (if requested):
     if restore:
         fbi_object.break_points.restore()

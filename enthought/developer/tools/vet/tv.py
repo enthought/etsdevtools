@@ -1,13 +1,13 @@
 #------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
-# 
+#
 # This software is provided without warranty under the terms of the BSD
 # license included in enthought/LICENSE.txt and may be redistributed only
 # under the conditions described in the aforementioned license.  The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 # Thanks for using Enthought open source!
-# 
+#
 # Author: David C. Morrill
 # Date: 01/12/2005
 # Description: Traits DB Viewing Tool (TV)
@@ -20,213 +20,213 @@
 from enthought.traits.api \
     import tdb, HasTraits, HasStrictTraits, Instance, Str, CTrait, \
            List
-           
+
 from enthought.traits.ui.api \
     import TreeEditor, TreeNode, View, Item
 
 #-------------------------------------------------------------------------------
-#  'TVPackage' class:  
+#  'TVPackage' class:
 #-------------------------------------------------------------------------------
 
 class TVPackage ( HasStrictTraits ):
-    
+
     #---------------------------------------------------------------------------
-    #  Trait definitions:  
+    #  Trait definitions:
     #---------------------------------------------------------------------------
-    
+
     name    = Str
     package = Str
     items   = List
 
     #---------------------------------------------------------------------------
-    #  Default value implementation:  
+    #  Default value implementation:
     #---------------------------------------------------------------------------
-        
+
     def _items_default ( self ):
         package = self.package
         return ([ TVPackage( package = '%s.%s' % ( package, name ) )
                   for name in tdb.packages( package ) ] +
                 [ TVTrait( fq_name = '%s.%s' % ( package, name ) )
                   for name in tdb.names( package ) ])
-        
+
     def _name_default ( self ):
         return self.package[ self.package.rfind( '.' ) + 1: ]
 
 #-------------------------------------------------------------------------------
-#  'TVPackages' class:  
+#  'TVPackages' class:
 #-------------------------------------------------------------------------------
 
 class TVPackages ( HasStrictTraits ):
-    
+
     #---------------------------------------------------------------------------
-    #  Trait definitions:  
+    #  Trait definitions:
     #---------------------------------------------------------------------------
-    
+
     packages = List( TVPackage )
 
     #---------------------------------------------------------------------------
-    #  Default value implementation:  
+    #  Default value implementation:
     #---------------------------------------------------------------------------
-        
+
     def _packages_default ( self ):
-        return [ TVPackage( package = name ) for name in tdb.packages() ] 
+        return [ TVPackage( package = name ) for name in tdb.packages() ]
 
 #-------------------------------------------------------------------------------
-#  'TVTrait' class:  
+#  'TVTrait' class:
 #-------------------------------------------------------------------------------
 
 class TVTrait ( HasStrictTraits ):
-    
+
     #---------------------------------------------------------------------------
-    #  Trait definitions:  
+    #  Trait definitions:
     #---------------------------------------------------------------------------
-    
+
     name    = Str
-    fq_name = Str    
+    fq_name = Str
     trait   = Instance( CTrait )
-    
+
     #---------------------------------------------------------------------------
-    #  Default value implementations:  
+    #  Default value implementations:
     #---------------------------------------------------------------------------
-        
+
     def _name_default ( self ):
         return self.fq_name[ self.fq_name.rfind( '.' ) + 1: ]
-        
+
     #---------------------------------------------------------------------------
-    #  Event handlers:  
+    #  Event handlers:
     #---------------------------------------------------------------------------
-        
+
     def _fq_name_changed ( self ):
-        self.trait = tdb( self.fq_name ) 
+        self.trait = tdb( self.fq_name )
 
 #-------------------------------------------------------------------------------
-#  'TVCategory' class:  
+#  'TVCategory' class:
 #-------------------------------------------------------------------------------
 
 class TVCategory ( HasStrictTraits ):
-    
+
     #---------------------------------------------------------------------------
-    #  Trait definitions:  
+    #  Trait definitions:
     #---------------------------------------------------------------------------
-        
+
     category = Str               # Name of category
     traits   = List( TVTrait )   # Traits defined in this category
 
     #---------------------------------------------------------------------------
-    #  Default value implementation:  
+    #  Default value implementation:
     #---------------------------------------------------------------------------
-        
+
     def _traits_default ( self ):
-        return [ TVTrait( fq_name = fq_name ) 
+        return [ TVTrait( fq_name = fq_name )
                  for fq_name in tdb.categories( self.category ) ]
-        
+
 #-------------------------------------------------------------------------------
-#  'TVCategories' class:  
+#  'TVCategories' class:
 #-------------------------------------------------------------------------------
 
 class TVCategories ( HasStrictTraits ):
-    
+
     #---------------------------------------------------------------------------
-    #  Trait definitions:  
+    #  Trait definitions:
     #---------------------------------------------------------------------------
-        
+
     categories = List( TVCategory )  # List of all categories
 
     #---------------------------------------------------------------------------
-    #  Default value implementation:  
+    #  Default value implementation:
     #---------------------------------------------------------------------------
-        
+
     def _categories_default ( self ):
-        return [ TVCategory( category = category ) 
+        return [ TVCategory( category = category )
                  for category in tdb.categories() ]
-                                
+
 #-------------------------------------------------------------------------------
-#  'TDBView' class: 
+#  'TDBView' class:
 #-------------------------------------------------------------------------------
 
 class TDBView ( HasStrictTraits ):
-    
+
     #---------------------------------------------------------------------------
-    #  Trait definitions:  
+    #  Trait definitions:
     #---------------------------------------------------------------------------
-        
+
     items = List( [ TVPackages(), TVCategories() ] )
-    
+
 #-------------------------------------------------------------------------------
-#  'TraitTest' class:  
+#  'TraitTest' class:
 #-------------------------------------------------------------------------------
-        
+
 class TraitTest ( HasTraits ):
-    
+
     #---------------------------------------------------------------------------
-    #  Trait definitions:  
+    #  Trait definitions:
     #---------------------------------------------------------------------------
-        
+
     desc = Str
     help = Str
-    
+
     #---------------------------------------------------------------------------
-    #  Traits view definition:  
+    #  Traits view definition:
     #---------------------------------------------------------------------------
-        
-    traits_view = View( [ [ '_', 
+
+    traits_view = View( [ [ '_',
                             Item( 'desc{Description}',
                                   style = 'readonly' ),
                             Item( 'help',
                                   style     = 'readonly',
                                   resizable = True ), '_',
                             '|{Trait Information}' ],
-                          [ '_', 
-                            Item( 'value{Simple}',   style = 'simple'   ), '_', 
-                            Item( 'value{Custom}',   style = 'custom'   ), '_', 
-                            Item( 'value{Text}',     style = 'text'     ), '_', 
+                          [ '_',
+                            Item( 'value{Simple}',   style = 'simple'   ), '_',
+                            Item( 'value{Custom}',   style = 'custom'   ), '_',
+                            Item( 'value{Text}',     style = 'text'     ), '_',
                             Item( 'value{Readonly}', style = 'readonly' ),
                             '|{Trait Editors}' ],
                         '|<>' ],
                         resizable = True )
-    
+
 #-------------------------------------------------------------------------------
-#  'TDB' class:  
+#  'TDB' class:
 #-------------------------------------------------------------------------------
-        
+
 class TDB ( HasStrictTraits ):
-    
+
     #---------------------------------------------------------------------------
-    #  Trait definitions:  
+    #  Trait definitions:
     #---------------------------------------------------------------------------
-        
+
     view = Instance( TDBView, () )
     test = Instance( TraitTest )
-    
+
 #-------------------------------------------------------------------------------
-#  Handles a trait (or other object) being selected:  
+#  Handles a trait (or other object) being selected:
 #-------------------------------------------------------------------------------
-        
+
 def select_trait ( object ):
     """ Handles a trait (or other object) being selected.
     """
     if isinstance( object, TVTrait ):
         trait = object.trait
-        test  = TraitTest( desc = trait.desc or '', 
+        test  = TraitTest( desc = trait.desc or '',
                            help = trait.help or '' )
         test.add_trait( 'value', trait )
         try:
             test.value
             the_tdb.test = test
-            
+
             return
         except:
             pass
-            
+
     the_tdb.test = None
-    
+
 #-------------------------------------------------------------------------------
-#  Define the tree editor:  
+#  Define the tree editor:
 #-------------------------------------------------------------------------------
 
 tdb_editor = TreeEditor(
     editable  = False,
-    on_select = select_trait, 
+    on_select = select_trait,
     nodes     = [
         TreeNode( node_for   = [ TDBView ],
                   children   = 'items',
@@ -256,7 +256,7 @@ tdb_editor = TreeEditor(
                   label      = 'name',
                   icon_group = '<group>',
                   icon_open  = '<open>'
-        ), 
+        ),
         TreeNode( node_for   = [ TVCategories ],
                   auto_open  = True,
                   children   = 'categories',
@@ -283,19 +283,19 @@ tdb_editor = TreeEditor(
         )
     ]
 )
-    
+
 #-------------------------------------------------------------------------------
-#  Run the viewer:  
+#  Run the viewer:
 #-------------------------------------------------------------------------------
 
 the_tdb = TDB()
-the_tdb.configure_traits( view = View( 
-        [ Item( 'view', 
+the_tdb.configure_traits( view = View(
+        [ Item( 'view',
               editor    = tdb_editor,
-              resizable = True ), 
+              resizable = True ),
           Item( 'test',
                 style     = 'custom',
-                resizable = True ), 
+                resizable = True ),
           '-splitter1:=<>' ],
         title     = 'Traits Data Base Viewer',
         id        = 'enthought.traits.vet.tv',

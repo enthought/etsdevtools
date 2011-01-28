@@ -3,10 +3,10 @@
 # Project: docutils
 # Date:    2005-07-29
 # Author:  David Baer
-# 
+#
 # Description:
-# 
-# 
+#
+#
 ###########################################################################
 
 "Template loader agent"
@@ -42,5 +42,5 @@ class TemplateLoader:
                 if len(paths_to_try) == 0:
                     raise
 
-        
+
 

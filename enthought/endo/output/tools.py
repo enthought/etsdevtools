@@ -4,10 +4,10 @@
 # Project: docutils
 # Date:    2005-07-11
 # Author:  David Baer
-# 
+#
 # Description:
 #  Utilities that are useful in generating output
-# 
+#
 ###########################################################################
 
 "Utilities that are useful in generating documentation"
@@ -46,7 +46,7 @@ def format_params(argnames, defaults, context):
     specialargs = [ ]
     args = list(argnames)
     defs = list(defaults)
-    
+
     if (context.kwargs) and (args is not None) and (len(args) >= 1):
         specialargs.append('**<span class=\"param-name\">%s</span>' % args.pop())
     if (context.varargs) and (args is not None) and (len(args) >= 1):
@@ -81,7 +81,7 @@ def fix_indent(docstring):
         return docstring
 
     lines[0] = _INDENT_RE.sub('', lines[0])
-    
+
     indent_amount = [ ]
     for i in range(1, len(lines)):
         # don't count blank lines
@@ -103,10 +103,10 @@ def fix_indent(docstring):
         min_indent = 0
     else:
         min_indent = min(indent_amount)
-    
+
     # 2) Remove this indent.
     lines = [ lines[0] ] + [ line[min_indent:] for line in lines[1:] ]
-    
+
     # 3) Put lines back together.
     docstring = '\n'.join(lines)
 
@@ -168,12 +168,12 @@ def hierarchicalize_modules(module_list):
 
     return result
 
-    
+
 
 def _insert_into(hierarchy, module, level):
     """ Inserts a module into a hierarchy based on comparing the module names
     at *level* of the package hierarchy.
-    
+
     Parameters
     ----------
     hierarchy : list of (DocObject, hierarchy) tuples
@@ -212,7 +212,7 @@ def object_link(obj):
     "return a URL linking to the documentation for obj"
     if not obj.is_concrete():
         return ''
-    
+
     if isinstance(obj, docobjects.Module):
         # modules have their own page
         link = "%s.html" % obj.abs_name
@@ -234,7 +234,7 @@ def class_link(obj):
 
 def unparse(e, context = None, trait_mode = False):
     """Unparse an AST node to text
-    
+
       * e is an AST expression
       * context (optional) is a namespace for resolving (+ linking) identifiers
       * trait_mode is True if resolved identifiers inside strings should be linked
@@ -296,7 +296,7 @@ def unparse(e, context = None, trait_mode = False):
                     c = context
                     while not isinstance(c, docobjects.Module):
                         c = c.parent_module
-                
+
                     target = c.resolve(e.value)
                     if target is not None and target.is_concrete():
                         if isinstance(target, docobjects.Class):
@@ -378,7 +378,7 @@ def unparse(e, context = None, trait_mode = False):
             c = context
             while not isinstance(c, docobjects.Module):
                 c = c.parent_module
-                
+
             target = c.resolve(e.name)
             if target is not None and target.is_concrete():
                 if isinstance(target, docobjects.Class):
@@ -441,4 +441,4 @@ def unparse(e, context = None, trait_mode = False):
         result = '???'
 
     return result
-        
+

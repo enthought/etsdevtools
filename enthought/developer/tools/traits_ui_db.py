@@ -1,19 +1,19 @@
 #-------------------------------------------------------------------------------
-#  
+#
 #  Traits UI DataBase browser
-#  
+#
 #  Written by: David C. Morrill
-#  
+#
 #  Date: 07/14/2006
-#  
+#
 #  (c) Copyright 2006 by David C. Morrill
-#  
+#
 #-------------------------------------------------------------------------------
 
 """ Copyright 2006 by David C. Morrill """
 
 #-------------------------------------------------------------------------------
-#  Imports:  
+#  Imports:
 #-------------------------------------------------------------------------------
 
 import shelve
@@ -27,26 +27,26 @@ from enthought.traits.ui.api \
 
 from enthought.traits.ui.tabular_adapter \
     import TabularAdapter
-    
+
 from enthought.traits.trait_base \
-    import traits_home                             
-    
+    import traits_home
+
 from enthought.developer.api \
     import file_watch, HasPayload
-    
+
 #-------------------------------------------------------------------------------
-#  Returns the name of the traits UI database:  
+#  Returns the name of the traits UI database:
 #-------------------------------------------------------------------------------
-        
+
 def ui_db_name ( ):
     """ Returns the name of the traits UI database.
     """
     return os.path.join( traits_home(), 'traits_ui' )
-    
+
 #-------------------------------------------------------------------------------
-#  Opens the traits UI database:  
+#  Opens the traits UI database:
 #-------------------------------------------------------------------------------
-        
+
 def get_ui_db ( mode = 'r' ):
     """ Opens the traits UI database.
     """
@@ -54,9 +54,9 @@ def get_ui_db ( mode = 'r' ):
         return shelve.open( ui_db_name(), flag = mode, protocol = -1 )
     except:
         return None
-        
+
 #-------------------------------------------------------------------------------
-#  Table editor definition:  
+#  Table editor definition:
 #-------------------------------------------------------------------------------
 
 class TraitsUIDBAdapter ( TabularAdapter ):
@@ -70,20 +70,20 @@ table_editor = TabularEditor(
 )
 
 #-------------------------------------------------------------------------------
-#  'TUIDBRecord' class:  
+#  'TUIDBRecord' class:
 #-------------------------------------------------------------------------------
 
 class TUIDBRecord ( HasPrivateTraits ):
-    
+
     #---------------------------------------------------------------------------
-    #  Trait definitions:  
+    #  Trait definitions:
     #---------------------------------------------------------------------------
-        
+
     # Id of the database entry:
     id = Str
-    
+
     #---------------------------------------------------------------------------
-    #  Deletes the 'id' from the traits UI data base:  
+    #  Deletes the 'id' from the traits UI data base:
     #---------------------------------------------------------------------------
 
     def delete ( self ):
@@ -95,39 +95,39 @@ class TUIDBRecord ( HasPrivateTraits ):
             db.close()
 
 #-------------------------------------------------------------------------------
-#  'TraitsUIDB' class:  
+#  'TraitsUIDB' class:
 #-------------------------------------------------------------------------------
 
 class TraitsUIDB ( HasPrivateTraits ):
-    
+
     #---------------------------------------------------------------------------
-    #  Trait definitions:  
+    #  Trait definitions:
     #---------------------------------------------------------------------------
-     
+
     # The name of the plugin:
     name = Str( 'Traits UI DB' )
-    
+
     # All items currently in the database:
     all_items = List( TUIDBRecord )
-    
+
     # The value associated with the currently selected traits ui db id:
     value = Instance( HasPayload,
                       connect   = 'from: current selected value',
                       draggable = 'Drag current selected value.' )
-    
+
     # The currently selected traits ui db row:
     selected = Any
-    
+
     # The 'Delete selected id' button:
     delete = Button( 'Delete' )
-    
+
     # Has the UI been initialized yet?
     initialized = Bool( False )
-    
+
     #---------------------------------------------------------------------------
-    #  Trait view definitions:  
+    #  Trait view definitions:
     #---------------------------------------------------------------------------
-        
+
     traits_view = View(
         VGroup(
             Item( 'all_items',
@@ -135,9 +135,9 @@ class TraitsUIDB ( HasPrivateTraits ):
                   editor     = table_editor,
                   id         = 'all_items'
             ),
-            HGroup( 
+            HGroup(
                 spring,
-                Item( 'delete', 
+                Item( 'delete',
                       show_label   = False,
                       enabled_when = 'selected is not None'
                 )
@@ -149,19 +149,19 @@ class TraitsUIDB ( HasPrivateTraits ):
         height    = 0.50,
         resizable = True
     )
-                 
+
     #---------------------------------------------------------------------------
-    #  Initializes the object:  
+    #  Initializes the object:
     #---------------------------------------------------------------------------
-    
+
     def __init__ ( self, **traits ):
         super( TraitsUIDB, self ).__init__( **traits )
         self.update_all_items()
-        
+
     #---------------------------------------------------------------------------
-    #  Determines the set of available database keys:  
+    #  Determines the set of available database keys:
     #---------------------------------------------------------------------------
-                
+
     def update_all_items ( self, file_name = None ):
         """ Determines the set of available database keys.
         """
@@ -170,12 +170,12 @@ class TraitsUIDB ( HasPrivateTraits ):
             keys = db.keys()
             db.close()
             keys.sort()
-            self.all_items = [ TUIDBRecord( id = key ) for key in keys ] 
-            
+            self.all_items = [ TUIDBRecord( id = key ) for key in keys ]
+
     #---------------------------------------------------------------------------
     #  Handles the user selecting a data base id from the table:
     #---------------------------------------------------------------------------
-                        
+
     def _selected_changed ( self, record ):
         """ Handles the user selecting a local variable.
         """
@@ -183,7 +183,7 @@ class TraitsUIDB ( HasPrivateTraits ):
         if not self.initialized:
             self.initialized = True
             file_watch.watch( self.update_all_items, ui_db_name() )
-            
+
         if record is not None:
             # Display the contents of the selected data base record:
             db = get_ui_db()
@@ -195,23 +195,23 @@ class TraitsUIDB ( HasPrivateTraits ):
                 db.close()
         else:
             self.value = None
-            
+
     def _delete_changed ( self ):
         """ Handles the 'delete' button being clicked.
         """
         self.all_items.remove( self.selected )
         self.selected = None
-            
+
     #---------------------------------------------------------------------------
-    #  Handles items being deleted from the 'all_items' list:  
+    #  Handles items being deleted from the 'all_items' list:
     #---------------------------------------------------------------------------
-    
+
     def _all_items_items_changed ( self, event ):
         """ Handles items being deleted from the 'all_items' list.
         """
         for record in event.removed:
             record.delete()
-        
+
 #-------------------------------------------------------------------------------
 #  Create export objects:
 #-------------------------------------------------------------------------------

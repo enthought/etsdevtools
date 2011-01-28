@@ -1,5 +1,5 @@
 """
-A traits-aware documentation tool. 
+A traits-aware documentation tool.
 Part of the ETSDevTools project of the Enthought Tool Suite.
 
 :Author: David Baer

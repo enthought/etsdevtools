@@ -2,14 +2,14 @@
 #
 #  Copyright (c) 2005, Enthought, Inc.
 #  All rights reserved.
-#  
+#
 #  This software is provided without warranty under the terms of the BSD
 #  license included in enthought/LICENSE.txt and may be redistributed only
 #  under the conditions described in the aforementioned license.  The license
 #  is also available online at http://www.enthought.com/licenses/BSD.txt
 #  Thanks for using Enthought open source!
-#  
-#  Author: David C. Morrill 
+#
+#  Author: David C. Morrill
 #  Date: 11/30/2004
 #
 #  Description: Envisage plugin definition for the Traits 'View Editing Tool'
@@ -26,10 +26,10 @@ from enthought.envisage.core.runtime.extension \
 
 from enthought_envisage_core_runtime \
     import Preferences
-    
+
 from enthought_envisage_ui \
     import Action, Group, Menu, UIActions, UIViews, View
-    
+
 from enthought_envisage_ui_preference \
     import PreferencePages, Page
 
@@ -60,22 +60,22 @@ preference_pages = PreferencePages(
 
 #--- Menus/Actions -------------------------------------------------------------
 
-file_menu = Menu( 
+file_menu = Menu(
     id     = 'FileMenu',
     label  = 'File',
     path   = '',
-            
+
     groups = [
         Group( name = 'AnExampleGroup' ),
         Group( name = 'AnotherGroup' ),
     ]
 )
 
-sub_menu = Menu( 
+sub_menu = Menu(
     id     = 'SubMenu',
     label  = 'Sub',
     path   = 'FileMenu/AnExampleGroup',
-            
+
     groups = [
         Group( name = 'MainGroup' ),
         Group( name = 'RadioGroup' ),
@@ -175,7 +175,7 @@ plugin = Plugin(
     provider_name = 'Enthought, Inc',
     provider_url  = 'www.enthought.com',
     autostart     = True,
-    
+
     # The name of the class that implements the plugin:
     class_name = 'enthought.traits.vet.VETPlugin',
 
@@ -189,7 +189,7 @@ plugin = Plugin(
     # The extension points offered by this plugin to allow other plugins to
     # contribute to it:
     extension_points = [],
-    
+
     # The contributions that this plugin makes to extension points offered by
     # other plugins:
     #extensions = [ ui_actions, ui_views, preferences, preference_pages ]

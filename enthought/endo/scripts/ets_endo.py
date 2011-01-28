@@ -1,10 +1,10 @@
-""" 
+"""
 Copyright 2008 Enthought, Inc.
 License: BSD Style
 
 This script figures out appropriate subdirectories of specified directories or
-the working directory to document, infers the structure of package names and 
-subdirectories, and runs endo.py, passing all the package info that it found, 
+the working directory to document, infers the structure of package names and
+subdirectories, and runs endo.py, passing all the package info that it found,
 along with any endo arguments passed to it on the command line.
 
 By default, the script simply finds subdirectories of the specified
@@ -33,7 +33,7 @@ def _get_usable_dirs(apath, setup=False):
     """
     # Look for setup.py if setup is True, otherwise look for __init__.py
     file_to_check = setup and 'setup.py' or '__init__.py'
-        
+
     result = [ ]
     stack = [ os.path.abspath(apath) ]
     while len(stack) > 0:
@@ -43,14 +43,14 @@ def _get_usable_dirs(apath, setup=False):
             result.append(top)
 
         # check sub directories
-        dirs = [ os.path.join(top, d) for d in os.listdir(top) 
+        dirs = [ os.path.join(top, d) for d in os.listdir(top)
                  if os.path.isdir(os.path.join(top, d)) ]
         stack.extend(dirs)
     return result
 
 def _get_project_packages(apath):
     """ Returns a list of package names referenced by ``setup.py`` in *apath*.
-    
+
     The list includes the packages referenced by the 'packages' and
     'namespace_packages' parameters of setup().
     """
@@ -68,7 +68,7 @@ def _get_project_packages(apath):
             f.close()
         except Exception, e:
             raise ETSEndoException('An error occurred while reading %s.\n The exception was: %s' % (setup_file, str(e)))
-        
+
         try:
             # Distutils expects setup.py to be run from where it lives
             oldwd = os.getcwd()
@@ -82,7 +82,7 @@ def _get_project_packages(apath):
         #    packages.extend(kwds['namespace_packages'])
         if 'packages' in kwds:
             packages.extend(kwds['packages'])
-            
+
     return packages
 
 def _safe_setup_execution(setup):
@@ -139,8 +139,8 @@ def _safe_setup_execution(setup):
         info = {}
 
     return info
-    
-    
+
+
 def main():
     """ Entry point for the installed script.
     """
@@ -157,10 +157,10 @@ def main():
     add_endo_options(parser)
     group = optparse.OptionGroup(parser, "%prog-specific Options", "Not passed through to endo")
     group.add_option("-j", "--project", dest="project_list", action="append",
-                     metavar="PATH", default=[], 
+                     metavar="PATH", default=[],
                      help="Root of Setuptools-based project located at PATH")
     group.add_option("-t", "--use-setup", dest="use_setup", action="store_true",
-                     default=False, 
+                     default=False,
                      help="Look for Setuptools-based projects")
     parser.add_option_group(group)
     options, args = parser.parse_args()
@@ -168,7 +168,7 @@ def main():
         pathlist = [ os.getcwd() ]
     else:
         pathlist = [ os.path.abspath(arg) for arg in args ]
-    
+
     if options.project_list != []:
         packages = []
         for proj in options.project_list:
@@ -192,7 +192,7 @@ def main():
                         ropts.append('-r%s=%s' % (pkg, os.path.join(adir, pkg.replace('.', os.sep))))
             else:
                 ropts.extend( ['-r%s' % pdir for pdir in usable_dirs ] )
-                
+
     endo_args = []
     skip = False
     for arg in sys.argv[1:]: # Remove options endo doesn't understand

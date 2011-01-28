@@ -1,13 +1,13 @@
 #-------------------------------------------------------------------------------
-#  
+#
 #  Python source file syntax checker plugin.
-#  
+#
 #  Written by: David C. Morrill
-#  
+#
 #  Date: 07/08/2006
-#  
+#
 #  (c) Copyright 2006 by David C. Morrill
-#  
+#
 #-------------------------------------------------------------------------------
 
 #-------------------------------------------------------------------------------
@@ -19,92 +19,92 @@ from exceptions \
 
 from os.path \
     import exists
-    
+
 from enthought.traits.api \
     import File, Int, Str, Bool, false, Button
-    
+
 from enthought.traits.ui.api \
     import View, VGroup, HGroup, Item, CodeEditor, spring
-    
+
 from enthought.pyface.timer.api \
     import do_after
-    
+
 from enthought.developer.features.api \
     import DropFile
-    
+
 from enthought.developer.api \
     import Saveable, read_file, file_watch
-     
+
 from enthought.developer.helper.themes \
     import TTitle
-    
+
 #-------------------------------------------------------------------------------
 #  'SyntaxChecker' class:
 #-------------------------------------------------------------------------------
 
 class SyntaxChecker ( Saveable ):
-    
+
     #---------------------------------------------------------------------------
-    #  Trait definitions:  
+    #  Trait definitions:
     #---------------------------------------------------------------------------
 
     # The name of the plugin:
     name = Str( 'Syntax Checker' )
-    
+
     # The persistence id for this object:
     id = Str( 'enthought.developer.tools.syntax_checker.state',
               save_state_id = True )
-    
+
     # Should the syntax checker automatically go to the current syntax error?
     auto_goto = Bool( False, save_state = True )
-    
+
     # Should a changed file be automatically reloaded:
     auto_load = Bool( True, save_state = True )
-    
+
     # The name of the file currently being syntax checked:
     file_name = File( drop_file = DropFile( extensions = [ '.py' ],
                                     draggable = True,
                                     tooltip   = 'Drop a Python source file to '
                                           'syntax check it.\nDrag this file.' ),
                       connect   = 'to' )
-    
+
     # The current source code being syntax checked:
     source = Str
-    
+
     # The current syntax error message:
     error = Str
-    
+
     # Current error line:
     error_line = Int
-    
+
     # Current error column:
     error_column = Int
-    
+
     # Current editor line:
     line = Int
-    
+
     # Current editor column:
     column = Int
-    
+
     # 'Go to' button:
     go_to = Button( 'Go To' )
-    
+
     # Can the current file be saved?
     can_save = false
-    
+
     #---------------------------------------------------------------------------
-    #  Traits view definitions:  
+    #  Traits view definitions:
     #---------------------------------------------------------------------------
 
     traits_view = View(
         VGroup(
-            TTitle( 'file_name' ), 
+            TTitle( 'file_name' ),
             Item( 'source@',
                   editor = CodeEditor( selected_line = 'line' ) ),
             TTitle( 'error' ),
             HGroup(
                 spring,
-                Item( 'go_to', 
+                Item( 'go_to',
                       show_label   = False,
                       enabled_when = '(error_line > 0) and (not auto_goto)' ),
             ),
@@ -112,7 +112,7 @@ class SyntaxChecker ( Saveable ):
         ),
         title = 'Syntax Checker'
     )
-    
+
     options = View(
         VGroup(
             Item( 'auto_goto',
@@ -127,9 +127,9 @@ class SyntaxChecker ( Saveable ):
         id      = 'enthought.developer.tools.syntax_checker.options',
         buttons = [ 'OK', 'Cancel' ]
     )
-        
+
     #---------------------------------------------------------------------------
-    #  Handles the 'auto_goto' trait being changed:  
+    #  Handles the 'auto_goto' trait being changed:
     #---------------------------------------------------------------------------
 
     def _auto_goto_changed ( self, auto_goto ):
@@ -137,9 +137,9 @@ class SyntaxChecker ( Saveable ):
         """
         if auto_goto and (self.error_line > 0):
             self._go_to_changed()
-    
+
     #---------------------------------------------------------------------------
-    #  Handles the 'Go To' button being clicked:  
+    #  Handles the 'Go To' button being clicked:
     #---------------------------------------------------------------------------
 
     def _go_to_changed ( self ):
@@ -147,9 +147,9 @@ class SyntaxChecker ( Saveable ):
         """
         self.line   = self.error_line
         self.column = self.error_column
-    
+
     #---------------------------------------------------------------------------
-    #  Handles the 'file_name' trait being changed:  
+    #  Handles the 'file_name' trait being changed:
     #---------------------------------------------------------------------------
 
     def _file_name_changed ( self, old_name, new_name ):
@@ -158,9 +158,9 @@ class SyntaxChecker ( Saveable ):
         self._set_listener( old_name, True )
         self._set_listener( new_name, False )
         self._load_file_name( new_name )
-        
+
     #---------------------------------------------------------------------------
-    #  Handles the 'source' trait being changed:  
+    #  Handles the 'source' trait being changed:
     #---------------------------------------------------------------------------
 
     def _source_changed ( self, source ):
@@ -172,9 +172,9 @@ class SyntaxChecker ( Saveable ):
                 do_after( 750, self._syntax_check )
             else:
                 self._syntax_check()
-            
+
     #---------------------------------------------------------------------------
-    #  Handles the current file being updated:  
+    #  Handles the current file being updated:
     #---------------------------------------------------------------------------
 
     def _file_changed ( self, file_name ):
@@ -182,9 +182,9 @@ class SyntaxChecker ( Saveable ):
         """
         if self.auto_load:
             self._load_file_name( file_name )
-                
+
     #---------------------------------------------------------------------------
-    #  Sets up/Removes a file watch on a specified file:  
+    #  Sets up/Removes a file watch on a specified file:
     #---------------------------------------------------------------------------
 
     def _set_listener ( self, file_name, remove ):
@@ -192,7 +192,7 @@ class SyntaxChecker ( Saveable ):
         """
         if exists( file_name ):
             file_watch.watch( self._file_changed, file_name, remove = remove )
-    
+
     #---------------------------------------------------------------------------
     #  Loads a specified source file:
     #---------------------------------------------------------------------------
@@ -210,9 +210,9 @@ class SyntaxChecker ( Saveable ):
         self.source = source
         self._dont_update = False
         self.needs_save   = False
-            
+
     #---------------------------------------------------------------------------
-    #  Checks the current source for syntax errors:  
+    #  Checks the current source for syntax errors:
     #---------------------------------------------------------------------------
 
     def _syntax_check ( self ):
@@ -226,13 +226,13 @@ class SyntaxChecker ( Saveable ):
         except SyntaxError, excp:
             self.error_line   = excp.lineno
             self.error_column = excp.offset + 1
-            self.error        = '%s on line %d, column %d' % ( 
+            self.error        = '%s on line %d, column %d' % (
                                 excp.msg, excp.lineno, self.error_column )
             if self.auto_goto:
                 self._go_to_changed()
-            
+
     #---------------------------------------------------------------------------
-    #  Saves the current source back to the associated file:  
+    #  Saves the current source back to the associated file:
     #---------------------------------------------------------------------------
 
     def save ( self ):
@@ -250,7 +250,7 @@ class SyntaxChecker ( Saveable ):
                     fh.close()
                 except:
                     pass
-    
+
 #-------------------------------------------------------------------------------
 #  Create exported objects:
 #-------------------------------------------------------------------------------

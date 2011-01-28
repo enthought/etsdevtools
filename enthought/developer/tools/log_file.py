@@ -1,6 +1,6 @@
 #-------------------------------------------------------------------------------
 #
-#  Display log messages gleaned from a log file plugin. 
+#  Display log messages gleaned from a log file plugin.
 #
 #  Written by: David C. Morrill
 #
@@ -21,10 +21,10 @@ import wx
 
 from threading \
     import Thread
-    
+
 from time \
     import sleep
-    
+
 from enthought.traits.api \
     import HasPrivateTraits, Any, Enum, Instance, List, Range, Str, File, \
            Delegate, Button
@@ -34,13 +34,13 @@ from enthought.traits.ui.api \
 
 from enthought.traits.ui.table_column \
     import ObjectColumn
-    
+
 from enthought.traits.ui.table_filter \
     import TableFilter
-    
+
 from enthought.developer.features.api \
     import DropFile
-    
+
 #-------------------------------------------------------------------------------
 #  Constants:
 #-------------------------------------------------------------------------------
@@ -59,8 +59,8 @@ LogType = Enum( 'Debug', 'Info', 'Warning', 'Error', 'Critical' )
 #-------------------------------------------------------------------------------
 
 extra_view = View(
-    Item( 'extra', 
-          style      = 'readonly', 
+    Item( 'extra',
+          style      = 'readonly',
           show_label = False,
           editor     = CodeEditor()
     ),
@@ -94,13 +94,13 @@ text_color_map = {
 }
 
 class TypeColumn ( ObjectColumn ):
-    
+
     def get_cell_color ( self, object ):
         return cell_color_map[ object.type ]
-    
+
     def get_text_color ( self, object ):
         return text_color_map[ object.type ]
-        
+
 log_file_table_editor = TableEditor(
     columns = [ TypeColumn(   name = 'type', width = 0.10,
                               horizontal_alignment = 'center' ),
@@ -117,8 +117,8 @@ log_file_table_editor = TableEditor(
     filter_name         = 'log_filter',
     selection_bg_color  = 0xFBD391,
     selection_color     = 'black',
-)        
-              
+)
+
 #-------------------------------------------------------------------------------
 #  'LogFilter' class:
 #-------------------------------------------------------------------------------
@@ -136,35 +136,35 @@ class LogFilter ( TableFilter ):
 
     # The current logging level:
     logging_level = LogType
-    
+
     #-- TableFilter Method Overrides -------------------------------------------
-    
+
     def filter ( self, object ):
         """ Returns whether a specified object meets the filter criteria.
         """
         return (log_level[ object.type ] >= log_level[ self.logging_level ])
-        
+
 #-------------------------------------------------------------------------------
 #  'LogRecord' class:
 #-------------------------------------------------------------------------------
 
 class LogRecord ( HasPrivateTraits ):
-    
+
     # The type of the log record:
     type = LogType
-    
+
     # The data on which the log record was created:
     date = Str
-    
+
     # The time at which the log record was created:
     time = Str
-    
+
     # The information associated with the log record:
     info = Str
-    
+
     # The extra (expanded) information associated with the log record:
     extra = Str
-    
+
 #-------------------------------------------------------------------------------
 #  'LogFile' class:
 #-------------------------------------------------------------------------------
@@ -177,11 +177,11 @@ class LogFile ( HasPrivateTraits ):
 
     # The name of the plugin:
     name = Str( 'LogFile', transient = True )
-    
+
     # The persistence id for this object:
-    id = Str( 'enthought.developer.tools.log_file.state', 
+    id = Str( 'enthought.developer.tools.log_file.state',
               save_state_id = True, transient = True )
-    
+
     # The name of the log file being processed:
     file_name = File( drop_file = DropFile( extensions = [ '.log' ],
                                       tooltip = 'Drop a log file to display.' ),
@@ -189,21 +189,21 @@ class LogFile ( HasPrivateTraits ):
 
     # The current logging level being displayed:
     logging_level = Delegate( 'log_filter', modify = True )
-    
+
     # Maximum number of log messages displayed:
     max_records = Range( 1, 10000, 10000, save_state = True )
-    
+
     # The log record filter:
     log_filter = Instance( LogFilter, (), save_state = True )
 
     # The current set of log records:
     log_records = List( LogRecord, transient = True )
-    
+
     # Button used to clear all current log records:
     clear = Button( 'Clear' )
-    
+
     #-- Private Traits ---------------------------------------------------------
-    
+
     _lines = Any( [] )
 
     #---------------------------------------------------------------------------
@@ -239,27 +239,27 @@ class LogFile ( HasPrivateTraits ):
     )
 
     #-- 'object' Method Overrides ----------------------------------------------
-    
+
     def __init__ ( self, **traits ):
         """ Initializes the object and starts the background log processing
             thread running.
         """
         self._start_thread()
-        
+
         super( LogFile, self).__init__( **traits )
 
     #-- HasTraits Method Overrides ---------------------------------------------
-    
+
     def copyable_trait_names ( self, **metadata ):
         """ Returns the list of trait names to copy or clone by default.
         """
         return [ 'log_filter', 'max_records' ]
-        
+
     #-- Trait Event Handlers ---------------------------------------------------
-    
+
     def _clear_changed ( self ):
         self.log_records = []
-    
+
     #-- Private Methods --------------------------------------------------------
 
     def _start_thread ( self ):
@@ -268,7 +268,7 @@ class LogFile ( HasPrivateTraits ):
         thread = Thread( target = self._process_log )
         thread.setDaemon( True )
         thread.start()
-        
+
     def _process_log ( self ):
         """ Processes the current log file.
         """
@@ -277,13 +277,13 @@ class LogFile ( HasPrivateTraits ):
         while True:
             if file_name != self.file_name:
                 file_name = self.file_name
-                
+
                 try:
                     if fh is not None:
                         fh.close()
                 except:
                     pass
-                    
+
                 fh   = None
                 data = ''
                 self.log_records = []
@@ -291,34 +291,34 @@ class LogFile ( HasPrivateTraits ):
                     fh = open( file_name, 'rb' )
                 except:
                     pass
-                    
+
             if fh is not None:
                 new_data = fh.read()
                 if new_data == '':
                     continue
-                    
+
                 data += new_data
                 col   = data.rfind( '\n' )
                 if col < 0:
                     continue
-                    
+
                 self._lines.extend( data[ : col ].split( '\n' ) )
                 data = data[ col + 1: ].lstrip()
-                
+
                 records = []
                 while True:
                     record = self._next_record()
                     if record is None:
                         break
-                        
+
                     records.insert( 0, record )
-                        
+
                 if len( records ) > 0:
                     self.log_records = \
                         (records + self.log_records)[ : self.max_records ]
-                
+
             sleep( 1 )
-            
+
     def _next_record ( self ):
         """ Returns the next LogRecord or None if no complete log record is
             found.
@@ -326,7 +326,7 @@ class LogFile ( HasPrivateTraits ):
         lines = self._lines
         if len( lines ) == 0:
             return None
-            
+
         type, date_time, info = lines[0].split( '|', 2 )
         type       = type.capitalize()
         date, time = date_time.split()
@@ -341,7 +341,7 @@ class LogFile ( HasPrivateTraits ):
                 break
         else:
             return None
-            
+
         return LogRecord( type  = type, date = date, time = time, info = info,
                           extra = extra )
 
@@ -366,16 +366,16 @@ view = LogFile()
 
 if __name__ == '__main__':
     import sys
-    
+
     if len( sys.argv ) >= 3:
         print 'Usage is: log_file log_file_name'
         sys.exit(1)
-        
+
     file_name = ('C:\\Documents and Settings\\dmorrill\\Application Data\\'
                  'Enthought\\enthought.vms\\ets.log')
     if len( sys.argv ) >= 2:
         file_name = sys.argv[1]
-        
+
     view.file_name = file_name
     view.configure_traits( filename = 'log_file.cfg' )
-    
+

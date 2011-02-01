@@ -43,17 +43,14 @@ import setuptools
 import numpy
 
 
-# FIXME: This works around a setuptools bug which gets setup_data.py metadata
-# from incorrect packages. Ticket #1592
-#from setup_data import INFO
+# This works around a setuptools bug which gets setup_data.py metadata
+# from incorrect packages.
 setup_data = dict(__name__='', __file__='setup_data.py')
 execfile('setup_data.py', setup_data)
 INFO = setup_data['INFO']
 
-
 # Pull the description values for the setup keywords from our file docstring.
 DOCLINES = __doc__.split("\n")
-
 
 # Configure python extensions
 def configuration(parent_package='', top_path=None):

@@ -106,6 +106,7 @@ numpy.distutils.core.setup(
             ]
         },
     include_package_data = True,
+    package_data = {'enthought': ['endo/data/*.*']},
     install_requires = INFO['install_requires'],
     license = 'BSD',
     long_description = '\n'.join(DOCLINES[3:]),

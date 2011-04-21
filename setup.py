@@ -18,9 +18,6 @@ inspecting code.
   code. It extracts not only docstrings, but also plain comments that
   immediately precede variable assignments (both module-scope variables and
   class attributes).
-- **enthought.testing**: Scripts related to running unit tests, based on
-  testoob, and also allowing running test suites in separate processes and
-  aggregating the results.
 - **enthought.debug**: A collection of debugging tools, not to be included in
   production code. NOTE: These tools are functional, but are not being
   developed or supported. They have been mainly superceded by the tools

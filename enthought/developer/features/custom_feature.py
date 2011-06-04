@@ -23,16 +23,16 @@
 #  Imports:
 #-------------------------------------------------------------------------------
 
-from enthought.traits.api \
+from traits.api \
     import HasTraits, HasPrivateTraits, Property, Instance, Str, true
 
-from enthought.traits.ui.api \
+from traitsui.api \
     import View
 
-from enthought.pyface.dock.api \
+from pyface.dock.api \
     import DockWindowFeature
 
-from enthought.pyface.image_resource \
+from pyface.image_resource \
     import ImageResource
 
 #-------------------------------------------------------------------------------

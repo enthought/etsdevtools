@@ -5,21 +5,21 @@ of the ListCanvasEditor.
 
 #-- Imports --------------------------------------------------------------------
 
-from enthought.traits.api \
+from traits.api \
     import HasTraits, HasPrivateTraits, File, Constant, Int, Str, Property, \
            Instance, List, Tuple, Bool, Any, Range, Enum, implements, \
            cached_property, on_trait_change
 
-from enthought.traits.ui.api \
+from traitsui.api \
     import View, Item, ListEditor, ValueEditor, TabularEditor
 
-from enthought.traits.ui.ui_traits \
+from traitsui.ui_traits \
     import ATheme
 
-from enthought.traits.ui.theme \
+from traitsui.theme \
     import Theme
 
-from enthought.traits.ui.tabular_adapter \
+from traitsui.tabular_adapter \
     import TabularAdapter
 
 from enthought.developer.editors.list_canvas_editor \

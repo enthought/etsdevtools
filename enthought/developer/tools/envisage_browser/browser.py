@@ -16,20 +16,20 @@
 #  Imports:
 #-------------------------------------------------------------------------------
 
-from enthought.traits.api \
+from traits.api \
     import HasTraits, Str, Instance, List, Enum, Property, Any, File
 
-from enthought.traits.ui.api \
+from traitsui.api \
     import View, Tabbed, HSplit, VSplit, VGroup, HGroup, Item, TreeEditor, \
            EnumEditor, TableEditor, InstanceEditor, UIInfo, Handler
 
-from enthought.traits.ui.tree_node \
+from traitsui.tree_node \
     import TreeNode
 
-from enthought.traits.ui.table_column \
+from traitsui.table_column \
     import ObjectColumn
 
-from enthought.traits.ui.menu \
+from traitsui.menu \
     import NoButtons
 
 from enthought.developer.features.api \

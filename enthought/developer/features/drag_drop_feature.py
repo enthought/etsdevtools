@@ -27,13 +27,13 @@
 #  Imports:
 #-------------------------------------------------------------------------------
 
-from enthought.traits.api \
+from traits.api \
     import HasStrictTraits, HasTraits, List, Str
 
-from enthought.pyface.dock.api \
+from pyface.dock.api \
     import DockWindowFeature
 
-from enthought.pyface.image_resource \
+from pyface.image_resource \
     import ImageResource
 
 #-------------------------------------------------------------------------------

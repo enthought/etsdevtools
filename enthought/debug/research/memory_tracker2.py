@@ -1,7 +1,7 @@
 import gc
 import weakref
 
-from enthought.traits.api import HasTraits, Int, Str, Any, List, Dict
+from traits.api import HasTraits, Int, Str, Any, List, Dict
 
 class TrackedClassObject(HasTraits):
 

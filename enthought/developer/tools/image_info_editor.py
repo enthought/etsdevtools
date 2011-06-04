@@ -19,7 +19,7 @@
 #  Imports:
 #-------------------------------------------------------------------------------
 
-from enthought.traits.ui.api \
+from traitsui.api \
     import View, HGroup, VGroup, HSplit, Item, Label, Theme, ListStrEditor
 
 from enthought.developer.helper.image_library_editor \

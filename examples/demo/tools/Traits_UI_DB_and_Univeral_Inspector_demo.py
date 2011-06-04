@@ -52,10 +52,10 @@ In order for this demo to run, you must have the enthought.developer package
 installed.
 """
 
-from enthought.traits.api \
+from traits.api \
     import HasTraits, Instance
 
-from enthought.traits.ui.api \
+from traitsui.api \
     import View, HSplit, Item
 
 from enthought.developer.tools.traits_ui_db \
@@ -81,7 +81,7 @@ class UIDBTool ( HasTraits ):
             id          = 'splitter',
             show_labels = False
         ),
-        id        = 'enthought.traits.ui.demo.tools.Traits_UI_DB_and_'
+        id        = 'traitsui.demo.tools.Traits_UI_DB_and_'
                     'Universal_Inspector_demo',
         width     = 0.75,
         height    = 0.50,

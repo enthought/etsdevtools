@@ -23,20 +23,20 @@ import sys
 from os.path \
     import basename, dirname
 
-from enthought.traits.api \
+from traits.api \
     import HasPrivateTraits, Any, Constant, File, Int, List, Code, Instance, \
            Str, Property
 
-from enthought.traits.ui.api \
+from traitsui.api \
     import View, VGroup, HGroup, Item, TableEditor
 
-from enthought.traits.ui.table_column \
+from traitsui.table_column \
     import ObjectColumn
 
-from enthought.util.wx.clipboard \
+from traits.util.wx.clipboard \
     import clipboard
 
-from enthought.pyface.image_resource \
+from pyface.image_resource \
     import ImageResource
 
 from enthought.developer.features.api \

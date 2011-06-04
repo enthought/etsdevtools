@@ -17,19 +17,19 @@
 #  Imports:
 #-------------------------------------------------------------------------------
 
-from enthought.traits.ui.api \
+from traitsui.api \
     import View, VGroup, Item
 
-from enthought.traits.ui.api \
+from traitsui.api \
     import Theme
 
-from enthought.traits.ui.basic_editor_factory \
+from traitsui.basic_editor_factory \
     import BasicEditorFactory
 
-from enthought.traits.ui.wx.ui_editor \
+from traitsui.wx.ui_editor \
     import UIEditor
 
-from enthought.traits.ui.wx.themed_slider_editor \
+from traitsui.wx.themed_slider_editor \
     import ThemedSliderEditor
 
 #-------------------------------------------------------------------------------

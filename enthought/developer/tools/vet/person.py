@@ -16,9 +16,9 @@
 #  Imports:
 #-------------------------------------------------------------------------------
 
-from enthought.traits.api import HasStrictTraits, Trait, Font, Color, \
+from traits.api import HasStrictTraits, Trait, Font, Color, \
                                 Str, Range, List, Instance, RGBColor
-from enthought.traits.ui.api import CodeEditor, View
+from traitsui.api import CodeEditor, View
 
 #-------------------------------------------------------------------------------
 #  'Person' class:

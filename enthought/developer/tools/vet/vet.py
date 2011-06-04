@@ -23,7 +23,7 @@ import sys
 import cPickle
 import shelve
 import copy
-import enthought.traits.ui
+import traitsui
 
 from os \
     import popen4, environ
@@ -34,20 +34,20 @@ from os.path \
 from threading \
     import Thread
 
-from enthought.traits.api \
+from traits.api \
     import HasTraits, HasStrictTraits, HasPrivateTraits, \
            Str, List, Instance, Event, Any, true, false, Regex, Code
 
-from enthought.traits.ui.api \
+from traitsui.api \
     import View, Group, Item, UIInfo, TreeEditor, TreeNode, \
            EnumEditor, Handler, EditorFactory, TextEditor, HSplit, \
            VSplit, message
 
-from enthought.traits.ui.menu \
+from traitsui.menu \
     import MenuBar, Menu, Action, CloseAction, UndoAction, RedoAction, \
            Separator, OKCancelButtons
 
-from enthought.traits.trait_base \
+from traits.trait_base \
     import traits_home
 
 from class_browser \
@@ -109,8 +109,8 @@ export_template = """
 #  Imports:
 #-------------------------------------------------------------------------------
 
-from enthought.traits.ui.api      import Handler, View, Group, Item
-from enthought.traits.ui.menu import MenuBar, Menu, Action, Separator
+from traitsui.api      import Handler, View, Group, Item
+from traitsui.menu import MenuBar, Menu, Action, Separator
 %(imports)s%(functions)s
 #-------------------------------------------------------------------------------
 #  '%(class)s' class:
@@ -1207,7 +1207,7 @@ class VETEditorX ( VETEditor ):
     #  Trait definitions:
     #---------------------------------------------------------------------------
 
-    package = Str( 'enthought.traits.ui' )
+    package = Str( 'traitsui' )
 
     #---------------------------------------------------------------------------
     #  Event handlers:
@@ -1215,7 +1215,7 @@ class VETEditorX ( VETEditor ):
 
     def _tag_changed ( self, tag ):
         self.class_name = tag + 'Editor'
-        self.editor     = getattr( enthought.traits.ui, self.class_name )()
+        self.editor     = getattr( traitsui, self.class_name )()
 
 #-------------------------------------------------------------------------------
 #  'Editors' class:
@@ -1702,7 +1702,7 @@ class EditHandler ( Handler ):
             parent = info.ui.control,
             view   = View(
                 [ Item( 'code', style = 'custom', resizable = True ), '|<>' ],
-                id        = 'enthought.traits.vet.view_source',
+                id        = 'traits.vet.view_source',
                 title     = 'Source Code [View Editing Tool]',
                 handler   = VETViewHandler( action = self.closed_source_view ),
                 resizable = True,
@@ -1742,7 +1742,7 @@ class EditHandler ( Handler ):
                               '|<>' ],
                 title     = 'Class Browser [View Editing Tool]',
                 handler   = VETViewHandler( action = self.closed_classes_view ),
-                id        = 'enthought.traits.vet.view_classes',
+                id        = 'traits.vet.view_classes',
                 resizable = True,
                 width     = .2,
                 height    = .3 ) )
@@ -1862,7 +1862,7 @@ class EditHandler ( Handler ):
     def copy_to_clipboard ( self, info ):
         """ Copies the current View source code to the clipboard.
         """
-        from enthought.util.wx.clipboard import clipboard
+        from traits.util.wx.clipboard import clipboard
 
         clipboard.data = self.format( info )
 
@@ -2478,7 +2478,7 @@ vet_view = View(
         show_labels = False
     ),
     menubar   = vet_menubar,
-    id        = 'enthought.traits.vet.vet',
+    id        = 'traits.vet.vet',
     dock      = 'tab',
     title     = 'View Editing Tool',
     resizable = True,

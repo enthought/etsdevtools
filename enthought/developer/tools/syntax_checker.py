@@ -20,13 +20,13 @@ from exceptions \
 from os.path \
     import exists
 
-from enthought.traits.api \
+from traits.api \
     import File, Int, Str, Bool, false, Button
 
-from enthought.traits.ui.api \
+from traitsui.api \
     import View, VGroup, HGroup, Item, CodeEditor, spring
 
-from enthought.pyface.timer.api \
+from pyface.timer.api \
     import do_after
 
 from enthought.developer.features.api \

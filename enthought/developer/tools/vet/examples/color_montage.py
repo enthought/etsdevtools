@@ -18,9 +18,9 @@
 #  Imports:
 #-------------------------------------------------------------------------------
 
-from enthought.traits.ui.api import Handler, View, Group, Item, RGBColorEditor
-from enthought.traits.ui.menu import MenuBar, Menu, Action, Separator
-import enthought.traits.ui
+from traitsui.api import Handler, View, Group, Item, RGBColorEditor
+from traitsui.menu import MenuBar, Menu, Action, Separator
+import traitsui
 
 #-------------------------------------------------------------------------------
 #  'ColorMontage' class:
@@ -35,7 +35,7 @@ class ColorMontage ( Handler ):
     def object_rgba_color_changed ( self, info ):
         """ Handles the object's 'rgba_color' trait changing value.
         """
-        from enthought.util.wx.clipboard import clipboard
+        from traits.util.wx.clipboard import clipboard
         c = info.object.rgba_color_
         clipboard.data = '0x%02X%02X%02X%02X' % (
             255 - int( 255 * c[3] ),
@@ -84,7 +84,7 @@ class ColorMontage ( Handler ):
             show_labels = False
         ),
         title   = 'Color Montage',
-        id      = 'enthought.traits.vet.examples.color_montage',
+        id      = 'traits.vet.examples.color_montage',
         buttons = [ 'Undo', 'OK', 'Cancel' ]
     )
 
@@ -93,7 +93,7 @@ class ColorMontage ( Handler ):
 #-------------------------------------------------------------------------------
 
 if __name__ == '__main__':
-    import enthought.traits.vet.person
+    import traits.vet.person
     ColorMontage().configure_traits( context = {
-        'object': enthought.traits.vet.person.Person(),
+        'object': traits.vet.person.Person(),
     } )

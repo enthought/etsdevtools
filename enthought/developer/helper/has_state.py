@@ -20,10 +20,10 @@ import shelve
 from os.path \
     import join
 
-from enthought.traits.api \
+from traits.api \
     import HasPrivateTraits, Str
 
-from enthought.traits.trait_base \
+from traits.trait_base \
     import traits_home
 
 #-------------------------------------------------------------------------------

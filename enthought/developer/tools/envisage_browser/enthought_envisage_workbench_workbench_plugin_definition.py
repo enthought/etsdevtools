@@ -1,7 +1,7 @@
 #-------------------------------------------------------------------------------
 #
 #  Extension point adapters for ExtensionPoint subclasses defined in:
-#  - enthought.envisage.workbench.workbench_plugin_definition.py
+#  - envisage.workbench.workbench_plugin_definition.py
 #
 #  Written by: David C. Morrill
 #
@@ -15,7 +15,7 @@
 #  Imports:
 #-------------------------------------------------------------------------------
 
-from enthought.traits.ui.api \
+from traitsui.api \
     import VGroup, HGroup, Item
 
 from enthought.developer.tools.envisage_browser.object_adapter \

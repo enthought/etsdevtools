@@ -16,10 +16,10 @@
 #  Imports:
 #-------------------------------------------------------------------------------
 
-from enthought.traits.api \
+from traits.api \
     import Trait, TraitType, TraitHandler, TraitError
 
-from enthought.traits.ui.value_tree \
+from traitsui.value_tree \
     import SingleValueTreeNodeObject, TraitsNode
 
 #-------------------------------------------------------------------------------

@@ -14,7 +14,7 @@
 #  Imports:
 #-------------------------------------------------------------------------------
 
-from enthought.envisage.core.core_plugin_definition \
+from envisage.core.core_plugin_definition \
     import PluginDefinition
 
 #-------------------------------------------------------------------------------
@@ -38,7 +38,7 @@ PluginDefinition(
 
     # The Id's of the plugins that this plugin requires:
     requires = [
-        'enthought.envisage.core',
+        'envisage.core',
     ]
 )
 

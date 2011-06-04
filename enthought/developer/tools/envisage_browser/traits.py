@@ -17,7 +17,7 @@
 from os \
     import access, R_OK
 
-from enthought.traits.api \
+from traits.api \
     import TraitHandler, TraitFactory
 
 #-------------------------------------------------------------------------------
@@ -60,7 +60,7 @@ class TraitTextFile ( TraitHandler ):
         return 'a file name with read access'
 
     def get_editor ( self, trait ):
-        from enthought.traits.ui.api import FileEditor
+        from traitsui.api import FileEditor
         return FileEditor()
 
 # Create a resusable instance:

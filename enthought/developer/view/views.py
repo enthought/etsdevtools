@@ -10,8 +10,8 @@
 #
 #-------------------------------------------------------------------------------
 # Imports
-from enthought.pyface.workbench.api import TraitsUIView
-from enthought.pyface.workbench.api import Perspective, PerspectiveItem
+from pyface.workbench.api import TraitsUIView
+from pyface.workbench.api import Perspective, PerspectiveItem
 from enthought.developer.tools.api import *
 
 # Constants

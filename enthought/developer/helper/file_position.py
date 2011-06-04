@@ -20,7 +20,7 @@
 from os.path \
     import basename
 
-from enthought.traits.api \
+from traits.api \
     import HasPrivateTraits, Any, File, Int, Property
 
 #-------------------------------------------------------------------------------

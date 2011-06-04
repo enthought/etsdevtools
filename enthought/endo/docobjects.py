@@ -32,7 +32,7 @@ warnings = None
 from util import alpha_sort
 
 # traits primitives
-TRAITS_PRIMITIVES = set([ 'enthought.traits.api.' + x for x in
+TRAITS_PRIMITIVES = set([ 'traits.api.' + x for x in
                           [ 'Trait' ] ])
 _trait_vars = {}
 # traits base classes -- constructed later
@@ -42,26 +42,26 @@ CTRAIT_TYPE = None
 
 def _is_trait(val):
     return (  # Find traits like Color = TraitFactory(Color)
-              isinstance(val, enthought.traits.api.TraitFactory)
+              isinstance(val, traits.api.TraitFactory)
               # Find traits like generic_trait = CTrait(8)
-              or isinstance(val, enthought.traits.api.CTrait)
+              or isinstance(val, traits.api.CTrait)
               # Find both 'class BaseRange(TraitType)' and 'class TraitRange(TraitHandler)'
               or ( type(val) == types.TypeType and
-                   issubclass(val, enthought.traits.api.BaseTraitHandler))
+                   issubclass(val, traits.api.BaseTraitHandler))
               # Find traits like DictStrAny
-              or isinstance(val, enthought.traits.api.BaseTraitHandler)
+              or isinstance(val, traits.api.BaseTraitHandler)
             )
 
-# attempt to build a list of traits primitives from enthought.traits.api package
+# attempt to build a list of traits primitives from traits.api package
 try:
-    import enthought.traits.api
-    _traits_vars= vars(enthought.traits.api)
-    CTRAIT_TYPE = enthought.traits.api.CTrait
+    import traits.api
+    _traits_vars= vars(traits.api)
+    CTRAIT_TYPE = traits.api.CTrait
 except ImportError:
-    local_warnings.warn("enthought.traits.api not found\n")
+    local_warnings.warn("traits.api not found\n")
 
 
-TRAITS_PRIMITIVES.update([ 'enthought.traits.api.' + sym
+TRAITS_PRIMITIVES.update([ 'traits.api.' + sym
     for sym in _traits_vars.keys()
     if _is_trait(_traits_vars[sym]) or
     # Find traits like Constant or Delegate
@@ -69,24 +69,24 @@ TRAITS_PRIMITIVES.update([ 'enthought.traits.api.' + sym
     type(_traits_vars[sym]) == types.FunctionType ) ])
 
 _temp = [ sym for sym in _traits_vars.keys()
-          if isinstance(_traits_vars[sym], enthought.traits.api.MetaHasTraits) and
-             issubclass(_traits_vars[sym], enthought.traits.api.HasTraits) ]
-HAS_TRAITS_BASES.update([ 'enthought.traits.api.' + sym for sym in _temp ] +
-                        [ 'enthought.traits.has_traits.' + sym for sym in _temp ])
+          if isinstance(_traits_vars[sym], traits.api.MetaHasTraits) and
+             issubclass(_traits_vars[sym], traits.api.HasTraits) ]
+HAS_TRAITS_BASES.update([ 'traits.api.' + sym for sym in _temp ] +
+                        [ 'traits.has_traits.' + sym for sym in _temp ])
 
 # attempt to build add traits.ui primitives to the list
 try:
-    import enthought.traits.ui.api
-    _traits_vars = vars(enthought.traits.ui.api)
+    import traitsui.api
+    _traits_vars = vars(traitsui.api)
 except ImportError:
-    local_warnings.warn("enthought.traits.ui.api not found\n")
+    local_warnings.warn("traitsui.api not found\n")
 
-TRAITS_PRIMITIVES.update([ 'enthought.traits.ui.api.' + sym
+TRAITS_PRIMITIVES.update([ 'traitsui.api.' + sym
     for sym in _traits_vars.keys() if _is_trait(_traits_vars[sym]) ])
-HAS_TRAITS_BASES.update([ 'enthought.traits.ui.api.' + sym
+HAS_TRAITS_BASES.update([ 'traitsui.api.' + sym
             for sym in _traits_vars.keys()
-            if isinstance(_traits_vars[sym], enthought.traits.api.MetaHasTraits)
-            and issubclass(_traits_vars[sym], enthought.traits.api.HasTraits) ] )
+            if isinstance(_traits_vars[sym], traits.api.MetaHasTraits)
+            and issubclass(_traits_vars[sym], traits.api.HasTraits) ] )
 
 
 def _indent_multiline_string(s, indent):
@@ -126,7 +126,7 @@ def check_trait_import(name):
 
 def check_has_traits_import(name):
     obj = import_obj(name)
-    return issubclass(obj, enthought.traits.api.HasTraits)
+    return issubclass(obj, traits.api.HasTraits)
 
 class DocObject(Namespace):
     """ documentable object parent class
@@ -354,7 +354,7 @@ class _OpaqueRef(DocObject):
 
     Opaque references are uniquely specified by their fqn, so that they can
     be tested for identity with a well-known name (e.g.
-    enthought.traits.HasTraits)
+    traits.HasTraits)
 
     This class is for internal use only.  Instances of this class are created
     by the import resolver and are exposed only through Namespace.resolve().
@@ -583,7 +583,7 @@ class Module(DocObject):
         return self.file[-11:] == '__init__.py'
 
     def name_prefix(self):
-        "Return module prefix (i.e. 'enthought.' for enthought.chaco)"
+        "Return module prefix (i.e. 'enthought.' for chaco)"
         if self.is_package():
             return self.abs_name + '.'
         else:

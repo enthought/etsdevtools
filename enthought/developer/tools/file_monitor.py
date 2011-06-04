@@ -47,11 +47,11 @@ import logging
 from os.path \
     import abspath, split, splitext, isfile
 
-from enthought.traits.api \
+from traits.api \
     import HasPrivateTraits, Str, List, Instance, Directory, Enum, true, \
            false
 
-from enthought.traits.api \
+from traits.api \
     import View, Tabbed, VGroup, HGroup, Item, TableEditor, InstanceEditor
 
 from enthought.developer.api \

@@ -21,7 +21,7 @@
 from enthought.developer.helper.file_position \
     import FilePosition
 
-from enthought.traits.api \
+from traits.api \
     import Str
 
 #-------------------------------------------------------------------------------

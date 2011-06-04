@@ -12,15 +12,15 @@ from os.path \
     import exists, join, isdir, isfile, splitext
 
 # Enthought library imports.
-from enthought.envisage.api import IExtensionRegistry
-from enthought.envisage.api import ExtensionPoint
-from enthought.pyface.workbench.api import View
-from enthought.traits.ui.menu import Action as TraitsAction, Menu as TraitsMenu
+from envisage.api import IExtensionRegistry
+from envisage.api import ExtensionPoint
+from pyface.workbench.api import View
+from traitsui.menu import Action as TraitsAction, Menu as TraitsMenu
 from enthought.developer.tools.file_browser import FileBrowser, RootNode, PathNode, FileNode
-from enthought.pyface.api import GUI
-from enthought.traits.api import Instance, Property, implements, Dict, Any
-from enthought.traits.ui.api import Handler, View as TraitsView, Item, TreeEditor, InstanceEditor
-from enthought.traits.ui.tree_node import ObjectTreeNode
+from pyface.api import GUI
+from traits.api import Instance, Property, implements, Dict, Any
+from traitsui.api import Handler, View as TraitsView, Item, TreeEditor, InstanceEditor
+from traitsui.tree_node import ObjectTreeNode
 
 # Setup a logger for this module.
 logger = logging.getLogger(__name__)
@@ -125,7 +125,7 @@ class FileBrowserView(View, FileBrowser):
 
         if shell is None:
             shell = self.window.get_view_by_id(
-                'enthought.plugins.python_shell_view'
+                'envisage.plugins.python_shell_view'
             )
 
         if shell is not None:

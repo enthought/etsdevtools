@@ -1,7 +1,7 @@
-from enthought.traits.api \
+from traits.api \
     import HasTraits, Instance
 
-from enthought.traits.ui.api \
+from traitsui.api \
     import View, VSplit, Item
 
 from enthought.developer.tools.image_library_viewer \
@@ -28,7 +28,7 @@ class ImageInfoEditor ( HasTraits ):
             show_labels = False
         ),
         title     = 'Image Info Editor',
-        id        = 'enthought.traits.ui.demo.tools.Image_Info_Editor',
+        id        = 'traitsui.demo.tools.Image_Info_Editor',
         width     = 0.75,
         height    = 0.75,
         resizable = True

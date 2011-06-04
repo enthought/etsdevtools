@@ -20,17 +20,17 @@
 from time \
     import time
 
-from enthought.traits.ctraits \
+from traits.ctraits \
     import _trait_notification_handler
 
-from enthought.traits.api \
+from traits.api \
     import HasPrivateTraits, Str, Int, WeakRef, List, Range, Bool, Float, Any, \
            Constant
 
-from enthought.traits.ui.api \
+from traitsui.api \
     import View, HGroup, VGroup, Item, Handler, TableEditor
 
-from enthought.traits.ui.table_column \
+from traitsui.table_column \
     import ObjectColumn
 
 #-------------------------------------------------------------------------------

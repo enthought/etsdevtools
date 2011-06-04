@@ -31,32 +31,32 @@ from os \
 from os.path \
     import split, join, isdir, abspath, normcase
 
-from enthought.traits.api \
+from traits.api \
     import HasTraits, HasPrivateTraits, Str, Int, Instance, List, Dict, Any, \
            Code, Constant, Property, PythonValue, Button, Event, Bool, \
            TraitError, push_exception_handler
 
-from enthought.traits.ui.api \
+from traitsui.api \
     import View, VSplit, VGroup, HSplit, HGroup, HFlow, Tabbed, Item, \
            TableEditor, ValueEditor, CodeEditor, InstanceEditor, TextEditor, \
            EnumEditor, ShellEditor, TabularEditor, Handler, UI
 
-from enthought.traits.ui.value_tree \
+from traitsui.value_tree \
     import ValueTree
 
-from enthought.traits.ui.tabular_adapter \
+from traitsui.tabular_adapter \
     import TabularAdapter
 
-from enthought.traits.ui.menu \
+from traitsui.menu \
     import NoButtons
 
-from enthought.traits.ui.table_column \
+from traitsui.table_column \
     import ObjectColumn
 
-from enthought.pyface.timer.api \
+from pyface.timer.api \
     import do_later
 
-from enthought.pyface.image_resource \
+from pyface.image_resource \
     import ImageResource
 
 from enthought.developer.helper.bdb \

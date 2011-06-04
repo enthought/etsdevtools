@@ -30,21 +30,21 @@ from os.path \
 from threading \
     import Thread, Lock
 
-from enthought.traits.api \
+from traits.api \
     import HasPrivateTraits, Str, Int, Float, List, Instance, Event, File, \
            Directory, Property, Any, Delegate, true
 
-from enthought.traits.ui.api \
+from traitsui.api \
     import TreeEditor, TreeNode, ObjectTreeNode, TreeNodeObject, UI, View, \
     HGroup, Item
 
-from enthought.traits.ui.menu \
+from traitsui.menu \
     import NoButtons
 
-from enthought.traits.trait_base \
+from traits.trait_base \
     import traits_home
 
-from enthought.pyface.timer.api \
+from pyface.timer.api \
     import do_later
 
 from enthought.developer.api \

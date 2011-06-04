@@ -15,16 +15,16 @@
 #  Imports:
 #-------------------------------------------------------------------------------
 
-from enthought.envisage.core.core_plugin_definition \
+from envisage.core.core_plugin_definition \
     import PluginDefinition, ApplicationObject, Synchronizer
 
-from enthought.envisage.workbench.workbench_plugin_definition \
+from envisage.workbench.workbench_plugin_definition \
     import Workbench, Perspective, View, Feature
 
-from enthought.envisage.action.action_plugin_definition \
+from envisage.action.action_plugin_definition \
     import Action, Group, Location, Menu
 
-from enthought.envisage.workbench.action.action_plugin_definition \
+from envisage.workbench.action.action_plugin_definition \
     import WorkbenchActionSet
 
 #-------------------------------------------------------------------------------
@@ -213,8 +213,8 @@ class EnthoughtDeveloperPluginDefinition ( PluginDefinition ):
 
     # The Ids of the plugins that this plugin requires:
     requires = [
-        'enthought.envisage.core',
-        'enthought.envisage.workbench'
+        'envisage.core',
+        'envisage.workbench'
     ]
 
     # The extension points offered by this plugin.

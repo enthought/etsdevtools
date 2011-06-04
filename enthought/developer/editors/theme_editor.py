@@ -17,17 +17,17 @@
 #  Imports:
 #-------------------------------------------------------------------------------
 
-from enthought.traits.api \
+from traits.api \
     import HasTraits, Str, Int, List, Enum, Bool, Any, Property
 
-from enthought.traits.ui.api \
+from traitsui.api \
     import View, HGroup, VGroup, Item, Label, Theme, NullEditor, \
            ListStrEditor, spring
 
-from enthought.traits.ui.basic_editor_factory \
+from traitsui.basic_editor_factory \
     import BasicEditorFactory
 
-from enthought.traits.ui.wx.ui_editor \
+from traitsui.wx.ui_editor \
     import UIEditor
 
 from enthought.developer.helper.themes \
@@ -268,7 +268,7 @@ class ThemeEditor ( BasicEditorFactory ):
     klass = _ThemeEditor
 
 if __name__ == '__main__':
-    from enthought.traits.api import HasTraits, Instance
+    from traits.api import HasTraits, Instance
 
     class Test ( HasTraits ):
         theme = Instance( Theme, ( '@std:BlackChromeB', ) )

@@ -4,7 +4,7 @@ import gc
 import weakref
 
 # Enthought library imoprts
-from enthought.traits.api import HasTraits, Int, Str, Any, List, Dict, Property
+from traits.api import HasTraits, Int, Str, Any, List, Dict, Property
 
 class MemoryState(HasTraits):
 

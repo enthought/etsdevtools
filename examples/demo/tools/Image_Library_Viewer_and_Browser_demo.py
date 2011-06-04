@@ -51,10 +51,10 @@ In order for this demo to run, you must have the enthought.developer package
 installed.
 """
 
-from enthought.traits.api \
+from traits.api \
     import HasTraits, Instance
 
-from enthought.traits.ui.api \
+from traitsui.api \
     import View, VSplit, Item
 
 from enthought.developer.tools.image_library_viewer \
@@ -81,7 +81,7 @@ class ImageTool ( HasTraits ):
             show_labels = False
         ),
         title     = 'Image Tool',
-        id        = 'enthought.traits.ui.demo.tools.Image_Library_Viewer_'
+        id        = 'traitsui.demo.tools.Image_Library_Viewer_'
                     'and_Browser_demo',
         width     = 0.75,
         height    = 0.75,

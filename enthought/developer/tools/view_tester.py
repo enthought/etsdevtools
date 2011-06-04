@@ -19,16 +19,16 @@
 from os.path \
     import exists
 
-from enthought.traits.api \
+from traits.api \
     import HasTraits, HasPrivateTraits, List, File, Str, Instance, Bool
 
-from enthought.traits.ui.api \
+from traitsui.api \
     import View, VGroup, Item, ListEditor
 
-from enthought.pyface.timer.api \
+from pyface.timer.api \
     import do_later
 
-from enthought.pyface.image_resource \
+from pyface.image_resource \
     import ImageResource
 
 from enthought.developer.features.api \

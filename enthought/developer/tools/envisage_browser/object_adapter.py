@@ -15,7 +15,7 @@
 #  Imports:
 #-------------------------------------------------------------------------------
 
-from enthought.traits.api \
+from traits.api \
     import HasTraits, Instance, Any, Property, Delegate
 
 from enthought.developer.tools.envisage_browser.object_adapter_base \

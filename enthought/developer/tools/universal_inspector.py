@@ -23,11 +23,11 @@ from cPickle \
 from cStringIO \
     import StringIO
 
-from enthought.traits.api \
+from traits.api \
     import HasPrivateTraits, Any, Int, Str, Code, List, Range, Property, Bool, \
            Title
 
-from enthought.traits.ui.api \
+from traitsui.api \
     import View, VGroup, HGroup, Item, ListEditor, DNDEditor, ValueEditor, \
            CodeEditor
 
@@ -37,7 +37,7 @@ from enthought.developer.helper.themes \
 from enthought.io.file \
     import File
 
-from enthought.pyface.timer.api \
+from pyface.timer.api \
     import do_later
 
 from enthought.developer.api \

@@ -24,11 +24,11 @@ from os.path \
 from cPickle \
     import dump, load
 
-from enthought.traits.api \
+from traits.api \
     import HasPrivateTraits, Str, Int, List, Instance, Property, Any, Code, \
            Delegate, true
 
-from enthought.traits.ui.api \
+from traitsui.api \
     import TreeEditor, TreeNode, ObjectTreeNode, TreeNodeObject, View, Item
 
 #-------------------------------------------------------------------------------
@@ -663,7 +663,7 @@ class ClassBrowser ( HasPrivateTraits ):
                                 editor = cb_tree_editor ),
                           '|<>' ],
                         title     = 'Class browser',
-                        id        = 'enthought.traits.vet.ClassBrowser',
+                        id        = 'traits.vet.ClassBrowser',
                         resizable = True,
                         width     = .2,
                         height    = .3 )
@@ -678,7 +678,7 @@ class ClassBrowser ( HasPrivateTraits ):
                                 resizable = True ),
                           '|<>' ],
                         title     = 'Class browser',
-                        id        = 'enthought.traits.vet.ClassBrowserSourceView',
+                        id        = 'traits.vet.ClassBrowserSourceView',
                         resizable = True,
                         width     = .2,
                         height    = .3 )
@@ -689,7 +689,7 @@ class ClassBrowser ( HasPrivateTraits ):
                 editor    = cb_tree_editor_with_source,
                 resizable = True ),
           '|<>' ],
-        id = 'enthought.traits.vet.ClassBrowserImbeddedSourceView'
+        id = 'traits.vet.ClassBrowserImbeddedSourceView'
     )
 
     #---------------------------------------------------------------------------

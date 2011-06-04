@@ -18,7 +18,7 @@
 #  Imports:
 #-------------------------------------------------------------------------------
 
-from enthought.traits.api import HasStrictTraits, Enum, RGBColor
+from traits.api import HasStrictTraits, Enum, RGBColor
 
 #-------------------------------------------------------------------------------
 #  'ColorInfo' class:

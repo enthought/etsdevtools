@@ -29,21 +29,21 @@ from time \
 from zipfile \
     import ZipFile, ZIP_DEFLATED
 
-from enthought.traits.api \
+from traits.api \
     import HasPrivateTraits, File, Str, List, Button, Property, cached_property
 
-from enthought.traits.ui.api \
+from traitsui.api \
     import View, HGroup, VGroup, Tabbed, Item, Label, Theme, FileEditor, \
            TableEditor, ListStrEditor
 
-from enthought.traits.ui.table_column \
+from traitsui.table_column \
     import ObjectColumn
 
-from enthought.traits.ui.image.image \
+from traitsui.image.image \
     import ImageLibrary, ImageVolume, ImageVolumeInfo, ImageInfo, FastZipFile, \
            time_stamp_for
 
-from enthought.traits.ui.wx.history_editor \
+from traitsui.wx.history_editor \
     import HistoryEditor
 
 from enthought.developer.helper.themes \
@@ -457,9 +457,9 @@ class ImageVolumeBuilder ( HasPrivateTraits ):
 #-------------------------------------------------------------------------------
 
 if __name__ == '__main__':
-    from enthought.traits.api    import Instance
+    from traits.api    import Instance
     from file_sieve              import FileSieve
-    from enthought.traits.ui.api import VSplit
+    from traitsui.api import VSplit
 
     class VolumeBuilder ( HasPrivateTraits ):
 

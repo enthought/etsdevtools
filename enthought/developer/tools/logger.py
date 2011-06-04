@@ -18,16 +18,16 @@
 
 import logging
 
-from enthought.traits.api \
+from traits.api \
     import HasPrivateTraits, Any, Enum, Instance, List, Range, Str, Property
 
-from enthought.traits.ui.api \
+from traitsui.api \
     import View, Item, TableEditor
 
-from enthought.traits.ui.table_column \
+from traitsui.table_column \
     import ObjectColumn
 
-from enthought.traits.ui.table_filter \
+from traitsui.table_filter \
     import EvalFilterTemplate, RuleFilterTemplate, MenuFilterTemplate
 
 from enthought.developer.api \

@@ -23,10 +23,10 @@
 #  Imports:
 #-------------------------------------------------------------------------------
 
-from enthought.traits.api \
+from traits.api \
     import HasTraits
 
-from enthought.pyface.dock.api \
+from pyface.dock.api \
     import DockWindowFeature
 
 #-------------------------------------------------------------------------------

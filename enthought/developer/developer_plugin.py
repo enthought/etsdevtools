@@ -15,9 +15,9 @@
 #  Imports:
 #-------------------------------------------------------------------------------
 
-from enthought.envisage.api import Plugin
-from enthought.traits.api import List
-from enthought.pyface.dock.api import add_feature
+from envisage.api import Plugin
+from traits.api import List
+from pyface.dock.api import add_feature
 
 # Local imports.
 from view.views import *
@@ -40,9 +40,9 @@ ID = 'enthought.developer.tools'
 class EnthoughtDeveloperPlugin( Plugin ):
 
     # Extension point Ids.
-    VIEWS             = 'enthought.envisage.ui.workbench.views'
-    PERSPECTIVES      = 'enthought.envisage.ui.workbench.perspectives'
-    ACTION_SETS       = 'enthought.envisage.ui.workbench.action_sets'
+    VIEWS             = 'envisage.ui.workbench.views'
+    PERSPECTIVES      = 'envisage.ui.workbench.perspectives'
+    ACTION_SETS       = 'envisage.ui.workbench.action_sets'
 
     # The plugin's globally unique identifier:
     id = ID

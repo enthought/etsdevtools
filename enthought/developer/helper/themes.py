@@ -12,10 +12,10 @@
 #  Imports:
 #-------------------------------------------------------------------------------
 
-from enthought.traits.api \
+from traits.api \
     import Constant, Delegate, Instance
 
-from enthought.traits.ui.api \
+from traitsui.api \
     import Item, Theme, TitleEditor, ButtonEditor
 
 #-------------------------------------------------------------------------------

@@ -21,58 +21,58 @@
 
 import wx
 
-from enthought.traits.api \
+from traits.api \
     import HasTraits, HasPrivateTraits, HasStrictTraits, Interface, Instance, \
            List, Enum, Color, Bool, Range, Str, Float, Int, Event, Tuple, \
            Property, Delegate, Any, Missing, Undefined, implements, \
            on_trait_change, cached_property
 
-from enthought.traits.trait_base \
+from traits.trait_base \
     import SequenceTypes
 
-from enthought.traits.trait_base \
+from traits.trait_base \
     import user_name_for
 
-from enthought.traits.ui.api \
+from traitsui.api \
     import UI, View, Item, Theme, Editor
 
-from enthought.traits.ui.ui_traits \
+from traitsui.ui_traits \
     import ATheme, AView
 
-from enthought.traits.ui.menu \
+from traitsui.menu \
     import Menu, Action
 
-from enthought.traits.ui.wx.editor \
+from traitsui.wx.editor \
     import Editor
 
-from enthought.traits.ui.wx.basic_editor_factory \
+from traitsui.wx.basic_editor_factory \
     import BasicEditorFactory
 
-from enthought.traits.ui.wx.image_panel \
+from traitsui.wx.image_panel \
     import ImagePanel
 
-from enthought.traits.ui.wx.themed_checkbox_editor \
+from traitsui.wx.themed_checkbox_editor \
     import ThemedCheckboxEditor
 
-from enthought.traits.ui.wx.themed_slider_editor \
+from traitsui.wx.themed_slider_editor \
     import ThemedSliderEditor
 
-from enthought.traits.ui.wx.helper \
+from traitsui.wx.helper \
     import init_wx_handlers
 
-from enthought.pyface.api \
+from pyface.api \
     import confirm, YES
 
-from enthought.pyface.dock.api \
+from pyface.dock.api \
     import add_feature
 
-from enthought.pyface.timer.api \
+from pyface.timer.api \
     import do_later
 
-from enthought.pyface.image_resource \
+from pyface.image_resource \
     import ImageResource
 
-from enthought.util.wx.drag_and_drop \
+from traits.util.wx.drag_and_drop \
     import PythonDropSource, PythonDropTarget
 
 #-------------------------------------------------------------------------------

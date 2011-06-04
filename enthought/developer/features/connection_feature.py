@@ -28,16 +28,16 @@
 #  Imports:
 #-------------------------------------------------------------------------------
 
-from enthought.traits.api \
+from traits.api \
     import HasTraits, HasPrivateTraits, Any, List, Str, Dict, Instance, Enum
 
-from enthought.traits.ui.menu \
+from traitsui.menu \
     import Menu, Action
 
-from enthought.pyface.dock.api \
+from pyface.dock.api \
     import DockWindowFeature
 
-from enthought.pyface.image_resource \
+from pyface.image_resource \
     import ImageResource
 
 from enthought.developer.api \

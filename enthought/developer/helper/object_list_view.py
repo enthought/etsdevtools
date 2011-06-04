@@ -14,14 +14,14 @@
 #  Imports:
 #-------------------------------------------------------------------------------
 
-from enthought.traits.api \
+from traits.api \
     import HasPrivateTraits, HasStrictTraits, Instance, Str, List, Constant, \
            Any
 
-from enthought.traits.ui.api \
+from traitsui.api \
     import View, Item, ListEditor
 
-from enthought.traits.ui.menu \
+from traitsui.menu \
     import NoButtons
 
 from enthought.developer.features.api \
@@ -30,7 +30,7 @@ from enthought.developer.features.api \
 from enthought.developer.features.connect_feature \
     import can_connect
 
-from enthought.pyface.image_resource \
+from pyface.image_resource \
     import ImageResource
 
 #-------------------------------------------------------------------------------

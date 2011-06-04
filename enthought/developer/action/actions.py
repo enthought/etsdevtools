@@ -9,10 +9,10 @@
 #
 #-------------------------------------------------------------------------------
 # Imports
-from enthought.pyface.action.api import Action as PyfaceAction
-from enthought.envisage.ui.workbench.api import \
+from pyface.action.api import Action as PyfaceAction
+from envisage.ui.workbench.api import \
     Workbench, WorkbenchActionSet
-from enthought.envisage.ui.action.api \
+from envisage.ui.action.api \
     import Action, Group, Menu
 
 # Constants

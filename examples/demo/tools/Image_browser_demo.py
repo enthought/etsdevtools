@@ -16,7 +16,7 @@ Note: This demo requires the enthought.developer package to be installed.
 from enthought.developer.tools.image_browser \
      import ImageBrowser
 
-from enthought.traits.ui.image.image \
+from traitsui.image.image \
      import ImageLibrary
 
 # Get the image library volume called 'std':

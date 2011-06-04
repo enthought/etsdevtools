@@ -20,7 +20,7 @@
 import shelve
 import os
 
-from enthought.traits.trait_base \
+from traits.trait_base \
     import traits_home
 
 #-------------------------------------------------------------------------------

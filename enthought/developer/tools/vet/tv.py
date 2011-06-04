@@ -17,11 +17,11 @@
 #  Imports:
 #-------------------------------------------------------------------------------
 
-from enthought.traits.api \
+from traits.api \
     import tdb, HasTraits, HasStrictTraits, Instance, Str, CTrait, \
            List
 
-from enthought.traits.ui.api \
+from traitsui.api \
     import TreeEditor, TreeNode, View, Item
 
 #-------------------------------------------------------------------------------
@@ -298,7 +298,7 @@ the_tdb.configure_traits( view = View(
                 resizable = True ),
           '-splitter1:=<>' ],
         title     = 'Traits Data Base Viewer',
-        id        = 'enthought.traits.vet.tv',
+        id        = 'traits.vet.tv',
         resizable = True,
         width     = .40,
         height    = .75,

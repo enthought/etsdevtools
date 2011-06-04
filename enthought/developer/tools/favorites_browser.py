@@ -20,10 +20,10 @@ import sys
 from os.path \
     import exists, abspath, join
 
-from enthought.traits.api \
+from traits.api \
     import HasPrivateTraits, Event, List, Range, Instance, Bool, Str, Any
 
-from enthought.traits.ui.api \
+from traitsui.api \
     import View, Item, TreeNode, TreeEditor
 
 from enthought.developer.tools.class_browser \

@@ -18,7 +18,7 @@
 #  Imports:
 #-------------------------------------------------------------------------------
 
-from enthought.traits.api \
+from traits.api \
     import HasPrivateTraits, File
 
 from enthought.developer.services.file_watch \

@@ -17,10 +17,10 @@
 
 import sys
 
-from enthought.traits.api \
+from traits.api \
     import push_exception_handler
 
-from enthought.envisage.api \
+from envisage.api \
     import Plugin
 
 from enthought.developer.helper.fbi \

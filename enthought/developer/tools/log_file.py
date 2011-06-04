@@ -25,17 +25,17 @@ from threading \
 from time \
     import sleep
 
-from enthought.traits.api \
+from traits.api \
     import HasPrivateTraits, Any, Enum, Instance, List, Range, Str, File, \
            Delegate, Button
 
-from enthought.traits.ui.api \
+from traitsui.api \
     import View, HGroup, Item, TableEditor, CodeEditor, FileEditor, spring
 
-from enthought.traits.ui.table_column \
+from traitsui.table_column \
     import ObjectColumn
 
-from enthought.traits.ui.table_filter \
+from traitsui.table_filter \
     import TableFilter
 
 from enthought.developer.features.api \

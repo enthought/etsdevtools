@@ -21,16 +21,16 @@ import sys
 from os.path \
     import abspath, split, splitext
 
-from enthought.traits.api \
+from traits.api \
     import HasPrivateTraits, Str, File, List, Dict, Property
 
-from enthought.traits.ui.api \
+from traitsui.api \
     import View, VGroup, Tabbed, Item
 
-from enthought.traits.ui.menu \
+from traitsui.menu \
     import NoButtons
 
-from enthought.envisage.api import \
+from envisage.api import \
     Plugin
 
 from enthought.developer.tools.envisage_browser.object_adapter_base \

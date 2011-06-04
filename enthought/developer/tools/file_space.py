@@ -20,14 +20,14 @@ from os \
 from os.path \
     import join, isfile, isdir, basename, dirname, splitext
 
-from enthought.traits.api \
+from traits.api \
     import HasPrivateTraits, Instance, Property, Int, Str, Any, Regex, List, \
            File, Directory, Callable, true, false, Bool
 
-from enthought.traits.ui.api \
+from traitsui.api \
     import View, Item, TreeEditor, TreeNode, TreeNodeObject, ObjectTreeNode
 
-from enthought.pyface.api \
+from pyface.api \
     import error, confirm, YES
 
 from enthought.developer.api \

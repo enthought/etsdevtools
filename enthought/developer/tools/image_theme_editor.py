@@ -18,7 +18,7 @@
 #  Imports:
 #-------------------------------------------------------------------------------
 
-from enthought.traits.ui.api \
+from traitsui.api \
     import View, Item
 
 from enthought.developer.editors.theme_editor \

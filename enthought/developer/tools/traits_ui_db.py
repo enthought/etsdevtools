@@ -19,16 +19,16 @@
 import shelve
 import os
 
-from enthought.traits.api \
+from traits.api \
     import HasPrivateTraits, List, Str, Any, Instance, Bool, Button
 
-from enthought.traits.ui.api \
+from traitsui.api \
     import View, VGroup, HGroup, Item, ValueEditor, TabularEditor, spring
 
-from enthought.traits.ui.tabular_adapter \
+from traitsui.tabular_adapter \
     import TabularAdapter
 
-from enthought.traits.trait_base \
+from traits.trait_base \
     import traits_home
 
 from enthought.developer.api \

@@ -16,9 +16,9 @@
 
 import enthought.developer
 
-import enthought.envisage
+import envisage
 
-import enthought.plugins.python_shell
+import envisage.plugins.python_shell
 
 from os.path \
     import abspath, dirname, join
@@ -27,9 +27,9 @@ from os.path \
 #  Package locations:
 #-------------------------------------------------------------------------------
 
-envisage  = abspath( dirname( enthought.envisage.__file__  ) )
+envisage  = abspath( dirname( envisage.__file__  ) )
 developer = abspath( dirname( enthought.developer.__file__ ) )
-pythonshell = abspath( dirname( enthought.plugins.python_shell.__file__ ) )
+pythonshell = abspath( dirname( envisage.plugins.python_shell.__file__ ) )
 
 #-------------------------------------------------------------------------------
 #  The plugin definitions required by the application:

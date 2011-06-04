@@ -9,7 +9,7 @@
 #  'feature' capability to implement their functionality. As a result, the
 #  appropriate DockWindow features must also be included in the application
 #  framework by adding the appropriate Feature extensions (see the
-#  enthought.pyface.dock.feature package for more information).
+#  pyface.dock.feature package for more information).
 #
 #  Package owner/architect: David C. Morrill
 #

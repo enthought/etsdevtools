@@ -15,13 +15,13 @@
 #  Imports:
 #-------------------------------------------------------------------------------
 
-from enthought.traits.api \
+from traits.api \
     import HasPrivateTraits, List, Any, Property
 
-from enthought.traits.ui.api \
+from traitsui.api \
     import View, VGroup, HGroup, Tabbed, Item
 
-from enthought.traits.ui.menu \
+from traitsui.menu \
     import NoButtons
 
 from enthought.developer.tools.envisage_browser.object_adapter \

@@ -23,22 +23,22 @@ import enthought.developer.helper.profiler as profiler_module
 from types \
     import UnboundMethodType
 
-from enthought.traits.api \
+from traits.api \
     import HasPrivateTraits, Str, Instance, List, Directory, Bool, Any
 
-from enthought.traits.ui.api \
+from traitsui.api \
     import View, HGroup, Item, TableEditor
 
-from enthought.traits.ui.table_column \
+from traitsui.table_column \
     import ObjectColumn
 
-from enthought.pyface.image_resource \
+from pyface.image_resource \
     import ImageResource
 
 from enthought.developer.features.api \
     import CustomFeature
 
-from enthought.pyface.timer.api \
+from pyface.timer.api \
     import do_later
 
 from enthought.developer.api \

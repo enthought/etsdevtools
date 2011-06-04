@@ -14,21 +14,21 @@
 #  Imports:
 #-------------------------------------------------------------------------------
 
-from enthought.traits.api \
+from traits.api \
     import HasTraits, HasPrivateTraits, Str, List, Instance, Button, Tuple, \
            Property, Dict, Enum, Bool, cached_property
 
-from enthought.traits.ui.api \
+from traitsui.api \
     import View, VGroup, HGroup, Item, EnumEditor, ListEditor, spring, UI, \
            Handler, DNDEditor
 
-from enthought.traits.ui.key_bindings \
+from traitsui.key_bindings \
     import KeyBindings, KeyBinding
 
 from enthought.developer.features.api \
     import add_standard_features
 
-from enthought.pyface.image_resource\
+from pyface.image_resource\
     import ImageResource
 
 from helper.themes \

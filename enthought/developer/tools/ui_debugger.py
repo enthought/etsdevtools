@@ -16,27 +16,27 @@
 
 import wx
 
-from enthought.traits.api \
+from traits.api \
     import HasPrivateTraits, Any, Instance, Property, Int, Str, List, Code, \
            TraitHandler, TraitError, Trait
 
-from enthought.traits.ui.api \
+from traitsui.api \
     import View, HSplit, VSplit, VGroup, Item, TreeEditor, TreeNodeObject, \
            ObjectTreeNode, TableEditor, Handler
 
-from enthought.traits.ui.table_column \
+from traitsui.table_column \
     import ObjectColumn
 
-from enthought.traits.ui.menu \
+from traitsui.menu \
     import NoButtons
 
-from enthought.traits.ui.wx.editor \
+from traitsui.wx.editor \
     import Editor
 
-from enthought.traits.ui.wx.basic_editor_factory \
+from traitsui.wx.basic_editor_factory \
     import BasicEditorFactory
 
-from enthought.pyface.timer.api \
+from pyface.timer.api \
     import do_later
 
 from enthought.developer.api \

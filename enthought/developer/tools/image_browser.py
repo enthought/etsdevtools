@@ -17,16 +17,16 @@
 #  Imports:
 #-------------------------------------------------------------------------------
 
-from enthought.traits.api \
+from traits.api \
     import HasPrivateTraits, Property, Str, List
 
-from enthought.traits.ui.api \
+from traitsui.api \
     import View, Item, ImageEditor
 
-from enthought.traits.ui.ui_traits \
+from traitsui.ui_traits \
     import Image, ATheme
 
-from enthought.traits.ui.theme \
+from traitsui.theme \
     import Theme
 
 from enthought.developer.editors.list_canvas_editor \

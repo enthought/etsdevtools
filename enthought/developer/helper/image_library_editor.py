@@ -17,14 +17,14 @@
 #  Imports:
 #-------------------------------------------------------------------------------
 
-from enthought.traits.api \
+from traits.api \
     import HasPrivateTraits, Instance, Str, List, Property, Constant, \
            on_trait_change
 
-from enthought.traits.ui.api \
+from traitsui.api \
     import View, VGroup, HSplit, Item, ListEditor, InstanceEditor
 
-from enthought.traits.ui.image.image \
+from traitsui.image.image \
     import ImageLibrary, ImageInfo
 
 from enthought.developer.helper.library_manager \

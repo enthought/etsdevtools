@@ -1,7 +1,7 @@
 #-------------------------------------------------------------------------------
 #
 #  Extension point adapters for ExtensionPoint subclasses defined in:
-#  - enthought.plugins.python_shell.python_shell_plugin_definition.py
+#  - envisage.plugins.python_shell.python_shell_plugin_definition.py
 #
 #  Written by: David C. Morrill
 #
@@ -15,13 +15,13 @@
 #  Imports:
 #-------------------------------------------------------------------------------
 
-from enthought.traits.api \
+from traits.api \
     import HasPrivateTraits, Str, Property
 
-from enthought.traits.ui.api \
+from traitsui.api \
     import VSplit, Item, TableEditor
 
-from enthought.traits.ui.table_column \
+from traitsui.table_column \
     import ObjectColumn
 
 from enthought.developer.tools.envisage_browser.object_adapter \

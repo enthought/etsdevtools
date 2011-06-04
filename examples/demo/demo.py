@@ -18,7 +18,7 @@
 """ Run the Developer Tools demo.
 """
 
-from enthought.traits.ui.extras.demo import demo
+from traitsui.extras.demo import demo
 
 demo()
 

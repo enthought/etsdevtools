@@ -5,7 +5,7 @@ import unittest
 import nose
 
 # Enthought library
-from enthought.traits.api import HasTraits, Any
+from traits.api import HasTraits, Any
 from enthought.debug.memory_tracker import MemoryState, get_all_referrers
 
 

@@ -19,19 +19,19 @@
 
 import wx
 
-from enthought.traits.api \
+from traits.api \
     import Bool, Instance, Str, on_trait_change
 
-from enthought.traits.ui.api \
+from traitsui.api \
     import Image
 
-from enthought.traits.ui.basic_editor_factory \
+from traitsui.basic_editor_factory \
     import BasicEditorFactory
 
-from enthought.traits.ui.wx.editor \
+from traitsui.wx.editor \
     import Editor
 
-from enthought.traits.ui.wx.themed_control \
+from traitsui.wx.themed_control \
     import ThemedControl
 
 #-------------------------------------------------------------------------------

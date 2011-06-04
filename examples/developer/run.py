@@ -10,11 +10,11 @@
 
 import sys
 
-from enthought.envisage.ui.workbench.api import WorkbenchApplication
-from enthought.envisage.core_plugin import CorePlugin
-from enthought.envisage.ui.workbench.workbench_plugin import \
+from envisage.ui.workbench.api import WorkbenchApplication
+from envisage.core_plugin import CorePlugin
+from envisage.ui.workbench.workbench_plugin import \
          WorkbenchPlugin
-from enthought.plugins.python_shell.python_shell_plugin import \
+from envisage.plugins.python_shell.python_shell_plugin import \
          PythonShellPlugin
 
 # Enthought developer tool plugins:

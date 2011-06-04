@@ -36,16 +36,16 @@
 from os.path \
     import exists, splitext
 
-from enthought.traits.api \
+from traits.api \
     import HasTraits, HasStrictTraits, Str, List, Enum, false
 
-from enthought.pyface.api \
+from pyface.api \
     import FileDialog, OK
 
-from enthought.pyface.dock.api \
+from pyface.dock.api \
     import DockWindowFeature
 
-from enthought.pyface.image_resource \
+from pyface.image_resource \
     import ImageResource
 
 from enthought.io.api \

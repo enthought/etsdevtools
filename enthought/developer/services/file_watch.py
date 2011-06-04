@@ -21,7 +21,7 @@ import wx
 from os.path \
     import abspath, getsize, getmtime, exists
 
-from enthought.traits.api \
+from traits.api \
     import HasPrivateTraits, Str, Int, Long, Any, Bool, List, Callable
 
 from threading \

@@ -21,7 +21,7 @@
 #  Imports:
 #-------------------------------------------------------------------------------
 
-from enthought.envisage.core.runtime.extension \
+from envisage.core.runtime.extension \
     import Plugin
 
 from enthought_envisage_core_runtime \
@@ -48,8 +48,8 @@ preferences = Preferences(
 #--- Preference pages ----------------------------------------------------------
 
 vet_preference_page = Page(
-    id         = 'enthought.traits.vet.PreferencePage',
-    class_name = 'enthought.traits.vet.PreferencePage',
+    id         = 'traits.vet.PreferencePage',
+    class_name = 'traits.vet.PreferencePage',
     label      = 'VET Preferences',
     category   = '',
 )
@@ -83,8 +83,8 @@ sub_menu = Menu(
 )
 
 #do_it_action = Action(
-#    id            = 'enthought.envisage.example.action.DoItAction',
-#    class_name    = 'enthought.envisage.example.action.DoItAction',
+#    id            = 'envisage.example.action.DoItAction',
+#    class_name    = 'envisage.example.action.DoItAction',
 #    label         = 'Do It!',
 #    description   = "An action's description can appear in the status bar",
 #    icon          = 'images/do_it.png',
@@ -95,8 +95,8 @@ sub_menu = Menu(
 #)
 #
 #higher_action = Action(
-#    id            = 'enthought.envisage.example.action.HigherAction',
-#    class_name    = 'enthought.envisage.example.action.DoItAction',
+#    id            = 'envisage.example.action.HigherAction',
+#    class_name    = 'envisage.example.action.DoItAction',
 #    label         = 'Higher',
 #    description   = "An action's description can appear in the status bar",
 #    icon          = 'images/higher.png',
@@ -107,8 +107,8 @@ sub_menu = Menu(
 #)
 #
 #lower_action = Action(
-#    id            = 'enthought.envisage.example.action.LowerAction',
-#    class_name    = 'enthought.envisage.example.action.DoItAction',
+#    id            = 'envisage.example.action.LowerAction',
+#    class_name    = 'envisage.example.action.DoItAction',
 #    label         = 'Lower',
 #    description   = "An action's description can appear in the status bar",
 #    icon          = 'images/lower.png',
@@ -119,8 +119,8 @@ sub_menu = Menu(
 #)
 #
 #overdrive_action = Action(
-#    id            = 'enthought.envisage.example.action.OverdriveAction',
-#    class_name    = 'enthought.envisage.example.action.DoItAction',
+#    id            = 'envisage.example.action.OverdriveAction',
+#    class_name    = 'envisage.example.action.DoItAction',
 #    label         = 'Overdrive',
 #    description   = "An action's description can appear in the status bar",
 #    icon          = 'images/overdrive.png',
@@ -142,22 +142,22 @@ ui_views = UIViews(
         View(
             name       = 'VET Edit View',
             icon       = 'images/stuff_view.png',
-            id         = 'enthought.traits.vet.EditView',
-            class_name = 'enthought.traits.vet.EditView',
+            id         = 'traits.vet.EditView',
+            class_name = 'traits.vet.EditView',
             position   = 'left'
         ),
         View(
             name       = 'VET Visual View',
             icon       = 'images/stuff_view.png',
-            id         = 'enthought.traits.vet.VisualView',
-            class_name = 'enthought.traits.vet.VisualView',
+            id         = 'traits.vet.VisualView',
+            class_name = 'traits.vet.VisualView',
             position   = 'top'
         ),
         View(
             name       = 'VET Property View',
             icon       = 'images/stuff_view.png',
-            id         = 'enthought.traits.vet.PropertyView',
-            class_name = 'enthought.traits.vet.PropertyView',
+            id         = 'traits.vet.PropertyView',
+            class_name = 'traits.vet.PropertyView',
             position   = 'bottom'
         ),
     ]
@@ -169,7 +169,7 @@ ui_views = UIViews(
 
 plugin = Plugin(
     # General information about the plugin:
-    id            = 'enthought.traits.vet',
+    id            = 'traits.vet',
     name          = 'Traits View Editing Tool Plugin',
     version       = '1.0.0',
     provider_name = 'Enthought, Inc',
@@ -177,13 +177,13 @@ plugin = Plugin(
     autostart     = True,
 
     # The name of the class that implements the plugin:
-    class_name = 'enthought.traits.vet.VETPlugin',
+    class_name = 'traits.vet.VETPlugin',
 
     # The Id's of the plugins that this plugin requires:
     requires = [
-        'enthought.envisage.ui',
-        'enthought.envisage.ui.preference',
-        'enthought.envisage.ui.python_shell',
+        'envisage.ui',
+        'envisage.ui.preference',
+        'envisage.ui.python_shell',
     ],
 
     # The extension points offered by this plugin to allow other plugins to

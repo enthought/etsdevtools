@@ -19,17 +19,17 @@ import sys
 from os.path \
     import join, exists, basename
 
-from enthought.traits.api \
+from traits.api \
     import HasTraits, HasPrivateTraits, Any, Instance, List, Property, File, \
            Directory, Str
 
-from enthought.traits.ui.api \
+from traitsui.api \
     import View, VGroup, HGroup, Item, ListEditor, TreeEditor
 
-from enthought.traits.ui.value_tree \
+from traitsui.value_tree \
     import TraitsNode
 
-from enthought.pyface.timer.api \
+from pyface.timer.api \
     import do_later
 
 from enthought.developer.tools.class_browser \

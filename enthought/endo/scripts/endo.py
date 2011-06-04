@@ -27,9 +27,9 @@ from tokenize import generate_tokens, COMMENT, NEWLINE, INDENT
 from traceback import print_exception
 
 try:
-    from enthought.etsconfig.api import ETSConfig
+    from traits.etsconfig.api import ETSConfig
 except:
-    from enthought.traits.trait_base import ETSConfig
+    from traits.trait_base import ETSConfig
 ETSConfig.toolkit = 'null'
 
 import enthought.endo as endo

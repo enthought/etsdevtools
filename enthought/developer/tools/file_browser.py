@@ -22,11 +22,11 @@ from os \
 from os.path \
     import exists, join, isdir, isfile
 
-from enthought.traits.api \
+from traits.api \
     import HasPrivateTraits, Any, Instance, File, Directory, Str, Property, \
            Callable
 
-from enthought.traits.ui.api \
+from traitsui.api \
     import View, Item, TreeEditor, TreeNodeObject, ObjectTreeNode
 
 from enthought.developer.api \

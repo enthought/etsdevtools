@@ -16,13 +16,13 @@
 #  Imports:
 #-------------------------------------------------------------------------------
 
-from enthought.traits.api \
+from traits.api \
     import HasTraits, HasPrivateTraits, Any, Str, List, Range, Instance
 
-from enthought.traits.ui.api \
+from traitsui.api \
     import View, VGroup, Item, ListEditor, InstanceEditor
 
-from enthought.pyface.timer.api \
+from pyface.timer.api \
     import do_later
 
 from enthought.developer.api \

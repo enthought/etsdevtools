@@ -20,23 +20,23 @@
 from os.path \
     import isdir, basename
 
-from enthought.traits.api \
+from traits.api \
     import HasPrivateTraits, Str, List, File, Directory, Constant, Instance, \
            Int, Property, TraitType, TraitError, cached_property
 
-from enthought.traits.ui.api \
+from traitsui.api \
     import View, VGroup, HGroup, Item, TableEditor, UIInfo, Handler, spring
 
-from enthought.traits.ui.table_column \
+from traitsui.table_column \
     import ObjectColumn
 
-from enthought.traits.ui.table_filter \
+from traitsui.table_filter \
     import TableFilter
 
-from enthought.traits.ui.image.image \
+from traitsui.image.image \
     import ImageLibrary, ImageInfo
 
-from enthought.traits.ui.key_bindings \
+from traitsui.key_bindings \
     import KeyBindings, KeyBinding
 
 from enthought.developer.features.api \
@@ -49,7 +49,7 @@ from image_browser \
     import ImageItem
 
 # fixme: We need to add a toolkit independent version of the clipboard...
-from enthought.util.wx.clipboard \
+from traits.util.wx.clipboard \
     import clipboard
 
 #-------------------------------------------------------------------------------

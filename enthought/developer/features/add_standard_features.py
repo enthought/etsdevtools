@@ -35,7 +35,7 @@ from save_feature         import SaveFeature
 from save_state_feature   import SaveStateFeature
 from tool_feature         import ToolFeature
 
-from enthought.pyface.dock.api \
+from pyface.dock.api \
     import add_feature
 
 #-------------------------------------------------------------------------------

@@ -32,14 +32,14 @@ import shelve
 from os.path \
     import join
 
-from enthought.traits.api \
+from traits.api \
     import HasTraits, List, TraitListObject, TraitSetObject, TraitDictObject, \
            Str, on_trait_change
 
-from enthought.traits.trait_base \
+from traits.trait_base \
     import traits_home
 
-from enthought.pyface.dock.api \
+from pyface.dock.api \
     import DockWindowFeature
 
 #-------------------------------------------------------------------------------

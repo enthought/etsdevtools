@@ -24,10 +24,10 @@
 #  Imports:
 #-------------------------------------------------------------------------------
 
-from enthought.pyface.dock.api \
+from pyface.dock.api \
     import DockWindowFeature
 
-from enthought.pyface.image_resource \
+from pyface.image_resource \
     import ImageResource
 
 from enthought.developer.api \

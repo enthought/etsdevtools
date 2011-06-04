@@ -1,7 +1,7 @@
 #-------------------------------------------------------------------------------
 #
 #  Extension point adapters for ExtensionPoint subclasses defined in:
-#  - enthought.envisage.resource.resource_plugin_definition.py
+#  - envisage.resource.resource_plugin_definition.py
 #
 #  Written by: David C. Morrill
 #
@@ -15,14 +15,14 @@
 #  Imports:
 #-------------------------------------------------------------------------------
 
-from enthought.traits.api \
+from traits.api \
     import HasPrivateTraits, Str, Code, Property
 
 
-from enthought.traits.ui.api \
+from traitsui.api \
     import VGroup, HGroup, Item, TableEditor
 
-from enthought.traits.ui.table_column \
+from traitsui.table_column \
     import ObjectColumn
 
 from enthought.developer.tools.envisage_browser.object_adapter \

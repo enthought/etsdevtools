@@ -19,9 +19,9 @@
 #  Imports:
 #-------------------------------------------------------------------------------
 
-from enthought.traits.ui.api import Handler, View, Group, Item, RGBColorEditor
-from enthought.traits.ui.menu import MenuBar, Menu, Action, Separator
-import enthought.traits.ui
+from traitsui.api import Handler, View, Group, Item, RGBColorEditor
+from traitsui.menu import MenuBar, Menu, Action, Separator
+import traitsui
 
 #-------------------------------------------------------------------------------
 #  'ViewHandler' class:
@@ -36,7 +36,7 @@ class ViewHandler ( Handler ):
     def object_color_changed ( self, info ):
         """ Handles the object's 'color' trait changing value.
         """
-        from enthought.util.wx.clipboard import clipboard as cb
+        from traits.util.wx.clipboard import clipboard as cb
         c      = info.object.color_
         format = info.object.format
         if format == 'Web':
@@ -86,7 +86,7 @@ class ViewHandler ( Handler ):
             )
         ),
         title   = 'Color Clipboard',
-        id      = 'enthought.traits.vet.examples.color_clipboard',
+        id      = 'traits.vet.examples.color_clipboard',
         buttons = [ 'OK', 'Cancel' ]
     )
 
@@ -95,7 +95,7 @@ class ViewHandler ( Handler ):
 #-------------------------------------------------------------------------------
 
 if __name__ == '__main__':
-    import enthought.traits.vet.examples.color_info
+    import traits.vet.examples.color_info
     ViewHandler().configure_traits( context = {
-        'object': enthought.traits.vet.examples.color_info.ColorInfo()
+        'object': traits.vet.examples.color_info.ColorInfo()
     } )

@@ -146,10 +146,10 @@ Also, please note that in order for this demo to run, you must have the
 enthought.developer package installed.
 """
 
-from enthought.traits.api \
+from traits.api \
     import HasTraits, Instance
 
-from enthought.traits.ui.api \
+from traitsui.api \
     import View, VSplit, Item
 
 from enthought.developer.tools.file_sieve \
@@ -184,7 +184,7 @@ class VolumeBuilder ( HasTraits ):
             show_labels = False
         ),
         title     = 'Image Volume Builder',
-        id        = 'enthought.traits.ui.demo.tools.'
+        id        = 'traitsui.demo.tools.'
                     'Image_Volume_Builder_demo',
         width     = 0.75,
         height    = 0.75,

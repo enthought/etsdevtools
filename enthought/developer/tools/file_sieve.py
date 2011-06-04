@@ -32,22 +32,22 @@ from os.path \
 from stat \
     import ST_SIZE, ST_MTIME
 
-from enthought.traits.api \
+from traits.api \
     import HasPrivateTraits, Str, Int, Long, Enum, List, Float, Bool, \
            Property, Button, Instance, Directory, TraitType, TraitError, \
            cached_property
 
-from enthought.traits.ui.api \
+from traitsui.api \
     import View, VSplit, VGroup, HGroup, Item, TableEditor, TitleEditor, \
            DirectoryEditor, Handler, spring
 
-from enthought.traits.ui.table_column \
+from traitsui.table_column \
     import ObjectColumn
 
-from enthought.traits.ui.table_filter \
+from traitsui.table_filter \
     import TableFilter
 
-from enthought.traits.ui.helper \
+from traitsui.helper \
     import commatize
 
 #-------------------------------------------------------------------------------
@@ -766,7 +766,7 @@ class FileSieve ( HasPrivateTraits ):
 if __name__ == '__main__':
     sieve = FileSieve(
         #path = r'C:\svnroot\enthought.trunk\enthought.sweet_pickle_2.1' )
-        path = r'C:\svnroot\enthought.trunk\enthought.pyface_3.0' )
+        path = r'C:\svnroot\enthought.trunk\pyface_3.0' )
 
     sieve.configure_traits()
 

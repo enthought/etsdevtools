@@ -26,24 +26,24 @@ from types \
 from sys \
     import getrefcount
 
-from enthought.traits.api \
+from traits.api \
     import HasPrivateTraits, Str, Int, Any, Button, Property, Instance, List, \
            Event, PythonValue, cached_property, on_trait_change
 
-from enthought.traits.ui.api \
+from traitsui.api \
     import View, VSplit, VGroup, HGroup, Item, Handler, spring, TableEditor, \
            ListEditor, ValueEditor, TreeEditor, TreeNode, Theme
 
-from enthought.traits.ui.key_bindings \
+from traitsui.key_bindings \
     import KeyBindings, KeyBinding
 
-from enthought.traits.ui.helper \
+from traitsui.helper \
     import commatize
 
-from enthought.traits.ui.table_column \
+from traitsui.table_column \
     import ObjectColumn, ExpressionColumn
 
-from enthought.traits.ui.api \
+from traitsui.api \
     import HistoryEditor
 
 #-------------------------------------------------------------------------------

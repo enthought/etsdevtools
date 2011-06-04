@@ -15,10 +15,10 @@
 #  Imports:
 #-------------------------------------------------------------------------------
 
-from enthought.traits.api \
+from traits.api \
     import HasPrivateTraits, File, Code, Property
 
-from enthought.pyface.dock.api \
+from pyface.dock.api \
     import IDockUIProvider
 
 #-------------------------------------------------------------------------------

@@ -15,7 +15,7 @@
 #  Imports:
 #-------------------------------------------------------------------------------
 
-from enthought.traits.api \
+from traits.api \
     import HasPrivateTraits,  Str, Range, RGBColor, List, Enum, Instance
 
 #-------------------------------------------------------------------------------

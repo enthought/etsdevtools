@@ -23,7 +23,7 @@ from os.path \
 from platform \
     import system
 
-from enthought.traits.api \
+from traits.api \
     import HasPrivateTraits, Str, Int, Bool, List, Dict
 
 #-------------------------------------------------------------------------------

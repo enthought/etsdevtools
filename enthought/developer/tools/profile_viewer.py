@@ -21,21 +21,21 @@ import hotshot, hotshot.stats
 from os.path \
     import split, splitext
 
-from enthought.traits.api \
+from traits.api \
     import HasPrivateTraits, Str, Instance, List, Int, Float, File, Range, \
            Any, TraitValue, Property, property_depends_on, on_trait_change
 
-from enthought.traits.ui.api \
+from traitsui.api \
     import View, VGroup, Tabbed, Item, TableEditor, ListEditor
 
-from enthought.traits.ui.table_column \
+from traitsui.table_column \
     import ObjectColumn
 
-from enthought.traits.ui.table_filter \
+from traitsui.table_filter \
     import EvalFilterTemplate, RuleFilterTemplate, MenuFilterTemplate, \
            EvalTableFilter
 
-from enthought.pyface.timer.api \
+from pyface.timer.api \
     import do_later
 
 from enthought.developer.api \

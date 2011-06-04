@@ -19,23 +19,23 @@
 #  Imports:
 #-------------------------------------------------------------------------------
 
-from enthought.traits.api \
+from traits.api \
     import HasPrivateTraits, Instance, Int, Bool, List, Event, Button, \
            Property, on_trait_change, cached_property
 
-from enthought.traits.ui.api \
+from traitsui.api \
     import View, HGroup, Item, Theme, TabularEditor, spring
 
-from enthought.traits.ui.ui_traits \
+from traitsui.ui_traits \
     import Image
 
-from enthought.traits.ui.image.image \
+from traitsui.image.image \
     import ImageLibrary, ImageVolume, ImageInfo
 
-from enthought.traits.ui.wx.themed_vertical_notebook_editor \
+from traitsui.wx.themed_vertical_notebook_editor \
     import ThemedVerticalNotebookEditor
 
-from enthought.traits.ui.tabular_adapter \
+from traitsui.tabular_adapter \
     import TabularAdapter
 
 #-------------------------------------------------------------------------------

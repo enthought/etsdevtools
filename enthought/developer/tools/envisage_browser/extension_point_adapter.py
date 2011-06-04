@@ -23,13 +23,13 @@ from types import FunctionType
 from os.path \
     import join, exists
 
-from enthought.traits.api \
+from traits.api \
     import List, Property
 
-from enthought.traits.ui.api \
+from traitsui.api \
     import View, Tabbed, VGroup, Item, Include, ListEditor
 
-from enthought.traits.ui.menu \
+from traitsui.menu \
     import NoButtons
 
 from enthought.developer.tools.envisage_browser.object_adapter \

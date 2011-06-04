@@ -1,5 +1,5 @@
 """
-A demonstration of how tools in the <b>enthought.developer</b> package can be
+A demonstration of how tools in the <b>etsdevtools.developer</b> package can be
 easily connected together to form other tools. In this case we are connecting
 the <i>ImageLibraryViewer</i> to an <i>ImageBrowser</i> to form a new
 <i>ImageTool</i>.
@@ -14,7 +14,7 @@ because both of these tools support the <i>feature</i> architecture, they
 can just as easily be connected together by the end user using the <i>feature
 user interface</i>.
 
-All of the tools in the <b>enthought.developer</b> package follow the <i>small,
+All of the tools in the <b>etsdevtools.developer</b> package follow the <i>small,
 sharp, visual tools</i> design model, which is intended to allow developers
 and end users to create new tools by the interconnection of the other tools,
 similar to the shell command line tool model, but oriented toward visual tools.
@@ -47,7 +47,7 @@ Traits UI-based application.
 If you select one or more images in the image library viewer, you will see a
 full size version of the image appear in the browser view.
 
-In order for this demo to run, you must have the enthought.developer package
+In order for this demo to run, you must have the etsdevtools.developer package
 installed.
 """
 
@@ -57,10 +57,10 @@ from traits.api \
 from traitsui.api \
     import View, VSplit, Item
 
-from enthought.developer.tools.image_library_viewer \
+from etsdevtools.developer.tools.image_library_viewer \
      import ImageLibraryViewer
 
-from enthought.developer.tools.image_browser \
+from etsdevtools.developer.tools.image_browser \
      import ImageBrowser
 
 class ImageTool ( HasTraits ):

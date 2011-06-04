@@ -25,7 +25,7 @@ from traitsui.api \
 from traitsui.key_bindings \
     import KeyBindings, KeyBinding
 
-from enthought.developer.features.api \
+from etsdevtools.developer.features.api \
     import add_standard_features
 
 from pyface.image_resource\
@@ -41,59 +41,59 @@ from helper.themes \
 # The standard tools:
 StdTools = {
     'Application Monitor':
-        'enthought.developer.tools.app_monitor.AppMonitor',
+        'etsdevtools.developer.tools.app_monitor.AppMonitor',
     'Class Browser':
-        'enthought.developer.tools.class_browser.ClassBrowser',
+        'etsdevtools.developer.tools.class_browser.ClassBrowser',
     'Favorites Browser':
-        'enthought.developer.tools.favorites_browser.FavoritesBrowser',
+        'etsdevtools.developer.tools.favorites_browser.FavoritesBrowser',
     'FBI Viewer':
-        'enthought.developer.tools.fbi_viewer.FBIViewer',
+        'etsdevtools.developer.tools.fbi_viewer.FBIViewer',
     'File Browser':
-        'enthought.developer.tools.file_browser.FileBrowser',
+        'etsdevtools.developer.tools.file_browser.FileBrowser',
 #   'File Monitor':
-#       'enthought.developer.tools.file_monitor.FileMonitor',
+#       'etsdevtools.developer.tools.file_monitor.FileMonitor',
     'File Sieve':
-        'enthought.developer.tools.file_sieve.FileSieve',
+        'etsdevtools.developer.tools.file_sieve.FileSieve',
     'File Search':
-        'enthought.developer.tools.file_search.FileSearch',
+        'etsdevtools.developer.tools.file_search.FileSearch',
     'File Space':
-        'enthought.developer.tools.file_space.FileSpace',
+        'etsdevtools.developer.tools.file_space.FileSpace',
     'Heap Browser':
-        'enthought.developer.tools.heap_browser.HB_HeapBrowser',
+        'etsdevtools.developer.tools.heap_browser.HB_HeapBrowser',
     'Image Browser':
-        'enthought.developer.tools.image_browser.ImageBrowser',
+        'etsdevtools.developer.tools.image_browser.ImageBrowser',
     'Image Library Viewer':
-        'enthought.developer.tools.image_library_viewer.ImageLibraryViewer',
+        'etsdevtools.developer.tools.image_library_viewer.ImageLibraryViewer',
     'Image Theme Editor':
-        'enthought.developer.tools.image_theme_editor.ImageThemeEditor',
+        'etsdevtools.developer.tools.image_theme_editor.ImageThemeEditor',
     'Listener':
-        'enthought.developer.tools.listener.Listener',
+        'etsdevtools.developer.tools.listener.Listener',
     'Logger':
-        'enthought.developer.tools.logger.Logger',
+        'etsdevtools.developer.tools.logger.Logger',
     'Log File':
-        'enthought.developer.tools.log_file.LogFile',
+        'etsdevtools.developer.tools.log_file.LogFile',
     'Object Source':
-        'enthought.developer.tools.object_source.ObjectSource',
+        'etsdevtools.developer.tools.object_source.ObjectSource',
     'Object Viewer':
-        'enthought.developer.tools.object_viewer.ObjectViewer',
+        'etsdevtools.developer.tools.object_viewer.ObjectViewer',
     'Profile Viewer':
-        'enthought.developer.tools.profile_viewer.ProfileViewer',
+        'etsdevtools.developer.tools.profile_viewer.ProfileViewer',
     'Profiler':
-        'enthought.developer.tools.profiler.Profiler',
+        'etsdevtools.developer.tools.profiler.Profiler',
     'Syntax Checker':
-        'enthought.developer.tools.syntax_checker.SyntaxChecker',
+        'etsdevtools.developer.tools.syntax_checker.SyntaxChecker',
     'Traceback Viewer':
-        'enthought.developer.tools.traceback_viewer.TracebackViewer',
+        'etsdevtools.developer.tools.traceback_viewer.TracebackViewer',
     'Traits UI DB':
-        'enthought.developer.tools.traits_ui_db.TraitsUIDB',
+        'etsdevtools.developer.tools.traits_ui_db.TraitsUIDB',
     'UI Debugger':
-        'enthought.developer.tools.ui_debugger.UIDebugger',
+        'etsdevtools.developer.tools.ui_debugger.UIDebugger',
     'Universal Inspector':
-        'enthought.developer.tools.universal_inspector.UniversalInspector',
+        'etsdevtools.developer.tools.universal_inspector.UniversalInspector',
     'View Tester':
-        'enthought.developer.tools.view_tester.ViewTester',
+        'etsdevtools.developer.tools.view_tester.ViewTester',
     'Wiretap':
-        'enthought.developer.tools.wiretap.Wiretap',
+        'etsdevtools.developer.tools.wiretap.Wiretap',
     'Template View':
         'enthought.template.test.template_view.TemplateView'
 }
@@ -328,7 +328,7 @@ class Tools ( HasPrivateTraits ):
             )
         ),
         title        = 'Enthought Developer Tools: Traits UI Edition',
-        id           = 'enthought.developer.tools.Tools',
+        id           = 'etsdevtools.developer.tools.Tools',
         width        = 0.75,
         height       = 0.75,
         resizable    = True,
@@ -416,7 +416,7 @@ class Tools ( HasPrivateTraits ):
         if not self.fbi_enabled:
             self.fbi_enabled = True
 
-            from enthought.developer.helper.fbi import use_fbi
+            from etsdevtools.developer.helper.fbi import use_fbi
             use_fbi()
 
             print 'FBI Enabled'

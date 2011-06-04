@@ -14,7 +14,7 @@
 #  Imports:
 #-------------------------------------------------------------------------------
 
-import enthought.developer
+import etsdevtools.developer
 
 import envisage
 
@@ -28,7 +28,7 @@ from os.path \
 #-------------------------------------------------------------------------------
 
 envisage  = abspath( dirname( envisage.__file__  ) )
-developer = abspath( dirname( enthought.developer.__file__ ) )
+developer = abspath( dirname( etsdevtools.developer.__file__ ) )
 pythonshell = abspath( dirname( envisage.plugins.python_shell.__file__ ) )
 
 #-------------------------------------------------------------------------------

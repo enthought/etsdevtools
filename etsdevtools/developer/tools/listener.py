@@ -28,7 +28,7 @@ from traitsui.api \
 from traitsui.table_column \
     import ObjectColumn
 
-from enthought.developer.api \
+from etsdevtools.developer.api \
     import FilePosition, TraitValue, read_file
 
 #-------------------------------------------------------------------------------
@@ -219,7 +219,7 @@ class Listener ( HasPrivateTraits ):
               show_label = False,
               editor     = listener_table_editor
         ),
-        id = 'enthought.developer.tools.listener'
+        id = 'etsdevtools.developer.tools.listener'
     )
 
     #---------------------------------------------------------------------------

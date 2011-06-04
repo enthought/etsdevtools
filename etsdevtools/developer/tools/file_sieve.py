@@ -596,7 +596,7 @@ class FileSieve ( HasPrivateTraits ):
     name = Str( 'File Sieve' )
 
     # The persistence id for this object:
-    id = Str( 'enthought.developer.tools.file_sieve.state',
+    id = Str( 'etsdevtools.developer.tools.file_sieve.state',
               save_state_id = True )
 
     # The path specifying the files to be listed:
@@ -696,7 +696,7 @@ class FileSieve ( HasPrivateTraits ):
             id = 'splitter',
         ),
         title     = 'File Sieve',
-        id        = 'enthought.developer.tools.file_sieve.FileSieve',
+        id        = 'etsdevtools.developer.tools.file_sieve.FileSieve',
         width     = 0.6,
         height    = 0.7,
         resizable = True,

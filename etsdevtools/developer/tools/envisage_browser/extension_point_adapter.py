@@ -32,7 +32,7 @@ from traitsui.api \
 from traitsui.menu \
     import NoButtons
 
-from enthought.developer.tools.envisage_browser.object_adapter \
+from etsdevtools.developer.tools.envisage_browser.object_adapter \
     import ObjectAdapter
 
 #-------------------------------------------------------------------------------
@@ -78,7 +78,7 @@ class ExtensionPointClassAdapter ( ObjectAdapter ):
                    ),
                    id = 'tabbed'
                ),
-               id        = 'enthought.developer.tools.envisage_browser.'
+               id        = 'etsdevtools.developer.tools.envisage_browser.'
                           'extension_point__adapter.ExtensionPointClassAdapter',
                title     = 'Extension Point Class Definition',
                resizable = True,
@@ -149,7 +149,7 @@ class ExtensionPointAdapter ( ObjectAdapter ):
             Include( 'extra_page4' ),
             id = 'tabbed'
         ),
-        id        = 'enthought.developer.tools.envisage_browser.'
+        id        = 'etsdevtools.developer.tools.envisage_browser.'
                     'extension_point_adapter.ExtensionPointAdapter',
         title     = 'Extension Point Definition',
         resizable = True,

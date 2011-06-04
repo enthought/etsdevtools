@@ -31,7 +31,7 @@ from traitsui.api \
     import View, VGroup, HGroup, Item, ListEditor, DNDEditor, ValueEditor, \
            CodeEditor
 
-from enthought.developer.helper.themes \
+from etsdevtools.developer.helper.themes \
     import TTitle
 
 from enthought.io.file \
@@ -40,7 +40,7 @@ from enthought.io.file \
 from pyface.timer.api \
     import do_later
 
-from enthought.developer.api \
+from etsdevtools.developer.api \
     import HasPayload, FilePosition, read_file, file_watch
 
 #-------------------------------------------------------------------------------
@@ -65,7 +65,7 @@ class UniversalInspector ( HasPrivateTraits ):
     name = Str( 'Universal Inspector' )
 
     # The persistence id for this object:
-    id = Str( 'enthought.developer.tools.universal_inspector.state',
+    id = Str( 'etsdevtools.developer.tools.universal_inspector.state',
               save_state_id = True )
 
     # Maximum number of open inspectors allowed:
@@ -99,7 +99,7 @@ class UniversalInspector ( HasPrivateTraits ):
               width = -50
         ),
         title   = 'Universal Inspector Options',
-        id      = 'enthought.developer.tools.universal_inspector.options',
+        id      = 'etsdevtools.developer.tools.universal_inspector.options',
         buttons = [ 'OK', 'Cancel' ]
     )
 

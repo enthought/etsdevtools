@@ -2,7 +2,7 @@
 import unittest
 
 # Enthought library
-from enthought.debug.research.memory_tracker2 import TrackedClassObject
+from etsdevtools.debug.research.memory_tracker2 import TrackedClassObject
 
 class TrackedClassObjectTestCase(unittest.TestCase):
 

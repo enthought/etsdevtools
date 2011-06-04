@@ -26,19 +26,19 @@ from traitsui.api \
 from pyface.timer.api \
     import do_later
 
-from enthought.developer.features.api \
+from etsdevtools.developer.features.api \
     import DropFile
 
-from enthought.developer.api \
+from etsdevtools.developer.api \
     import FilePosition, read_file
 
-from enthought.developer.helper.fbi \
+from etsdevtools.developer.helper.fbi \
     import fbi_object
 
-from enthought.developer.helper.themes \
+from etsdevtools.developer.helper.themes \
     import TTitle, TButton
 
-from enthought.developer.helper.bdb \
+from etsdevtools.developer.helper.bdb \
     import BPType
 
 #-------------------------------------------------------------------------------
@@ -62,7 +62,7 @@ class FBIViewer ( HasPrivateTraits ):
     name = Str( 'FBI Viewer' )
 
     # The persistence id for this object:
-    id = Str( 'enthought.developer.tools.fbi_viewer.state',
+    id = Str( 'etsdevtools.developer.tools.fbi_viewer.state',
               save_state_id = True )
 
     # Maximum number of open viewers allowed:
@@ -99,7 +99,7 @@ class FBIViewer ( HasPrivateTraits ):
               width = -50
         ),
         title   = 'FBI Viewer Options',
-        id      = 'enthought.developer.tools.fbi_viewer.options',
+        id      = 'etsdevtools.developer.tools.fbi_viewer.options',
         buttons = [ 'OK', 'Cancel' ]
     )
 

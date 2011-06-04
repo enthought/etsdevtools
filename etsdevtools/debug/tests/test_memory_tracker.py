@@ -6,7 +6,7 @@ import nose
 
 # Enthought library
 from traits.api import HasTraits, Any
-from enthought.debug.memory_tracker import MemoryState, get_all_referrers
+from etsdevtools.debug.memory_tracker import MemoryState, get_all_referrers
 
 
 class MemoryStateTestCase(unittest.TestCase):

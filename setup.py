@@ -10,7 +10,7 @@ The ETSDevTools project includes a set of packages that can be used during the
 development of a software project, for understanding, debugging, testing, and
 inspecting code.
 
-- **Enthought Developer Tool Suite** (enthought.developer): A collection of
+- **Enthought Developer Tool Suite** (etsdevtools.developer): A collection of
   utilities, designed to ease the development and debugging of Traits-based
   programs. They can be used as plug-ins to your Envisage application while
   you are developing it, and then removed when you are ready to release it.
@@ -18,7 +18,7 @@ inspecting code.
   code. It extracts not only docstrings, but also plain comments that
   immediately precede variable assignments (both module-scope variables and
   class attributes).
-- **enthought.debug**: A collection of debugging tools, not to be included in
+- **etsdevtools.debug**: A collection of debugging tools, not to be included in
   production code. NOTE: These tools are functional, but are not being
   developed or supported. They have been mainly superceded by the tools
   in the Enthought Developer Tool Suite.
@@ -97,9 +97,9 @@ numpy.distutils.core.setup(
     description = DOCLINES[1],
     entry_points = {
         'console_scripts': [
-            'endo = enthought.endo.scripts.endo:main',
-            'endo-readstate = enthought.endo.scripts.readstate:main',
-            'ets_endo = enthought.endo.scripts.ets_endo:main',
+            'endo = etsdevtools.endo.scripts.endo:main',
+            'endo-readstate = etsdevtools.endo.scripts.readstate:main',
+            'ets_endo = etsdevtools.endo.scripts.ets_endo:main',
             ]
         },
     include_package_data = True,

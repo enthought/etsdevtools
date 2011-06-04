@@ -18,7 +18,7 @@
 
 import sys
 
-import enthought.developer.helper.profiler as profiler_module
+import etsdevtools.developer.helper.profiler as profiler_module
 
 from types \
     import UnboundMethodType
@@ -35,16 +35,16 @@ from traitsui.table_column \
 from pyface.image_resource \
     import ImageResource
 
-from enthought.developer.features.api \
+from etsdevtools.developer.features.api \
     import CustomFeature
 
 from pyface.timer.api \
     import do_later
 
-from enthought.developer.api \
+from etsdevtools.developer.api \
     import PythonFilePosition, FilePosition, import_module
 
-from enthought.developer.helper.profiler \
+from etsdevtools.developer.helper.profiler \
     import begin_profiling, end_profiling, profile
 
 #-------------------------------------------------------------------------------
@@ -96,7 +96,7 @@ class Profiler ( HasPrivateTraits ):
     name = Str( 'Profiler' )
 
     # The persistence id for this object:
-    id = Str( 'enthought.developer.tools.profiler.state', save_state_id = True )
+    id = Str( 'etsdevtools.developer.tools.profiler.state', save_state_id = True )
 
     # Custom button used to begin profiling:
     start = Instance( CustomFeature, {
@@ -147,7 +147,7 @@ class Profiler ( HasPrivateTraits ):
               show_label = False,
               editor     = profiler_table_editor
         ),
-        id = 'enthought.developer.tools.profiler'
+        id = 'etsdevtools.developer.tools.profiler'
     )
 
     options = View(
@@ -163,7 +163,7 @@ class Profiler ( HasPrivateTraits ):
             show_left = False
         ),
         title   = 'Profiler Options',
-        id      = 'enthought.developer.tools.profiler.options',
+        id      = 'etsdevtools.developer.tools.profiler.options',
         buttons = [ 'OK', 'Cancel' ]
     )
 

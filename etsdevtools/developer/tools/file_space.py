@@ -30,7 +30,7 @@ from traitsui.api \
 from pyface.api \
     import error, confirm, YES
 
-from enthought.developer.api \
+from etsdevtools.developer.api \
     import FilePosition
 
 #-------------------------------------------------------------------------------
@@ -174,7 +174,7 @@ class FileSpaceRootNode ( FileSpaceBaseNode ):
                Item( 'name' ),
                buttons = [ 'OK', 'Cancel' ],
                title   = 'New File Space Root',
-               id = 'enthought.developer.tools.file_space.FileSpaceRootNode'
+               id = 'etsdevtools.developer.tools.file_space.FileSpaceRootNode'
            )
 
     #---------------------------------------------------------------------------
@@ -586,7 +586,7 @@ class FileSpace ( HasPrivateTraits ):
     name = Str( 'File Space' )
 
     # The persistence id for this object:
-    id = Str( 'enthought.developer.tools.file_space.state',
+    id = Str( 'etsdevtools.developer.tools.file_space.state',
               save_state_id = True )
 
     # The root file space node:

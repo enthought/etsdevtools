@@ -1,6 +1,6 @@
 #-------------------------------------------------------------------------------
 #
-#  Sample plugin definition for the enthought.developer.tools and associated
+#  Sample plugin definition for the etsdevtools.developer.tools and associated
 #  DockWindow features.
 #
 #  Written by: David C. Morrill
@@ -31,7 +31,7 @@ from features.api import DragDropFeature, DropFileFeature, ConnectFeature, \
 #-------------------------------------------------------------------------------
 
 # The plugin's globally unique identifier:
-ID = 'enthought.developer.tools'
+ID = 'etsdevtools.developer.tools'
 
 #-------------------------------------------------------------------------------
 #  The test plugin:

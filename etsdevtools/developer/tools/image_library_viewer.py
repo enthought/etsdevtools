@@ -39,10 +39,10 @@ from traitsui.image.image \
 from traitsui.key_bindings \
     import KeyBindings, KeyBinding
 
-from enthought.developer.features.api \
+from etsdevtools.developer.features.api \
     import DropFile
 
-from enthought.developer.helper.traits \
+from etsdevtools.developer.helper.traits \
     import Size
 
 from image_browser \
@@ -367,7 +367,7 @@ class ImageLibraryViewer ( HasPrivateTraits ):
             )
         ),
         title        = 'Image Library Viewer',
-        id           = 'enthought.developer.tools.image_library_viewer.'
+        id           = 'etsdevtools.developer.tools.image_library_viewer.'
                        'ImageLibraryViewer',
         width        = 0.75,
         height       = 0.75,

@@ -23,7 +23,7 @@ from os.path \
 from traits.api \
     import HasPrivateTraits, Any, File, Int, Str, Enum, Property, false, true
 
-from enthought.developer.helper.read_file \
+from etsdevtools.developer.helper.read_file \
     import read_file
 
 #-------------------------------------------------------------------------------

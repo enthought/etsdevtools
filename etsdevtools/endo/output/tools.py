@@ -17,7 +17,7 @@ import sys
 import re
 
 sys.path.append('..')
-import enthought.endo.docobjects as docobjects
+import etsdevtools.endo.docobjects as docobjects
 
 def encode_entities(s):
     """ returns s, with <, >, and & replaced with proper XML entities """
@@ -199,7 +199,7 @@ def _insert_into(hierarchy, module, level):
     # The module doesn't match any existing roots
     if mod_len > level+1:
         # need a placeholder at this level
-        from enthought.endo.docobjects import _OpaqueRef
+        from etsdevtools.endo.docobjects import _OpaqueRef
         base_name = '.'.join(module.name_list[:level+1])
         hierarchy.append( (_OpaqueRef.new_ref(base_name), []) )
         _insert_into(hierarchy, module, level)

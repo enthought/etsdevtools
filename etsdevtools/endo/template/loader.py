@@ -12,7 +12,7 @@
 "Template loader agent"
 
 import os
-from enthought.endo.template import Template
+from etsdevtools.endo.template import Template
 
 class TemplateLoader:
     """The template loader is responsible for loading templates.

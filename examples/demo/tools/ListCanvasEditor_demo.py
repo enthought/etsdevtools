@@ -22,7 +22,7 @@ from traitsui.theme \
 from traitsui.tabular_adapter \
     import TabularAdapter
 
-from enthought.developer.editors.list_canvas_editor \
+from etsdevtools.developer.editors.list_canvas_editor \
     import ListCanvasAdapter, IListCanvasAware, ListCanvasEditor, \
            ListCanvasItemMonitor, ListCanvasItem, SnapInfo, GridInfo, \
            GuideInfo, Modified
@@ -274,7 +274,7 @@ class People ( HasTraits ):
                            guide_info = guide_info )
         ),
         title     = 'List Canvas Test',
-        id        = 'enthought.developer.editors.list_canvas_editor',
+        id        = 'etsdevtools.developer.editors.list_canvas_editor',
         width     = 0.75,
         height    = 0.75,
         resizable = True

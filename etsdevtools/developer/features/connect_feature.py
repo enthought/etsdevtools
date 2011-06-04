@@ -45,7 +45,7 @@ from pyface.dock.api \
 from pyface.image_resource \
     import ImageResource
 
-from enthought.developer.api \
+from etsdevtools.developer.api \
     import get_pickle, set_pickle
 
 #-------------------------------------------------------------------------------
@@ -62,7 +62,7 @@ no_connections = Menu(
     name = 'popup'
 )
 
-PermanentConnections = 'enthought.developer.features.ConnectFeature.' \
+PermanentConnections = 'etsdevtools.developer.features.ConnectFeature.' \
                        'permanent_connections'
 
 #-------------------------------------------------------------------------------

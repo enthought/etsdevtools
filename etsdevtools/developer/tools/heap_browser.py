@@ -59,15 +59,15 @@ SequenceTypes = ( list, tuple )
 # Classes which should not show up in any of the statistics, since they are
 # part of this tool itself:
 ignored_classes = set( [
-    'enthought.developer.tools.heap_browser.HB_ClassCount',
-    'enthought.developer.tools.heap_browser.HB_Referrer',
-    'enthought.developer.tools.heap_browser.HB_Referrers',
-    'enthought.developer.tools.heap_browser.HB_ReferrerHandler',
-    'enthought.developer.tools.heap_browser.HB_Detail',
-    'enthought.developer.tools.heap_browser.HB_InstanceDetail',
-    'enthought.developer.tools.heap_browser.HB_Baseline',
-    'enthought.developer.tools.heap_browser.HB_BaselineCount',
-    'enthought.developer.tools.heap_browser.HB_HeapBrowser'
+    'etsdevtools.developer.tools.heap_browser.HB_ClassCount',
+    'etsdevtools.developer.tools.heap_browser.HB_Referrer',
+    'etsdevtools.developer.tools.heap_browser.HB_Referrers',
+    'etsdevtools.developer.tools.heap_browser.HB_ReferrerHandler',
+    'etsdevtools.developer.tools.heap_browser.HB_Detail',
+    'etsdevtools.developer.tools.heap_browser.HB_InstanceDetail',
+    'etsdevtools.developer.tools.heap_browser.HB_Baseline',
+    'etsdevtools.developer.tools.heap_browser.HB_BaselineCount',
+    'etsdevtools.developer.tools.heap_browser.HB_HeapBrowser'
 ] )
 
 #-------------------------------------------------------------------------------
@@ -420,7 +420,7 @@ class HB_Referrer ( HasPrivateTraits ):
               show_label = False,
               editor     = ValueEditor()
         ),
-        id        = 'enthought.developer.tools.heap_browser.HB_Referrer',
+        id        = 'etsdevtools.developer.tools.heap_browser.HB_Referrer',
         width     = 0.20,
         height    = 0.25,
         resizable = True,
@@ -670,7 +670,7 @@ class HB_Detail ( HasPrivateTraits ):
                 show_labels = False
             )
         ),
-        id           = 'enthought.developer.tools.heap_browser.HB_Detail',
+        id           = 'etsdevtools.developer.tools.heap_browser.HB_Detail',
         resizable    = True,
         key_bindings = detail_key_bindings
     )
@@ -1122,7 +1122,7 @@ class HB_HeapBrowser ( HasPrivateTraits ):
             show_labels = False
         ),
         title        = 'Heap Browser',
-        id           = 'enthought.developer.tools.heap_browser.HB_HeapBrowser',
+        id           = 'etsdevtools.developer.tools.heap_browser.HB_HeapBrowser',
         width        = 0.5,
         height       = 0.75,
         resizable    = True,
@@ -1304,7 +1304,7 @@ if __name__ == '__main__':
     hb = HB_HeapBrowser()
     hb.update()
 
-    from enthought.developer.helper.fbi import use_fbi
+    from etsdevtools.developer.helper.fbi import use_fbi
     use_fbi()
 
     hb.configure_traits()

@@ -21,10 +21,10 @@
 from traitsui.api \
     import View, Item
 
-from enthought.developer.editors.theme_editor \
+from etsdevtools.developer.editors.theme_editor \
     import ThemeEditor
 
-from enthought.developer.helper.image_library_editor \
+from etsdevtools.developer.helper.image_library_editor \
     import ImageLibraryEditor, ImageLibraryItem
 
 #-------------------------------------------------------------------------------
@@ -60,7 +60,7 @@ class ImageThemeEditor ( ImageLibraryEditor ):
     editor_title = 'Image Theme Editor'
 
     # The persistence id for the image library editor:
-    editor_id = 'enthought.developer.tools.image_theme_editor.ImageThemeEditor'
+    editor_id = 'etsdevtools.developer.tools.image_theme_editor.ImageThemeEditor'
 
     # Editor item factory class:
     item_class = ImageThemeItem

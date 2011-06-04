@@ -32,20 +32,20 @@ from traitsui.table_column \
 from traitsui.menu \
     import NoButtons
 
-from enthought.developer.features.api \
+from etsdevtools.developer.features.api \
     import DropFile
 
-from enthought.developer.tools.envisage_browser.object_adapter_base \
+from etsdevtools.developer.tools.envisage_browser.object_adapter_base \
     import ObjectAdapterBase
 
-from enthought.developer.tools.envisage_browser.application_adapter \
+from etsdevtools.developer.tools.envisage_browser.application_adapter \
     import ApplicationAdapter, ExtensionPointFileRefs, ExtensionPointRefs
 
-from enthought.developer.tools.envisage_browser.plugin_definition_adapter \
+from etsdevtools.developer.tools.envisage_browser.plugin_definition_adapter \
     import PluginDefinitionAdapter, RequiredByAdapter, RequiresAdapter, \
            ExtensionPointsAdapter, ExtensionsAdapter
 
-from enthought.developer.tools.envisage_browser.extension_point_adapter \
+from etsdevtools.developer.tools.envisage_browser.extension_point_adapter \
     import ExtensionPointAdapter, ExtensionPointClassAdapter
 
 #-------------------------------------------------------------------------------
@@ -286,7 +286,7 @@ class ApplicationBrowser ( Handler ):
             ),
             id = 'tabbed'
         ),
-        id = 'enthought.developer.tools.envisage_browser.browser',
+        id = 'etsdevtools.developer.tools.envisage_browser.browser',
     )
 
 #-- Handler Method Overrides ---------------------------------------------------

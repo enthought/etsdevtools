@@ -15,7 +15,7 @@
 
 import sys
 
-from enthought.developer.helper.ex_fbi \
+from etsdevtools.developer.helper.ex_fbi \
     import SavedBreakPoints
 
 #-------------------------------------------------------------------------------

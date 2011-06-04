@@ -207,7 +207,7 @@ class FileSearch ( HasTraits ):
             )
         ),
         title     = 'Live File Search',
-        id        = 'enthought.developer.tools.file_search',
+        id        = 'etsdevtools.developer.tools.file_search',
         width     = 0.75,
         height    = 0.67,
         resizable = True

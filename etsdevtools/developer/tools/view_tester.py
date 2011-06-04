@@ -31,13 +31,13 @@ from pyface.timer.api \
 from pyface.image_resource \
     import ImageResource
 
-from enthought.developer.features.api \
+from etsdevtools.developer.features.api \
     import CustomFeature
 
-from enthought.developer.api \
+from etsdevtools.developer.api \
     import file_watch
 
-from enthought.developer.helper.themes \
+from etsdevtools.developer.helper.themes \
     import TTitle
 
 #-------------------------------------------------------------------------------
@@ -54,7 +54,7 @@ class ViewTester ( HasPrivateTraits ):
     name = Str( 'View Tester' )
 
     # Peristent state id for this view:
-    id = Str( 'enthought.developer.tools.view_tester.state',
+    id = Str( 'etsdevtools.developer.tools.view_tester.state',
               save_state_id = True )
 
     # Should a changed file be automatically reloaded:
@@ -108,7 +108,7 @@ class ViewTester ( HasPrivateTraits ):
             show_left = False
         ),
         title   = 'View Tester Options',
-        id      = 'enthought.developer.tools.view_tester.options',
+        id      = 'etsdevtools.developer.tools.view_tester.options',
         buttons = [ 'OK', 'Cancel' ]
     )
 

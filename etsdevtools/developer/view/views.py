@@ -1,7 +1,7 @@
 #-------------------------------------------------------------------------------
 #
 #  Workbench views and perspectives for the objects in
-#  enthought.developer.tools.
+#  etsdevtools.developer.tools.
 #
 #  Author: David C. Morrill
 #          Vibha Srinivasan <vibha@enthought.com>
@@ -12,10 +12,10 @@
 # Imports
 from pyface.workbench.api import TraitsUIView
 from pyface.workbench.api import Perspective, PerspectiveItem
-from enthought.developer.tools.api import *
+from etsdevtools.developer.tools.api import *
 
 # Constants
-ID = 'enthought.developer.tools'
+ID = 'etsdevtools.developer.tools'
 
 def get_universal_inspector_view(window, **traits):
     return TraitsUIView(
@@ -178,9 +178,9 @@ def get_profile_viewer_view(window, **traits):
                 **traits)
 
 def get_break_points_view(window, **traits):
-    from enthought.developer.helper.fbi import Breakpoints
+    from etsdevtools.developer.helper.fbi import Breakpoints
     return TraitsUIView(
-                id   = 'enthought.developer.helper.fbi.break_points',
+                id   = 'etsdevtools.developer.helper.fbi.break_points',
                 obj  = Breakpoints(),
                 name = 'Break Points',
                 window = window,

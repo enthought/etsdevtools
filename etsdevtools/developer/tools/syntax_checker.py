@@ -29,13 +29,13 @@ from traitsui.api \
 from pyface.timer.api \
     import do_after
 
-from enthought.developer.features.api \
+from etsdevtools.developer.features.api \
     import DropFile
 
-from enthought.developer.api \
+from etsdevtools.developer.api \
     import Saveable, read_file, file_watch
 
-from enthought.developer.helper.themes \
+from etsdevtools.developer.helper.themes \
     import TTitle
 
 #-------------------------------------------------------------------------------
@@ -52,7 +52,7 @@ class SyntaxChecker ( Saveable ):
     name = Str( 'Syntax Checker' )
 
     # The persistence id for this object:
-    id = Str( 'enthought.developer.tools.syntax_checker.state',
+    id = Str( 'etsdevtools.developer.tools.syntax_checker.state',
               save_state_id = True )
 
     # Should the syntax checker automatically go to the current syntax error?
@@ -124,7 +124,7 @@ class SyntaxChecker ( Saveable ):
             show_left = False
         ),
         title   = 'Syntax Checker Options',
-        id      = 'enthought.developer.tools.syntax_checker.options',
+        id      = 'etsdevtools.developer.tools.syntax_checker.options',
         buttons = [ 'OK', 'Cancel' ]
     )
 

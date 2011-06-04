@@ -39,7 +39,7 @@ from traitsui.wx.basic_editor_factory \
 from pyface.timer.api \
     import do_later
 
-from enthought.developer.api \
+from etsdevtools.developer.api \
     import HasPayload
 
 #-------------------------------------------------------------------------------
@@ -221,7 +221,7 @@ class WXWindow ( TreeNodeObject ):
                     dock  = 'horizontal' ),
             id = 'splitter'
         ),
-        id   = 'enthought.developer.tools.ui_debugger.item',
+        id   = 'etsdevtools.developer.tools.ui_debugger.item',
         kind = 'subpanel'
     )
 
@@ -428,7 +428,7 @@ class UIDebugger ( Handler ):
             id = 'splitter'
         ),
         title = 'UI Debugger',
-        id    = 'enthought.developer.tools.ui_debugger'
+        id    = 'etsdevtools.developer.tools.ui_debugger'
     )
 
     #---------------------------------------------------------------------------

@@ -39,13 +39,13 @@ from traits.util.wx.clipboard \
 from pyface.image_resource \
     import ImageResource
 
-from enthought.developer.features.api \
+from etsdevtools.developer.features.api \
     import CustomFeature
 
-from enthought.developer.api \
+from etsdevtools.developer.api \
     import FilePosition
 
-from enthought.developer.helper.themes \
+from etsdevtools.developer.helper.themes \
     import TTitle
 
 #-------------------------------------------------------------------------------
@@ -174,7 +174,7 @@ class TracebackViewer ( HasPrivateTraits ):
               show_label = False,
               editor     = traceback_table_editor
         ),
-        id = 'enthought.developer.tools.traceback_viewer'
+        id = 'etsdevtools.developer.tools.traceback_viewer'
     )
 
     #---------------------------------------------------------------------------

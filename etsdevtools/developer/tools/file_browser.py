@@ -29,7 +29,7 @@ from traits.api \
 from traitsui.api \
     import View, Item, TreeEditor, TreeNodeObject, ObjectTreeNode
 
-from enthought.developer.api \
+from etsdevtools.developer.api \
     import FilePosition
 
 #-------------------------------------------------------------------------------
@@ -201,7 +201,7 @@ class FileBrowser ( HasPrivateTraits ):
     name = Str( 'File Browser' )
 
     # The persistence id for this object:
-    id = Str( 'enthought.developer.tools.file_browser.state',
+    id = Str( 'etsdevtools.developer.tools.file_browser.state',
               save_state_id = True )
 
     # File browser root path:
@@ -244,7 +244,7 @@ class FileBrowser ( HasPrivateTraits ):
               width = 300
         ),
         title   = 'File Browser Options',
-        id      = 'enthought.developer.tools.file_browser.options',
+        id      = 'etsdevtools.developer.tools.file_browser.options',
         buttons = [ 'OK', 'Cancel' ]
     )
 

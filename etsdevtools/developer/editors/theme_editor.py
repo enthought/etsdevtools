@@ -30,7 +30,7 @@ from traitsui.basic_editor_factory \
 from traitsui.wx.ui_editor \
     import UIEditor
 
-from enthought.developer.helper.themes \
+from etsdevtools.developer.helper.themes \
     import LabelTheme
 
 from list_canvas_editor \

@@ -25,10 +25,10 @@ from traitsui.api \
 from pyface.timer.api \
     import do_later
 
-from enthought.developer.api \
+from etsdevtools.developer.api \
     import HasPayload
 
-from enthought.developer.helper.themes \
+from etsdevtools.developer.helper.themes \
     import TTitle
 
 #-------------------------------------------------------------------------------
@@ -45,7 +45,7 @@ class ObjectViewer ( HasPrivateTraits ):
     name = Str( 'Object Viewer' )
 
     # The persistence id for this object:
-    id = Str( 'enthought.developer.tools.object_viewer.state',
+    id = Str( 'etsdevtools.developer.tools.object_viewer.state',
               save_state_id = True )
 
     # Maximum number of open viewers allowed:
@@ -79,7 +79,7 @@ class ObjectViewer ( HasPrivateTraits ):
               width = -50
         ),
         title   = 'Object Viewer Options',
-        id      = 'enthought.developer.tools.object_viewer.options',
+        id      = 'etsdevtools.developer.tools.object_viewer.options',
         buttons = [ 'OK', 'Cancel' ]
     )
 

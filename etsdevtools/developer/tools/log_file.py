@@ -38,7 +38,7 @@ from traitsui.table_column \
 from traitsui.table_filter \
     import TableFilter
 
-from enthought.developer.features.api \
+from etsdevtools.developer.features.api \
     import DropFile
 
 #-------------------------------------------------------------------------------
@@ -65,7 +65,7 @@ extra_view = View(
           editor     = CodeEditor()
     ),
     kind       = 'popup',
-    id         = 'enthought.developer.tools.log_file.extra',
+    id         = 'etsdevtools.developer.tools.log_file.extra',
     width      = 0.40,
     height     = 0.30,
     resizable  = True,
@@ -179,7 +179,7 @@ class LogFile ( HasPrivateTraits ):
     name = Str( 'LogFile', transient = True )
 
     # The persistence id for this object:
-    id = Str( 'enthought.developer.tools.log_file.state',
+    id = Str( 'etsdevtools.developer.tools.log_file.state',
               save_state_id = True, transient = True )
 
     # The name of the log file being processed:
@@ -232,7 +232,7 @@ class LogFile ( HasPrivateTraits ):
             Item( 'clear', show_label = False )
         ),
         title     = 'Log File',
-        id        = 'enthought.developer.tools.log_file',
+        id        = 'etsdevtools.developer.tools.log_file',
         width     = 0.6,
         height    = 0.5,
         resizable = True

@@ -27,7 +27,7 @@ from traitsui.api \
 from traitsui.image.image \
     import ImageLibrary, ImageInfo
 
-from enthought.developer.helper.library_manager \
+from etsdevtools.developer.helper.library_manager \
     import LibraryManager
 
 #-------------------------------------------------------------------------------
@@ -81,7 +81,7 @@ class ImageLibraryEditor ( HasPrivateTraits ):
     #-- Overridable Class Constants --------------------------------------------
 
     # The persistence id for the image library editor:
-    editor_id = ('enthought.developer.tools.image_library_editor.'
+    editor_id = ('etsdevtools.developer.tools.image_library_editor.'
                  'ImageLibraryEditor')
 
     # Editor item factory class:

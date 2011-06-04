@@ -152,7 +152,7 @@ class EventMonitor ( Handler ):
                   editor     = events_table_editor
             )
         ),
-        id        = 'enthought.developer.tools.event_monitor.EventMonitor',
+        id        = 'etsdevtools.developer.tools.event_monitor.EventMonitor',
         title     = 'Traits Notification Event Monitor',
         width     = 0.5,
         height    = 0.5,

@@ -46,7 +46,7 @@ from traitsui.image.image \
 from traitsui.wx.history_editor \
     import HistoryEditor
 
-from enthought.developer.helper.themes \
+from etsdevtools.developer.helper.themes \
     import LabelTheme, InsetTheme
 
 #-------------------------------------------------------------------------------
@@ -269,7 +269,7 @@ class ImageVolumeBuilder ( HasPrivateTraits ):
             ),
             group_theme = '@std:XG1'
         ),
-        id        = 'enthought.developer.tools.image_volume_builder.'
+        id        = 'etsdevtools.developer.tools.image_volume_builder.'
                     'ImageVolumeBuilder',
         title     = 'Image Volume Builder',
         width     = 0.75,
@@ -479,7 +479,7 @@ if __name__ == '__main__':
                 show_labels = False,
                 id          = 'splitter'
             ),
-            id        = 'enthought.developer.tools.image_volume_builder'
+            id        = 'etsdevtools.developer.tools.image_volume_builder'
                         '.VolumeBuilder',
             title     = 'Volume Builder',
             width     = 0.75,

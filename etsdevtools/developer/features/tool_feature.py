@@ -156,7 +156,7 @@ class ToolFeature ( DockWindowFeature, IFeatureTool ):
         """ Returns a feature object for use with the specified DockControl (or
             None if the feature does not apply to the DockControl object).
         """
-        from enthought.developer.features.api import is_not_none
+        from etsdevtools.developer.features.api import is_not_none
 
         object = dock_control.object
         if isinstance( object, HasTraits ):

@@ -32,7 +32,7 @@
 #               is written to. If omitted, the result is ignored.
 #
 #  Example:
-#    enthought.developer.file_monitor.ftp( %n, %m, 'dmorrill.com', 'www' )
+#    etsdevtools.developer.file_monitor.ftp( %n, %m, 'dmorrill.com', 'www' )
 #
 #------------------------------------------------------------------------------
 
@@ -54,7 +54,7 @@ from traits.api \
 from traits.api \
     import View, Tabbed, VGroup, HGroup, Item, TableEditor, InstanceEditor
 
-from enthought.developer.api \
+from etsdevtools.developer.api \
     import read_file, truncate, import_symbol, file_watch
 
 
@@ -430,7 +430,7 @@ class FileMonitor ( HasPrivateTraits ):
     name = Str( 'File Monitor' )
 
     # The persistence id for this object:
-    id = Str( 'enthought.developer.tools.file_monitor.state',
+    id = Str( 'etsdevtools.developer.tools.file_monitor.state',
               save_state_id = True )
 
     # The set of currently defined monitors:
@@ -443,7 +443,7 @@ class FileMonitor ( HasPrivateTraits ):
     rules = List( Rule, save_state = True )
 
     # Default path to import file monitor functions from:
-    import_path = Str( 'enthought.developer.tools.file_monitor_functions',
+    import_path = Str( 'etsdevtools.developer.tools.file_monitor_functions',
                        save_state = True )
 
     #---------------------------------------------------------------------------
@@ -482,7 +482,7 @@ class FileMonitor ( HasPrivateTraits ):
               label = 'Default import path',
               width = -200
         ),
-        id = 'enthought.developer.tools.file_monitor.options'
+        id = 'etsdevtools.developer.tools.file_monitor.options'
     )
 
     #---------------------------------------------------------------------------

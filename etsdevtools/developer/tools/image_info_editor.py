@@ -22,10 +22,10 @@
 from traitsui.api \
     import View, HGroup, VGroup, HSplit, Item, Label, Theme, ListStrEditor
 
-from enthought.developer.helper.image_library_editor \
+from etsdevtools.developer.helper.image_library_editor \
     import ImageLibraryEditor, ImageLibraryItem
 
-from enthought.developer.helper.themes \
+from etsdevtools.developer.helper.themes \
     import InsetTheme
 
 #-------------------------------------------------------------------------------
@@ -78,7 +78,7 @@ class ImageInfoItem ( ImageLibraryItem ):
             ),
             group_theme = '@std:XG0',
         ),
-        id = 'enthought.developer.tools.image_info_editor.ImageInfoItem'
+        id = 'etsdevtools.developer.tools.image_info_editor.ImageInfoItem'
     )
 
 #-------------------------------------------------------------------------------
@@ -96,7 +96,7 @@ class ImageInfoEditor ( ImageLibraryEditor ):
     editor_title = 'Image Information Editor'
 
     # The persistence id for the image library editor:
-    editor_id = 'enthought.developer.tools.image_info_editor.ImageInfoEditor'
+    editor_id = 'etsdevtools.developer.tools.image_info_editor.ImageInfoEditor'
 
     # Editor item factory class:
     item_class = ImageInfoItem

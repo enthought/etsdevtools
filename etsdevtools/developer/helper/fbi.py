@@ -59,37 +59,37 @@ from pyface.timer.api \
 from pyface.image_resource \
     import ImageResource
 
-from enthought.developer.helper.bdb \
+from etsdevtools.developer.helper.bdb \
     import Bdb, BPType, Breakpoint
 
-from enthought.developer.tools.class_browser \
+from etsdevtools.developer.tools.class_browser \
     import ClassBrowser, ClassBrowserPaths, CBPath
 
-from enthought.developer.tools.object_source \
+from etsdevtools.developer.tools.object_source \
     import ObjectSource
 
-from enthought.developer.tools.favorites_browser \
+from etsdevtools.developer.tools.favorites_browser \
     import FavoritesBrowser
 
-from enthought.developer.tools.universal_inspector \
+from etsdevtools.developer.tools.universal_inspector \
     import UniversalInspector
 
-from enthought.developer.tools.listener \
+from etsdevtools.developer.tools.listener \
     import Listener
 
-from enthought.developer.tools.profiler \
+from etsdevtools.developer.tools.profiler \
     import Profiler
 
-from enthought.developer.helper.file_position \
+from etsdevtools.developer.helper.file_position \
     import FilePosition
 
-from enthought.developer.helper.pickle \
+from etsdevtools.developer.helper.pickle \
     import get_pickle, set_pickle
 
-from enthought.developer.helper.themes \
+from etsdevtools.developer.helper.themes \
     import TButton
 
-from enthought.developer.features.api \
+from etsdevtools.developer.features.api \
     import CustomFeature
 
 #-------------------------------------------------------------------------------
@@ -128,10 +128,10 @@ TheClassBrowser = ClassBrowser( root = ClassBrowserPaths(
 TheObjectSource     = ObjectSource()
 TheListener         = Listener()
 TheFavoritesBrowser = FavoritesBrowser(
-    id = 'enthought.developer.helper.fbi.favorites_browser.state'
+    id = 'etsdevtools.developer.helper.fbi.favorites_browser.state'
 )
 TheInspector = UniversalInspector(
-    id = 'enthought.developer.helper.fbi.universal_inspector.state'
+    id = 'etsdevtools.developer.helper.fbi.universal_inspector.state'
 )
 TheProfiler = Profiler()
 
@@ -546,7 +546,7 @@ class Breakpoints ( HasPrivateTraits ):
               id         = 'break_points',
               editor     = bp_table_editor
         ),
-        id = 'enthought.developer.helper.fbi.break_points'
+        id = 'etsdevtools.developer.helper.fbi.break_points'
     )
 
     #---------------------------------------------------------------------------
@@ -569,7 +569,7 @@ class Breakpoints ( HasPrivateTraits ):
             self.restored           = True
             self.restore_bp.enabled = False
             bps = [ bp for bp in get_pickle(
-                       'enthought.developer.helper.fbi.break_points.state', [] )
+                       'etsdevtools.developer.helper.fbi.break_points.state', [] )
                        if bp.restore() ]
             self._no_save = True
             self.break_points.extend( bps )
@@ -592,7 +592,7 @@ class Breakpoints ( HasPrivateTraits ):
         self.restore()
 
         # Now save out all current break points:
-        set_pickle( 'enthought.developer.helper.fbi.break_points.state',
+        set_pickle( 'etsdevtools.developer.helper.fbi.break_points.state',
                     self.break_points[:] )
 
     #---------------------------------------------------------------------------
@@ -1068,7 +1068,7 @@ class FBI ( Handler ):
                    show_labels = False
                ),
                title     = 'FBI: Frame Based Inspector',
-               id        = 'enthought.developer.helper.fbi',
+               id        = 'etsdevtools.developer.helper.fbi',
                kind      = 'livemodal',
                dock      = 'tab',
                width     = 0.8,
@@ -1092,7 +1092,7 @@ class FBI ( Handler ):
 
     def _get_wiretap ( self ):
         if self._wiretap is None:
-           from enthought.developer.tools.wiretap import Wiretap
+           from etsdevtools.developer.tools.wiretap import Wiretap
 
            self._wiretap = Wiretap()
 
@@ -1104,10 +1104,10 @@ class FBI ( Handler ):
 
     def _get_fbi_viewer ( self ):
         if self._fbi_viewer is None:
-            from enthought.developer.tools.fbi_viewer import FBIViewer
+            from etsdevtools.developer.tools.fbi_viewer import FBIViewer
 
             self._fbi_viewer = FBIViewer(
-                id = 'enthought.developer.helper.fbi.fbi_viewer.state'
+                id = 'etsdevtools.developer.helper.fbi.fbi_viewer.state'
             )
 
         return self._fbi_viewer
@@ -1398,7 +1398,7 @@ def fbi_exception ( type, value, traceback, msg = '', gui = None, offset = 0,
     if not has_features:
         has_features = True
         try:
-            from enthought.developer.features.api import add_standard_features
+            from etsdevtools.developer.features.api import add_standard_features
             add_standard_features()
         except:
             pass
@@ -1491,7 +1491,7 @@ def use_fbi ( stop = False, restore = True, modal = True ):
     """
     global fbi_object, skip_bp, is_modal
 
-    from enthought.developer.api import file_watch
+    from etsdevtools.developer.api import file_watch
     from ex_fbi                  import SavedBreakPoints
 
     skip_bp  = (not stop)

@@ -24,10 +24,10 @@ from traitsui.api \
 from traitsui.menu \
     import NoButtons
 
-from enthought.developer.tools.envisage_browser.object_adapter \
+from etsdevtools.developer.tools.envisage_browser.object_adapter \
     import ObjectAdapter, Export
 
-from enthought.developer.tools.envisage_browser.extension_point_adapter \
+from etsdevtools.developer.tools.envisage_browser.extension_point_adapter \
     import ExtensionPointClassAdapter
 
 #-------------------------------------------------------------------------------
@@ -97,7 +97,7 @@ class PluginDefinitionAdapter ( ObjectAdapter ):
                    ),
                    id = 'tabbed'
                ),
-               id        = 'enthought.developer.envisage_browser.'
+               id        = 'etsdevtools.developer.envisage_browser.'
                            'plugin_definition_adapter.PluginDefinitionAdapter',
                title     = 'Plugin Definition',
                resizable = True,

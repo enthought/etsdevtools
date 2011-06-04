@@ -23,7 +23,7 @@ from traits.api \
 from envisage.api \
     import Plugin
 
-from enthought.developer.helper.fbi \
+from etsdevtools.developer.helper.fbi \
     import enable_fbi, fbi
 
 #-------------------------------------------------------------------------------

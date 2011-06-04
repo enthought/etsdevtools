@@ -1,6 +1,6 @@
 ###########################################################################
 # File:    util.py
-# Project: enthought.endo
+# Project: etsdevtools.endo
 # Date:    2008-3-05
 # Author:  Janet Swisher
 #

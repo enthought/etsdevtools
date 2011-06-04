@@ -1,6 +1,6 @@
 #-------------------------------------------------------------------------------
 #
-#  enthought.developer package core API
+#  etsdevtools.developer package core API
 #
 #  Written by: David C. Morrill
 #
@@ -16,34 +16,34 @@
 #  Imports:
 #-------------------------------------------------------------------------------
 
-from enthought.developer.helper.trait_defs \
+from etsdevtools.developer.helper.trait_defs \
     import TraitValue
 
-from enthought.developer.helper.file_position \
+from etsdevtools.developer.helper.file_position \
     import FilePosition
 
-from enthought.developer.helper.python_file_position \
+from etsdevtools.developer.helper.python_file_position \
     import PythonFilePosition
 
-from enthought.developer.helper.has_payload \
+from etsdevtools.developer.helper.has_payload \
     import HasPayload
 
-from enthought.developer.helper.pickle \
+from etsdevtools.developer.helper.pickle \
     import get_pickle, set_pickle
 
-from enthought.developer.helper.read_file \
+from etsdevtools.developer.helper.read_file \
     import read_file
 
-from enthought.developer.helper.saveable \
+from etsdevtools.developer.helper.saveable \
     import Saveable
 
-from enthought.developer.helper.watched_file_name \
+from etsdevtools.developer.helper.watched_file_name \
     import WatchedFileName
 
-from enthought.developer.helper.functions \
+from etsdevtools.developer.helper.functions \
     import truncate, import_module, import_symbol
 
-from enthought.developer.services.file_watch \
+from etsdevtools.developer.services.file_watch \
     import file_watch
 
 #-------------------------------------------------------------------------------

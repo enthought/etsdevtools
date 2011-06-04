@@ -31,7 +31,7 @@ from traitsui.tabular_adapter \
 from traits.trait_base \
     import traits_home
 
-from enthought.developer.api \
+from etsdevtools.developer.api \
     import file_watch, HasPayload
 
 #-------------------------------------------------------------------------------
@@ -144,7 +144,7 @@ class TraitsUIDB ( HasPrivateTraits ):
             )
         ),
         title     = 'Traits UI DB',
-        id        = 'enthought.developer.tools.traits_ui_db',
+        id        = 'etsdevtools.developer.tools.traits_ui_db',
         width     = 0.40,
         height    = 0.50,
         resizable = True

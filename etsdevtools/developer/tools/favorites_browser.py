@@ -26,10 +26,10 @@ from traits.api \
 from traitsui.api \
     import View, Item, TreeNode, TreeEditor
 
-from enthought.developer.tools.class_browser \
+from etsdevtools.developer.tools.class_browser \
     import CBModuleFile, cb_tree_nodes
 
-from enthought.developer.api \
+from etsdevtools.developer.api \
     import FilePosition
 
 #-------------------------------------------------------------------------------
@@ -72,7 +72,7 @@ class FavoritesBrowser ( HasPrivateTraits ):
     name = Str( 'Favorites Browser' )
 
     # The persistent id used for saving the favorites data:
-    id = Str( 'enthought.developer.tools.favorites_browser.state',
+    id = Str( 'etsdevtools.developer.tools.favorites_browser.state',
               save_state_id = True )
 
     # Maximum number of favorites to remember:
@@ -111,7 +111,7 @@ class FavoritesBrowser ( HasPrivateTraits ):
               label = 'Maximum number of favorites'
         ),
         title   = 'Favorites Browser Options',
-        id      = 'enthought.developer.tools.favorites_browser.options',
+        id      = 'etsdevtools.developer.tools.favorites_browser.options',
         buttons = [ 'OK', 'Cancel' ]
     )
 

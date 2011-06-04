@@ -24,10 +24,10 @@ from traitsui.api \
 from traitsui.menu \
     import NoButtons
 
-from enthought.developer.features.api \
+from etsdevtools.developer.features.api \
     import CustomFeature, is_not_none
 
-from enthought.developer.features.connect_feature \
+from etsdevtools.developer.features.connect_feature \
     import can_connect
 
 from pyface.image_resource \

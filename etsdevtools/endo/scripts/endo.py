@@ -32,12 +32,12 @@ except:
     from traits.trait_base import ETSConfig
 ETSConfig.toolkit = 'null'
 
-import enthought.endo as endo
-import enthought.endo.docobjects as docobjects
-import enthought.endo.docerror as docerror
-from enthought.endo.namespace import Namespace
-from enthought.endo.output import OutputHTML
-from enthought.endo.util import alpha_sort
+import etsdevtools.endo as endo
+import etsdevtools.endo.docobjects as docobjects
+import etsdevtools.endo.docerror as docerror
+from etsdevtools.endo.namespace import Namespace
+from etsdevtools.endo.output import OutputHTML
+from etsdevtools.endo.util import alpha_sort
 
 from optparse import OptionParser, OptionGroup
 from glob import glob

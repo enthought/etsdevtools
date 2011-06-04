@@ -4,10 +4,10 @@ from traits.api \
 from traitsui.api \
     import View, VSplit, Item
 
-from enthought.developer.tools.image_library_viewer \
+from etsdevtools.developer.tools.image_library_viewer \
      import ImageLibraryViewer
 
-from enthought.developer.tools.image_info_editor \
+from etsdevtools.developer.tools.image_info_editor \
      import ImageInfoEditor
 
 class ImageInfoEditor ( HasTraits ):

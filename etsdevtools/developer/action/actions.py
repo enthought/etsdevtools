@@ -16,18 +16,18 @@ from envisage.ui.action.api \
     import Action, Group, Menu
 
 # Constants
-ID = 'enthought.developer'
+ID = 'etsdevtools.developer'
 
 class InvokeFBIAction(PyfaceAction):
     def perform(self, event):
         """ Performs the action. """
-        from enthought.developer.helper.fbi import FBIInvoker
+        from etsdevtools.developer.helper.fbi import FBIInvoker
         FBIInvoker.invoke(event)
 
 class RestoreBPAction(PyfaceAction):
     def perform(self, event):
         """ Performs the action. """
-        from enthought.developer.helper.fbi import Breakpoints
+        from etsdevtools.developer.helper.fbi import Breakpoints
         Breakpoints().restore()
 
 def get_action_sets(**traits):
@@ -52,14 +52,14 @@ def get_action_sets(**traits):
         Action( name        = 'Invoke FBI',
                 tooltip     = 'Invoke the FBI debugger',
                 class_name  = ID + '.action.actions.InvokeFBIAction',
-                id          = 'enthought.developer.helper.fbi.fbi_invoker',
+                id          = 'etsdevtools.developer.helper.fbi.fbi_invoker',
                 path = 'MenuBar/enthought_developer_ToolsMenu/'
                                'enthought_developer_DebugMenu'
         ),
         Action( name        = 'Restore break points',
                 tooltip     = 'Restores all previously saved break points',
                 class_name  = ID + '.action.actions.RestoreBPAction',
-                id          = 'enthought.developer.helper.fbi.break_points.restore',
+                id          = 'etsdevtools.developer.helper.fbi.break_points.restore',
                 path = 'MenuBar/enthought_developer_ToolsMenu/'
                                'enthought_developer_DebugMenu'
         ),

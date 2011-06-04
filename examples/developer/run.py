@@ -18,9 +18,9 @@ from envisage.plugins.python_shell.python_shell_plugin import \
          PythonShellPlugin
 
 # Enthought developer tool plugins:
-from enthought.developer.developer_plugin import EnthoughtDeveloperPlugin
-from enthought.developer.tools.fbi_plugin import FBIPlugin
-from enthought.developer.helper.fbi \
+from etsdevtools.developer.developer_plugin import EnthoughtDeveloperPlugin
+from etsdevtools.developer.tools.fbi_plugin import FBIPlugin
+from etsdevtools.developer.helper.fbi \
     import enable_fbi
 
 #-------------------------------------------------------------------------------

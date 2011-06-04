@@ -27,10 +27,10 @@ events</b> field. The default value is 30, but any value in the range from 1
 to 100,000 can be specified.
 
 Also, please note that in order for this demo to run, you must have the
-enthought.developer package installed.
+etsdevtools.developer package installed.
 """
 
-from enthought.developer.tools.event_monitor \
+from etsdevtools.developer.tools.event_monitor \
     import EventMonitor
 
 # Create an instance of the EventMonitor tool:

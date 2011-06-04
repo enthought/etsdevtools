@@ -18,7 +18,7 @@
 #  Imports:
 #-------------------------------------------------------------------------------
 
-from enthought.developer.helper.file_position \
+from etsdevtools.developer.helper.file_position \
     import FilePosition
 
 from traits.api \

@@ -25,10 +25,10 @@ from traitsui.api \
 from traitsui.table_column \
     import ObjectColumn
 
-from enthought.developer.tools.envisage_browser.object_adapter \
+from etsdevtools.developer.tools.envisage_browser.object_adapter \
     import Export
 
-from enthought.developer.tools.envisage_browser.extension_point_adapter \
+from etsdevtools.developer.tools.envisage_browser.extension_point_adapter \
     import ExtensionPointAdapter
 
 #-------------------------------------------------------------------------------

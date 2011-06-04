@@ -14,7 +14,7 @@
 import sys
 
 sys.path.append('..')
-from enthought.endo.namespace import Namespace
+from etsdevtools.endo.namespace import Namespace
 
 class FormattingException(Exception): pass
 

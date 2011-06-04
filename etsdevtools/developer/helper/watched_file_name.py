@@ -21,10 +21,10 @@
 from traits.api \
     import HasPrivateTraits, File
 
-from enthought.developer.services.file_watch \
+from etsdevtools.developer.services.file_watch \
     import file_watch
 
-from enthought.developer.helper.read_file \
+from etsdevtools.developer.helper.read_file \
     import read_file
 
 #-------------------------------------------------------------------------------

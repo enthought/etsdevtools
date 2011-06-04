@@ -31,10 +31,10 @@ from traitsui.value_tree \
 from pyface.image_resource \
     import ImageResource
 
-from enthought.developer.features.api \
+from etsdevtools.developer.features.api \
     import CustomFeature
 
-from enthought.developer.helper.fbi \
+from etsdevtools.developer.helper.fbi \
     import fbi_wiretap
 
 #-------------------------------------------------------------------------------
@@ -158,7 +158,7 @@ class Wiretap ( HasPrivateTraits ):
               show_label = False,
               editor     = wiretap_table_editor
         ),
-        id = 'enthought.developer.tools.wiretap'
+        id = 'etsdevtools.developer.tools.wiretap'
     )
 
     #---------------------------------------------------------------------------

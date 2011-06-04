@@ -1,6 +1,6 @@
 """
 A demonstration of the <i>File Sieve</i> tool, which is part of the
-<b>enthought.developer</b> package.
+<b>etsdevtools.developer</b> package.
 
 This demo is displayed as a popup window because it requires a fairly wide
 screen area in order to display all of the viewer columns. However, it can be
@@ -23,11 +23,11 @@ of the viewer. If it is larger than 32x32, then the value for that cell will
 be blank. However, you can click on the cell to display a pop-up view of the
 complete image.
 
-In order for this demo to run, you must have the enthought.developer package
+In order for this demo to run, you must have the etsdevtools.developer package
 installed.
 """
 
-from enthought.developer.tools.file_sieve \
+from etsdevtools.developer.tools.file_sieve \
      import FileSieve
 
 # Create an instance of the File Sieve as the demo to run:

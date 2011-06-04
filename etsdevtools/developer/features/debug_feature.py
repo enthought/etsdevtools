@@ -40,7 +40,7 @@ from pyface.dock.api \
 from pyface.image_resource \
     import ImageResource
 
-from enthought.developer.api \
+from etsdevtools.developer.api \
     import HasPayload
 
 #-------------------------------------------------------------------------------
@@ -251,7 +251,7 @@ class ObjectInspector ( HasPayload ):
               editor     = ValueEditor()
         ),
         title     = 'Object Inspector',
-        id        = 'enthought.developer.tools.debug_inspector.ObjectInspector',
+        id        = 'etsdevtools.developer.tools.debug_inspector.ObjectInspector',
         kind      = 'live',
         resizable = True,
         width     = 0.3,

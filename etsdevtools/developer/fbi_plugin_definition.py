@@ -23,10 +23,10 @@ from envisage.core.core_plugin_definition \
 
 PluginDefinition(
     # The plugin's globally unique identifier:
-    id = 'enthought.developer.tools.fbi_plugin',
+    id = 'etsdevtools.developer.tools.fbi_plugin',
 
     # The name of the class that implements the plugin:
-    class_name = 'enthought.developer.tools.fbi_plugin.FBIPlugin',
+    class_name = 'etsdevtools.developer.tools.fbi_plugin.FBIPlugin',
 
     # General information about the plugin:
     name          = 'FBI Plugin',

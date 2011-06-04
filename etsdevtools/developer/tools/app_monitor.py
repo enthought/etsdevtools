@@ -31,7 +31,7 @@ except:
 from pyface.image_resource \
     import ImageResource
 
-from enthought.developer.features.api \
+from etsdevtools.developer.features.api \
     import CustomFeature
 
 #-------------------------------------------------------------------------------
@@ -48,7 +48,7 @@ class AppMonitor ( HasPrivateTraits ):
     name = Str( 'Application Monitor' )
 
     # The persistence id for this object:
-    id = Str( 'enthought.developer.tools.app_monitor.state',
+    id = Str( 'etsdevtools.developer.tools.app_monitor.state',
               save_state_id = True )
 
     # The view style used to display the data:
@@ -84,7 +84,7 @@ class AppMonitor ( HasPrivateTraits ):
     options = View(
         Item( 'view_style', width = 180 ),
         title   = 'Application Monitor Options',
-        id      = 'enthought.developer.tools.app_monitor.options',
+        id      = 'etsdevtools.developer.tools.app_monitor.options',
         buttons = [ 'OK', 'Cancel' ]
     )
 

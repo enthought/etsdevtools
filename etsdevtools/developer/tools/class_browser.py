@@ -47,7 +47,7 @@ from traits.trait_base \
 from pyface.timer.api \
     import do_later
 
-from enthought.developer.api \
+from etsdevtools.developer.api \
     import FilePosition, PythonFilePosition
 
 #-------------------------------------------------------------------------------

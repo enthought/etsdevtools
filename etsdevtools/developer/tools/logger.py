@@ -30,7 +30,7 @@ from traitsui.table_column \
 from traitsui.table_filter \
     import EvalFilterTemplate, RuleFilterTemplate, MenuFilterTemplate
 
-from enthought.developer.api \
+from etsdevtools.developer.api \
     import FilePosition
 
 #-------------------------------------------------------------------------------
@@ -206,7 +206,7 @@ class Logger ( HasPrivateTraits ):
     name = Str( 'Logger' )
 
     # The persistence id for this object:
-    id = Str( 'enthought.developer.tools.logger.state', save_state_id = True )
+    id = Str( 'etsdevtools.developer.tools.logger.state', save_state_id = True )
 
     # Maximum number of log messages displayed:
     max_records = Range( 1, 10000, 100, save_state = True )
@@ -245,7 +245,7 @@ class Logger ( HasPrivateTraits ):
               show_label = False,
               editor     = logger_table_editor
         ),
-        id = 'enthought.developer.tools.logger'
+        id = 'etsdevtools.developer.tools.logger'
     )
 
     options = View(
@@ -256,7 +256,7 @@ class Logger ( HasPrivateTraits ):
               label = 'Max # log messages'
         ),
         title   = 'Logger Options',
-        id      = 'enthought.developer.tools.logger.options',
+        id      = 'etsdevtools.developer.tools.logger.options',
         buttons = [ 'OK', 'Cancel' ]
     )
 

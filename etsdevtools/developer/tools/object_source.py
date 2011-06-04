@@ -32,13 +32,13 @@ from traitsui.value_tree \
 from pyface.timer.api \
     import do_later
 
-from enthought.developer.tools.class_browser \
+from etsdevtools.developer.tools.class_browser \
     import CBModuleFile, CBClass, cb_tree_nodes
 
-from enthought.developer.api \
+from etsdevtools.developer.api \
     import HasPayload, FilePosition
 
-from enthought.developer.helper.themes \
+from etsdevtools.developer.helper.themes \
     import TTitle
 
 #-------------------------------------------------------------------------------
@@ -85,7 +85,7 @@ class ObjectDebugger ( HasPrivateTraits ):
                                        selected = 'selected' ),
               resizable  = True
         ),
-        id        = 'enthought.developer.tools.object_source.ObjectDebugger',
+        id        = 'etsdevtools.developer.tools.object_source.ObjectDebugger',
         resizable = True
     )
 

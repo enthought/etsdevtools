@@ -29,7 +29,7 @@ from traitsui.ui_traits \
 from traitsui.theme \
     import Theme
 
-from enthought.developer.editors.list_canvas_editor \
+from etsdevtools.developer.editors.list_canvas_editor \
     import ListCanvasEditor, ListCanvasAdapter
 
 #-------------------------------------------------------------------------------
@@ -112,7 +112,7 @@ class ImageBrowser ( HasPrivateTraits ):
               editor     = list_canvas_editor
         ),
         title     = 'Image Browser',
-        id        = 'enthought.developer.tools.image_browser.ImageBrowser',
+        id        = 'etsdevtools.developer.tools.image_browser.ImageBrowser',
         width     = 0.5,
         height    = 0.5,
         resizable = True

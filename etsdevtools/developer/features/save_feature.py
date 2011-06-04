@@ -30,7 +30,7 @@ from pyface.dock.api \
 from pyface.image_resource \
     import ImageResource
 
-from enthought.developer.api \
+from etsdevtools.developer.api \
     import Saveable
 
 #-------------------------------------------------------------------------------

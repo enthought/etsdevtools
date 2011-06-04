@@ -51,7 +51,7 @@ from pyface.image_resource \
 from enthought.io.api \
     import File
 
-from enthought.developer.api \
+from etsdevtools.developer.api \
     import HasPayload, FilePosition
 
 from feature_metadata \

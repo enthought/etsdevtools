@@ -38,10 +38,10 @@ from traitsui.table_filter \
 from pyface.timer.api \
     import do_later
 
-from enthought.developer.api \
+from etsdevtools.developer.api \
     import FilePosition
 
-from enthought.developer.features.api \
+from etsdevtools.developer.features.api \
     import DropFile
 
 #-------------------------------------------------------------------------------
@@ -329,7 +329,7 @@ class ProfilerStats ( HasPrivateTraits ):
             ),
             id = 'tabbed'
         ),
-        id = 'enthought.developer.tools.profile_viewer.ProfilerStats'
+        id = 'etsdevtools.developer.tools.profile_viewer.ProfilerStats'
     )
 
     #-- Trait Event Handlers ---------------------------------------------------
@@ -475,7 +475,7 @@ class ProfileViewer ( HasPrivateTraits ):
     name = Str( 'Profile Viewer' )
 
     # The persistence id for this object:
-    id = Str( 'enthought.developer.tools.profile_viewer.state',
+    id = Str( 'etsdevtools.developer.tools.profile_viewer.state',
               save_state_id = True )
 
     # Maximum number of open profiler stats allowed:
@@ -523,7 +523,7 @@ class ProfileViewer ( HasPrivateTraits ):
               width = -70
         ),
         title   = 'Profile Viewer Options',
-        id      = 'enthought.developer.tools.profile_viewer.options',
+        id      = 'etsdevtools.developer.tools.profile_viewer.options',
         buttons = [ 'OK', 'Cancel' ]
     )
 

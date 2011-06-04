@@ -1,3 +1,3 @@
 
-* Refactor the enthought.debug.fbi module to remove the hardwired dependency
+* Refactor the etsdevtools.debug.fbi module to remove the hardwired dependency
     on the wx backend to traits.

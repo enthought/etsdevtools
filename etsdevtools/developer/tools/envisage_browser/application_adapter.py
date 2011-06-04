@@ -33,10 +33,10 @@ from traitsui.menu \
 from envisage.api import \
     Plugin
 
-from enthought.developer.tools.envisage_browser.object_adapter_base \
+from etsdevtools.developer.tools.envisage_browser.object_adapter_base \
     import ObjectAdapterBase
 
-from enthought.developer.tools.envisage_browser.object_adapter \
+from etsdevtools.developer.tools.envisage_browser.object_adapter \
     import ObjectAdapter
 
 #-------------------------------------------------------------------------------
@@ -86,7 +86,7 @@ class ApplicationAdapter ( ObjectAdapterBase ):
                    ),
                    id = 'tabbed'
                ),
-               id        = 'enthought.developer.tools.envisage_browser.'
+               id        = 'etsdevtools.developer.tools.envisage_browser.'
                            'application_adapter.ApplicationAdapter',
                title     = 'Application Definition',
                resizable = True,
@@ -117,7 +117,7 @@ class ApplicationAdapter ( ObjectAdapterBase ):
         """
         for klass in extension_point.__class__.__mro__:
             module_name = klass.__module__
-            name   = ('enthought.developer.tools.envisage_browser.' +
+            name   = ('etsdevtools.developer.tools.envisage_browser.' +
                       module_name.replace( '.', '_' ))
             module = self.import_module( name )
             if module is not None:
@@ -247,7 +247,7 @@ class ApplicationAdapter ( ObjectAdapterBase ):
     def _plugin_definition ( self, plugin, module ):
         """ Processes a plugin definition found within a specified module.
         """
-        from enthought.developer.tools.envisage_browser.plugin_definition_adapter \
+        from etsdevtools.developer.tools.envisage_browser.plugin_definition_adapter \
              import PluginDefinitionAdapter
 
         self.plugin_definitions[ plugin.id ] = PluginDefinitionAdapter(
@@ -316,7 +316,7 @@ class ExtensionPointFileRefs ( ObjectAdapter ):
                    ),
                    id = 'tabbed'
                ),
-               id        = 'enthought.developer.tools.envisage_browser.'
+               id        = 'etsdevtools.developer.tools.envisage_browser.'
                            'application_adapter.ExtensionPointFileRefs',
                title     = 'Extension Point in File Definition',
                resizable = True,
@@ -384,7 +384,7 @@ class ExtensionPointRefs ( ObjectAdapter ):
                    ),
                    id = 'tabbed'
                ),
-               id        = 'enthought.developer.tools.envisage_browser.'
+               id        = 'etsdevtools.developer.tools.envisage_browser.'
                            'application_adapter.ExtensionPointRefs',
                title     = 'Extension Point Definition',
                resizable = True,
@@ -418,7 +418,7 @@ class UnknownPluginAdapter ( HasPrivateTraits ):
                    label = 'Definition',
                    dock  = 'tab'
                ),
-               id        = 'enthought.developer.tools.envisage_browser.'
+               id        = 'etsdevtools.developer.tools.envisage_browser.'
                            'application_adapter.UnknownPluginAdapter',
                title     = 'Unknown Plugin Definition',
                resizable = True,

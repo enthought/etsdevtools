@@ -24,15 +24,15 @@ import shutil
 import warnings
 
 # local imports
-from enthought.endo.util import alpha_sort
+from etsdevtools.endo.util import alpha_sort
 
 sys.path.append('..')
 
 ### Information about objects to document
-import enthought.endo.docobjects as docobjects
+import etsdevtools.endo.docobjects as docobjects
 
 ### Template engine for HTML output
-from enthought.endo.template import TemplateLoader
+from etsdevtools.endo.template import TemplateLoader
 
 ### Needed for formatting exceptions in a pretty way
 from traceback import print_exception

@@ -16,7 +16,7 @@ from envisage.api import IExtensionRegistry
 from envisage.api import ExtensionPoint
 from pyface.workbench.api import View
 from traitsui.menu import Action as TraitsAction, Menu as TraitsMenu
-from enthought.developer.tools.file_browser import FileBrowser, RootNode, PathNode, FileNode
+from etsdevtools.developer.tools.file_browser import FileBrowser, RootNode, PathNode, FileNode
 from pyface.api import GUI
 from traits.api import Instance, Property, implements, Dict, Any
 from traitsui.api import Handler, View as TraitsView, Item, TreeEditor, InstanceEditor
@@ -86,7 +86,7 @@ class FileBrowserView(View, FileBrowser):
     #### 'IView' interface ####################################################
 
     # The part's globally unique identifier.
-    id = 'enthought.developer.tools.file_browser'
+    id = 'etsdevtools.developer.tools.file_browser'
 
     # The part's name (displayed to the user).
     name = 'Workspace'

@@ -16,7 +16,7 @@
 #  Imports:
 #-------------------------------------------------------------------------------
 
-from enthought.developer.helper.traits \
+from enthought.developer.helper.trait_defs \
     import TraitValue
 
 from enthought.developer.helper.file_position \

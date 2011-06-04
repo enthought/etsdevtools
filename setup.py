@@ -60,7 +60,7 @@ def configuration(parent_package='', top_path=None):
         quiet=True,
     )
 
-    config.add_subpackage('enthought')
+    config.add_subpackage('etsdevtools')
 
     return config
 
@@ -77,7 +77,7 @@ config['packages'] += packages
 numpy.distutils.core.setup(
     author = 'Enthought, Inc',
     author_email = 'info@enthought.com',
-    download_url = ('http://www.enthought.com/repo/ETS/ETSDevTools-%s.tar.gz'
+    download_url = ('http://www.enthought.com/repo/ets/ETSDevTools-%s.tar.gz'
                     % INFO['version']),
     classifiers = [c.strip() for c in """\
         Development Status :: 5 - Production/Stable
@@ -110,9 +110,6 @@ numpy.distutils.core.setup(
     maintainer = 'ETS Developers',
     maintainer_email = 'enthought-dev@enthought.com',
     name = INFO['name'],
-    namespace_packages = [
-        'enthought',
-        ],
     platforms = ["Windows", "Linux", "Mac OS-X", "Unix", "Solaris"],
     tests_require = [
         'nose >= 0.10.3',

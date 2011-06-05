@@ -103,7 +103,7 @@ numpy.distutils.core.setup(
             ]
         },
     include_package_data = True,
-    package_data = {'endo': ['data/*.*']},
+    package_data = {'etsdevtools': ['endo/data/*.*']},
     install_requires = INFO['install_requires'],
     license = 'BSD',
     long_description = '\n'.join(DOCLINES[3:]),

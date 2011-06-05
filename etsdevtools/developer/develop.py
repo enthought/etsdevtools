@@ -95,7 +95,7 @@ StdTools = {
     'Wiretap':
         'etsdevtools.developer.tools.wiretap.Wiretap',
     'Template View':
-        'enthought.template.test.template_view.TemplateView'
+        'apptools.template.test.template_view.TemplateView'
 }
 
 #-------------------------------------------------------------------------------

@@ -48,7 +48,7 @@ from pyface.dock.api \
 from pyface.image_resource \
     import ImageResource
 
-from enthought.io.api \
+from apptools.io.api \
     import File
 
 from etsdevtools.developer.api \

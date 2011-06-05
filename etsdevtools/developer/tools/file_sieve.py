@@ -765,7 +765,7 @@ class FileSieve ( HasPrivateTraits ):
 
 if __name__ == '__main__':
     sieve = FileSieve(
-        #path = r'C:\svnroot\enthought.trunk\enthought.sweet_pickle_2.1' )
+        #path = r'C:\svnroot\enthought.trunk\apptools.sweet_pickle_2.1' )
         path = r'C:\svnroot\enthought.trunk\pyface_3.0' )
 
     sieve.configure_traits()

@@ -34,7 +34,7 @@ from traitsui.api \
 from etsdevtools.developer.helper.themes \
     import TTitle
 
-from enthought.io.file \
+from apptools.io.file \
     import File
 
 from pyface.timer.api \

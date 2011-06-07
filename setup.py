@@ -10,27 +10,25 @@ The ETSDevTools project includes a set of packages that can be used during the
 development of a software project, for understanding, debugging, testing, and
 inspecting code.
 
-- **Enthought Developer Tool Suite** (etsdevtools.developer): A collection of
-  utilities, designed to ease the development and debugging of Traits-based
-  programs. They can be used as plug-ins to your Envisage application while
-  you are developing it, and then removed when you are ready to release it.
-- **Endo**: A Traits-aware tool for processing API documentation of Python
-  code. It extracts not only docstrings, but also plain comments that
-  immediately precede variable assignments (both module-scope variables and
-  class attributes).
 - **etsdevtools.debug**: A collection of debugging tools, not to be included in
   production code. NOTE: These tools are functional, but are not being
   developed or supported. They have been mainly superceded by the tools
   in the Enthought Developer Tool Suite.
+- **etsdevtools.developer**: A collection of
+  utilities, designed to ease the development and debugging of Traits-based
+  programs. They can be used as plug-ins to your Envisage application while
+  you are developing it, and then removed when you are ready to release it.
+- **etsdevtools.endo**: A Traits-aware tool for processing API documentation
+  of Python code. It extracts not only docstrings, but also plain comments
+  that immediately precede variable assignments (both module-scope variables
+  and class attributes).
 
 Prerequisites
 -------------
 You must have the following libraries installed before building or installing
 ETSDevTools:
 
-* `Numpy <http://pypi.python.org/pypi/numpy/1.1.1>`_ version 1.1.0 or later is
-  preferred. Version 1.0.4 will work, but some tests may fail.
-* `setuptools <http://pypi.python.org/pypi/setuptools/0.6c8>`_
+* `Numpy <http://pypi.python.org/pypi/numpy/1.1.1>`_ version 1.1.1 or later
 """
 
 # NOTE: Setuptools must be imported BEFORE numpy.distutils or else things do

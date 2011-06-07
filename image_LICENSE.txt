@@ -15,11 +15,11 @@ released under a 3 clause BSD license.
 
 Files and orginal authors:
 ----------------------------------------------------------------------------
-enthought/developer/images:
+etsdevtools/developer/images:
                     disabled_ui.png | Nuvola
                          object.png | GV
                              ui.png | Nuvola
-enthought/developer/editors/images:
+etsdevtools/developer/editors/images:
                             add.png | CP
                           clear.png | CP
                           clone.png | GV
@@ -34,7 +34,7 @@ enthought/developer/editors/images:
                        maximize.png | CP
                        minimize.png | CP
                            save.png | Eclipse
-enthought/developer/features/images:
+etsdevtools/developer/features/images:
            connect_drag_feature.png | GV
            connect_file_feature.png | GV
            connect_from_feature.png | Enthought
@@ -57,7 +57,7 @@ enthought/developer/features/images:
              popup_menu_feature.png | GV
                    save_feature.png | GV
                    tool_feature.png | Nuvola
-enthought/developer/helper/images:
+etsdevtools/developer/helper/images:
                    fbi_clear_bp.png | Nuvola
                          fbi_go.png | GV
                        fbi_next.png | GV
@@ -66,7 +66,7 @@ enthought/developer/helper/images:
                      fbi_return.png | GV
                        fbi_step.png | GV
                            gbox.png | Enthought
-enthought/developer/tools/images:
+etsdevtools/developer/tools/images:
                           class.png | Eclipse
                       clipboard.png | GV
                            drop.png | GV
@@ -80,7 +80,7 @@ enthought/developer/tools/images:
                             run.png | Nuvola
                  start_profiler.png | GV
                   stop_profiler.png | GV
-enthought/developer/tools/vet/images:
+etsdevtools/developer/tools/vet/images:
                          action.png | Nuvola
                           class.png | Eclipse
                            code.png | GV

@@ -42,7 +42,7 @@ from traitsui.key_bindings \
 from etsdevtools.developer.features.api \
     import DropFile
 
-from etsdevtools.developer.helper.traits \
+from etsdevtools.developer.helper.trait_defs \
     import Size
 
 from image_browser \

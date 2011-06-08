@@ -26,9 +26,9 @@ import etsdevtools.developer
 #  Package locations:
 #-------------------------------------------------------------------------------
 
-envisage  = abspath(dirname(envisage.__file__))
-developer = abspath(dirname(etsdevtools.developer.__file__))
-pythonshell = abspath(dirname(envisage.plugins.python_shell.__file__))
+envisage_path  = abspath(dirname(envisage.__file__))
+developer_path = abspath(dirname(etsdevtools.developer.__file__))
+pythonshell_path = abspath(dirname(envisage.plugins.python_shell.__file__))
 
 #-------------------------------------------------------------------------------
 #  The plugin definitions required by the application:
@@ -36,18 +36,18 @@ pythonshell = abspath(dirname(envisage.plugins.python_shell.__file__))
 
 PLUGIN_DEFINITIONS = [
     # Envisage plugins:
-    join(envisage, 'core/core_plugin_definition.py'),
-    join(envisage, 'resource/resource_plugin_definition.py'),
-    join(envisage, 'action/action_plugin_definition.py'),
-    join(envisage, 'workbench/workbench_plugin_definition.py'),
-    join(envisage, 'workbench/action/action_plugin_definition.py'),
+    join(envisage_path, 'core/core_plugin_definition.py'),
+    join(envisage_path, 'resource/resource_plugin_definition.py'),
+    join(envisage_path, 'action/action_plugin_definition.py'),
+    join(envisage_path, 'workbench/workbench_plugin_definition.py'),
+    join(envisage_path, 'workbench/action/action_plugin_definition.py'),
 
     # Enthought plugins:
-    join(pythonshell, 'python_shell_plugin_definition.py'),
+    join(pythonshell_path, 'python_shell_plugin_definition.py'),
 
     # Enthought developer tool plugins:
-    join(developer, 'plugin_definition.py'),
-    join(developer, 'fbi_plugin_definition.py'),
+    join(developer_path, 'plugin_definition.py'),
+    join(developer_path, 'fbi_plugin_definition.py'),
 ]
 
 #-------------------------------------------------------------------------------

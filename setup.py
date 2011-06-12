@@ -1,35 +1,5 @@
-#!/usr/bin/env python
-#
 # Copyright (c) 2008-2011 by Enthought, Inc.
 # All rights reserved.
-
-"""
-Enthought tools to support Python development.
-
-The ETSDevTools project includes a set of packages that can be used during the
-development of a software project, for understanding, debugging, testing, and
-inspecting code.
-
-- **etsdevtools.debug**: A collection of debugging tools, not to be included in
-  production code. NOTE: These tools are functional, but are not being
-  developed or supported. They have been mainly superceded by the tools
-  in the Enthought Developer Tool Suite.
-- **etsdevtools.developer**: A collection of
-  utilities, designed to ease the development and debugging of Traits-based
-  programs. They can be used as plug-ins to your Envisage application while
-  you are developing it, and then removed when you are ready to release it.
-- **etsdevtools.endo**: A Traits-aware tool for processing API documentation
-  of Python code. It extracts not only docstrings, but also plain comments
-  that immediately precede variable assignments (both module-scope variables
-  and class attributes).
-
-Prerequisites
--------------
-You must have the following libraries installed before building or installing
-ETSDevTools:
-
-* `Numpy <http://pypi.python.org/pypi/numpy/1.1.1>`_ version 1.1.1 or later
-"""
 
 # NOTE: Setuptools must be imported BEFORE numpy.distutils or else things do
 # not work!
@@ -44,8 +14,6 @@ setup_data = dict(__name__='', __file__='setup_data.py')
 execfile('setup_data.py', setup_data)
 INFO = setup_data['INFO']
 
-# Pull the description values for the setup keywords from our file docstring.
-DOCLINES = __doc__.split("\n")
 
 # Configure python extensions
 def configuration(parent_package='', top_path=None):
@@ -92,7 +60,8 @@ numpy.distutils.core.setup(
         Topic :: Software Development
         Topic :: Software Development :: Libraries
         """.splitlines() if len(c.strip()) > 0],
-    description = DOCLINES[1],
+    description = 'tools to support Python development',
+    long_description = open('README.rst').read(),
     entry_points = {
         'console_scripts': [
             'endo = etsdevtools.endo.scripts.endo:main',
@@ -104,7 +73,6 @@ numpy.distutils.core.setup(
     package_data = {'etsdevtools': ['endo/data/*.*']},
     install_requires = INFO['install_requires'],
     license = 'BSD',
-    long_description = '\n'.join(DOCLINES[3:]),
     maintainer = 'ETS Developers',
     maintainer_email = 'enthought-dev@enthought.com',
     name = INFO['name'],

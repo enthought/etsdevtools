@@ -1862,7 +1862,7 @@ class EditHandler ( Handler ):
     def copy_to_clipboard ( self, info ):
         """ Copies the current View source code to the clipboard.
         """
-        from traits.util.wx.clipboard import clipboard
+        from pyface.wx.clipboard import clipboard
 
         clipboard.data = self.format( info )
 

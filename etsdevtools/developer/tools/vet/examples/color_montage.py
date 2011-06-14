@@ -35,7 +35,7 @@ class ColorMontage ( Handler ):
     def object_rgba_color_changed ( self, info ):
         """ Handles the object's 'rgba_color' trait changing value.
         """
-        from traits.util.wx.clipboard import clipboard
+        from pyface.wx.clipboard import clipboard
         c = info.object.rgba_color_
         clipboard.data = '0x%02X%02X%02X%02X' % (
             255 - int( 255 * c[3] ),

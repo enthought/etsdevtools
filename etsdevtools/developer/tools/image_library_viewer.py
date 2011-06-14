@@ -49,7 +49,7 @@ from image_browser \
     import ImageItem
 
 # fixme: We need to add a toolkit independent version of the clipboard...
-from traits.util.wx.clipboard \
+from pyface.wx.clipboard \
     import clipboard
 
 #-------------------------------------------------------------------------------

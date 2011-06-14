@@ -33,7 +33,7 @@ from traitsui.api \
 from traitsui.table_column \
     import ObjectColumn
 
-from traits.util.wx.clipboard \
+from pyface.wx.clipboard \
     import clipboard
 
 from pyface.image_resource \

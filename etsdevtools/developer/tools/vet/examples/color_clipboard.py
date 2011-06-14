@@ -36,7 +36,7 @@ class ViewHandler ( Handler ):
     def object_color_changed ( self, info ):
         """ Handles the object's 'color' trait changing value.
         """
-        from traits.util.wx.clipboard import clipboard as cb
+        from pyface.wx.clipboard import clipboard as cb
         c      = info.object.color_
         format = info.object.format
         if format == 'Web':

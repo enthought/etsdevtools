@@ -72,7 +72,7 @@ from pyface.timer.api \
 from pyface.image_resource \
     import ImageResource
 
-from traits.util.wx.drag_and_drop \
+from pyface.wx.drag_and_drop \
     import PythonDropSource, PythonDropTarget
 
 #-------------------------------------------------------------------------------

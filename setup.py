@@ -46,7 +46,7 @@ numpy.distutils.core.setup(
     maintainer = 'ETS Developers',
     maintainer_email = 'enthought-dev@enthought.com',
     url = 'http://code.enthought.com/projects/ets_dev_tools.php',
-    download_url = ('http://www.enthought.com/repo/ets/ETSDevTools-%s.tar.gz'
+    download_url = ('http://www.enthought.com/repo/ets/etsdevtools-%s.tar.gz'
                     % info['__version__']),
     classifiers = [c.strip() for c in """\
         Development Status :: 5 - Production/Stable

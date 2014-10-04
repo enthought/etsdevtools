@@ -1,10 +1,12 @@
 from traits import trait_notifiers
-from traits.api import Button, Float, HasStrictTraits, Instance, List, Unicode
+from traits.api import (
+    Bool, Button, cached_property, Float, HasStrictTraits, Instance, List,
+    Property, Unicode)
 from traits.util.event_tracer import (
     CallingMessageRecord, ChangeMessageRecord, ExitMessageRecord,
     MultiThreadChangeEventRecorder, MultiThreadRecordContainer, SentinelRecord)
 from traitsui.api import (
-    Item, HGroup, spring, TreeEditor, TreeNode, UItem, VGroup, View)
+    ButtonEditor, Item, HGroup, TreeEditor, TreeNode, UItem, VGroup, View)
 from pyface.timer.api import Timer
 
 
@@ -188,17 +190,24 @@ class NotViewer(HasStrictTraits):
     #: Time between updated, in msec.
     update_time = Float(100)
 
-    #: Start recording.
-    start_button = Button('Start')
+    #: Button to start/stop recording.
+    record_button = Button()
 
-    #: Stop recording.
-    stop_button = Button('Stop')
+    #: Label on top of the record button.
+    record_label = Property(Unicode, depends_on='recording')
+
+    @cached_property
+    def _get_record_label(self):
+        if self.recording:
+            return 'Stop'
+        else:
+            return 'Start'
 
     #: Message displaying recording status.
-    status = Unicode(u'Idle')
+    recording = Bool(False)
 
     def start(self):
-        self.status = u'Recording ...'
+        self.recording = True
         self.container = MultiThreadRecordContainer()
         self.recorder = MultiThreadChangeEventRecorder(self.container)
 
@@ -214,7 +223,7 @@ class NotViewer(HasStrictTraits):
             self.spin_timer.Stop()
             self.spin_timer = None
 
-            self.status = u'Idle'
+            self.recording = False
             trait_notifiers.clear_change_event_tracers()
             self.recorder.close()
             self.update_view()
@@ -228,17 +237,24 @@ class NotViewer(HasStrictTraits):
         view = View(
             VGroup(
                 HGroup(
-                    UItem('start_button'),
-                    UItem('stop_button'),
-                    spring,
-                    UItem('status', style='readonly'),
-                    UItem('15'),
+                    UItem(
+                        'record_button',
+                        editor=ButtonEditor(label_value='record_label')
+                    ),
+                    Item(
+                        'update_time',
+                        label='Update interval (ms)',
+                        enabled_when='not recording',
+                    ),
                 ),
                 VGroup(
-                    UItem('thread_list', editor=tree_editor),
+                    UItem(
+                        'thread_list',
+                        editor=tree_editor,
+                        enabled_when='not recording',
+                    ),
                     show_border=True,
                 ),
-                Item('update_time', label='Update interval (ms)'),
             ),
             title='NotViewer',
             height=800,
@@ -247,11 +263,11 @@ class NotViewer(HasStrictTraits):
         )
         return view
 
-    def _start_button_fired(self):
-        self.start()
-
-    def _stop_button_fired(self):
-        self.stop()
+    def _record_button_fired(self):
+        if self.recording:
+            self.stop()
+        else:
+            self.start()
 
     def _thread_list_default(self):
         return ThreadList({})

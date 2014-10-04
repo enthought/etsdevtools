@@ -175,83 +175,76 @@ tree_editor = TreeEditor(
 
 class NotViewer(HasStrictTraits):
 
-    #: Traits notification events recorder.
-    recorder = Instance(MultiThreadChangeEventRecorder)
-
-    #: Traits notification events container.
-    container = Instance(MultiThreadRecordContainer)
-
-    #: List of thread representations. These are the top branches of the tree.
-    thread_list = Instance(ThreadList)
-
-    #: Timer to update spinning.
-    spin_timer = Instance(Timer)
-
     #: Time between updated, in msec.
     update_time = Float(100)
 
+    #: Traits notification events recorder.
+    _recorder = Instance(MultiThreadChangeEventRecorder)
+
+    #: Traits notification events container.
+    _container = Instance(MultiThreadRecordContainer)
+
+    #: List of thread representations. These are the top branches of the tree.
+    _thread_list = Instance(ThreadList)
+
+    #: Timer to update spinning.
+    _spin_timer = Instance(Timer)
+
     #: Button to start/stop recording.
-    record_button = Button()
+    _record_button = Button()
 
     #: Label on top of the record button.
-    record_label = Property(Unicode, depends_on='recording')
-
-    @cached_property
-    def _get_record_label(self):
-        if self.recording:
-            return 'Stop'
-        else:
-            return 'Start'
+    _record_label = Property(Unicode, depends_on='recording')
 
     #: Message displaying recording status.
-    recording = Bool(False)
+    _recording = Bool(False)
 
     def start(self):
-        self.recording = True
-        self.container = MultiThreadRecordContainer()
-        self.recorder = MultiThreadChangeEventRecorder(self.container)
+        self._recording = True
+        self._container = MultiThreadRecordContainer()
+        self._recorder = MultiThreadChangeEventRecorder(self._container)
 
         trait_notifiers.set_change_event_tracers(
-            pre_tracer=self.recorder.pre_tracer,
-            post_tracer=self.recorder.post_tracer
+            pre_tracer=self._recorder.pre_tracer,
+            post_tracer=self._recorder.post_tracer
         )
 
-        self.spin_timer = Timer(self.update_time, self.update_view)
+        self._spin_timer = Timer(self.update_time, self.update_view)
 
     def stop(self):
-        if self.recorder is not None:
-            self.spin_timer.Stop()
-            self.spin_timer = None
+        if self._recorder is not None:
+            self._spin_timer.Stop()
+            self._spin_timer = None
 
-            self.recording = False
+            self._recording = False
             trait_notifiers.clear_change_event_tracers()
-            self.recorder.close()
+            self._recorder.close()
             self.update_view()
 
-            self.recorder = None
+            self._recorder = None
 
     def update_view(self):
-        self.thread_list = ThreadList(self.container._record_containers)
+        self._thread_list = ThreadList(self._container._record_containers)
 
     def default_traits_view(self):
         view = View(
             VGroup(
                 HGroup(
                     UItem(
-                        'record_button',
-                        editor=ButtonEditor(label_value='record_label')
+                        '_record_button',
+                        editor=ButtonEditor(label_value='_record_label')
                     ),
                     Item(
                         'update_time',
                         label='Update interval (ms)',
-                        enabled_when='not recording',
+                        enabled_when='not _recording',
                     ),
                 ),
                 VGroup(
                     UItem(
-                        'thread_list',
+                        '_thread_list',
                         editor=tree_editor,
-                        enabled_when='not recording',
+                        enabled_when='not _recording',
                     ),
                     show_border=True,
                 ),
@@ -263,11 +256,18 @@ class NotViewer(HasStrictTraits):
         )
         return view
 
-    def _record_button_fired(self):
-        if self.recording:
+    def __thread_list_default(self):
+        return ThreadList({})
+
+    @cached_property
+    def _get__record_label(self):
+        if self._recording:
+            return 'Stop recording'
+        else:
+            return 'Start recording'
+
+    def __record_button_fired(self):
+        if self._recording:
             self.stop()
         else:
             self.start()
-
-    def _thread_list_default(self):
-        return ThreadList({})

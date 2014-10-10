@@ -194,7 +194,7 @@ class NotViewer(HasStrictTraits):
     _record_button = Button()
 
     #: Label on top of the record button.
-    _record_label = Property(Unicode, depends_on='recording')
+    _record_label = Property(Unicode, depends_on='_recording')
 
     #: Message displaying recording status.
     _recording = Bool(False)

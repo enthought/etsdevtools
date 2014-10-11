@@ -54,9 +54,10 @@ def records_to_tree(records, idx):
                 sub_events.append(event)
             else:
                 # if same indent and equality -> continue
-                if change_records_equal(next_record, change_msg_record):
+                if (change_records_equal(next_record, change_msg_record)
+                        and next_record.indent == current_indent):
                     idx += 1
-                # if same indent but no equality -> exit
+                # if same indent but no equality, or smaller indent -> exit
                 # (new event at same level)
                 else:
                     break

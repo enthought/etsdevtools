@@ -45,7 +45,7 @@ numpy.distutils.core.setup(
     author_email = 'info@enthought.com',
     maintainer = 'ETS Developers',
     maintainer_email = 'enthought-dev@enthought.com',
-    url = 'http://code.enthought.com/projects/ets_dev_tools.php',
+    url = 'https://github.com/enthought/etsdevtools',
     download_url = ('http://www.enthought.com/repo/ets/etsdevtools-%s.tar.gz'
                     % info['__version__']),
     classifiers = [c.strip() for c in """\
